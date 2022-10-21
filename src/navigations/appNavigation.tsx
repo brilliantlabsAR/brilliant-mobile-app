@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import Screens from "../screens";
-import * as Routes from "../models/routes";
+import * as Routes from "../models";
 //import LogoTitle, { SettingIcon, BackIcon } from "../components/customHeader";
 import { useNavigation } from "@react-navigation/native";
-import { AppNavigationScreenProps } from "../navigations/types";
+// import { AppNavigationScreenProps } from "../navigations/types";
 //import { DevicePairingStatus, AsyncConst } from "../models";
 //import { storage } from "../index";
 //import { useAppSelector } from "../redux/hooks";
@@ -23,18 +23,18 @@ export type AppStackParamList = {
 };
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 const AppNavigation = () => {
-  const navigation = useNavigation<AppNavigationScreenProps>();
+  // const navigation = useNavigation<AppNavigationScreenProps>();
   // let tutorialShown = storage.getBoolean(AsyncConst.hasShownTutorial);
   // const pairingStatus: DevicePairingStatus = useAppSelector((state) => state.pairing.status);
 
   return (
     <AppStack.Navigator
-        screenOptions={{
+      screenOptions={{
         headerShown: true,
         headerBackVisible: false
       }}
     >
-       <AppStack.Screen
+      <AppStack.Screen
         name={Routes.NAV_LOGIN_SCREEN}
         component={Screens.LoginScreen}
         options={{ title: "" }}

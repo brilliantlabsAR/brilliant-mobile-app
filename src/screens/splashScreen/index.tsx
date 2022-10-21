@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
     View,
     Text,
@@ -39,11 +39,11 @@ const windowHeight = Dimensions.get('window').height;
 // import * as mainDao from '../../../database'
 
 type SplashScreenProps = NativeStackScreenProps<
-  RootStackParamList,
-  "SplashScreen"
+    RootStackParamList,
+    "SplashScreen"
 >;
 
-const SplashScreen = ({navigation}:SplashScreenProps) => {
+const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
     const [isShow, setIsShow] = useState<boolean>(false);
     //var isShow:boolean=false;
@@ -100,7 +100,7 @@ const SplashScreen = ({navigation}:SplashScreenProps) => {
             }).start();
 
             if (isLogin) {
-               // setIsShow(false);
+                // setIsShow(false);
             } else {
                 setIsShow(true);
                 { console.log("Ho", isShow) }
@@ -120,7 +120,7 @@ const SplashScreen = ({navigation}:SplashScreenProps) => {
             style={styles.bodyContainer}>
             <View style={styles.topView}>
                 {isShow == true ?
-                    
+
                     <Animated.View style={[
                         styles.animatedView,
                         {
@@ -168,7 +168,7 @@ const SplashScreen = ({navigation}:SplashScreenProps) => {
 
                             <TouchableOpacity style={styles.signInText}
                                 onPress={() =>
-                                    navigation.navigate(Routes.NAV_LOGIN_SCREEN)
+                                    navigation.navigate(Routes.NAV_APP)
                                     //this.props.navigation.navigate("HomeScreenPickUp")
                                     //  this.props.navigation.navigate('SigninScreen')
                                     // this.props.navigation.navigate('UserStreamingScreen')

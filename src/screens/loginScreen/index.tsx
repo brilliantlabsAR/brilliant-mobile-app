@@ -8,18 +8,14 @@ import {
   Platform,
   LogBox,
 } from "react-native";
+import { LoginNavigationProps } from "../../navigations/types";
 
- const LoginScreen=()=> {
+const LoginScreen = (props: LoginNavigationProps) => {
+  const { navigation } = props;
   return (
-    <>
-      <StatusBar
-        animated={true}
-        barStyle={Platform.OS === "ios" ? "dark-content" : "light-content"}
-        showHideTransition={"none"}
-        hidden={false}
-      />
-      
-    </>
+    <View>
+      <Text>HIiii</Text>
+    </View>
   );
 }
 

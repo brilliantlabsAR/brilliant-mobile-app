@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/native-stack";
 import { AppStackParamList } from "./appNavigation";
 
-export type LoginNavigationProps = NativeStackNavigationProp<
+export type LoginNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "LoginScreen"
 >;
