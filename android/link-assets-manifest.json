@@ -1,0 +1,37 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/ApercuProBold.otf",
+      "sha1": "192426c831b67b42cba2f5d6d072388444b19915"
+    },
+    {
+      "path": "src/assets/fonts/ApercuProBoldItalic.otf",
+      "sha1": "51d14bb350c5021664b8a67f309c55ed125122ac"
+    },
+    {
+      "path": "src/assets/fonts/ApercuProItalic.otf",
+      "sha1": "2bcf345158bdf8be1f6bac640f249a82e6b5e285"
+    },
+    {
+      "path": "src/assets/fonts/ApercuProLight.otf",
+      "sha1": "297f3abe93795abcd28db58fde96c43fd651fccb"
+    },
+    {
+      "path": "src/assets/fonts/ApercuProLightItalic.otf",
+      "sha1": "d45262f33f42c1c58d5fc02675e7214d1edc8935"
+    },
+    {
+      "path": "src/assets/fonts/ApercuProMedium.otf",
+      "sha1": "4f65b2ef37d67b1b6a502ec22fbf56ae8b0fafc2"
+    },
+    {
+      "path": "src/assets/fonts/ApercuProMediumItalic.otf",
+      "sha1": "1ff5edc90264ca3fa3a62d64c98e4d1cdd164e83"
+    },
+    {
+      "path": "src/assets/fonts/ApercuProRegular.otf",
+      "sha1": "5ddaf5f232dd9e797002cd3ce0f7037987fb4258"
+    }
+  ]
+}
