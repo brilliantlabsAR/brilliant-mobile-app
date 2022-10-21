@@ -27,34 +27,39 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column',
-        marginTop: 50,
-        marginLeft: 25,
-        marginRight: 25
+        marginLeft: 20,
+        marginTop: 50
+
     },
     backgroundWhite: {
         backgroundColor: Theme.color.White,
 
     },
-    loginText: {
+    verifyText: {
+        marginStart: 5,
         color: Theme.color.Black,
-        fontSize: normalize(30),
+        fontSize: 30,
+        fontStyle: 'normal',
         flexDirection: 'row',
         fontFamily: 'ApercuProBold'
 
     },
-    welcomeText: {
-        fontSize: normalize(14),
+    phoneNumberText: {
+        marginStart: 5,
         marginTop: 10,
         color: Theme.color.Black,
+        fontSize: 15,
+        fontStyle: 'normal',
         flexDirection: 'row',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: 'Apercu Pro Regular'
     },
-    phoneBox: {
-        marginTop: 40,
-        backgroundColor: Theme.color.White,
-        paddingBottom: 20,
-        borderRadius: 20
-    },
+    otpViewBox: {
+            marginTop: 20,
+            backgroundColor:Theme.color.White,
+            paddingBottom: 20,
+            marginRight: 25,
+            borderRadius: 20
+        },
     phoneBoxTwo:{
         flexDirection: 'row',
         flex: 1,
