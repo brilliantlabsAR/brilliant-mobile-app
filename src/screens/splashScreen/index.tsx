@@ -168,7 +168,7 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
                             <TouchableOpacity style={styles.signInText}
                                 onPress={() =>
-                                    navigation.navigate(Routes.NAV_APP)
+                                    navigation.navigate(Routes.NAV_LOGIN_SCREEN)
                                     //this.props.navigation.navigate("HomeScreenPickUp")
                                     //  this.props.navigation.navigate('SigninScreen')
                                     // this.props.navigation.navigate('UserStreamingScreen')

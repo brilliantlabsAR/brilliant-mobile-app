@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useRef } from "react";
-
 import {
     StatusBar,
     View,
@@ -18,26 +17,44 @@ import { Theme } from "../../models";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
-
 import { styles } from "./styles";
-//import OTPContainer from "../../components/otpContainer";
+import OTPContainer from "../../components/otpContainer";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
-let timerEnable = true;
+let timerEnable = true, clockCall;
 const LoginOtpVerify = (props: Props) => {
     const { navigation, route } = props;
 
     const [phoneNumber] = useState<string>(route.params.phoneNumber);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [timer, setTimer] = useState<number>(240);
+    const [otp, setOtp] = useState<string>('');
 
 
     useEffect(() => {
-        console.log('LoLO', phoneNumber)
+        console.log('LoLO', phoneNumber);
+        clockCall = setInterval(() => {
+            if (timer === 0) clearInterval(clockCall);
+            setTimer(timer - 1)
+        }, 1000);
+        return () => {
+            clearInterval(clockCall)
+        }
     })
 
     const calculateTimer = () => {
+        if (timer == 0) {
+            timerEnable = false;
+            clearInterval(clockCall);
+            return ('00:00')
+        } else {
+            var m = Math.floor(timer % 3600 / 60);
+            var s = Math.floor(timer % 3600 % 60);
+            return ((m < 10 ? `0${m} :` : `${m} :`) + (s < 10 ? `0${s}` : `${s}`))
+        }
     };
+
     function resendOtp() {
 
     }
@@ -89,25 +106,15 @@ const LoginOtpVerify = (props: Props) => {
 
                         <View style={styles.otpViewBox}>
                             <View>
-
-
-
-
-
-
-                                {/* <OTPContainer
+                                <OTPContainer
                                     codeCount={4}
                                     containerStyle={{ marginTop: 20 }}
-                                    otpStyles={{
-                                        backgroundColor: '#E2E2E7', borderRadius: 10,
-                                        keyboardType: 'number'
-                                    }}
                                     onFinish={(code) => {
-                                        this.setState({ otp: code })
+                                        setOtp(code)
 
                                         //   this.setCode(code)
                                     }}
-                                /> */}
+                                />
                                 <View style={styles.marginView}>
                                     <View style={styles.marginLeft}>
                                         <Image
@@ -120,7 +127,7 @@ const LoginOtpVerify = (props: Props) => {
                                         />
                                         <Text
                                             style={styles.timerText}
-                                        >{"calculateTimer()"}</Text>
+                                        >{calculateTimer()}</Text>
 
 
                                     </View>

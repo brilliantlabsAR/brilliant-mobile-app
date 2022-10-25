@@ -11,8 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export type AppStackParamList = {
   [Routes.NAV_SPLASH_SCREEN]: undefined;
-  [Routes.NAV_LOGIN_SCREEN]: undefined;
-  [Routes.NAV_LOGIN_VERIFY_SCREEN]: { phoneNumber: string };
+
   // [Routes.NAV_BLUETOOTH_PAIRING]: undefined;
   // [Routes.NAV_TUTORIALS]: undefined;
   // [Routes.NAV_DASHBOARD]: undefined;
@@ -35,16 +34,16 @@ const AppNavigation = () => {
         headerBackVisible: false
       }}
     >
-      <AppStack.Screen
+      {/* <AppStack.Screen
         name={Routes.NAV_LOGIN_SCREEN}
         component={Screens.LoginScreen}
         options={{ title: "" }}
-      />
-      <AppStack.Screen
+      /> */}
+      {/* <AppStack.Screen
         name={Routes.NAV_LOGIN_VERIFY_SCREEN}
         component={Screens.LoginOtpVerify}
         options={{ title: "" }}
-      />
+      /> */}
       {/* <AppStack.Screen
         name={Routes.NAV_BLUETOOTH_PAIRING}
         component={Screens.BluetoothPairing}

@@ -1,25 +1,21 @@
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Dimensions,  } from 'react-native';
+import { View, TextInput, Dimensions, StyleSheet } from 'react-native';
+import { IOtpContainer } from '../../types';
 import { styles } from './styles';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-
-
 const initCodes = [];
-const OTPContainer=()=>({
-  containerStyle,
-  otpStyles,
-  codeCount = 4,
-  onTyping,
-  onFinish,
-}) {
+
+const OTPContainer = (props: IOtpContainer) => {
+  const { codeCount, containerStyle, onFinish, onTyping } = props
   const inputCodeRef = useRef(new Array());
-  const [codes, setCodes] = useState(initCodes);
+  const [codes, setCodes] = useState<Array<string>>(initCodes);
   useEffect(() => {
-    const codes = [];
+    const codes: Array<string> = [];
     for (let i = 0; i < codeCount; i++) {
       codes.push('');
     }
@@ -68,7 +64,6 @@ const OTPContainer=()=>({
             ref={element => inputCodeRef.current.push(element)}
             style={[
               styles.input,
-              otpStyles,
               { width: width / (codeCount + 2), height: height / 14 },
             ]}
             onChangeText={text => onChangeCode(text.replace(/\s/g, ''), index)}
@@ -81,3 +76,6 @@ const OTPContainer=()=>({
     </View>
   );
 }
+
+export default OTPContainer;
+
