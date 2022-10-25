@@ -27,59 +27,64 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column',
-        marginTop: 50,
-        marginLeft: 25,
-        marginRight: 25
+        marginLeft: 20,
+        marginTop: 50
+
     },
     backgroundWhite: {
         backgroundColor: Theme.color.White,
 
     },
-    loginText: {
+    verifyText: {
+        marginStart: 5,
         color: Theme.color.Black,
-        fontSize: normalize(30),
+        fontSize: 30,
+        fontStyle: 'normal',
         flexDirection: 'row',
         fontFamily: 'ApercuProBold'
 
     },
-    welcomeText: {
-        fontSize: normalize(14),
+    phoneNumberText: {
+        marginStart: 5,
         marginTop: 10,
         color: Theme.color.Black,
+        fontSize: 15,
+        fontStyle: 'normal',
         flexDirection: 'row',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: 'Apercu Pro Regular'
     },
-    phoneBox: {
-        marginTop: 40,
+    otpViewBox: {
+        marginTop: 20,
         backgroundColor: Theme.color.White,
         paddingBottom: 20,
+        marginRight: 25,
         borderRadius: 20
     },
-    phoneBoxTwo:{
+    phoneBoxTwo: {
         flexDirection: 'row',
         flex: 1,
         width: '100%'
-      },
-      touchableCountryBox:{
+    },
+    touchableCountryBox: {
         width: '28%',
         height: normalize(47),
         backgroundColor: Theme.color.White,
-      },
-      signUpView:{
+    },
+    signUpView: {
         marginTop: normalize(20),
         alignContent: 'center',
         flex: 1,
         flexDirection: 'row',
         alignSelf: 'center'
-      },
-      dontSignUp:{
-           fontSize: 13,
-            color: Theme.color.Black,
-            fontStyle: 'normal',
-            fontFamily: 'Apercu Pro Medium'
+    },
+    dontSignUp: {
+        fontSize: 13,
+        color: Theme.color.Black,
+        fontStyle: 'normal',
+        fontFamily: 'Apercu Pro Medium'
 
-      },
-      loginButtonStyle:{
+    },
+    loginButtonStyle: {
         marginTop: 40,
         alignContent: 'center',
         alignItems: 'center',
@@ -89,8 +94,8 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center'
-      },
-      loginTextStyle:{
+    },
+    loginTextStyle: {
         fontSize: 16,
         color: Theme.color.White,
         fontStyle: 'normal',
@@ -98,7 +103,53 @@ export const styles = StyleSheet.create({
         fontWeight: '400',
         fontFamily: 'ApercuProLight'
 
-      }
+    }, marginView: {
+        marginTop: 20,
+        flex: 1,
+        flexDirection: 'row',
+    }, marginLeft: {
+        flexDirection: 'row',
+        marginLeft: 20
+    }, timerText: {
+        marginStart: 5,
+        color: Theme.color.Black,
+        fontSize: 13,
+        fontStyle: 'normal',
+        fontFamily: 'ApercuProRegular'
+    },
+    resendView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginRight: 20
+    },
+    resendText: {
+        fontSize: 13,
+        color: Theme.color.Black,
+        fontStyle: 'normal',
+        fontWeight: '300',
+        textDecorationLine: 'underline',
+        fontFamily: 'ApercuProRegular'
+    }, verifyButtonStyle: {
+        marginTop: 40,
+        alignContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        backgroundColor: Theme.color.Black,
+        height: 50,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },verifyButtonText:{
+        fontSize: 16,
+        color: Theme.color.White,
+        fontStyle: 'normal',
+        borderRadius: 25,
+        fontFamily: 'ApercuProRegular'
+
+    },marginTop:{
+        marginTop: 10,
+    }
     // textInputOutlineStyle: {
     //     colors: {
     //         placeholder: '#A1A1A1',
