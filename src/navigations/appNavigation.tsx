@@ -13,6 +13,8 @@ export type AppStackParamList = {
   [Routes.NAV_SPLASH_SCREEN]: undefined;
   [Routes.NAV_LOGIN_SCREEN]: undefined;
   [Routes.NAV_LOGIN_VERIFY_SCREEN]: { phoneNumber: string };
+  [Routes.NAV_UPDATE_PROFILE_SCREEN]: undefined;
+
   // [Routes.NAV_BLUETOOTH_PAIRING]: undefined;
   // [Routes.NAV_TUTORIALS]: undefined;
   // [Routes.NAV_DASHBOARD]: undefined;
@@ -30,6 +32,7 @@ const AppNavigation = () => {
 
   return (
     <AppStack.Navigator
+     initialRouteName={Routes.NAV_UPDATE_PROFILE_SCREEN}
       screenOptions={{
         headerShown: false,
         headerBackVisible: false
@@ -43,6 +46,11 @@ const AppNavigation = () => {
       <AppStack.Screen
         name={Routes.NAV_LOGIN_VERIFY_SCREEN}
         component={Screens.LoginOtpVerify}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_UPDATE_PROFILE_SCREEN}
+        component={Screens.UpdateProfileScreen}
         options={{ title: "" }}
       />
       {/* <AppStack.Screen
