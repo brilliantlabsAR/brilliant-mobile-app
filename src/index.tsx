@@ -9,6 +9,7 @@ import {
   LogBox,
 } from "react-native";
 import RootNavigation from "./navigations";
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function () {
   return (

@@ -17,22 +17,34 @@ import {
 import { Theme } from "../../models";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
-import { leftarrow,smartphone } from "../../assets"; 
+import { leftarrow, smartphone, timeIcon } from "../../assets";
 
 import { styles } from "./styles";
-import OTPContainer from "../../components/otpContainer";
+//import OTPContainer from "../../components/otpContainer";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
+let timerEnable = true;
 const LoginOtpVerify = (props: Props) => {
     const { navigation, route } = props;
 
     const [phoneNumber] = useState<string>(route.params.phoneNumber);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
 
     useEffect(() => {
         console.log('LoLO', phoneNumber)
     })
 
+    const calculateTimer = () => {
+    };
+    function resendOtp() {
+
+    }
+
+    function verifyOTPCall() {
+
+    }
     return (
         <SafeAreaView
             style={styles.bodyContainer}>
@@ -41,7 +53,7 @@ const LoginOtpVerify = (props: Props) => {
 
                 <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={() => {}}
+                    onPress={() => { }}
                 >
                     <View>
 
@@ -83,7 +95,7 @@ const LoginOtpVerify = (props: Props) => {
 
 
 
-                                <OTPContainer
+                                {/* <OTPContainer
                                     codeCount={4}
                                     containerStyle={{ marginTop: 20 }}
                                     otpStyles={{
@@ -95,58 +107,33 @@ const LoginOtpVerify = (props: Props) => {
 
                                         //   this.setCode(code)
                                     }}
-                                />
-                                <View style={{
-                                    marginTop: 20,
-                                    flex: 1,
-                                    flexDirection: 'row',
-                                }}>
-                                    <View style={{
-                                        flexDirection: 'row',
-                                        marginLeft: 20
-                                    }}>
+                                /> */}
+                                <View style={styles.marginView}>
+                                    <View style={styles.marginLeft}>
                                         <Image
                                             style={{
                                                 height: 15,
                                                 width: 15
                                             }}
-                                            source={require('../img/time_icon.png')}
+                                            source={timeIcon}
                                             resizeMode='contain'
                                         />
                                         <Text
-                                            style={{
-                                                marginStart: 5,
-                                                color: Color.Black,
-                                                fontSize: 13,
-                                                fontStyle: 'normal',
-                                                fontFamily: 'Apercu Pro Regular'
-                                            }}
-                                        >{this.calculateTimer()}</Text>
+                                            style={styles.timerText}
+                                        >{"calculateTimer()"}</Text>
 
 
                                     </View>
 
-                                    <View style={{
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        justifyContent: 'flex-end',
-                                        marginRight: 20
-                                    }}>
+                                    <View style={styles.resendView}>
                                         <TouchableOpacity activeOpacity={0.6}
                                             disabled={timerEnable}
                                             onPress={() =>
-                                                this.resendOtp()
+                                                resendOtp()
                                             }>
 
                                             <Text
-                                                style={{
-                                                    fontSize: 13,
-                                                    color: Color.Black,
-                                                    fontStyle: 'normal',
-                                                    fontWeight: '300',
-                                                    textDecorationLine: 'underline',
-                                                    fontFamily: 'Apercu Pro Regular'
-                                                }}
+                                                style={styles.resendText}
                                             >Resend OTP</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -154,46 +141,27 @@ const LoginOtpVerify = (props: Props) => {
 
                                 <TouchableOpacity activeOpacity={0.6}
                                     onPress={() =>
-                                        this.verifyOTPCall()
+                                        verifyOTPCall()
                                         //this.registerMember()
                                         //showErrorAlert('Register Successfully!')
 
                                         // console.log("Register", "Hii")
 
                                     }
-                                    style={{
-                                        marginTop: 40,
-                                        alignContent: 'center',
-                                        alignItems: 'center',
-                                        borderRadius: 100,
-                                        backgroundColor: '#000000',
-                                        height: 50,
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        justifyContent: 'center'
-                                    }}>
+                                    style={styles.verifyButtonStyle}>
 
 
                                     <Text
-                                        style={{
-                                            fontSize: 16,
-                                            color: Color.White,
-                                            fontStyle: 'normal',
-                                            borderRadius: 25,
-                                            fontFamily: 'Apercu Pro Regular'
-
-                                        }}
+                                        style={styles.verifyButtonText}
                                     >Verify Now</Text>
-                                    <View style={{
-                                        marginTop: 10,
-                                    }}>
+                                    <View style={styles.marginTop}>
 
                                     </View>
                                 </TouchableOpacity>
                             </View>
                         </View>
 
-                        <TouchableOpacity TouchableOpacity={0.6}>
+                        <TouchableOpacity activeOpacity={0.6}>
                             <View style={{
                                 alignSelf: 'center',
                                 flexDirection: 'row',
@@ -205,11 +173,11 @@ const LoginOtpVerify = (props: Props) => {
 
                     </View>
                     {
-                        this.state.showLoading ?
+                        isLoading ?
                             <ActivityIndicator
-                                style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: Color.transparent }}
+                                style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: Theme.color.transparent }}
                                 size="large"
-                                color={Color.Black}
+                                color={Theme.color.Black}
                             /> : null
                     }
                 </ScrollView>
