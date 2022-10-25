@@ -9,6 +9,7 @@ import { View, Text } from "react-native";
 export type RootStackParamList = {
   [Routes.NAV_SPLASH_SCREEN]: undefined;
   [Routes.NAV_APP]: undefined;
+  
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
