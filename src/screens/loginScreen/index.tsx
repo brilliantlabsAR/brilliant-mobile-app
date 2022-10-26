@@ -17,9 +17,10 @@ import {
 import { Theme } from "../../models";
 import { LoginNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
-import CountryPicker from 'react-native-country-codes-picker';
+//import  CountryPicker  from 'react-native-country-codes-picker';
+import { CountryCodePicker } from "../../utils/countryCodePicker";
 import { TextInput } from 'react-native-paper';
-import { leftarrow,smartphone } from "../../assets"; 
+import { leftarrow, smartphone } from "../../assets";
 
 import * as Routes from "../../models/routes";
 
@@ -29,23 +30,23 @@ const LoginScreen = (props: LoginNavigationProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [countryCode, setCountryCode] = useState<string>('');
   const [phoneNumber, setphoneNumber] = useState<string>('');
-  let newPhoneNumber=countryCode+phoneNumber;
+  let newPhoneNumber = countryCode + phoneNumber;
   const { navigation } = props;
 
- const textInputStyle= {
+  const textInputStyle = {
     colors: {
-        placeholder: '#A1A1A1',
-        text: '#000000', primary: '#A1A1A1',
-       // underlineColor: 'transparent',
-        background: 'white',
+      placeholder: '#A1A1A1',
+      text: '#000000', primary: '#A1A1A1',
+      // underlineColor: 'transparent',
+      background: 'white',
 
     }, fonts: {
-        regular: {
-            fontFamily: 'ApercuProRegular'
-        }
+      regular: {
+        fontFamily: 'ApercuProRegular'
+      }
     },
     roundness: 10
-}
+  }
   return (
     <SafeAreaView
       style={styles.bodyContainer}>
@@ -91,7 +92,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
                   onPress={() => setIsShow(true)}
                 >
 
-                 
+
                   <TextInput
                     mode="outlined"
                     label="Country Code"
@@ -99,9 +100,9 @@ const LoginScreen = (props: LoginNavigationProps) => {
                     pointerEvents="none"
                     editable={false}
                     value={countryCode}
-                    onFocus={() => {setIsShow(true)}}
-                    onKeyPress={keyPress => {setIsShow(false)}}
-                    onChangeText={(countryCode) => setCountryCode( countryCode )}
+                    onFocus={() => { setIsShow(true) }}
+                    onKeyPress={keyPress => { setIsShow(false) }}
+                    onChangeText={(countryCode) => setCountryCode(countryCode)}
                     theme={textInputStyle}
                   />
 
@@ -119,7 +120,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
                     label="Phone No."
                     keyboardType="phone-pad"
                     value={phoneNumber}
-                    onChangeText={(phoneNumber) => setphoneNumber(phoneNumber.replace(/\s/g, '') )}
+                    onChangeText={(phoneNumber) => setphoneNumber(phoneNumber.replace(/\s/g, ''))}
                     right={<TextInput.Icon name={smartphone} size={15} />}
                     theme={textInputStyle}
 
@@ -132,11 +133,11 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
               <TouchableOpacity activeOpacity={0.6}
                 onPress={() =>
-                 // this.LoginMember()
+                  // this.LoginMember()
                   //showErrorAlert('Register Successfully!')
                   //    this.props.navigation.navigate("LoginOtpVerifyScreen")
-                //  console.log("Register", "Hii")
-                  navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN,{phoneNumber:newPhoneNumber})
+                  //  console.log("Register", "Hii")
+                  navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: newPhoneNumber })
 
                 }
                 style={styles.loginButtonStyle}>
@@ -147,56 +148,18 @@ const LoginScreen = (props: LoginNavigationProps) => {
                 >Login</Text>
 
               </TouchableOpacity>
-              <CountryPicker
+              <CountryCodePicker
                 show={isShow}
                 lang={'en'}
                 style={{
+                  // Styles for whole modal [View]
                   modal: {
                     backgroundColor: Theme.color.White,
-                    borderTopRightRadius: 0,
-                    borderTopLeftRadius: 0,
-                  }, 
-                  // Styles for modal backdrop [View]
-                  backdrop: {
-                  
-                  },
-                  // Styles for bottom input line [View]
-                  line: {
-                  
-                  },
-                  // Styles for list of countries [FlatList]
-                  itemsList: {
-                  
+                    height: '70%'
                   },
                   // Styles for input [TextInput]
                   textInput: {
-                        height: 80,
-                        borderRadius: 0,
-                        
-                  },
-                  // Styles for country button [TouchableOpacity]
-                  countryButtonStyles: {
-                        height: 80
-                  },
-                  // Styles for search message [Text]
-                  searchMessageText: {
-          
-                  },
-                  // Styles for search message container [View]
-                  countryMessageContainer: {
-                  
-                  },
-                  // Flag styles [Text]
-                  flag: {
-          
-                  },
-                  // Dial code styles [Text]
-                  dialCode: {
-                  },
-                  // Country name styles [Text]
-                  countryName: {
-                    
-          
+                    borderRadius: 10,
                   },
                 }}
 
@@ -204,7 +167,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
                 // when picker button press you will get the country object with dial code
                 pickerButtonOnPress={(item) => {
                   console.log("hii", item.dial_code);
-                  setCountryCode(item.dial_code );
+                  setCountryCode(item.dial_code);
                   setIsShow(false)
                 }}
                 onBackdropPress={() => setIsShow(false)}
@@ -218,7 +181,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
                   <Text style={{
                     textDecorationLine: 'underline',
                   }}
-                    onPress={() => {}}>Signup</Text></Text>
+                    onPress={() => { }}>Signup</Text></Text>
                 {/* onPress={() => this.props.navigation.navigate("InviteContactScreen")}>Signup</Text></Text> */}
 
 
@@ -227,7 +190,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
             </View>
 
-            
+
 
           </View>
           {

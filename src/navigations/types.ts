@@ -4,14 +4,23 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { AppStackParamList } from "./appNavigation";
+import { RootStackParamList } from "./index";
 
 export type LoginNavigationProps = NativeStackScreenProps<
-  AppStackParamList,
+  RootStackParamList,
   "LoginScreen"
 >;
 export type LoginVerifyNavigationProps = NativeStackScreenProps<
-  AppStackParamList,
+  RootStackParamList,
   "LoginVerifyScreen"
+>;
+export type UpdateProfileNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "UpdateProfileScreen"
+>;
+export type SignUpNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  "SignUpScreen"
 >;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,

@@ -154,8 +154,8 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
                                     //this.registerMember()
                                     //showErrorAlert('Register Successfully!')
                                     //this.props.navigation.navigate("HomeScreenPickUp")
-                                    console.log("Register", "Hii")
 
+                                    navigation.navigate(Routes.NAV_SIGNUP_SCREEN)
                                     //   this.props.navigation.navigate('SignupScreen')
                                     //  this.props.navigation.navigate('LiveStreamingScreen')
                                 }
@@ -168,7 +168,7 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
                             <TouchableOpacity style={styles.signInText}
                                 onPress={() =>
-                                    navigation.navigate(Routes.NAV_APP)
+                                    navigation.navigate(Routes.NAV_LOGIN_SCREEN)
                                     //this.props.navigation.navigate("HomeScreenPickUp")
                                     //  this.props.navigation.navigate('SigninScreen')
                                     // this.props.navigation.navigate('UserStreamingScreen')

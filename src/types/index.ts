@@ -5,8 +5,8 @@ export interface ILoginVerification {
 }
 
 export interface IOtpContainer {
-  codeCount:number;
-  containerStyle:any;
-  otpStyles:() => void;
-  onFinish:() => void;
+  codeCount: number;
+  containerStyle: any;
+  onFinish: (code: string) => void;
+  onTyping?: (code: string) => void;
 }
