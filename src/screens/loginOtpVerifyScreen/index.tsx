@@ -11,7 +11,8 @@ import {
     Image,
     BackHandler,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    Keyboard
 } from "react-native";
 import { Theme } from "../../models";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
@@ -19,10 +20,12 @@ import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
 import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
+import { ShowToast } from "../../utils/toastUtils";
+import * as CONST from '../../models'
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
-let timerEnable = true, clockCall;
+let timerEnable = true, clockCall: number;
 const LoginOtpVerify = (props: Props) => {
     const { navigation, route } = props;
 
@@ -56,7 +59,13 @@ const LoginOtpVerify = (props: Props) => {
     };
 
     function resendOtp() {
-
+        if (otp == '' || otp == ' ') {
+            ShowToast(CONST.OTP_VERIFY);
+        } else {
+            Keyboard.dismiss();
+            setIsLoading(true);
+            // this.props.verifyOTP({ phone: phoneNumber, otp: otp })
+        }
     }
 
     function verifyOTPCall() {
@@ -70,7 +79,7 @@ const LoginOtpVerify = (props: Props) => {
 
                 <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={() => { }}
+                    onPress={() => { () => navigation.goBack() }}
                 >
                     <View>
 
@@ -85,11 +94,8 @@ const LoginOtpVerify = (props: Props) => {
             </View>
             <View style={styles.middleView}>
                 <ScrollView style={styles.backgroundWhite}
-                    keyboardShouldPersistTaps={'handled'}
-                >
-
+                    keyboardShouldPersistTaps={'handled'}>
                     <View>
-
                         <Text
                             style={styles.verifyText}
                         >{'Verify Phone'}</Text>
@@ -111,8 +117,6 @@ const LoginOtpVerify = (props: Props) => {
                                     containerStyle={{ marginTop: 20 }}
                                     onFinish={(code) => {
                                         setOtp(code)
-
-                                        //   this.setCode(code)
                                     }}
                                 />
                                 <View style={styles.marginView}>

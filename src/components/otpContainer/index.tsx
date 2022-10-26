@@ -1,14 +1,14 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, Dimensions, StyleSheet } from 'react-native';
+import { View, TextInput, Dimensions, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 import { IOtpContainer } from '../../types';
 import { styles } from './styles';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const initCodes = [];
+const initCodes: Array<string> = [];
 
 const OTPContainer = (props: IOtpContainer) => {
   const { codeCount, containerStyle, onFinish, onTyping } = props
@@ -40,13 +40,13 @@ const OTPContainer = (props: IOtpContainer) => {
     return codeString;
   };
 
-  const onChangeCode = (code, index) => {
+  const onChangeCode = (code: string, index: number) => {
     const typedCode = code.slice(-1);
     const currentCodes = [...codes];
     currentCodes[index] = typedCode;
     setCodes(currentCodes);
   };
-  const onKeyPress = (event, index) => {
+  const onKeyPress = (event: NativeSyntheticEvent<TextInputKeyPressEventData>, index: number) => {
     const key = event.nativeEvent.key;
     let destIndex = index;
     if (key === 'Backspace') {

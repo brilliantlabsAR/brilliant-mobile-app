@@ -87,3 +87,4 @@ export const PASSWORD_ERROR = "Please Provide a Password!";
 export const INCORRECT_PASSWORD =
   "Password should be atleast 8 characters, one uppercase and one special character and one number";
 export const VERIFY_REQUIRE = "Please Provide Required Details!";
+export const OTP_VERIFY = "Please enter OTP";
