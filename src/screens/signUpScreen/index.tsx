@@ -20,6 +20,7 @@ import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { leftarrow, smartphone, userIcon, mailIcon } from "../../assets";
 import { CountryCodePicker } from "../../utils/countryCodePicker";
+import {SIGNUP_TITLE,ALREADY_TITLE,AGREE_TITLE,TERMS_CONDITIONS,LOGIN} from "../../models/constants"
 
 const SignUpScreen = (props: SignUpNavigationProps) => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -63,7 +64,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                     <View style={styles.headerContainer}>
                         <Text style={styles.signupText}>{"Sign up"}</Text>
                         <Text style={styles.signupdescText}>
-                            {"Please enter your personal details below"}
+                            {SIGNUP_TITLE}
                         </Text>
                     </View>
                     <View style={styles.inputContainer}>
@@ -79,14 +80,8 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                     right={<TextInput.Icon name={userIcon} size={15} />}
                                     theme={textInputStyle}
                                 />
-                                <View style={{ height: 20 }} />
-                                <View
-                                    style={{
-                                        flexDirection: "row",
-                                        flex: 1,
-                                        width: "100%",
-                                    }}
-                                >
+                                <View style={styles.height20px} />
+                                <View style={styles.outcountrycodeView}>
                                     <TouchableOpacity
                                         style={styles.countrycodeView}
                                         onPress={() => setShow(true)}
@@ -110,18 +105,8 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                             theme={textInputStyle}
                                         />
                                     </TouchableOpacity>
-                                    <View
-                                        style={{
-                                            width: "2%",
-                                            backgroundColor: Theme.color.White,
-                                        }}
-                                    />
-                                    <View
-                                        style={{
-                                            width: "70%",
-                                            backgroundColor: Theme.color.White,
-                                        }}
-                                    >
+                                    <View style={styles.gape1}/>
+                                    <View style={styles.gape2}>
                                         <TextInput
                                             mode="outlined"
                                             label="Phone No."
@@ -135,7 +120,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                         />
                                     </View>
                                 </View>
-                                <View style={{ height: 20 }} />
+                                <View style={styles.height20px} />
                                 <TextInput
                                     mode="outlined"
                                     label="Email"
@@ -181,12 +166,12 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                 </TouchableOpacity>
                                 <View style={styles.alreadyaccountView}>
                                     <Text style={styles.alreadyaccountText}>
-                                        {"Already have an account? "}
+                                        {ALREADY_TITLE}
                                         <Text
                                             style={{ textDecorationLine: "underline" }}
                                             onPress={() => console.log("loginscreen")}
                                         >
-                                            Login
+                                            {LOGIN}
                                         </Text>
                                     </Text>
                                 </View>
@@ -194,12 +179,12 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                         </View>
                         <View style={styles.termsView}>
                             <Text style={styles.termsText}>
-                                {"by signing up you agree with our "}
+                                {AGREE_TITLE}
                                 <Text
                                     style={{ textDecorationLine: "underline" }}
                                     onPress={() => "Coming soon"}
                                 >
-                                    Terms and Conditions.
+                                    {TERMS_CONDITIONS}
                                 </Text>
                             </Text>
                         </View>

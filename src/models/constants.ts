@@ -88,3 +88,8 @@ export const INCORRECT_PASSWORD =
   "Password should be atleast 8 characters, one uppercase and one special character and one number";
 export const VERIFY_REQUIRE = "Please Provide Required Details!";
 export const OTP_VERIFY = "Please enter OTP";
+export const SIGNUP_TITLE = "Please enter your personal details below";
+export const ALREADY_TITLE = "Already have an account? ";
+export const AGREE_TITLE = "by signing up you agree with our ";
+export const TERMS_CONDITIONS = "Terms and Conditions.";
+export const LOGIN = "Login";
