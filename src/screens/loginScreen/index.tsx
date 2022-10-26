@@ -17,7 +17,8 @@ import {
 import { Theme } from "../../models";
 import { LoginNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
-import  CountryPicker  from 'react-native-country-codes-picker';
+//import  CountryPicker  from 'react-native-country-codes-picker';
+import { CountryCodePicker } from "../../utils/countryCodePicker";
 import { TextInput } from 'react-native-paper';
 import { leftarrow, smartphone } from "../../assets";
 
@@ -147,58 +148,20 @@ const LoginScreen = (props: LoginNavigationProps) => {
                 >Login</Text>
 
               </TouchableOpacity>
-              <CountryPicker
+              <CountryCodePicker
                 show={isShow}
                 lang={'en'}
                 style={{
+                  // Styles for whole modal [View]
                   modal: {
-                    backgroundColor: Theme.color.White,
-                    borderTopRightRadius: 0,
-                    borderTopLeftRadius: 0,
-                  },
-                  // Styles for modal backdrop [View]
-                  backdrop: {
-
-                  },
-                  // Styles for bottom input line [View]
-                  line: {
-
-                  },
-                  // Styles for list of countries [FlatList]
-                  itemsList: {
-
+                      backgroundColor: Theme.color.White,
+                      height: '70%'
                   },
                   // Styles for input [TextInput]
                   textInput: {
-                    height: 80,
-                    borderRadius: 0,
-
+                      borderRadius: 10,
                   },
-                  // Styles for country button [TouchableOpacity]
-                  countryButtonStyles: {
-                    height: 80
-                  },
-                  // Styles for search message [Text]
-                  searchMessageText: {
-
-                  },
-                  // Styles for search message container [View]
-                  countryMessageContainer: {
-
-                  },
-                  // Flag styles [Text]
-                  flag: {
-
-                  },
-                  // Dial code styles [Text]
-                  dialCode: {
-                  },
-                  // Country name styles [Text]
-                  countryName: {
-
-
-                  },
-                }}
+              }}
 
 
                 // when picker button press you will get the country object with dial code
