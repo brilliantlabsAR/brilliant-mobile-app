@@ -88,3 +88,7 @@ export const INCORRECT_PASSWORD =
   "Password should be atleast 8 characters, one uppercase and one special character and one number";
 export const VERIFY_REQUIRE = "Please Provide Required Details!";
 export const OTP_VERIFY = "Please enter OTP";
+export const VERIFY_OTP_TEXT = "Verify Phone";
+export const SEND_OTP = "We have send otp to your phone\nno.";
+export const SUCCESS_TEXT = "Success";
+export const SUCCESS_LOGIN = "Congratulations, successfully login";

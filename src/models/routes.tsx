@@ -1,9 +1,10 @@
 //Initial Navigation Routes
 export const NAV_SPLASH_SCREEN = "SplashScreen";
-export const NAV_APP = "App";
 export const NAV_LOGIN_SCREEN = "LoginScreen";
 export const NAV_LOGIN_VERIFY_SCREEN = "LoginVerifyScreen";
 export const NAV_SIGNUP_SCREEN = "SignUpScreen";
+export const NAV_SUCCESS_LOGIN = "SuccessLoginScreen";
+export const NAV_APP = "App";
 
 //App  Navigation Routes
 export const NAV_UPDATE_PROFILE_SCREEN = "UpdateProfileScreen";

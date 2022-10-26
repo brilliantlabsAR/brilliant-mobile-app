@@ -173,7 +173,8 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                         //this.registerMember()
                                         //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
                                         //
-                                        console.log("Register", "Hii")
+                                        // console.log("Register", "Hii")
+                                        navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: phoneNumber })
                                     }
                                     style={styles.touchOpacityView}
                                 >

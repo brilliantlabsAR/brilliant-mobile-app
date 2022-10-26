@@ -143,9 +143,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
                 style={styles.loginButtonStyle}>
 
 
-                <Text
-                  style={styles.loginTextStyle}
-                >Login</Text>
+                <Text style={styles.loginTextStyle}>Login</Text>
 
               </TouchableOpacity>
               <CountryCodePicker
