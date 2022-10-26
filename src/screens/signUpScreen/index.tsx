@@ -48,7 +48,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
     return (
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.mainView}>
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
                     <View>
                         <Image
                             style={styles.homeMenu}

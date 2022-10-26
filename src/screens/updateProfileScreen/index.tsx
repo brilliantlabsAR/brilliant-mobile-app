@@ -14,7 +14,7 @@ import {
     ActivityIndicator
 } from "react-native";
 import { Theme } from "../../models";
-import { LoginVerifyNavigationProps } from "../../navigations/types";
+import { LoginVerifyNavigationProps, UpdateProfileNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, smallUser, smartphone, timeIcon, mail } from "../../assets";
 import { styles } from "./styles";
@@ -37,8 +37,8 @@ const textInputStyle = {
 }
 
 
-const UpdateProfileScreen = () => {
-    // const { navigation, route } = props;
+const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
+    const { navigation } = props;
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [show, setShow] = useState(false);
     const [firstName, setFirstName] = useState<string>('');
@@ -49,13 +49,10 @@ const UpdateProfileScreen = () => {
     return (
         <SafeAreaView
             style={styles.bodyContainer}>
-
             <View style={styles.topView}>
-
                 <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={() => { }}
-                >
+                    onPress={() => navigation.goBack()}>
                     <View>
 
                         <Image

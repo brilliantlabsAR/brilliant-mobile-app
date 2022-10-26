@@ -79,7 +79,7 @@ const LoginOtpVerify = (props: Props) => {
 
                 <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={() => { () => navigation.goBack() }}
+                    onPress={() => navigation.goBack()}
                 >
                     <View>
 
