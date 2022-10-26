@@ -93,3 +93,6 @@ export const ALREADY_TITLE = "Already have an account? ";
 export const AGREE_TITLE = "by signing up you agree with our ";
 export const TERMS_CONDITIONS = "Terms and Conditions.";
 export const LOGIN = "Login";
+export const START_TITLE = "Frame Device";
+export const START_INST_TITLE = "Tap & Pair Your Frame Device with Frame App";
+export const START_TUTORIAL_TITLE = "Skip Tutorial";

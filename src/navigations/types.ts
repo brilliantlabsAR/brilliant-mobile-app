@@ -22,6 +22,10 @@ export type SignUpNavigationProps = NativeStackScreenProps<
   RootStackParamList,
   "SignUpScreen"
 >;
+export type StartNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "StartScreen"
+>;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Settings"

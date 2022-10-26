@@ -46,6 +46,17 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
         },
         roundness: 10,
     };
+    const codePickerStyle = {
+        // Styles for whole modal [View]
+        modal: {
+            backgroundColor: Theme.color.White,
+            height: "70%",
+        },
+        // Styles for input [TextInput]
+        textInput: {
+            borderRadius: 10,
+        },
+    }
     return (
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.mainView}>
@@ -133,17 +144,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                 <CountryCodePicker
                                     show={show}
                                     lang={"en"}
-                                    style={{
-                                        // Styles for whole modal [View]
-                                        modal: {
-                                            backgroundColor: Theme.color.White,
-                                            height: "70%",
-                                        },
-                                        // Styles for input [TextInput]
-                                        textInput: {
-                                            borderRadius: 10,
-                                        },
-                                    }}
+                                    style={codePickerStyle}
                                     // when picker button press you will get the country object with dial code
                                     pickerButtonOnPress={(item) => {
                                         console.log("hii", item.dial_code);
