@@ -5,6 +5,7 @@ export const NAV_LOGIN_SCREEN = "LoginScreen";
 export const NAV_LOGIN_VERIFY_SCREEN = "LoginVerifyScreen";
 
 //App  Navigation Routes
+export const NAV_UPDATE_PROFILE_SCREEN = "UpdateProfileScreen";
 // export const NAV_BLUETOOTH_PAIRING = "BluetoothPairing";
 // export const NAV_TUTORIALS = "Tutorials";
 // export const NAV_DASHBOARD = "Dashboard";

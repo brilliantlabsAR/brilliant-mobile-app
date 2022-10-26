@@ -14,6 +14,10 @@ export type LoginVerifyNavigationProps = NativeStackScreenProps<
   RootStackParamList,
   "LoginVerifyScreen"
 >;
+export type UpdateProfileNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "UpdateProfileScreen"
+>;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Settings"
