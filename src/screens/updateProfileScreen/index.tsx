@@ -97,9 +97,6 @@ const UpdateProfileScreen = () => {
                 }}
                 onBackdropPress={() => setShow(false)}
             />
-
-
-
             <View style={styles.textInputView}>
 
                 <TextInput

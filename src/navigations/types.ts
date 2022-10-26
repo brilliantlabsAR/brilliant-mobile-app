@@ -18,6 +18,10 @@ export type UpdateProfileNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "UpdateProfileScreen"
 >;
+export type SignUpNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  "SignUpScreen"
+>;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Settings"

@@ -3,3 +3,5 @@ export const smartphone = require("./images/smartphone.png");
 export const timeIcon = require("./images/time_icon.png");
 export const smallUser = require("./images/user.png");
 export const mail = require("./images/mail.png");
+export const userIcon = require("./images/user.png");
+export const mailIcon = require("./images/mail.png");
