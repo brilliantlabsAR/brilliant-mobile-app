@@ -133,7 +133,7 @@ const StartScreen = (props: StartNavigationProps) => {
                         <TouchableOpacity
                             activeOpacity={0.6}
                             style={styles.backTouchView}
-                            onPress={() => this.backButton()}>
+                            onPress={() => backButton()}>
                             <Image
                                 style={styles.menuIcon}
                                 source={backButtonVisible == true ? blackLeftArrowIcon : grayLeftArrowIcon}

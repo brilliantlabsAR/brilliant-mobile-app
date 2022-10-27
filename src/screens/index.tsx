@@ -4,6 +4,8 @@ import LoginOtpVerify from "./loginOtpVerifyScreen";
 import SignUpScreen from "./signUpScreen";
 import UpdateProfileScreen from "./updateProfileScreen";
 import StartScreen from "./startScreen";
+import PairingScreen from "./pairingScreen";
+import MyAccountScreen from "./MyAccountScreen";
 
 export default {
   SplashScreen,
@@ -11,5 +13,7 @@ export default {
   LoginOtpVerify,
   SignUpScreen,
   UpdateProfileScreen,
-  StartScreen
+  StartScreen,
+  PairingScreen,
+  MyAccountScreen
 };

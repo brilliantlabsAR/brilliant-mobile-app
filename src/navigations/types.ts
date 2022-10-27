@@ -26,6 +26,14 @@ export type StartNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "StartScreen"
 >;
+export type PairingNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "PairingScreen"
+>;
+export type AccountNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "MyAccountScreen"
+>;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Settings"

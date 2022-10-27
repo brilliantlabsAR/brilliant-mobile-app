@@ -13,6 +13,8 @@ export type AppStackParamList = {
   [Routes.NAV_SPLASH_SCREEN]: undefined;
   [Routes.NAV_UPDATE_PROFILE_SCREEN]: undefined;
   [Routes.NAV_START_SCREEN]: undefined;
+  [Routes.NAV_PAIRING_SCREEN]: undefined;
+  [Routes.NAV_ACCOUNT_SCREEN]: undefined;
   // [Routes.NAV_BLUETOOTH_PAIRING]: undefined;
   // [Routes.NAV_TUTORIALS]: undefined;
   // [Routes.NAV_DASHBOARD]: undefined;
@@ -30,7 +32,7 @@ const AppNavigation = () => {
 
   return (
     <AppStack.Navigator
-    initialRouteName={Routes.NAV_START_SCREEN}
+    initialRouteName={Routes.NAV_ACCOUNT_SCREEN}
       screenOptions={{
         headerShown: false,
         headerBackVisible: false
@@ -55,6 +57,16 @@ const AppNavigation = () => {
       <AppStack.Screen
         name={Routes.NAV_START_SCREEN}
         component={Screens.StartScreen}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_PAIRING_SCREEN}
+        component={Screens.PairingScreen}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_ACCOUNT_SCREEN}
+        component={Screens.MyAccountScreen}
         options={{ title: "" }}
       />
       {/* <AppStack.Screen

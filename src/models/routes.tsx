@@ -8,6 +8,8 @@ export const NAV_SIGNUP_SCREEN = "SignUpScreen";
 //App  Navigation Routes
 export const NAV_UPDATE_PROFILE_SCREEN = "UpdateProfileScreen";
 export const NAV_START_SCREEN = "StartScreen";
+export const NAV_PAIRING_SCREEN = "PairingScreen";
+export const NAV_ACCOUNT_SCREEN = "MyAccountScreen";
 // export const NAV_BLUETOOTH_PAIRING = "BluetoothPairing";
 // export const NAV_TUTORIALS = "Tutorials";
 // export const NAV_DASHBOARD = "Dashboard";
