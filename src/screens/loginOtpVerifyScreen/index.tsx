@@ -75,7 +75,7 @@ const LoginOtpVerify = (props: Props) => {
     }
 
     function verifyOTPCall() {
-        navigation.replace(Routes.NAV_SUCCESS_LOGIN);
+        navigation.replace(Routes.NAV_APP);
     }
 
     return (

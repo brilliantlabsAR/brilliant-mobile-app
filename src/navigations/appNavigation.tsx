@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import Screens from "../screens";
 import * as Routes from "../models";
+import Footer from '../components/footer'
 //import LogoTitle, { SettingIcon, BackIcon } from "../components/customHeader";
 import { useNavigation } from "@react-navigation/native";
 // import { AppNavigationScreenProps } from "../navigations/types";
@@ -12,6 +13,9 @@ import { useNavigation } from "@react-navigation/native";
 export type AppStackParamList = {
   [Routes.NAV_SPLASH_SCREEN]: undefined;
   [Routes.NAV_UPDATE_PROFILE_SCREEN]: undefined;
+  [Routes.NAV_LIVE_MOMENT]: { selectedTab: string } | undefined;
+  [Routes.NAV_MEDIA_SCREEN]: undefined;
+  [Routes.NAV_INVITE_CONTACT_SCREEN]: undefined;
   // [Routes.NAV_BLUETOOTH_PAIRING]: undefined;
   // [Routes.NAV_TUTORIALS]: undefined;
   // [Routes.NAV_DASHBOARD]: undefined;
@@ -29,22 +33,28 @@ const AppNavigation = () => {
 
   return (
     <AppStack.Navigator
+      // initialRouteName={Routes.NAV_INVITE_CONTACT_SCREEN}
       screenOptions={{
         headerShown: false,
         headerBackVisible: false
       }}
     >
-      {/* <AppStack.Screen
-        name={Routes.NAV_LOGIN_SCREEN}
-        component={Screens.LoginScreen}
+      <AppStack.Screen
+        name={Routes.NAV_LIVE_MOMENT}
+        component={Screens.LiveMomentScreen}
         options={{ title: "" }}
-      /> */}
-      {/* <AppStack.Screen
-        name={Routes.NAV_LOGIN_VERIFY_SCREEN}
-        component={Screens.LoginOtpVerify}
-        options={{ title: "" }}
+      />
 
-      /> */}
+      <AppStack.Screen
+        name={Routes.NAV_MEDIA_SCREEN}
+        component={Screens.MediaScreen}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_INVITE_CONTACT_SCREEN}
+        component={Screens.InviteContactScreen}
+        options={{ title: "" }}
+      />
       <AppStack.Screen
         name={Routes.NAV_UPDATE_PROFILE_SCREEN}
         component={Screens.UpdateProfileScreen}

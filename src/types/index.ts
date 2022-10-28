@@ -10,3 +10,6 @@ export interface IOtpContainer {
   onFinish: (code: string) => void;
   onTyping?: (code: string) => void;
 }
+export interface IFooter {
+  selectedTab:string
+}

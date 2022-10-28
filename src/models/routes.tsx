@@ -8,6 +8,10 @@ export const NAV_APP = "App";
 
 //App  Navigation Routes
 export const NAV_UPDATE_PROFILE_SCREEN = "UpdateProfileScreen";
+export const NAV_FOOTER = "Footer";
+export const NAV_LIVE_MOMENT = "LiveMomentScreen";
+export const NAV_MEDIA_SCREEN = "MediaScreen";
+export const NAV_INVITE_CONTACT_SCREEN = "InviteContactScreen";
 // export const NAV_BLUETOOTH_PAIRING = "BluetoothPairing";
 // export const NAV_TUTORIALS = "Tutorials";
 // export const NAV_DASHBOARD = "Dashboard";

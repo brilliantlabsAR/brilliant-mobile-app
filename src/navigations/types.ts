@@ -26,6 +26,22 @@ export type UpdateProfileNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "UpdateProfileScreen"
 >;
+export type FooterNavigationProps = NativeStackNavigationProp<
+  AppStackParamList,
+  "LiveMomentScreen"
+>;
+export type LiveMomentNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "LiveMomentScreen"
+>;
+export type MediaScreenNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "MediaScreen"
+>;
+export type InviteContactScreenNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "InviteContactScreen"
+>;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Settings"

@@ -4,6 +4,9 @@ import LoginOtpVerify from "./loginOtpVerifyScreen";
 import SignUpScreen from "./signUpScreen";
 import UpdateProfileScreen from "./updateProfileScreen";
 import SuccessLogin from "./successLogin";
+import LiveMomentScreen from "./liveMoment";
+import MediaScreen from "./mediaScreen";
+import InviteContactScreen from "./inviteContactScreen";
 
 export default {
   SplashScreen,
@@ -11,5 +14,8 @@ export default {
   LoginOtpVerify,
   SignUpScreen,
   UpdateProfileScreen,
-  SuccessLogin
+  SuccessLogin,
+  LiveMomentScreen,
+  MediaScreen,
+  InviteContactScreen
 };
