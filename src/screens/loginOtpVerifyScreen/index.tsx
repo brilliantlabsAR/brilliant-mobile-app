@@ -20,12 +20,14 @@ import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
 import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
+import { Loading } from "../../components/loading";
 import { ShowToast } from "../../utils/toastUtils";
-import * as CONST from '../../models'
+import * as Strings from '../../models';
+import * as Routes from "../../models/routes";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
-let timerEnable = true, clockCall: number;
+let timerEnable = true;
 const LoginOtpVerify = (props: Props) => {
     const { navigation, route } = props;
 
@@ -36,10 +38,14 @@ const LoginOtpVerify = (props: Props) => {
 
 
     useEffect(() => {
-        console.log('LoLO', phoneNumber);
-        clockCall = setInterval(() => {
-            if (timer === 0) clearInterval(clockCall);
-            setTimer(timer - 1)
+        console.log('LoLO', timer);
+        let clockCall = setInterval(() => {
+            if (timer === 0) {
+                clearInterval(clockCall);
+            }
+            else {
+                setTimer(timer - 1);
+            }
         }, 1000);
         return () => {
             clearInterval(clockCall)
@@ -47,10 +53,10 @@ const LoginOtpVerify = (props: Props) => {
     })
 
     const calculateTimer = () => {
-        if (timer == 0) {
+        console.log("timerlog", timer);
+        if (timer === 0) {
             timerEnable = false;
-            clearInterval(clockCall);
-            return ('00:00')
+            return ('00:00');
         } else {
             var m = Math.floor(timer % 3600 / 60);
             var s = Math.floor(timer % 3600 % 60);
@@ -60,7 +66,7 @@ const LoginOtpVerify = (props: Props) => {
 
     function resendOtp() {
         if (otp == '' || otp == ' ') {
-            ShowToast(CONST.OTP_VERIFY);
+            ShowToast(Strings.OTP_VERIFY);
         } else {
             Keyboard.dismiss();
             setIsLoading(true);
@@ -69,26 +75,21 @@ const LoginOtpVerify = (props: Props) => {
     }
 
     function verifyOTPCall() {
-
+        navigation.replace(Routes.NAV_APP);
     }
+
     return (
         <SafeAreaView
             style={styles.bodyContainer}>
-
             <View style={styles.topView}>
-
                 <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={() => navigation.goBack()}
-                >
+                    onPress={() => navigation.goBack()}>
                     <View>
-
                         <Image
                             style={styles.homeMenu}
                             source={leftarrow}
-                            resizeMode='contain'
-                        />
-
+                            resizeMode='contain' />
                     </View>
                 </TouchableOpacity>
             </View>
@@ -96,44 +97,29 @@ const LoginOtpVerify = (props: Props) => {
                 <ScrollView style={styles.backgroundWhite}
                     keyboardShouldPersistTaps={'handled'}>
                     <View>
-                        <Text
-                            style={styles.verifyText}
-                        >{'Verify Phone'}</Text>
-                        <Text
-                            style={styles.phoneNumberText}
-                        >{'We have send otp to your phone\nno. ' + phoneNumber}</Text>
-
+                        <Text style={styles.verifyText}>{Strings.VERIFY_OTP_TEXT}</Text>
+                        <Text style={styles.phoneNumberText}>{Strings.SEND_OTP + phoneNumber}</Text>
                     </View>
-                    <View style={{
-                        marginLeft: 10,
-                        marginRight: 10,
-
-                    }}>
+                    <View style={styles.otpViewContainer}>
 
                         <View style={styles.otpViewBox}>
                             <View>
                                 <OTPContainer
                                     codeCount={4}
-                                    containerStyle={{ marginTop: 20 }}
+                                    containerStyle={styles.otpContainerStyle}
                                     onFinish={(code) => {
                                         setOtp(code)
                                     }}
                                 />
                                 <View style={styles.marginView}>
-                                    <View style={styles.marginLeft}>
+                                    <View style={styles.timerView}>
                                         <Image
-                                            style={{
-                                                height: 15,
-                                                width: 15
-                                            }}
+                                            style={styles.timerImage}
                                             source={timeIcon}
-                                            resizeMode='contain'
-                                        />
+                                            resizeMode='contain' />
                                         <Text
                                             style={styles.timerText}
                                         >{calculateTimer()}</Text>
-
-
                                     </View>
 
                                     <View style={styles.resendView}>
@@ -142,10 +128,7 @@ const LoginOtpVerify = (props: Props) => {
                                             onPress={() =>
                                                 resendOtp()
                                             }>
-
-                                            <Text
-                                                style={styles.resendText}
-                                            >Resend OTP</Text>
+                                            <Text style={styles.resendText}>Resend OTP</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -155,42 +138,17 @@ const LoginOtpVerify = (props: Props) => {
                                         verifyOTPCall()
                                         //this.registerMember()
                                         //showErrorAlert('Register Successfully!')
-
                                         // console.log("Register", "Hii")
-
                                     }
                                     style={styles.verifyButtonStyle}>
 
-
-                                    <Text
-                                        style={styles.verifyButtonText}
-                                    >Verify Now</Text>
-                                    <View style={styles.marginTop}>
-
-                                    </View>
+                                    <Text style={styles.verifyButtonText}>Verify Now</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
 
-                        <TouchableOpacity activeOpacity={0.6}>
-                            <View style={{
-                                alignSelf: 'center',
-                                flexDirection: 'row',
-
-                            }}>
-
-                            </View>
-                        </TouchableOpacity>
-
                     </View>
-                    {
-                        isLoading ?
-                            <ActivityIndicator
-                                style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: Theme.color.transparent }}
-                                size="large"
-                                color={Theme.color.Black}
-                            /> : null
-                    }
+                    {isLoading ? <Loading /> : null}
                 </ScrollView>
 
             </View>

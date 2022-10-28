@@ -21,7 +21,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: normalize(0),
         marginLeft: normalize(23)
-
     },
     middleView: {
         backgroundColor: Theme.color.White,
@@ -103,19 +102,26 @@ export const styles = StyleSheet.create({
         fontWeight: '400',
         fontFamily: 'ApercuProLight'
 
-    }, marginView: {
+    },
+    marginView: {
         marginTop: 20,
         flex: 1,
         flexDirection: 'row',
-    }, marginLeft: {
+    },
+    timerView: {
         flexDirection: 'row',
         marginLeft: 20
-    }, timerText: {
+    },
+    timerText: {
         marginStart: 5,
         color: Theme.color.Black,
         fontSize: 13,
         fontStyle: 'normal',
         fontFamily: 'ApercuProRegular'
+    },
+    timerImage: {
+        height: 15,
+        width: 15
     },
     resendView: {
         flex: 1,
@@ -130,7 +136,8 @@ export const styles = StyleSheet.create({
         fontWeight: '300',
         textDecorationLine: 'underline',
         fontFamily: 'ApercuProRegular'
-    }, verifyButtonStyle: {
+    },
+    verifyButtonStyle: {
         marginTop: 40,
         alignContent: 'center',
         alignItems: 'center',
@@ -140,15 +147,23 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center'
-    },verifyButtonText:{
+    }, verifyButtonText: {
         fontSize: 16,
         color: Theme.color.White,
         fontStyle: 'normal',
         borderRadius: 25,
         fontFamily: 'ApercuProRegular'
 
-    },marginTop:{
-        marginTop: 10,
+    },
+    // marginTop: {
+    //     marginTop: 10,
+    // },
+    otpContainerStyle: {
+        marginTop: 20
+    },
+    otpViewContainer: {
+        marginLeft: 10,
+        marginRight: 10,
     }
     // textInputOutlineStyle: {
     //     colors: {

@@ -68,10 +68,26 @@ export const styles = StyleSheet.create({
         color: Theme.color.Black,
         fontFamily: 'Apercu Pro Regular',
     },
+    outcountrycodeView:{
+        flexDirection: "row",
+        flex: 1,
+        width: "100%",
+    },
     countrycodeView:{
         width: '28%',
         height: normalize(47),
         backgroundColor: Theme.color.White,
+    },
+    gape1:{
+        width: "2%",
+        backgroundColor: Theme.color.White,
+    },
+    gape2:{
+        width: "70%",
+        backgroundColor: Theme.color.White,
+    },
+    height20px:{
+        height: 20
     },
     touchOpacityView:{
         marginTop: 40,

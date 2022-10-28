@@ -16,7 +16,7 @@ import {
 import { Theme } from "../../models";
 import { LoginVerifyNavigationProps, UpdateProfileNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
-import { leftarrow, smallUser, smartphone, timeIcon, mail } from "../../assets";
+import { leftarrow, userIcon, smartphone, timeIcon, mailIcon } from "../../assets";
 import { styles } from "./styles";
 import { TextInput } from 'react-native-paper';
 import { CountryCodePicker } from "../../utils/countryCodePicker";
@@ -102,7 +102,7 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
                     keyboardType="default"
                     value={firstName}
                     onChangeText={(firstName) => setFirstName(firstName)}
-                    right={<TextInput.Icon name={smallUser} size={15} />}
+                    right={<TextInput.Icon name={userIcon} size={15} />}
                     theme={textInputStyle}
 
 
@@ -162,7 +162,7 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
                     keyboardType="email-address"
                     value={email}
                     onChangeText={(email) => setEmail(email.replace(/\s/g, ''))}
-                    right={<TextInput.Icon name={mail} size={15} />}
+                    right={<TextInput.Icon name={mailIcon} size={15} />}
                     theme={textInputStyle}
                     style={styles.marginTop}
 

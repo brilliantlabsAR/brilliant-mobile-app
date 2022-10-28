@@ -3,7 +3,7 @@
  */
 import React from "react";
 import { AsyncStorage } from "react-native";
-import * as CONST from "../models";
+import * as Strings from "../models";
 import { ShowToast } from "../utils/toastUtils";
 
 export const Validations = {
@@ -13,11 +13,11 @@ export const Validations = {
       if (email.match(mailformat)) {
         return true;
       } else {
-        ShowToast(CONST.EMAIL_ERROR);
+        ShowToast(Strings.EMAIL_ERROR);
         return false;
       }
     } else {
-      ShowToast(CONST.EMPTY_EMAIL_ERROR);
+      ShowToast(Strings.EMPTY_EMAIL_ERROR);
       return false;
     }
   },
@@ -27,11 +27,11 @@ export const Validations = {
       if (phoneNo.match(phoneNoFormat)) {
         return true;
       } else {
-        ShowToast(CONST.PHONE_ERROR);
+        ShowToast(Strings.PHONE_ERROR);
         return false;
       }
     } else {
-      ShowToast(CONST.EMPTY_PHONE_ERROR);
+      ShowToast(Strings.EMPTY_PHONE_ERROR);
       return false;
     }
   },
@@ -51,7 +51,7 @@ export const Validations = {
     if (text && text.length > 0) {
       return true;
     } else {
-      ShowToast(CONST.PASSWORD_ERROR);
+      ShowToast(Strings.PASSWORD_ERROR);
       return false;
     }
   },
@@ -60,7 +60,7 @@ export const Validations = {
     if (text && text.trim().length > 0) {
       return true;
     } else {
-      ShowToast(CONST.VERIFY_REQUIRE);
+      ShowToast(Strings.VERIFY_REQUIRE);
       return false;
     }
   },
