@@ -14,7 +14,7 @@ import {
     ActivityIndicator,
     Keyboard
 } from "react-native";
-import { Theme } from "../../models";
+import {  Theme } from "../../models";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
@@ -22,6 +22,7 @@ import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
 import { ShowToast } from "../../utils/toastUtils";
 import * as CONST from '../../models'
+import * as Routes from "../../models/routes";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
@@ -36,7 +37,6 @@ const LoginOtpVerify = (props: Props) => {
 
 
     useEffect(() => {
-        console.log('LoLO', phoneNumber);
         clockCall = setInterval(() => {
             if (timer === 0) clearInterval(clockCall);
             setTimer(timer - 1)
@@ -69,6 +69,7 @@ const LoginOtpVerify = (props: Props) => {
     }
 
     function verifyOTPCall() {
+        navigation.navigate(Routes.NAV_APP);
 
     }
     return (

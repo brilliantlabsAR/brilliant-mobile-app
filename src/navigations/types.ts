@@ -22,6 +22,22 @@ export type SignUpNavigationProps = NativeStackScreenProps<
   RootStackParamList,
   "SignUpScreen"
 >;
+// export type FooterNavigationProps = NativeStackScreenProps<
+//   RootStackParamList,
+//   "Footer"
+// >;
+export type LiveMomentNavigationProps = NativeStackScreenProps<
+AppStackParamList,
+  "LiveMomentScreen"
+>;
+export type MediaScreenNavigationProps = NativeStackScreenProps<
+AppStackParamList,
+  "MediaScreen"
+>;
+export type InviteContactScreenNavigationProps = NativeStackScreenProps<
+AppStackParamList,
+  "InviteContactScreen"
+>;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Settings"

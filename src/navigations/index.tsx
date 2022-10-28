@@ -42,6 +42,7 @@ const RootNavigation: React.FC = () => {
           component={screens.SignUpScreen}
           options={{ headerShown: false }}
         />
+       
 
         <RootStack.Screen
           name={Routes.NAV_APP}

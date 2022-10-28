@@ -56,7 +56,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
         <TouchableOpacity
           activeOpacity={0.6}
-          onPress={() => BackHandler.exitApp()}
+          onPress={() => navigation.goBack()}
         >
           <View>
             <Image
