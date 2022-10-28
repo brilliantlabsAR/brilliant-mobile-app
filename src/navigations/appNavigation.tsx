@@ -13,6 +13,9 @@ import { useNavigation } from "@react-navigation/native";
 export type AppStackParamList = {
   [Routes.NAV_SPLASH_SCREEN]: undefined;
   [Routes.NAV_UPDATE_PROFILE_SCREEN]: undefined;
+  [Routes.NAV_START_SCREEN]: undefined;
+  [Routes.NAV_PAIRING_SCREEN]: undefined;
+  [Routes.NAV_ACCOUNT_SCREEN]: undefined;
   [Routes.NAV_LIVE_MOMENT]: { selectedTab: string } | undefined;
   [Routes.NAV_MEDIA_SCREEN]: undefined;
   [Routes.NAV_INVITE_CONTACT_SCREEN]: undefined;
@@ -58,6 +61,21 @@ const AppNavigation = () => {
       <AppStack.Screen
         name={Routes.NAV_UPDATE_PROFILE_SCREEN}
         component={Screens.UpdateProfileScreen}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_START_SCREEN}
+        component={Screens.StartScreen}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_PAIRING_SCREEN}
+        component={Screens.PairingScreen}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_ACCOUNT_SCREEN}
+        component={Screens.MyAccountScreen}
         options={{ title: "" }}
       />
       {/* <AppStack.Screen

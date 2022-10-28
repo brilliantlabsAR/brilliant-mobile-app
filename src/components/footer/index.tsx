@@ -65,7 +65,7 @@ const Footer = (props: Props) => {
             <TouchableOpacity
                 activeOpacity={0.6}
                 style={[styles.accountButtonStyle, { backgroundColor: selectedTab == "MyAccount" ? Theme.color.grayEleven : Theme.color.White }]}
-                onPress={() => navigation.replace(Routes.NAV_UPDATE_PROFILE_SCREEN)}
+                onPress={() => navigation.replace(Routes.NAV_ACCOUNT_SCREEN)}
             >
                 <View style={styles.mediaScreenView}>
                     <Image
