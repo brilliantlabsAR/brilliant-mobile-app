@@ -2,7 +2,7 @@ import {
     StyleSheet,
     Dimensions
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 
 
@@ -40,25 +40,25 @@ export const styles = StyleSheet.create({
     }, backButtonStyle: {
         marginLeft: normalize(20),
         marginTop: normalize(10)
-    },headerText:{
+    }, headerText: {
         fontSize: normalize(15),
         color: Theme.color.Black,
         marginLeft: normalize(10),
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         marginTop: normalize(7)
-    },viewSpace:{
+    }, viewSpace: {
         backgroundColor: Theme.color.Black,
         height: 0.2
-    },viewTop:{
+    }, viewTop: {
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column',
         marginTop: normalize(10)
 
-    },insideScroll:{
+    }, insideScroll: {
         marginLeft: normalize(15),
         marginRight: normalize(15),
-    },searchContactView:{
+    }, searchContactView: {
         backgroundColor: Theme.color.gray14,
         opacity: 0.9,
         height: normalize(30),
@@ -68,30 +68,30 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignContent: 'center',
         alignItems: 'center',
-    },searchTextInput:{
+    }, searchTextInput: {
         fontSize: normalize(10),
         color: Theme.color.gray12,
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         marginLeft: normalize(5),
         flex: 5,
-    },searchInconView:{
+    }, searchInconView: {
         justifyContent: 'flex-end',
         flex: 1,
         flexDirection: 'row',
         alignContent: 'center',
         alignItems: 'center',
         marginRight: normalize(15)
-    },searchImage:{
+    }, searchImage: {
         height: normalize(10),
         width: normalize(10),
-    },inviteTouch:{
+    }, inviteTouch: {
         marginTop: normalize(20),
         marginLeft: normalize(15),
         marginRight: normalize(15),
-    },shareViewTop:{
+    }, shareViewTop: {
         flexDirection: 'row',
         flex: 1,
-    },shareView:{
+    }, shareView: {
         height: normalize(40),
         width: normalize(40),
         padding: normalize(10),
@@ -100,56 +100,56 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
-    },shareLinkText:{
+    }, shareLinkText: {
         fontSize: normalize(12),
         color: Theme.color.Black,
-        fontFamily: 'ApercuProLight',
+        fontFamily: FontFamily.light,
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
         marginLeft: normalize(15)
-    },contactListText:{
+    }, contactListText: {
         fontSize: normalize(12),
         color: Theme.color.Black,
         opacity: 0.5,
-        fontFamily: 'ApercuProLight',
+        fontFamily: FontFamily.light,
         marginTop: normalize(20),
         marginLeft: normalize(15),
         marginRight: normalize(15),
-    },noConttact:{
+    }, noConttact: {
         fontSize: normalize(12),
         color: Theme.color.Black,
-        fontFamily: 'ApercuProLight',
+        fontFamily: FontFamily.light,
         marginTop: normalize(20),
         alignItems: 'center',
         alignSelf: 'center'
-    },topListView:{
+    }, topListView: {
         flexDirection: 'row',
         flex: 1,
         height: normalize(60),
         marginLeft: normalize(15),
         marginRight: normalize(15),
-    },middleView:{
+    }, middleView: {
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-    },listNameView:{
+    }, listNameView: {
         marginTop: normalize(15),
         marginLeft: normalize(20),
         flexDirection: 'column'
-    },listNameText:{
+    }, listNameText: {
         fontSize: normalize(12),
         color: Theme.color.Black,
-        fontFamily: 'ApercuProRegular',
-    },numberView:{
+        fontFamily: FontFamily.regular,
+    }, numberView: {
         marginTop: normalize(5),
-    },numberText:{
+    }, numberText: {
         fontSize: normalize(12),
         color: Theme.color.gray12,
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
 
-    },viewLine:{
+    }, viewLine: {
         height: 1,
         width: "100%",
         backgroundColor: Theme.color.gray13,

@@ -1,7 +1,7 @@
 import {
     StyleSheet,
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 
 
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     topTextStyle: {
         fontSize: normalize(15),
         color: Theme.color.Black,
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
     },
     spaceView: {
         backgroundColor: Theme.color.Black,
@@ -79,10 +79,10 @@ export const styles = StyleSheet.create({
         fontStyle: 'normal',
         borderRadius: 25,
         fontWeight: '400',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
 
     },
-    marginTop:{
+    marginTop: {
         marginTop: normalize(20)
     }
 })

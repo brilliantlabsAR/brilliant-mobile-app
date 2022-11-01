@@ -15,7 +15,7 @@ import { CountryItem, ItemTemplateProps, Style } from "./types/Types";
 import { useKeyboardStatus } from "./helpers/useKeyboardStatus";
 import { CountryButton } from "./components/CountryButton";
 import { countriesRemover } from "./helpers/countriesRemover";
-import { Theme } from '../../models';
+import { FontFamily, Theme } from '../../models';
 
 
 const height = Dimensions.get('window').height;
@@ -234,8 +234,8 @@ export const CountryCodePicker = ({
                                 height: 40,
                                 padding: 5,
                                 color: Theme.color.Black,
-                                fontFamily:'ApercuProRegular'
-                               
+                                fontFamily: FontFamily.regular
+
                             }}
                             placeholderTextColor={Theme.color.blackTwo}
                             value={searchValue}

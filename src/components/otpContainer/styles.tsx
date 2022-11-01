@@ -1,7 +1,7 @@
 import {
   StyleSheet,
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 
 export const styles = StyleSheet.create({
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
     color: Theme.color.Black,
     backgroundColor: '#E2E2E7',
-    fontFamily: 'Apercu Pro Regular',
+    fontFamily: FontFamily.regular,
     opacity: 0.8,
     borderRadius: 10,
     //paddingVertical: 12,

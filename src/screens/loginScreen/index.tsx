@@ -14,7 +14,7 @@ import {
   ScrollView,
   ActivityIndicator
 } from "react-native";
-import { Theme } from "../../models";
+import { FontFamily, Theme } from "../../models";
 import { LoginNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 //import  CountryPicker  from 'react-native-country-codes-picker';
@@ -42,7 +42,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
     }, fonts: {
       regular: {
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
       }
     },
     roundness: 10
@@ -137,7 +137,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
                   //showErrorAlert('Register Successfully!')
                   //    this.props.navigation.navigate("LoginOtpVerifyScreen")
                   //  console.log("Register", "Hii")
-                  navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: newPhoneNumber })
+                  navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: phoneNumber })
 
                 }
                 style={styles.loginButtonStyle}>

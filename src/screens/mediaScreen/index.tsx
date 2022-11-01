@@ -218,15 +218,7 @@ const MediaScreen = (props: Props) => {
                                                 </MenuOptions>
                                             </Menu>
 
-
-
                                         </View>
-
-
-
-
-
-
                                     </View>
 
                                 </View>
@@ -236,9 +228,9 @@ const MediaScreen = (props: Props) => {
                     </MenuProvider>
 
                 </ScrollView>
-                <Footer selectedTab="MediaScreen" />
 
             </View>
+            <Footer selectedTab="MediaScreen" />
         </SafeAreaView>
     )
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
     StatusBar,
     View,
@@ -14,25 +14,38 @@ import {
     ActivityIndicator,
     Keyboard,
     Dimensions,
-    PermissionsAndroid
+    PermissionsAndroid,
+    ListRenderItem,
+    FlatList,
 } from "react-native";
 import { Theme } from "../../models";
 import { LiveMomentNavigationProps } from "../../navigations/types";
-import { ILoginVerification } from "../../types";
-import { leftarrow, smartphone, mediaLive } from "../../assets";
+import { mediaLive, whiteUser, search, blackBell, bellFill, roundMinus } from "../../assets";
 import MapView, { Marker } from "react-native-maps";
 import { styles } from "./styles";
-import { normalize } from "../../utils/dimentionUtils";
 import Contact from 'react-native-contacts';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Footer from '../../components/footer';
 import * as Routes from "../../models/routes";
+import BottomSheet, { BottomSheetRefProps } from '../../components/bottomSheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { TextInput } from "react-native-paper";
+import { Loading } from '../../components/loading';
+import * as String from '../../models/constants'
 
 type Props = LiveMomentNavigationProps
+const { height: SCREEN_HEIGHT } = Dimensions.get('screen');
+const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 const LiveMomentScreen = (props: Props) => {
     const { navigation, route } = props;
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [markers, setMarkers] = React.useState([
+    const bottomSheetRef = useRef(null);
+    const Screen = {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+    };
+    const snapPoints = [0, Screen.height / 2, '70%', '100%'];
+    const [markers, setMarkers] = useState([
         {
             "id": "123",
             "latLng": {
@@ -50,13 +63,74 @@ const LiveMomentScreen = (props: Props) => {
             "name": "Test One"
         }
     ]);
+
+    const [streamerList, setStreamerList] = useState<any[]>([
+        {
+            "id": "1",
+            "name": "Media File 1\n2022-06-31 12-0.",
+            "date": "21 Jan 2022"
+        },
+        {
+            "id": "2",
+            "name": "Media File 1\n2022-06-31 12-0.",
+            "date": "28 Jan 2021"
+        },
+        {
+            "id": "3",
+            "name": "Media File 1\n2022-06-31 12-0.",
+            "date": "14 Feb 2021"
+        },
+        {
+            "id": "4",
+            "name": "Media File 1\n2022-06-31 12-0.",
+            "date": "14 Feb 2021"
+        },
+        {
+            "id": "5",
+            "name": "Media File 1\n2022-06-31 12-0.",
+            "date": "14 Feb 2021"
+        },
+        {
+            "id": "6",
+            "name": "Media File 1\n2022-06-31 12-0.",
+            "date": "14 Feb 2021"
+        },
+        {
+            "id": "7",
+            "name": "Media File 1\n2022-06-31 12-0.",
+            "date": "14 Feb 2021"
+        },
+        {
+            "id": "8",
+            "name": "Media File 1\n2022-06-31 12-0.",
+            "date": "14 Feb 2021"
+        },
+        {
+            "id": "9",
+            "name": "Media File 1\n2022-06-31 12-0.",
+            "date": "14 Feb 2021"
+        },
+    ]);
     const [names, setNames] = useState<string[]>([]);
 
-    const [backendContacts, setbackendContacts] = React.useState([]);
-    const [contactList, setcontactList] = React.useState<any[]>([]);
-    const [audienceList, setaudienceList] = React.useState<any[]>([]);
+    const [backendContacts, setbackendContacts] = useState([]);
+    const [contactList, setcontactList] = useState<any[]>([]);
+    const [audienceList, setaudienceList] = useState<any[]>([]);
+    const [itemClick, setItemClick] = useState<boolean>(false);
 
-
+    const ref = useRef<BottomSheetRefProps>(null);
+    useEffect(() => {
+        const isActive = ref?.current?.isActive();
+        if (isActive) {
+            ref?.current?.scrollTo(-400);
+        } else {
+            Platform.OS == "ios" ? (
+                ref?.current?.scrollTo(-150)
+            ) : (
+                ref?.current?.scrollTo(-100)
+            )
+        }
+    }, [])
 
 
     async function requestContactPermission() {
@@ -153,7 +227,7 @@ const LiveMomentScreen = (props: Props) => {
 
                     console.log('result', result);
                     setcontactList(result);
-                    setaudienceList(result)
+                    setaudienceList(result);
 
                     console.log('HIHIOKOK', contactList)
                 })
@@ -166,300 +240,177 @@ const LiveMomentScreen = (props: Props) => {
 
     }
 
-    return (
+    const render_contactList: ListRenderItem<any> = ({ item, index }) => {
+        return (
+            <View style={styles.contactListContainer}>
+                <View style={styles.profilePictureContainer} >
+                    {item?.profilePicture == "" ?
+                        <View style={styles.placeholder}>
+                            <Text style={styles.txt}>{item?.name.substring(0, 1)}</Text>
+                        </View> :
+                        <View style={styles.placeholder}>
+                            <Image
+                                style={styles.profileImage}
+                                source={{ uri: item?.profilePicture }}
+                                resizeMode='cover'
+                            />
+                        </View>
+                    }
+                </View>
+                <View style={styles.nameListContainer} >
+                    <Text style={styles.name}>{item.name}</Text>
+                </View>
+                {/* {!this.state.audienceList.includes(item) && */}
+                <TouchableOpacity style={styles.iconContainer}
+                    onPress={() => {
+                        //   this.setState({ audienceList: this.state.audienceList.push(item), popupOpen: true })
+                        //  this.setState({ audienceList: [...this.state.audienceList, item], popupOpen: true })
+                        // this.sentNotification(item.id);
+                        // this.setState({ popupOpen: true })
+                        // this.setState({ itemClick: true })
 
+                    }} >
+                    <View>
+                        {itemClick == true ?
+
+                            <Image
+                                style={styles.iconStyle}
+                                source={blackBell}
+                                // source={require('../img/bell_fill.png')}
+                                resizeMode='contain'
+                            /> :
+                            <Image
+                                style={styles.iconStyle}
+                                // source={require('../img/black_bell.png')}
+                                source={bellFill}
+                                resizeMode='contain'
+                            />
+                        }
+                    </View>
+                </TouchableOpacity>
+
+
+                <TouchableOpacity style={styles.iconContainer}
+                    onPress={() => {
+                        // this.setState({ popupOpen: true }, () => {
+
+                        //     this.streamerUserBlock(item.id, item);
+                        // });
+                    }}
+                >
+                    <View >
+                        <Image
+                            style={styles.iconStyle}
+                            source={roundMinus}
+                            resizeMode='contain'
+                        />
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+
+    return (
         <SafeAreaView
             style={styles.bodyContainer}>
-            <View style={styles.topView}>
-                <View style={styles.mapTopView}>
-                    <MapView
-                        style={StyleSheet.absoluteFillObject}
-                        // mapType={'terrain'}
-                        mapType={Platform.OS == "ios" ? "satellite" : "hybrid"}
-                        zoomEnabled
-                        pitchEnabled
-                        zoomTapEnabled
-                        zoomControlEnabled={false}
-                        showsCompass={false}
-                    >
-                        {markers.map((marker, index) => (
-                            <Marker
-                                key={marker.id}
-                                coordinate={marker.latLng}
-                                title={marker.name}
-
-                            >
-                                <Image
-                                    source={mediaLive}
-                                    style={{ width: normalize(25), height: normalize(25) }}
-                                    resizeMode="contain"
-                                />
-                            </Marker>
-                        ))}
-                    </MapView>
-                </View>
-
-
-                {/* <BottomSheet withOverlay={true} isOpen={this.state.popupOpen} sliderMinHeight={Platform.OS == "android" ? 120 : 80} sliderMaxHeight={SCREEN_HEIGHT - 180}    >
-            {(onScrollEndDrag) => (
-
-                <ScrollView onScrollEndDrag={onScrollEndDrag}>
-                    <View
-                        style={{
-                            backgroundColor: 'white',
-                            marginBottom: Dimension(60),
-                            width: '100%'
-                        }}
-                    >
-                        <View style={{
-                            backgroundColor: Color.Black,
-                            height: 0.2,
-                            width: SCREEN_WIDTH,
-                            opacity: 0.5
-                        }} />
-
-                        <View style={{
-                            backgroundColor: Color.gray14,
-                            opacity: 0.9,
-                            height: Dimension(30),
-                            width: '100%',
-                            borderRadius: Dimension(15),
-                            marginTop: Dimension(20),
-                            flex: 1,
-                            flexDirection: 'row',
-                            alignContent: 'center',
-                            alignItems: 'center',
-                            opacity: 0.4
-
-                        }}>
-                            <TextInput
-                                style={{
-                                    fontSize: Dimension(10),
-                                    color: Color.Black,
-                                    fontFamily: 'Apercu Pro Regular',
-                                    marginLeft: Dimension(5),
-                                    flex: 5,
-
-                                }}
-                                placeholder="search contacts"
-                                placeholderTextColor={Color.gray}
-                                onChangeText={searchText => this.searchText(searchText)}
-                            />
-
-                            <View style={{
-                                justifyContent: 'flex-end',
-                                flex: 1,
-                                flexDirection: 'row',
-                                alignContent: 'center',
-                                alignItems: 'center',
-                                marginRight: Dimension(20)
-                            }}>
-                                <Image
-                                    style={{
-                                        height: Dimension(10),
-                                        width: Dimension(10),
-                                    }}
-                                    source={require('../img/search.png')}
-                                    resizeMode='cover'
-                                />
-                            </View>
-
-                        </View>
-                        <TouchableOpacity style={{
-                            marginTop: Dimension(20),
-                            marginLeft: Dimension(15),
-                            marginRight: Dimension(15),
-                        }}
-                            onPress={() => {
-                                this.setState({ popupOpen: true });
-                                { console.log('press', this.state.popupOpen) }
-                                this.props.navigation.navigate("InviteContactScreen")
-                            }
-                            }>
-                            <View style={{
-                                flexDirection: 'row',
-                                flex: 1,
-
-                            }}>
-
-                                <View style={{
-                                    height: Dimension(40),
-                                    width: Dimension(40),
-                                    padding: Dimension(10),
-                                    borderRadius: Dimension(180 / 2),
-                                    backgroundColor: Color.Black,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    alignSelf: 'center',
-                                }}
-
+            <GestureHandlerRootView style={styles.container}>
+                <View style={styles.topView}>
+                    <View style={styles.mapTopView}>
+                        <MapView
+                            style={StyleSheet.absoluteFillObject}
+                            // mapType={'terrain'}
+                            mapType={Platform.OS == "ios" ? "satellite" : "hybrid"}
+                            zoomEnabled
+                            pitchEnabled
+                            zoomTapEnabled
+                            zoomControlEnabled={false}
+                            showsCompass={false}
+                        >
+                            {markers.map((marker, index) => (
+                                <Marker
+                                    key={marker.id}
+                                    coordinate={marker.latLng}
+                                    title={marker.name}
                                 >
                                     <Image
-                                        style={styles.userImage}
-                                        source={require('../img/white_user.png')}
-                                        resizeMode='cover'
-
+                                        source={mediaLive}
+                                        style={styles.mediaLiveImage}
+                                        resizeMode="contain"
                                     />
-                                </View>
-                                <Text
-                                    style={{
-                                        fontSize: Dimension(12),
-                                        color: Color.Black,
-                                        fontFamily: 'Apercu Pro Light',
-                                        justifyContent: 'center',
-                                        alignContent: 'center',
-                                        alignItems: 'center',
-                                        alignSelf: 'center',
-                                        marginLeft: Dimension(15)
-                                    }}
-                                >{'Invite Contacts'}</Text>
-
-                            </View>
-                        </TouchableOpacity>
-                        <Text
-                            style={{
-                                fontSize: Dimension(12),
-                                color: Color.Black,
-                                opacity: 0.5,
-                                fontFamily: 'Apercu Pro Light',
-                                marginTop: Dimension(20),
-                                marginLeft: Dimension(15),
-                                marginRight: Dimension(15),
-                            }}
-                        >{'Streamer'}</Text>
-                        <FlatList
-                            data={this.state.streamerList}
-                            scrollEnabled={true}
-                            showsVerticalScrollIndicator={false}
-                            ItemSeparatorComponent={this.FlatListItemSeparator}
-                            renderItem={ContactListItem}
-                            keyExtractor={(item, index) => index.toString()}
-                        />
-
-                        <Text
-                            style={{
-                                fontSize: Dimension(12),
-                                color: Color.Black,
-                                opacity: 0.5,
-                                fontFamily: 'Apercu Pro Light',
-                                marginTop: Dimension(20),
-                                marginLeft: Dimension(15),
-                                marginRight: Dimension(15),
-                            }}
-                        >{'My audience (' + this.state.audienceList.length + ')'}</Text>
-                        <FlatList
-                            data={this.state.audienceList}
-                            scrollEnabled={true}
-                            showsVerticalScrollIndicator={false}
-                            ItemSeparatorComponent={this.FlatListItemSeparator}
-                            renderItem={({ item, index }) =>
-
-
-                                <View style={{
-                                    flexDirection: 'row',
-                                    flex: 1,
-                                    height: Dimension(60),
-                                    marginLeft: Dimension(15),
-                                    marginRight: Dimension(15),
-                                }}>
-                                    <View style={{
-                                        alignContent: 'center',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }} >
-                                        <View style={styles.imgCon}>
-                                            {item.profilePicture == "" ?
-                                                <View style={styles.placeholder}>
-                                                    <Text style={styles.txt}>{item.name.substring(0, 1)}</Text>
-                                                </View> :
-                                                <View style={styles.placeholder}>
-                                                    <Image
-                                                        style={{
-                                                            height: Dimension(55),
-                                                            width: Dimension(55)
-                                                        }}
-                                                        source={{ uri: item.profilePicture }}
-                                                        resizeMode='cover'
-                                                    />
-                                                </View>
-                                            }
-
-                                        </View>
-
-                                    </View>
-                                    <View style={{
-                                        marginLeft: Dimension(10),
-                                        flexDirection: 'column',
-                                        alignContent: 'center',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }} >
-                                        <Text
-                                            style={{
-                                                fontSize: Dimension(12),
-                                                color: Color.Black,
-                                                fontFamily: 'Apercu Pro Regular',
-
-                                            }}
-                                        >{item.name}</Text>
-                                    </View>
-                                    <TouchableOpacity style={{
-                                        flexDirection: 'row',
-                                        alignContent: 'center',
-                                        alignItems: 'center',
-                                        justifyContent: 'flex-end',
-                                        flex: 6
-                                    }} activeOpacity={0.6}
-                                        onPress={() => {
-                                            // this.setState({ audienceList: this.state.audienceList.filter(contact => contact != item), popupOpen: true })
-                                            this.setState({ popupOpen: true }, () => {
-                                                this.audienceUserBlock(item.id, item, index);
-                                            });
-                                        }
-                                        }>
-                                        <View  >
-                                            <Image
-                                                style={{
-                                                    height: Dimension(15),
-                                                    width: Dimension(15)
-                                                }}
-                                                source={require('../img/round_minus.png')}
-                                                resizeMode='contain'
-                                            />
-                                        </View>
-                                    </TouchableOpacity>
-
-                                </View>
-                            }
-                            keyExtractor={item => item.id}
-                        />
-
-                        <View style={{
-                            backgroundColor: 'transparent',
-                            height: Dimension(10)
-                        }} />
-
+                                </Marker>
+                            ))}
+                        </MapView>
                     </View>
 
-                </ScrollView>
-            )}
-        </BottomSheet> */}
-                <Footer selectedTab="LiveScreen" />
-            </View>
+                    {/* <View style={styles.container}> */}
+                    <BottomSheet ref={ref}>
+                        <View style={styles.bottomSheetContainer}>
+
+                            <View style={styles.searchContainer}>
+                                <TextInput
+                                    style={styles.searchInput}
+                                    placeholder="search contacts"
+                                    placeholderTextColor={Theme.color.White}
+                                    underlineColor={Theme.color.gray14}
+                                // onChangeText={searchText => this.searchText(searchText)}
+                                />
+
+                                <View style={styles.searchIconContainer}>
+                                    <Image
+                                        style={styles.searchIcon}
+                                        source={search}
+                                        resizeMode='cover'
+                                    />
+                                </View>
+                            </View>
+                            <TouchableOpacity style={styles.inviteContactContainer}
+                                onPress={() => {
+                                    // this.setState({ popupOpen: true });
+                                    // { console.log('press', this.state.popupOpen) }
+                                    navigation.navigate(Routes.NAV_INVITE_CONTACT_SCREEN)
+                                }
+                                }>
+                                <View style={styles.userIconContainer}>
+                                    <Image
+                                        style={styles.userImage}
+                                        source={whiteUser}
+                                        resizeMode='cover'
+                                    />
+                                </View>
+                                <Text style={styles.inviteContactText}>{String.INVITE_CONTACT}</Text>
+                            </TouchableOpacity>
+
+                            <ScrollView scrollEnabled={true} style={styles.contactList}>
+                                <Text style={styles.headerStyle}>{String.STREAMER}</Text>
+                                <FlatList
+                                    data={streamerList}
+                                    scrollEnabled={false}
+                                    showsVerticalScrollIndicator={false}
+                                    // ItemSeparatorComponent={this.FlatListItemSeparator}
+                                    renderItem={render_contactList}
+                                    keyExtractor={(item, index) => index.toString()}
+                                />
+                                <Text style={styles.headerStyle}>{String.AUDIENCE}</Text>
+                                <FlatList
+                                    data={streamerList}
+                                    scrollEnabled={false}
+                                    showsVerticalScrollIndicator={false}
+                                    // ItemSeparatorComponent={this.FlatListItemSeparator}
+                                    renderItem={render_contactList}
+                                    keyExtractor={(item, index) => index.toString()}
+                                />
+                            </ScrollView>
+                        </View>
+                    </BottomSheet>
+                </View>
+            </GestureHandlerRootView >
+            <Footer selectedTab="LiveScreen" />
             {
                 isLoading ?
-                    <ActivityIndicator
-                        style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: Theme.color.transparent }}
-                        size="large"
-                        color={Theme.color.Black}
-                    /> : null
+                    <Loading /> : null
             }
-
-        </SafeAreaView>
-
+        </SafeAreaView >
     )
-
-
-
 }
+
 export default LiveMomentScreen;

@@ -2,7 +2,7 @@ import {
     StyleSheet,
     Dimensions
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 
 const { width, height } = Dimensions.get('screen');
@@ -56,11 +56,11 @@ export const styles = StyleSheet.create({
         width: '100%',
         resizeMode: 'contain'
     },
-    mediaTextStyle:{
-        fontFamily: 'ApercuProRegular',
+    mediaTextStyle: {
+        fontFamily: FontFamily.regular,
         fontSize: normalize(10),
         marginTop: normalize(5)
-    },liveButtonStyle:{
+    }, liveButtonStyle: {
         width: width / 3,
         height: '100%',
         alignItems: 'center',
@@ -74,11 +74,11 @@ export const styles = StyleSheet.create({
     },
     liveTextStyle:
     {
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         fontSize: normalize(10),
         marginTop: normalize(5)
     },
-    accountButtonStyle:{
+    accountButtonStyle: {
         width: width / 3,
         height: '100%',
         alignItems: 'center',
@@ -91,8 +91,8 @@ export const styles = StyleSheet.create({
         borderWidth: 0.5,
         paddingBottom: normalize(7)
     },
-    accountTextStyle:{
-        fontFamily: 'ApercuProRegular',
+    accountTextStyle: {
+        fontFamily: FontFamily.regular,
         fontSize: normalize(10),
         marginTop: normalize(5)
     }

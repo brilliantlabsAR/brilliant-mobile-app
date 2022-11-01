@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, ViewStyle } from "react-native";
-import { Theme } from '../../../models';
+import { FontFamily, Theme } from '../../../models';
 import { ItemTemplateProps } from "../types/Types";
 
 
@@ -21,7 +21,7 @@ export const CountryButton = ({ item, name, style, ...rest }: ItemTemplateProps)
             flex: 0.3,
             fontSize: 16,
             color: Theme.color.Black,
-            fontFamily:'ApercuProRegular'
+            fontFamily: FontFamily.regular
         }, style?.dialCode]}>
             {item?.dial_code}
         </Text>
@@ -29,7 +29,7 @@ export const CountryButton = ({ item, name, style, ...rest }: ItemTemplateProps)
             flex: 1,
             fontSize: 16,
             color: Theme.color.Black,
-            fontFamily:'ApercuProRegular'
+            fontFamily: FontFamily.regular
         }, style?.countryName]}>
             {name}
         </Text>

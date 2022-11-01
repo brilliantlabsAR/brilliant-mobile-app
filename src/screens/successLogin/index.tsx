@@ -12,13 +12,25 @@ import {
 } from "react-native";
 import { Theme } from "../../models";
 import { ShowToast } from "../../utils/toastUtils";
-import { styles } from "./styles"
-import * as Strings from "../../models"
+import { styles } from "./styles";
+import * as Strings from "../../models";
+import { SuccessLoginNavigationProps } from '../../navigations/types';
+import * as Routes from "../../models/routes";
 
-const SuccessLogin = () => {
+const SuccessLogin = (props: SuccessLoginNavigationProps) => {
+    const { navigation } = props;
     useEffect(() => {
-        BackHandler.exitApp()
-    })
+        BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+        }
+    }, [])
+
+    const handleBackButton = () => {
+        BackHandler.exitApp();
+        return true;
+    }
+
 
     return (
         <SafeAreaView
@@ -37,8 +49,8 @@ const SuccessLogin = () => {
                     <TouchableOpacity activeOpacity={0.6}
                         onPress={() =>
                             //this.registerMember()
-                            ShowToast('Welcome To Frame App!')
-                            // this.props.navigation.navigate("StartScreen")
+                            // ShowToast('Welcome To Frame App!');
+                            navigation.replace(Routes.NAV_APP)
                         }
                     >
                         <View style={styles.textContainer}>

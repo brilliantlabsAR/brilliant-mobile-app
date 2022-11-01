@@ -1,7 +1,7 @@
 import {
     StyleSheet,
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 
 
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
         color: Theme.color.Black,
         fontSize: normalize(30),
         flexDirection: 'row',
-        fontFamily: 'ApercuProBold'
+        fontFamily: FontFamily.bold
 
     },
     welcomeText: {
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
         marginTop: 10,
         color: Theme.color.Black,
         flexDirection: 'row',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
     },
     phoneBox: {
         marginTop: 40,
@@ -55,31 +55,31 @@ export const styles = StyleSheet.create({
         paddingBottom: 20,
         borderRadius: 20
     },
-    phoneBoxTwo:{
+    phoneBoxTwo: {
         flexDirection: 'row',
         flex: 1,
         width: '100%'
-      },
-      touchableCountryBox:{
+    },
+    touchableCountryBox: {
         width: '28%',
         height: normalize(47),
         backgroundColor: Theme.color.White,
-      },
-      signUpView:{
+    },
+    signUpView: {
         marginTop: normalize(20),
         alignContent: 'center',
         flex: 1,
         flexDirection: 'row',
         alignSelf: 'center'
-      },
-      dontSignUp:{
-           fontSize: 13,
-            color: Theme.color.Black,
-            fontStyle: 'normal',
-            fontFamily: 'Apercu Pro Medium'
+    },
+    dontSignUp: {
+        fontSize: 13,
+        color: Theme.color.Black,
+        fontStyle: 'normal',
+        fontFamily: 'Apercu Pro Medium'
 
-      },
-      loginButtonStyle:{
+    },
+    loginButtonStyle: {
         marginTop: 40,
         alignContent: 'center',
         alignItems: 'center',
@@ -89,16 +89,16 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center'
-      },
-      loginTextStyle:{
+    },
+    loginTextStyle: {
         fontSize: 16,
         color: Theme.color.White,
         fontStyle: 'normal',
         borderRadius: 25,
         fontWeight: '400',
-        fontFamily: 'ApercuProLight'
+        fontFamily: FontFamily.light
 
-      }
+    }
     // textInputOutlineStyle: {
     //     colors: {
     //         placeholder: '#A1A1A1',

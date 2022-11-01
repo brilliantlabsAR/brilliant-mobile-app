@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -62,5 +62,17 @@
 		<string>ApercuProMediumItalic.otf</string>
 		<string>ApercuProRegular.otf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>To access camera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Allow contacts access</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow microphone access</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To access photo library</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>To access bluetooth to find and connect different device</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>To access bluetooth </string>
 </dict>
 </plist>

@@ -1,7 +1,7 @@
 import {
     StyleSheet,
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 
 
@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontStyle: 'normal',
         flexDirection: 'row',
-        fontFamily: 'ApercuProBold'
+        fontFamily: FontFamily.bold
 
     },
     phoneNumberText: {
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
         fontSize: 15,
         fontStyle: 'normal',
         flexDirection: 'row',
-        fontFamily: 'Apercu Pro Regular'
+        fontFamily: FontFamily.regular
     },
     otpViewBox: {
         marginTop: 20,
@@ -100,7 +100,7 @@ export const styles = StyleSheet.create({
         fontStyle: 'normal',
         borderRadius: 25,
         fontWeight: '400',
-        fontFamily: 'ApercuProLight'
+        fontFamily: FontFamily.light
 
     },
     marginView: {
@@ -117,7 +117,7 @@ export const styles = StyleSheet.create({
         color: Theme.color.Black,
         fontSize: 13,
         fontStyle: 'normal',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
     },
     timerImage: {
         height: 15,
@@ -135,7 +135,7 @@ export const styles = StyleSheet.create({
         fontStyle: 'normal',
         fontWeight: '300',
         textDecorationLine: 'underline',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
     },
     verifyButtonStyle: {
         marginTop: 40,
@@ -152,7 +152,7 @@ export const styles = StyleSheet.create({
         color: Theme.color.White,
         fontStyle: 'normal',
         borderRadius: 25,
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
 
     },
     // marginTop: {

@@ -1,7 +1,7 @@
 import {
     StyleSheet,
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 
 
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
     }, searchText: {
         fontSize: normalize(10),
         color: Theme.color.gray12,
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         marginLeft: normalize(5),
         flex: 5,
     }, searchIconView: {
@@ -90,7 +90,7 @@ export const styles = StyleSheet.create({
     textStyle: {
         fontSize: normalize(12),
         color: Theme.color.Black,
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
 
     }, calenderTopView: {
         marginTop: normalize(20),
@@ -101,7 +101,7 @@ export const styles = StyleSheet.create({
     }, dateTextStyle: {
         fontSize: normalize(12),
         color: Theme.color.gray12,
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         marginLeft: normalize(5)
     }, moreButtonStyle: {
         flex: 0.3,
@@ -111,27 +111,27 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.White,
         borderRadius: normalize(5),
         width: normalize(120)
-    },menuView:{
+    }, menuView: {
         alignContent: 'center',
         marginLeft: normalize(7)
-    },menuText:{
+    }, menuText: {
         fontSize: normalize(12),
         color: Theme.color.Black,
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         paddingTop: normalize(2),
         paddingBottom: normalize(2)
-    },menuSeparator:{
+    }, menuSeparator: {
         backgroundColor: Theme.color.gray,
         height: normalize(0.5)
-    },menuViewOtion:{
+    }, menuViewOtion: {
         alignContent: 'center',
         marginLeft: normalize(7),
         paddingTop: normalize(5),
         paddingBottom: normalize(5)
-    },menuOptionText:{
+    }, menuOptionText: {
         fontSize: normalize(12),
         color: Theme.color.Black,
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
 
     }
 })

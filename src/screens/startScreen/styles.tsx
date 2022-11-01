@@ -2,37 +2,37 @@ import {
     StyleSheet,
     Dimensions
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 const windowWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
-    bodyContainer:{
+    bodyContainer: {
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column'
     },
-    bodyContainerView:{
+    bodyContainerView: {
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column',
 
     },
-    scrollContainer:{
+    scrollContainer: {
         backgroundColor: Theme.color.White
     },
-    titleView:{
+    titleView: {
         marginTop: normalize(50)
     },
-    titleText:{
+    titleText: {
         color: Theme.color.Black,
         fontSize: normalize(30),
         fontStyle: 'normal',
         flexDirection: 'row',
         alignSelf: 'center',
-        fontFamily: 'ApercuProBold'
+        fontFamily: FontFamily.bold
     },
-    swiperView:{
+    swiperView: {
         width: '100%',
         flex: 1,
         marginTop: normalize(20)
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
         height: normalize(190),
         resizeMode: 'contain'
     },
-    instructionTitle:{
+    instructionTitle: {
         fontSize: normalize(14),
         color: Theme.color.Black,
         justifyContent: 'center',
@@ -60,16 +60,16 @@ export const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: "center",
         textAlign: 'center',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
     },
-    nextButtonView:{
+    nextButtonView: {
         flexDirection: 'row',
         flex: 1,
         marginTop: normalize(45),
         marginRight: normalize(10),
         marginLeft: normalize(10)
     },
-    nextButtoTouch:{
+    nextButtoTouch: {
         flexDirection: 'row',
         alignContent: 'flex-end',
         alignSelf: 'flex-end',
@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
         width: normalize(30),
         alignSelf: 'center'
     },
-    backTouchView:{
+    backTouchView: {
         flexDirection: 'row',
         alignContent: 'flex-start',
         alignSelf: 'flex-start',
@@ -93,37 +93,37 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-start',
 
     },
-    paginationDotView:{
+    paginationDotView: {
         flexDirection: 'row',
         alignSelf: 'center',
         alignContent: 'center',
         alignItems: "center",
         textAlign: 'center',
-        marginTop:normalize(10)
+        marginTop: normalize(10)
     },
-    skipTutorialView:{
+    skipTutorialView: {
         marginTop: normalize(80),
         backgroundColor: Theme.color.White,
         alignSelf: 'center'
     },
-    skipTutorialText:{
+    skipTutorialText: {
         fontSize: normalize(14),
         color: Theme.color.Black,
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         textDecorationLine: 'underline',
     },
-    marginTopStyle:{
+    marginTopStyle: {
         marginTop: 10,
     },
-    nextButtonText:{
+    nextButtonText: {
         fontSize: normalize(18),
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         alignSelf: 'center'
     },
     backButtonText:
     {
         fontSize: normalize(18),
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         alignSelf: 'center'
     }
 })
