@@ -4,12 +4,56 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { AppStackParamList } from "./appNavigation";
+import { RootStackParamList } from "./index";
 
 export type LoginNavigationProps = NativeStackScreenProps<
-  AppStackParamList,
+  RootStackParamList,
   "LoginScreen"
 >;
-
+export type LoginVerifyNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  "LoginVerifyScreen"
+>;
+export type SignUpNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  "SignUpScreen"
+>;
+export type SuccessLoginNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  "SuccessLoginScreen"
+>;
+export type UpdateProfileNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "UpdateProfileScreen"
+>;
+export type FooterNavigationProps = NativeStackNavigationProp<
+  AppStackParamList,
+  "LiveMomentScreen"
+>;
+export type LiveMomentNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "LiveMomentScreen"
+>;
+export type MediaScreenNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "MediaScreen"
+>;
+export type InviteContactScreenNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "InviteContactScreen"
+>;
+export type StartNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "StartScreen"
+>;
+export type PairingNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "PairingScreen"
+>;
+export type AccountNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "MyAccountScreen"
+>;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Settings"
