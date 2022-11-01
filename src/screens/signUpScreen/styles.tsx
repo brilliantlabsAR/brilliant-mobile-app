@@ -1,7 +1,7 @@
 import {
     StyleSheet,
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 
 
@@ -23,73 +23,73 @@ export const styles = StyleSheet.create({
         width: 25,
         height: 25,
     },
-    mainContainer:{
+    mainContainer: {
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column',
         marginLeft: normalize(20)
 
     },
-    scrollContainer:{
+    scrollContainer: {
         backgroundColor: Theme.color.White
     },
-    headerContainer:{
+    headerContainer: {
         marginRight: 25
     },
-    signupText:{
+    signupText: {
         color: Theme.color.Black,
         fontSize: normalize(30),
         flexDirection: 'row',
-        fontFamily: 'ApercuProBold'
+        fontFamily: FontFamily.bold
     },
-    signupdescText:{
+    signupdescText: {
         fontSize: normalize(14),
         marginTop: normalize(10),
         color: Theme.color.Black,
         flexDirection: 'row',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
     },
-    inputContainer:{
+    inputContainer: {
         marginRight: 25
     },
-    afterinputContainer:{
+    afterinputContainer: {
         marginTop: 50,
         backgroundColor: Theme.color.White,
         paddingBottom: 20,
         borderRadius: 20
     },
-    termsView:{
+    termsView: {
         flexDirection: 'row',
         flex: 1,
         justifyContent: 'center'
     },
-    termsText:{
+    termsText: {
         fontSize: normalize(14),
         color: Theme.color.Black,
-        fontFamily: 'Apercu Pro Regular',
+        fontFamily: FontFamily.regular,
     },
-    outcountrycodeView:{
+    outcountrycodeView: {
         flexDirection: "row",
         flex: 1,
         width: "100%",
     },
-    countrycodeView:{
+    countrycodeView: {
         width: '28%',
         height: normalize(47),
         backgroundColor: Theme.color.White,
     },
-    gape1:{
+    gape1: {
         width: "2%",
         backgroundColor: Theme.color.White,
     },
-    gape2:{
+    gape2: {
         width: "70%",
         backgroundColor: Theme.color.White,
     },
-    height20px:{
+    height20px: {
         height: 20
     },
-    touchOpacityView:{
+    touchOpacityView: {
         marginTop: 40,
         alignItems: 'center',
         borderRadius: 100,
@@ -99,23 +99,23 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center'
     },
-    touchOpacityText:{
+    touchOpacityText: {
         fontSize: 16,
         color: Theme.color.White,
         fontStyle: 'normal',
         borderRadius: 25,
         fontWeight: '400',
-        fontFamily: 'Apercu Pro Regular'
+        fontFamily: FontFamily.regular
 
     },
-    alreadyaccountView:{
+    alreadyaccountView: {
         marginTop: normalize(20),
         alignContent: 'center',
         flex: 1,
         flexDirection: 'row',
         alignSelf: 'center'
     },
-    alreadyaccountText:{
+    alreadyaccountText: {
         fontSize: 13,
         color: Theme.color.Black,
         fontStyle: 'normal',

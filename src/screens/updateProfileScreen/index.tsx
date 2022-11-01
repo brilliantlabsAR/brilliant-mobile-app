@@ -13,7 +13,7 @@ import {
     ScrollView,
     ActivityIndicator
 } from "react-native";
-import { Theme } from "../../models";
+import { FontFamily, Theme } from "../../models";
 import { LoginVerifyNavigationProps, UpdateProfileNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, userIcon, smartphone, timeIcon, mailIcon } from "../../assets";
@@ -30,7 +30,7 @@ const textInputStyle = {
 
     }, fonts: {
         regular: {
-            fontFamily: 'ApercuProRegular'
+            fontFamily: FontFamily.regular
         }
     },
     roundness: 10

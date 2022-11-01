@@ -30,6 +30,7 @@ export const search = require("./images/search.png");
 export const mediaDemoImage = require("./images/media_demo_image.png");
 export const shareIcon = require("./images/share_icon.png");
 export const closeIcon = require("./images/close.png");
-
-
-
+export const whiteUser = require("./images/white_user.png");
+export const blackBell = require("./images/black_bell.png");
+export const bellFill = require("./images/bell_fill.png");
+export const roundMinus = require("./images/round_minus.png");

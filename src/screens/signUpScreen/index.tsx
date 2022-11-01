@@ -14,13 +14,13 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-paper";
 
-import { Theme } from "../../models";
+import { FontFamily, Theme } from "../../models";
 import { SignUpNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { leftarrow, smartphone, userIcon, mailIcon } from "../../assets";
 import { CountryCodePicker } from "../../utils/countryCodePicker";
-import {SIGNUP_TITLE,ALREADY_TITLE,AGREE_TITLE,TERMS_CONDITIONS,LOGIN} from "../../models/constants"
+import { SIGNUP_TITLE, ALREADY_TITLE, AGREE_TITLE, TERMS_CONDITIONS, LOGIN } from "../../models/constants"
 
 const SignUpScreen = (props: SignUpNavigationProps) => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -41,7 +41,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
         },
         fonts: {
             regular: {
-                fontFamily: "Apercu Pro Regular",
+                fontFamily: FontFamily.regular,
             },
         },
         roundness: 10,
@@ -116,7 +116,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                             theme={textInputStyle}
                                         />
                                     </TouchableOpacity>
-                                    <View style={styles.gape1}/>
+                                    <View style={styles.gape1} />
                                     <View style={styles.gape2}>
                                         <TextInput
                                             mode="outlined"

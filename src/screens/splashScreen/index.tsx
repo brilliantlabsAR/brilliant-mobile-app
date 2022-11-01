@@ -155,8 +155,8 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
                                     //showErrorAlert('Register Successfully!')
                                     //this.props.navigation.navigate("HomeScreenPickUp")
 
-                                    //navigation.navigate(Routes.NAV_SIGNUP_SCREEN)
-                                    navigation.navigate(Routes.NAV_APP)
+                                    navigation.navigate(Routes.NAV_SIGNUP_SCREEN)
+                                    // navigation.navigate(Routes.NAV_APP)
                                     //   this.props.navigation.navigate('SignupScreen')
                                     //  this.props.navigation.navigate('LiveStreamingScreen')
                                 }

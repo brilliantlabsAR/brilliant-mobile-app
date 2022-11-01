@@ -1,7 +1,7 @@
 import {
     StyleSheet,
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 
 
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
         fontSize: normalize(30),
         fontStyle: 'normal',
         flexDirection: 'row',
-        fontFamily: 'ApercuProBold'
+        fontFamily: FontFamily.bold
     },
     liveStreamingText: {
         marginStart: normalize(5),
@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
         fontSize: normalize(30),
         fontStyle: 'normal',
         flexDirection: 'row',
-        fontFamily: 'ApercuProBold'
+        fontFamily: FontFamily.bold
 
     },
     broadCastText: {
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
         fontSize: normalize(15),
         fontStyle: 'normal',
         flexDirection: 'row',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
     },
     middleView: {
         marginTop: normalize(30),
@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
         color: Theme.color.White,
         fontStyle: 'normal',
         borderRadius: normalize(25),
-        fontFamily: 'ApercuProLight'
+        fontFamily: FontFamily.light
 
     },
     signInText:
@@ -89,7 +89,7 @@ export const styles = StyleSheet.create({
         color: Theme.color.Black,
         fontStyle: 'normal',
         borderRadius: 25,
-        fontFamily: 'ApercuProLight'
+        fontFamily: FontFamily.light
 
     },
     brilliantTextSmall: {

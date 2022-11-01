@@ -55,4 +55,6 @@ export const Theme = {
 
 export const FontFamily = {
   regular: "ApercuPro-Regular",
+  bold: "ApercuPro-Bold",
+  light: "ApercuPro-Light",
 };

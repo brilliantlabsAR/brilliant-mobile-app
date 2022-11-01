@@ -25,6 +25,7 @@ import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
 import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
+import Footer from "../../components/footer";
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
     const { navigation } = props;
@@ -257,6 +258,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                     </View>
                 </Modal>
             </View>
+            <Footer selectedTab="MyAccount" />
         </SafeAreaView>
     )
 };

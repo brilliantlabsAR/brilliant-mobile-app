@@ -11,5 +11,5 @@ export interface IOtpContainer {
   onTyping?: (code: string) => void;
 }
 export interface IFooter {
-  selectedTab:string
+  selectedTab: string;
 }

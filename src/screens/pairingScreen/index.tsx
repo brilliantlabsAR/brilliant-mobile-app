@@ -21,12 +21,12 @@ import BleManager from 'react-native-ble-manager';
 import NetInfo from '@react-native-community/netinfo';
 
 import { normalize } from "../../utils/dimentionUtils";
-import { Theme } from "../../models";
+import { FontFamily, Theme } from "../../models";
 import { PairingNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { chasmaIcon } from "../../assets";
-import {ENSURE_TITLE, LETS_PAIR_TITLE, SUBMIT, CONNECT} from "../../models/constants";
+import { ENSURE_TITLE, LETS_PAIR_TITLE, SUBMIT, CONNECT } from "../../models/constants";
 
 const PairingScreen = (props: PairingNavigationProps) => {
     const [showBLE, setshowBLE] = useState<boolean>(false);
@@ -36,7 +36,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
     const [scanning, setscanning] = useState<boolean>(false);
     const [devices, setdevices] = useState([]);
 
-    
+
 
     const textInputOutlineStyle = {
         colors: {
@@ -47,7 +47,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
         }, fonts: {
             regular: {
-                fontFamily: 'Apercu Pro Regular'
+                fontFamily: FontFamily.regular
             }
         },
         roundness: 10,
@@ -60,7 +60,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
     }
     const FlatListItemSeparator = () => {
         return (
-            <View style={styles.itemSeparatorView}/>
+            <View style={styles.itemSeparatorView} />
         );
     }
     const renderItem = (item) => {
@@ -96,114 +96,114 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
         );
     }
-    
-    return(
+
+    return (
         <SafeAreaView style={styles.bodyContainer}>
             <Provider>
                 <View style={styles.mainContainer}>
                     <View style={styles.mainContainer2} >
-                    {showBLE == true?
-                        <View style={styles.marginTopView}>
-                            <Portal>
-                            <Modal visible={visibleModal} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
-                                    
-                                <View style={styles.insideModalView}>
+                        {showBLE == true ?
+                            <View style={styles.marginTopView}>
+                                <Portal>
+                                    <Modal visible={visibleModal} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
 
-                                    <TextInput
-                                        mode="outlined"
-                                        label="Enter your SSID/wifi/hotspot name"
-                                        keyboardType="default"
-                                        value={ssid}
-                                        //fontSize={15}
-                                        editable={false}
-                                        onChangeText={(ssid) => setssid(ssid)}
-                                        theme={textInputOutlineStyle}
+                                        <View style={styles.insideModalView}>
 
-                                    />
-                                    <View style={styles.height15}/>
+                                            <TextInput
+                                                mode="outlined"
+                                                label="Enter your SSID/wifi/hotspot name"
+                                                keyboardType="default"
+                                                value={ssid}
+                                                //fontSize={15}
+                                                editable={false}
+                                                onChangeText={(ssid) => setssid(ssid)}
+                                                theme={textInputOutlineStyle}
 
-                                    <TextInput
-                                        mode="outlined"
-                                        label="Enter your Wifi password"
-                                        keyboardType="default"
-                                        value={password}
-                                        //fontSize={15}
-                                        onChangeText={(password) => setpassword(password)}
-                                        theme={textInputOutlineStyle}
+                                            />
+                                            <View style={styles.height15} />
 
-                                    />
-                                    <TouchableOpacity activeOpacity={0.6}
-                                        onPress={() => {
-                                            //this.wifiConnection();
-                                            //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
-                                            // 
-                                            //console.log("Register", "Hii")
-                                        }}>
-                                        <View style={styles.submitButtonView}>
-                                            <Text style={styles.submitText}>{SUBMIT}</Text>
+                                            <TextInput
+                                                mode="outlined"
+                                                label="Enter your Wifi password"
+                                                keyboardType="default"
+                                                value={password}
+                                                //fontSize={15}
+                                                onChangeText={(password) => setpassword(password)}
+                                                theme={textInputOutlineStyle}
 
+                                            />
+                                            <TouchableOpacity activeOpacity={0.6}
+                                                onPress={() => {
+                                                    //this.wifiConnection();
+                                                    //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
+                                                    // 
+                                                    //console.log("Register", "Hii")
+                                                }}>
+                                                <View style={styles.submitButtonView}>
+                                                    <Text style={styles.submitText}>{SUBMIT}</Text>
+
+                                                </View>
+                                            </TouchableOpacity>
                                         </View>
+                                    </Modal>
+                                </Portal>
+                                <View style={styles.TouchableView}>
+                                    <TouchableOpacity style={styles.TouchableStyle}
+                                        onPress={() => {
+                                            //this.startScan()
+                                        }}
+                                    >
+                                        <Text style={styles.TouchableText}>{'Scan Bluetooth (' + (scanning ? 'on' : 'off') + ')'}</Text>
                                     </TouchableOpacity>
                                 </View>
-                            </Modal>
-                            </Portal>
-                            <View style={styles.TouchableView}>
-                                <TouchableOpacity style={styles.TouchableStyle}
-                                    onPress={() => {
-                                        //this.startScan()
-                                    }}
-                                >
-                                    <Text style={styles.TouchableText}>{'Scan Bluetooth (' + (scanning ? 'on' : 'off') + ')'}</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <FlatList
-                                data={devices}
-                                scrollEnabled={false}
-                                showsVerticalScrollIndicator={false}
-                                ItemSeparatorComponent={FlatListItemSeparator}
-                                renderItem={({ item }) => renderItem(item)}
-                                keyExtractor={item => item.id}
+                                <FlatList
+                                    data={devices}
+                                    scrollEnabled={false}
+                                    showsVerticalScrollIndicator={false}
+                                    ItemSeparatorComponent={FlatListItemSeparator}
+                                    renderItem={({ item }) => renderItem(item)}
+                                    keyExtractor={item => item.id}
 
-                            />
-                            {scanning ?
-                                <ActivityIndicator
-                                    style={styles.activityIndicatorStyle}
-                                    size="large"
-                                    color={Theme.color.Black}
-                                /> :
-                                null
-                            }
-                        </View>
-                        
-                        :
-                        <View style={styles.pairTitleView}>
-                            <Text style={styles.pairTitle}>{LETS_PAIR_TITLE}</Text>
-                            <View style={styles.circularProgressView}>
-                                <AnimatedCircularProgress
-                                    size={300}
-                                    width={8}
-                                    fill={100}
-                                    duration={5000}
-                                    tintColor={Theme.color.Black}
-                                    onAnimationComplete={() => {
-                                        setshowBLE(true)
-                                    }}
-                                    backgroundColor={Theme.color.gray15} >
-
-                                    {
-                                        (fill) => (
-                                            <Image
-                                                style={styles.imageView}
-                                                source={chasmaIcon}
-                                                resizeMode='contain'
-                                            />
-                                        )
-                                    }
-                                </AnimatedCircularProgress>
-                                <Text style={styles.ensureText}>{ENSURE_TITLE}</Text>
+                                />
+                                {scanning ?
+                                    <ActivityIndicator
+                                        style={styles.activityIndicatorStyle}
+                                        size="large"
+                                        color={Theme.color.Black}
+                                    /> :
+                                    null
+                                }
                             </View>
-                        </View>
-                    }        
+
+                            :
+                            <View style={styles.pairTitleView}>
+                                <Text style={styles.pairTitle}>{LETS_PAIR_TITLE}</Text>
+                                <View style={styles.circularProgressView}>
+                                    <AnimatedCircularProgress
+                                        size={300}
+                                        width={8}
+                                        fill={100}
+                                        duration={5000}
+                                        tintColor={Theme.color.Black}
+                                        onAnimationComplete={() => {
+                                            setshowBLE(true)
+                                        }}
+                                        backgroundColor={Theme.color.gray15} >
+
+                                        {
+                                            (fill) => (
+                                                <Image
+                                                    style={styles.imageView}
+                                                    source={chasmaIcon}
+                                                    resizeMode='contain'
+                                                />
+                                            )
+                                        }
+                                    </AnimatedCircularProgress>
+                                    <Text style={styles.ensureText}>{ENSURE_TITLE}</Text>
+                                </View>
+                            </View>
+                        }
                     </View>
                 </View>
             </Provider>

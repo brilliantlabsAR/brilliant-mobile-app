@@ -2,44 +2,44 @@ import {
     StyleSheet,
     Dimensions
 } from "react-native";
-import { Theme } from "../../models/themes";
+import { FontFamily, Theme } from "../../models/themes";
 import { normalize } from "../../utils/dimentionUtils";
 const windowWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
 
-    bodyContainer:{
+    bodyContainer: {
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column'
     },
-    mainContainer:{
+    mainContainer: {
         backgroundColor: Theme.color.White,
         flexDirection: 'column',
         flex: 1,
         marginLeft: normalize(20),
         marginRight: normalize(20)
     },
-    mainContainer2:{ 
-        backgroundColor: Theme.color.White 
+    mainContainer2: {
+        backgroundColor: Theme.color.White
     },
-    marginTopView:{
+    marginTopView: {
         marginTop: normalize(5)
     },
-    containerStyle:{ 
+    containerStyle: {
         backgroundColor: 'white',
         padding: 20,
         marginLeft: normalize(20),
         marginRight: normalize(20),
-        borderRadius: normalize(20) 
+        borderRadius: normalize(20)
     },
-    insideModalView:{
+    insideModalView: {
         flexDirection: 'column'
     },
-    height15:{
+    height15: {
         height: normalize(15)
     },
-    submitButtonView:{
+    submitButtonView: {
         alignItems: 'center',
         borderRadius: normalize(80),
         backgroundColor: '#000000',
@@ -47,84 +47,84 @@ export const styles = StyleSheet.create({
         marginTop: normalize(10),
         justifyContent: 'center'
     },
-    submitText:{
+    submitText: {
         fontSize: 16,
         color: Theme.color.White,
         fontStyle: 'normal',
-        fontFamily: 'ApercuProRegular'
+        fontFamily: FontFamily.regular
     },
-    TouchableView:{
+    TouchableView: {
         backgroundColor: Theme.color.LightBlue,
         borderRadius: normalize(10),
     },
-    TouchableStyle:{
+    TouchableStyle: {
         flexDirection: 'row',
         alignContent: 'center',
         alignItems: 'center'
     },
-    TouchableText:{ 
+    TouchableText: {
         fontSize: normalize(12),
-        fontFamily: 'Apercu Pro Regular',
+        fontFamily: FontFamily.regular,
         color: Theme.color.White,
         padding: normalize(10),
     },
-    itemSeparatorView:{
+    itemSeparatorView: {
         height: 1,
         width: "100%",
         backgroundColor: Theme.color.gray13,
     },
-    renderItemMainView:{
+    renderItemMainView: {
         flexDirection: 'row',
         height: normalize(60),
         alignContent: 'center',
         alignItems: 'center',
         backgroundColor: Theme.color.White
     },
-    renderItemView:{
+    renderItemView: {
         marginLeft: normalize(10),
         flexDirection: 'column',
         flex: 3,
     },
-    renderItemText:{
+    renderItemText: {
         fontSize: normalize(14),
         color: Theme.color.Black,
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
     },
-    renderItemText2:{
+    renderItemText2: {
         fontSize: normalize(12),
         color: Theme.color.gray12,
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
     },
-    connectTouchView:{
+    connectTouchView: {
         flexDirection: 'row',
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'flex-end',
         flex: 1,
     },
-    connectView:{
+    connectView: {
         backgroundColor: Theme.color.blackOne,
         borderRadius: normalize(10),
     },
-    connectText:{ 
+    connectText: {
         fontSize: normalize(12),
         textAlign: 'center',
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
         color: Theme.color.White,
         padding: normalize(10)
-     },
-    activityIndicatorStyle:{ 
+    },
+    activityIndicatorStyle: {
         position: 'absolute',
         top: 0,
         bottom: 0,
         right: 0,
         left: 0,
-        backgroundColor: Theme.color.transparent 
+        backgroundColor: Theme.color.transparent
     },
-    pairTitleView:{
+    pairTitleView: {
         marginTop: normalize(50),
     },
-    pairTitle:{
+    pairTitle: {
         marginStart: 5,
         color: Theme.color.Black,
         fontSize: 30,
@@ -132,23 +132,23 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center',
         textAlign: 'center',
-        fontFamily: 'ApercuProBold'
+        fontFamily: FontFamily.bold
     },
-    circularProgressView:{
+    circularProgressView: {
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: "center",
         marginTop: normalize(50)
     },
-    imageView:{
+    imageView: {
         height: normalize(180),
         width: normalize(180)
     },
-    ensureText:{
+    ensureText: {
         fontSize: normalize(14),
         color: Theme.color.Black,
         marginTop: normalize(40),
-        fontFamily: 'ApercuProRegular',
+        fontFamily: FontFamily.regular,
     }
 
 })
