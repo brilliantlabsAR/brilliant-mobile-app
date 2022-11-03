@@ -31,7 +31,9 @@ import BottomSheet, { BottomSheetRefProps } from '../../components/bottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TextInput } from "react-native-paper";
 import { Loading } from '../../components/loading';
-import * as String from '../../models/constants'
+import * as String from '../../models/constants';
+import GetLocation from "react-native-get-location";
+
 
 type Props = LiveMomentNavigationProps
 const { height: SCREEN_HEIGHT } = Dimensions.get('screen');
@@ -120,6 +122,7 @@ const LiveMomentScreen = (props: Props) => {
 
     const ref = useRef<BottomSheetRefProps>(null);
     useEffect(() => {
+        getLocation();
         const isActive = ref?.current?.isActive();
         if (isActive) {
             ref?.current?.scrollTo(-400);
@@ -132,7 +135,21 @@ const LiveMomentScreen = (props: Props) => {
         }
     }, [])
 
+    async  function getLocation() {
 
+        await GetLocation.getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 15000,
+        })
+          .then(location => {
+            console.log('Location', location);
+            
+          })
+          .catch(error => {
+            const { code, message } = error;
+            console.warn(code, message);
+          })
+      }
     async function requestContactPermission() {
         try {
             const OsVeri = Platform.Version;
@@ -192,7 +209,7 @@ const LiveMomentScreen = (props: Props) => {
             }
         ).then(async () => {
             await Contact.getAll().then((contact) => {
-                console.log(contact)
+                //console.log(contact)
             });
         });
         getContact();
@@ -211,12 +228,12 @@ const LiveMomentScreen = (props: Props) => {
                 }
             ).then(async () => {
                 await Contact.getAll().then((contact) => {
-                    console.log('CONTACT', contact);
+                   // console.log('CONTACT', contact);
 
                     let result = contact.filter(item => {
                         if (item.phoneNumbers && item.phoneNumbers.length > 0) {
                             var number = item.phoneNumbers[0].number.toString();
-                            console.log('new', number);
+                          //  console.log('new', number);
 
                             return backendContacts.toString().indexOf(number.replace(/ /g, '').replace('(', '').replace(')', '').replace('-', '')) > -1
                         } else {
@@ -225,11 +242,11 @@ const LiveMomentScreen = (props: Props) => {
                     }
                     )
 
-                    console.log('result', result);
+                   // console.log('result', result);
                     setcontactList(result);
                     setaudienceList(result);
 
-                    console.log('HIHIOKOK', contactList)
+                 //   console.log('HIHIOKOK', contactList)
                 })
             }).catch((e) => {
                 console.log(e)
@@ -319,7 +336,10 @@ const LiveMomentScreen = (props: Props) => {
                         <MapView
                             style={StyleSheet.absoluteFillObject}
                             // mapType={'terrain'}
-                            mapType={Platform.OS == "ios" ? "satellite" : "hybrid"}
+                            
+                          //  mapType={Platform.OS == "ios" ? "hybridFlyover" : "hybrid"}
+                            mapType={Platform.OS == 'ios' ? 'satelliteFlyover' : 'hybrid'}
+
                             zoomEnabled
                             pitchEnabled
                             zoomTapEnabled

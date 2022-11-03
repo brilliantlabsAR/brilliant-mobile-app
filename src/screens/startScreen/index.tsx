@@ -11,6 +11,7 @@ import {
     BackHandler,
     ScrollView,
     ActivityIndicator,
+    PermissionsAndroid
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import SwiperFlatList from 'react-native-swiper-flatlist';
@@ -20,6 +21,7 @@ import { Theme } from "../../models";
 import { StartNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
+//import { check, PERMISSIONS, RESULTS, checkMultiple, requestMultiple,request } from 'react-native-permissions';
 import { chasmaIcon, blackRightArrowIcon, grayRightArrowIcon, blackLeftArrowIcon, grayLeftArrowIcon } from "../../assets";
 import { START_TITLE, START_INST_TITLE, START_TUTORIAL_TITLE } from "../../models/constants"
 
@@ -35,6 +37,62 @@ const StartScreen = (props: StartNavigationProps) => {
     const [boardingIndex, setboardingIndex] = useState<number>(0);
     const [nextButtonVisible, setnextButtonVisible] = useState<boolean>(true);
     const [backButtonVisible, setbackButtonVisible] = useState<boolean>(false);
+
+
+
+
+
+    useEffect(() => {
+        if (Platform.OS === 'android' && Platform.Version >= 23) {
+            PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
+                if (result) {
+                    console.log("ACCESS_FINE_LOCATION Permission is OK");
+                } else {
+                    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
+                        if (result) {
+                            console.log("ACCESS_FINE_LOCATION User accept");
+                        } else {
+                            console.log("User refuse");
+                        }
+                    });
+                }
+            });
+
+
+            if (Platform.Version >= 30) {
+                
+                try {
+                   PermissionsAndroid.requestMultiple(
+                        [PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+                        PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT]
+                    ).then((result) => {
+                        if (result['android.permission.BLUETOOTH_SCAN']
+                            && result['android.permission.BLUETOOTH_CONNECT'] === 'granted') {
+                            console.log('You can use the bluetooth');
+                        }else{
+                            console.log('Permission denied');
+                            return;    
+                        }
+                    });
+
+
+                } catch (err) {
+                    console.warn(err)
+                }
+
+            }
+
+
+
+
+
+
+        }
+    })
+
+
+
+
     const nextButton = () => {
         let pos = currentIndex + 1;
         if (pos == -1) {
@@ -119,7 +177,7 @@ const StartScreen = (props: StartNavigationProps) => {
                         <TouchableOpacity
                             activeOpacity={0.6}
                             style={styles.nextButtoTouch}
-                        //onPress={() => this.nextButton()}
+                            onPress={() => nextButton()}
                         >
                             <Text style={[styles.nextButtonText, { color: nextButtonVisible == true ? Theme.color.Black : Theme.color.gray, }]}>{'Next'}</Text>
 
