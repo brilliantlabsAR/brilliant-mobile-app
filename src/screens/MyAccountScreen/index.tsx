@@ -17,15 +17,17 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImageCropPicker from "react-native-image-crop-picker";
 import Modal from 'react-native-modal';
-
-import { normalize } from "../../utils/dimentionUtils";
-import { Theme } from "../../models";
+import { API_SLUG_CONTENT, API_LOGIN, Theme } from "../../models";
 import { AccountNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
 import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
 import Footer from "../../components/footer";
+import axios from 'axios';
+import api, { getApi, REQUEST_METHODS } from "../../models/apiStructure";
+import { ILoginData } from "../../redux/apiDataTypes";
+
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
     const { navigation } = props;
@@ -34,6 +36,37 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     const [showLoading, setshowLoading] = useState<boolean>(false);
     const [modalVisible, setmodalVisible] = useState<boolean>(false);
     let file = '';
+
+
+    const getData =
+        () => {
+            return (
+                api(API_SLUG_CONTENT, { method: REQUEST_METHODS.GET })
+            )
+        };
+
+    const postData =
+        (params: ILoginData) => {
+            return (
+                api(API_LOGIN, { method: REQUEST_METHODS.POST, params: params })
+            )
+        };
+    useEffect(() => {
+        console.log(API_SLUG_CONTENT);
+        // getApi(API_SLUG_CONTENT).then((res) => {
+        //     console.log("res", res);
+        // })
+
+        // api(API_SLUG_CONTENT, [])
+        // getData().then((res) => { console.log("res", res); })
+        const params: ILoginData = {
+            phone: "(973) 59-41814",
+            cc: "+91",
+            fcmToken: "ijoidfjoijweoifjopkjwcfkopvk operjioivjeoirtgujiojeriotjgioerjop berk pogtker'ktgerpgkrepok",
+            deviceType: "android"
+        };
+        postData(params).then((res) => { console.log("res", res.data); })
+    })
 
     const openModal = () => {
         setmodalVisible(true);
