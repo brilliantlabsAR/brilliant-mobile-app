@@ -12,10 +12,12 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column'
-    }, homeMenu: {
+    }, 
+    homeMenu: {
         width: 25,
         height: 25,
-    }, topView: {
+    },
+    topView: {
         position: 'absolute',
         bottom: 0,
         width: '100%',
@@ -31,8 +33,8 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 2,
         elevation: 5
-    }, mediaButtonStyle:
-    {
+    },
+    mediaButtonStyle:{
         width: width / 3,
         height: '100%',
         alignItems: 'center',
@@ -45,22 +47,26 @@ export const styles = StyleSheet.create({
         borderWidth: 0.5,
         paddingBottom: normalize(7)
     },
-    mediaScreenView:
-    {
+    mediaScreenView:{
         height: normalize(20),
         width: normalize(20)
     },
-    iconView:
-    {
+    mediaImageStyle:{
         height: '100%',
         width: '100%',
         resizeMode: 'contain'
     },
-    mediaTextStyle: {
+    iconView:{
+        height: '100%',
+        width: '100%',
+        resizeMode: 'contain'
+    },
+    mediaTextStyle:{
         fontFamily: FontFamily.regular,
         fontSize: normalize(10),
         marginTop: normalize(5)
-    }, liveButtonStyle: {
+    },
+    liveButtonStyle: {
         width: width / 3,
         height: '100%',
         alignItems: 'center',

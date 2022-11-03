@@ -416,7 +416,7 @@ PODS:
     - React-Core
   - RNDeviceInfo (10.3.0):
     - React-Core
-  - RNGestureHandler (2.7.1):
+  - RNGestureHandler (2.8.0):
     - React-Core
   - RNImageCropPicker (0.38.0):
     - React-Core
@@ -718,15 +718,15 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 758e70947c232828a66b5ddc42d02b4d010fa26e
   React-jsinspector: 55605caf04e02f9b0e05842b786f1c12dde08f4b
   React-logger: ca970551cb7eea2fd814d0d5f6fc1a471eb53b76
-  react-native-agora: c328ef8c381d7b22cc11d1eb298d8ff8a8e7a70d
+  react-native-agora: 7147c431a5af7f08dd420478d85c662b5e36efed
   react-native-ble-manager: b67db4b4c9f8ce8038b4aad4fe29db98878738ea
   react-native-contacts: 0aa99963d8f29099d4725cd0d2f8b6ef5f0d9a2d
-  react-native-maps: 085f614cf14d3637b2048bb9752da5b1c27c2886
-  react-native-netinfo: 85b2a435c4d3705c08b0c42ff2d6ef6b9622ea0a
-  react-native-nodemediaclient: 59d49a2115afd788a5bd97a523f5e468e609d2e0
-  react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
-  react-native-simple-toast: 8ee5d23f0b92b935ab7434cdb65159ce12dfb4b7
-  react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
+  react-native-maps: ed6470f754c140c75aabff757e154cf52a1636a8
+  react-native-netinfo: 17f6000534b84cf30b5f31ab5304914d5f55feb7
+  react-native-nodemediaclient: 5ad142c83e36aae7cfec31aeec53efa516dc166d
+  react-native-safe-area-context: ec0d85aca8110dae9327430a9541fec165352dab
+  react-native-simple-toast: 4f6a5b31f7a03bace3388fe9477b4db3de221bdd
+  react-native-video: 79a186e378d327b6c08bc3982c17ef455c6bd75c
   React-perflogger: c9161ff0f1c769993cd11d2751e4331ff4ceb7cd
   React-RCTActionSheet: 2d885b0bea76a5254ef852939273edd8de116180
   React-RCTAnimation: 353fa4fc3c19060068832dd32e555182ec07be45
@@ -739,14 +739,14 @@ SPEC CHECKSUMS:
   React-RCTVibration: e8b7dd6635cc95689b5db643b5a3848f1e05b30b
   React-runtimeexecutor: 27f468c5576eaf05ffb7a907528e44c75a3fcbae
   ReactCommon: e30ec17dfb1d4c4f3419eac254350d6abca6d5a2
-  ReactNativeGetLocation: d6b15cb2a2023ab7703f756501bad86d3ecf6fea
-  RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
-  RNCMaskedView: bc0170f389056201c82a55e242e5d90070e18e5a
-  RNDeviceInfo: 4701f0bf2a06b34654745053db0ce4cb0c53ada7
-  RNGestureHandler: b7a872907ee289ada902127f2554fa1d2c076122
+  ReactNativeGetLocation: 8517f44ae7364ac45fa3946f8bffeaa73594ff0d
+  RNCAsyncStorage: 73b194e58ded504eee17b9a3c125651e2507ddde
+  RNCMaskedView: 1f6cd0cb5e38ec01960e12fd8f95ecad809f8fbb
+  RNDeviceInfo: e5dbe9fc01590f4bc5b9dda77e39ff6a39859224
+  RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
   RNNotifee: 5155e0a5e0a97d0c839030d8192783cd63053999
-  RNReanimated: 7181243f956b43a9a95fd85c4b6f10aa26358a99
+  RNReanimated: 79e0b389a990002a774d28f8e94935c5dbe80f37
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   RNSVG: ecd661f380a07ba690c9c5929c475a44f432d674
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
@@ -758,4 +758,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: bd4cd4bc92644ee46be432ceb4a0d0539841db14
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2

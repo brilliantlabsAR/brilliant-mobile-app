@@ -98,20 +98,18 @@ export const styles = StyleSheet.create({
         fontWeight: '400',
         fontFamily: FontFamily.light
 
+    },
+    gap1:{
+        width: '2%',
+        backgroundColor: Theme.color.White,
+    },
+    gap2:{
+        width: '70%',
+        backgroundColor: Theme.color.White,
+    },
+    signupTextStyle:{
+        textDecorationLine: 'underline',
     }
-    // textInputOutlineStyle: {
-    //     colors: {
-    //         placeholder: '#A1A1A1',
-    //         text: '#000000', primary: '#A1A1A1',
-    //         underlineColor: 'transparent',
-    //         background: 'white',
-
-    //     }, fonts: {
-    //         regular: {
-    //             fontFamily: 'Apercu Pro Regular'
-    //         }
-    //     },
-    //     roundness: 10
-    // }
+    
 
 })

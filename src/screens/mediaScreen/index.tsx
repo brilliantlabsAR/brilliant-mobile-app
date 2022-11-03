@@ -22,6 +22,7 @@ import { Theme } from "../../models";
 import { MediaScreenNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage } from "../../assets";
+import {SEARCH_MEDIA, RENAME, DOWNLOAD, DELETE} from "../../models/constants";
 import * as CONST from '../../models';
 import { styles } from "./styles";
 import Footer from '../../components/footer'
@@ -121,16 +122,12 @@ const MediaScreen = (props: Props) => {
     return (
 
 
-        <SafeAreaView
-            style={styles.bodyContainer}>
+        <SafeAreaView style={styles.bodyContainer}>
 
             <View style={styles.topView}>
-                <ScrollView
-                    style={styles.scrollviewStyle}>
+                <ScrollView style={styles.scrollviewStyle}>
                     <View style={styles.searchView}>
-                        <Text
-                            style={styles.searchText}
-                        >{'Search media'}</Text>
+                        <Text style={styles.searchText}>{SEARCH_MEDIA}</Text>
 
                         <View style={styles.searchIconView}>
                             <Image
@@ -201,19 +198,19 @@ const MediaScreen = (props: Props) => {
                                                     <MenuOption onSelect={() => { 'function download' }} style={styles.menuView}>
                                                         <Text
                                                             style={styles.menuText}
-                                                        >{'Rename'}</Text>
+                                                        >{RENAME}</Text>
                                                     </MenuOption>
                                                     <View style={styles.menuSeparator} />
                                                     <MenuOption onSelect={() => { 'jo' }} style={styles.menuViewOtion}>
                                                         <Text
                                                             style={styles.menuOptionText}
-                                                        >{'Download'}</Text>
+                                                        >{DOWNLOAD}</Text>
                                                     </MenuOption>
                                                     <View style={styles.menuSeparator} />
                                                     <MenuOption onSelect={() => { 'pokl' }} style={styles.menuViewOtion}>
                                                         <Text
                                                             style={styles.menuOptionText}
-                                                        >{'Delete'}</Text>
+                                                        >{DELETE}</Text>
                                                     </MenuOption>
                                                 </MenuOptions>
                                             </Menu>

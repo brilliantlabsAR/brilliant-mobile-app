@@ -24,7 +24,9 @@ import {
 import { Theme } from "../../models";
 import { InviteContactScreenNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
+import { Loading } from '../../components/loading';
 import { search, closeIcon, shareIcon } from "../../assets";
+import { INVITE_CONTACT, SHARE_LINK, NO_CONTACT_LIST } from "../../models/constants";
 import Contact from 'react-native-contacts';
 
 
@@ -156,11 +158,6 @@ const InviteContactScreen = (props: Props) => {
                 console.log(e)
             })
 
-
-
-
-
-
         } catch (e) {
             console.log(e);
         }
@@ -202,9 +199,7 @@ const InviteContactScreen = (props: Props) => {
 
 
     const FlatListItemSeparator = ({ item }: { item: any }) => {
-        <View
-            style={styles.viewLine}
-        />
+        <View style={styles.viewLine}/>
     }
 
     const ContactListItem = ({ item }: { item: any }) => (
@@ -222,16 +217,13 @@ const InviteContactScreen = (props: Props) => {
         >
             <View style={styles.topListView}>
                 <View style={styles.middleView} >
-                    <View>
-                        <View style={styles.placeholder}>
-                            {item.givenName && item.givenName.length > 0 &&
+                    <View style={styles.placeholder}>
+                        {item.givenName && item.givenName.length > 0 &&
 
-                                <Text style={styles.txt}>{item.givenName[0]}</Text>
-                            }
+                            <Text style={styles.txt}>{item.givenName[0]}</Text>
+                        }
 
-                        </View>
                     </View>
-
                 </View>
                 <View style={styles.listNameView} >
                     <Text
@@ -247,15 +239,7 @@ const InviteContactScreen = (props: Props) => {
                         }
 
                     </View>
-
-
                 </View>
-
-
-
-
-
-
             </View>
         </TouchableOpacity>
     );
@@ -270,21 +254,15 @@ const InviteContactScreen = (props: Props) => {
                     onPress={() => navigation.goBack()}
                     style={styles.backButtonStyle}
                 >
-                    <View>
-
-                        <Image
-                            style={styles.homeMenu}
-                            source={closeIcon}
-                            resizeMode='contain'
-                        />
-
-                    </View>
+                <Image
+                    style={styles.homeMenu}
+                    source={closeIcon}
+                    resizeMode='contain'
+                />
                 </TouchableOpacity>
                 <Text
                     style={styles.headerText}
-                >{'Invite Contacts'}</Text>
-
-
+                >{INVITE_CONTACT}</Text>
             </View>
             <View style={styles.viewSpace} />
 
@@ -328,7 +306,7 @@ const InviteContactScreen = (props: Props) => {
                             </View>
                             <Text
                                 style={styles.shareLinkText}
-                            >{'Share Link'}</Text>
+                            >{SHARE_LINK}</Text>
 
                         </View>
                     </TouchableOpacity>
@@ -348,15 +326,11 @@ const InviteContactScreen = (props: Props) => {
                         /> :
                         <Text
                             style={styles.noConttact}
-                        >{'No Contact List found'}</Text>
+                        >{NO_CONTACT_LIST}</Text>
                     }
                     {
                         isLoading ?
-                            <ActivityIndicator
-                                style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: Theme.color.transparent }}
-                                size="large"
-                                color={Theme.color.Black}
-                            /> : null
+                        <Loading /> : null
                     }
                 </ScrollView>
 
