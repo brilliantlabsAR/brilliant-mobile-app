@@ -21,6 +21,7 @@ import { API_SLUG_CONTENT, API_LOGIN, Theme } from "../../models";
 import { AccountNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
+import { Loading } from '../../components/loading';
 import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
 import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
 import Footer from "../../components/footer";
@@ -254,11 +255,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                     </View>
                     {
                         showLoading ?
-                            <ActivityIndicator
-                                style={styles.activityView}
-                                size="large"
-                                color={Theme.color.Black}
-                            /> : null
+                        <Loading /> : null
                     }
                 </ScrollView>
                 <Modal

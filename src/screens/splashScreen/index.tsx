@@ -27,6 +27,7 @@ import notifee, { EventType } from '@notifee/react-native';
 import GetLocation from "react-native-get-location";
 import { styles } from "./styles";
 import { Theme } from "../../models/themes";
+import {SIGNUP_AND, START_LIVE_STREAMING, BROADCAST_YOUR_LIFE,LOGIN,SIGNUP} from "../../models/constants";
 import { RootStackParamList } from "../../navigations";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Routes from "../../models/routes";
@@ -160,16 +161,9 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
                         <View>
 
-                            <Text
-                                style={styles.signUpTextStyle}
-                            >{'Sign up and'}</Text>
-
-                            <Text
-                                style={styles.liveStreamingText}
-                            >{'Start live streaming'}</Text>
-                            <Text
-                                style={styles.broadCastText}
-                            >{'Broadcast your life as it happens'}</Text>
+                            <Text style={styles.signUpTextStyle}>{SIGNUP_AND}</Text>
+                            <Text style={styles.liveStreamingText}>{START_LIVE_STREAMING}</Text>
+                            <Text style={styles.broadCastText}>{BROADCAST_YOUR_LIFE}</Text>
 
                         </View>
 
@@ -183,9 +177,7 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
                                     navigation.navigate(Routes.NAV_SIGNUP_SCREEN)
                                 }
                             >
-                                <Text
-                                    style={styles.middleSignUpText}
-                                >Sign up</Text>
+                                <Text style={styles.middleSignUpText}>{SIGNUP}</Text>
                             </TouchableOpacity>
 
 
@@ -197,9 +189,7 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
                             >
 
 
-                                <Text
-                                    style={styles.loginText}
-                                >Login</Text>
+                                <Text style={styles.loginText}>{LOGIN}</Text>
 
 
                             </TouchableOpacity>

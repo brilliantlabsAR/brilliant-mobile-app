@@ -18,6 +18,7 @@ import { Theme } from "../../models";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
+import { VERIFY_NOW, RESEND_OTP } from "../../models/constants";
 import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
 import { Loading } from "../../components/loading";
@@ -103,48 +104,47 @@ const LoginOtpVerify = (props: Props) => {
                     <View style={styles.otpViewContainer}>
 
                         <View style={styles.otpViewBox}>
-                            <View>
-                                <OTPContainer
-                                    codeCount={4}
-                                    containerStyle={styles.otpContainerStyle}
-                                    onFinish={(code) => {
-                                        setOtp(code)
-                                    }}
-                                />
-                                <View style={styles.marginView}>
-                                    <View style={styles.timerView}>
-                                        <Image
-                                            style={styles.timerImage}
-                                            source={timeIcon}
-                                            resizeMode='contain' />
-                                        <Text
-                                            style={styles.timerText}
-                                        >{calculateTimer()}</Text>
-                                    </View>
-
-                                    <View style={styles.resendView}>
-                                        <TouchableOpacity activeOpacity={0.6}
-                                            disabled={timerEnable}
-                                            onPress={() =>
-                                                resendOtp()
-                                            }>
-                                            <Text style={styles.resendText}>Resend OTP</Text>
-                                        </TouchableOpacity>
-                                    </View>
+                            <OTPContainer
+                                codeCount={4}
+                                containerStyle={styles.otpContainerStyle}
+                                onFinish={(code) => {
+                                    setOtp(code)
+                                }}
+                            />
+                            <View style={styles.marginView}>
+                                <View style={styles.timerView}>
+                                    <Image
+                                        style={styles.timerImage}
+                                        source={timeIcon}
+                                        resizeMode='contain' />
+                                    <Text
+                                        style={styles.timerText}
+                                    >{calculateTimer()}</Text>
                                 </View>
 
-                                <TouchableOpacity activeOpacity={0.6}
-                                    onPress={() =>
-                                        verifyOTPCall()
-                                        //this.registerMember()
-                                        //showErrorAlert('Register Successfully!')
-                                        // console.log("Register", "Hii")
-                                    }
-                                    style={styles.verifyButtonStyle}>
-
-                                    <Text style={styles.verifyButtonText}>Verify Now</Text>
-                                </TouchableOpacity>
+                                <View style={styles.resendView}>
+                                    <TouchableOpacity activeOpacity={0.6}
+                                        disabled={timerEnable}
+                                        onPress={() =>
+                                            resendOtp()
+                                        }>
+                                        <Text style={styles.resendText}>{RESEND_OTP}</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
+
+                            <TouchableOpacity activeOpacity={0.6}
+                                onPress={() =>
+                                    verifyOTPCall()
+                                    //this.registerMember()
+                                    //showErrorAlert('Register Successfully!')
+                                    // console.log("Register", "Hii")
+                                }
+                                style={styles.verifyButtonStyle}>
+
+                                <Text style={styles.verifyButtonText}>{VERIFY_NOW}</Text>
+                            </TouchableOpacity>
+                            
                         </View>
 
                     </View>

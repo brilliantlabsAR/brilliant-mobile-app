@@ -28,6 +28,7 @@ import { FontFamily, Theme } from "../../models";
 import { PairingNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
+import { Loading } from '../../components/loading';
 import { chasmaIcon } from "../../assets";
 const peripherals = new Map();
 
@@ -633,12 +634,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
                                 />
                                 {scanning ?
-                                    <ActivityIndicator
-                                        style={styles.activityIndicatorStyle}
-                                        size="large"
-                                        color={Theme.color.Black}
-                                    /> :
-                                    null
+                                     <Loading /> : null
                                 }
                             </View>
 
