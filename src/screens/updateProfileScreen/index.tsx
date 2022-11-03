@@ -18,6 +18,7 @@ import { LoginVerifyNavigationProps, UpdateProfileNavigationProps } from "../../
 import { ILoginVerification } from "../../types";
 import { leftarrow, userIcon, smartphone, timeIcon, mailIcon } from "../../assets";
 import { styles } from "./styles";
+import { Loading } from '../../components/loading';
 import { TextInput } from 'react-native-paper';
 import { CountryCodePicker } from "../../utils/countryCodePicker";
 
@@ -34,6 +35,18 @@ const textInputStyle = {
         }
     },
     roundness: 10
+}
+
+const countryPickerStyle = {
+    // Styles for whole modal [View]
+    modal: {
+        backgroundColor: Theme.color.White,
+        height: '70%'
+    },
+    // Styles for input [TextInput]
+    textInput: {
+        borderRadius: 10,
+    },
 }
 
 
@@ -74,17 +87,7 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
             <CountryCodePicker
                 show={show}
                 lang={'en'}
-                style={{
-                    // Styles for whole modal [View]
-                    modal: {
-                        backgroundColor: Theme.color.White,
-                        height: '70%'
-                    },
-                    // Styles for input [TextInput]
-                    textInput: {
-                        borderRadius: 10,
-                    },
-                }}
+                style={countryPickerStyle}
 
                 // when picker button press you will get the country object with dial code
                 pickerButtonOnPress={(item) => {
@@ -158,7 +161,6 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
                 <TextInput
                     mode="outlined"
                     label="Email"
-
                     keyboardType="email-address"
                     value={email}
                     onChangeText={(email) => setEmail(email.replace(/\s/g, ''))}
@@ -181,25 +183,15 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
                     }
                     style={styles.updateButtonStyle}>
 
-
-                    <Text
-                        style={styles.updateText}
-                    >Update</Text>
+                    <Text style={styles.updateText}>Update</Text>
 
                 </TouchableOpacity>
 
             </View>
 
-
-
-
             {
                 isLoading ?
-                    <ActivityIndicator
-                        style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0, backgroundColor: Theme.color.transparent }}
-                        size="large"
-                        color={Theme.color.Black}
-                    /> : null
+                <Loading /> : null
             }
 
 

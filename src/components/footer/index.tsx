@@ -38,11 +38,7 @@ const Footer = (props: Props) => {
                 <View style={styles.mediaScreenView}>
                     <Image
                         source={selectedTab == 'MediaScreen' ? blackPlaylist : grayPlaylist}
-                        style={{
-                            height: '100%',
-                            width: '100%',
-                            resizeMode: 'contain'
-                        }} />
+                        style={styles.mediaImageStyle} />
                 </View>
                 <Text style={[styles.mediaTextStyle, { color: selectedTab == 'MediaScreen' ? Theme.color.Black : Theme.color.gray12, }]}>MEDIA</Text>
             </TouchableOpacity>
@@ -54,11 +50,7 @@ const Footer = (props: Props) => {
                 <View style={styles.mediaScreenView}>
                     <Image
                         source={selectedTab == 'LiveScreen' ? blackLive : grayLive}
-                        style={{
-                            height: '100%',
-                            width: '100%',
-                            resizeMode: 'contain'
-                        }} />
+                        style={styles.mediaImageStyle} />
                 </View>
                 <Text style={[styles.liveTextStyle, { color: selectedTab == 'LiveScreen' ? Theme.color.Black : Theme.color.gray12 }]}>LIVE MOMENT</Text>
             </TouchableOpacity>
@@ -70,11 +62,7 @@ const Footer = (props: Props) => {
                 <View style={styles.mediaScreenView}>
                     <Image
                         source={selectedTab == 'MyAccount' ? blackUser : grayUser}
-                        style={{
-                            height: '100%',
-                            width: '100%',
-                            resizeMode: 'contain'
-                        }} />
+                        style={styles.mediaImageStyle} />
                 </View>
                 <Text style={[styles.accountTextStyle, { color: selectedTab == 'MyAccount' ? Theme.color.Black : Theme.color.gray12 }]}>MY ACCOUNT</Text>
             </TouchableOpacity>

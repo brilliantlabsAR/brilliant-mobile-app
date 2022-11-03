@@ -122,14 +122,6 @@ export const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         height: normalize(60),
     },
-    activityView: {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        right: 0,
-        left: 0,
-        backgroundColor: Theme.color.transparent
-    },
     modalMainView: {
         alignSelf: 'center',
         backgroundColor: 'white',

@@ -3,8 +3,16 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
-
+use_frameworks! :linkage => :static
 target 'Brilliant' do
+  # permissions_path = '../node_modules/react-native-permissions/ios'
+  # pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  # pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
+  # pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  # pod 'Permission-BluetoothPeripheral', :path => "#{permissions_path}/BluetoothPeripheral"
+  # pod 'Permission-Contacts', :path => "#{permissions_path}/Contacts"
+  # pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
+
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -28,10 +36,16 @@ target 'Brilliant' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
-  use_flipper!()
+ # use_flipper!()
 
   post_install do |installer|
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = "arm64"
+      end
+    end
   end
+
 end

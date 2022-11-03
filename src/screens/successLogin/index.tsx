@@ -55,8 +55,7 @@ const SuccessLogin = (props: SuccessLoginNavigationProps) => {
                     >
                         <View style={styles.textContainer}>
 
-                            <Text
-                                style={styles.testStyle} >Ok</Text>
+                            <Text style={styles.testStyle} >Ok</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
