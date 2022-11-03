@@ -17,7 +17,6 @@ import {
 import { FontFamily, Theme } from "../../models";
 import { LoginNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
-//import  CountryPicker  from 'react-native-country-codes-picker';
 import { CountryCodePicker } from "../../utils/countryCodePicker";
 import { TextInput } from 'react-native-paper';
 import { leftarrow, smartphone } from "../../assets";

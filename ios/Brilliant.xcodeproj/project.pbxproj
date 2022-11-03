@@ -8,20 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* BrilliantTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* BrilliantTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-Brilliant.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Brilliant.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		39C52F4269A64FCD871B807B /* ApercuProLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = FCA9270D17404801949A0B33 /* ApercuProLight.otf */; };
 		59212346E4BB444FAA2CADCB /* ApercuProRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F3DC2D2FDC034841ADD3ACC2 /* ApercuProRegular.otf */; };
 		612E28ACBBF84AEEBED60746 /* ApercuProItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = CCE1D66C9497466DBDE3BFDE /* ApercuProItalic.otf */; };
-		7699B88040F8A987B510C191 /* libPods-Brilliant-BrilliantTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Brilliant-BrilliantTests.a */; };
 		7D936206D84B4138BF5537FC /* ApercuProMediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C6B7A211A874872AA217699 /* ApercuProMediumItalic.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		83C41205AFF44372A1CD0E0B /* ApercuProLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 91540333D9424958968CE056 /* ApercuProLightItalic.otf */; };
 		9F44AC1F6B5B446AB4CFDD5F /* ApercuProBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D3B1576F57024906857C1F6B /* ApercuProBoldItalic.otf */; };
+		AEA1E158B5FF8297C72DCBAA /* Pods_Brilliant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634337E929128F6F00B249A5 /* Pods_Brilliant.framework */; };
+		AF321134F22237712EC87077 /* Pods_Brilliant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10632CB6F6844FEA0A888CE8 /* Pods_Brilliant.framework */; };
 		B53AF4BE75B34CC7A630773C /* ApercuProMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 50339A5FACBA4334AA23799E /* ApercuProMedium.otf */; };
 		B84D9A990DB149B89A0FF80C /* ApercuProBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B523E360D8494D5793D85068 /* ApercuProBold.otf */; };
+		EE1586FDD89D84408E76ABF4 /* Pods_Brilliant_BrilliantTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18381B22DABE58526D026B5A /* Pods_Brilliant_BrilliantTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,28 +39,95 @@
 		00E356EE1AD99517003FC87E /* BrilliantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrilliantTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* BrilliantTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrilliantTests.m; sourceTree = "<group>"; };
+		10632CB6F6844FEA0A888CE8 /* Pods_Brilliant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Brilliant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* Brilliant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Brilliant.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Brilliant/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Brilliant/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Brilliant/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Brilliant/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Brilliant/main.m; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Brilliant-BrilliantTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Brilliant-BrilliantTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18381B22DABE58526D026B5A /* Pods_Brilliant_BrilliantTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Brilliant_BrilliantTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-Brilliant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant.debug.xcconfig"; path = "Target Support Files/Pods-Brilliant/Pods-Brilliant.debug.xcconfig"; sourceTree = "<group>"; };
-		50339A5FACBA4334AA23799E /* ApercuProMedium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProMedium.otf; path = ../src/assets/fonts/ApercuProMedium.otf; sourceTree = "<group>"; };
+		50339A5FACBA4334AA23799E /* ApercuProMedium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProMedium.otf; path = ../src/assets/fonts/ApercuProMedium.otf; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Brilliant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant.release.xcconfig"; path = "Target Support Files/Pods-Brilliant/Pods-Brilliant.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Brilliant-BrilliantTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant-BrilliantTests.debug.xcconfig"; path = "Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-Brilliant.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Brilliant.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C6B7A211A874872AA217699 /* ApercuProMediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProMediumItalic.otf; path = ../src/assets/fonts/ApercuProMediumItalic.otf; sourceTree = "<group>"; };
+		634337C329128F6F00B249A5 /* AgoraAIDenoiseExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraAIDenoiseExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraAIDenoiseExtension.xcframework; sourceTree = "<group>"; };
+		634337C529128F6F00B249A5 /* AgoraCIExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraCIExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraCIExtension.xcframework; sourceTree = "<group>"; };
+		634337C729128F6F00B249A5 /* AgoraCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraCore.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraCore.xcframework; sourceTree = "<group>"; };
+		634337C929128F6F00B249A5 /* AgoraDav1dExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraDav1dExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraDav1dExtension.xcframework; sourceTree = "<group>"; };
+		634337CB29128F6F00B249A5 /* AgoraFDExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraFDExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraFDExtension.xcframework; sourceTree = "<group>"; };
+		634337CD29128F6F00B249A5 /* Agorafdkaac.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Agorafdkaac.xcframework; path = Pods/AgoraRtcEngine_iOS/Agorafdkaac.xcframework; sourceTree = "<group>"; };
+		634337CF29128F6F00B249A5 /* Agoraffmpeg.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Agoraffmpeg.xcframework; path = Pods/AgoraRtcEngine_iOS/Agoraffmpeg.xcframework; sourceTree = "<group>"; };
+		634337D129128F6F00B249A5 /* AgoraFullAudioFormatExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraFullAudioFormatExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraFullAudioFormatExtension.xcframework; sourceTree = "<group>"; };
+		634337D329128F6F00B249A5 /* AgoraReplayKitExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraReplayKitExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraReplayKitExtension.xcframework; sourceTree = "<group>"; };
+		634337D529128F6F00B249A5 /* AgoraRtcKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraRtcKit.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraRtcKit.xcframework; sourceTree = "<group>"; };
+		634337D729128F6F00B249A5 /* AgoraSoundTouch.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraSoundTouch.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraSoundTouch.xcframework; sourceTree = "<group>"; };
+		634337D929128F6F00B249A5 /* AgoraSpatialAudioExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraSpatialAudioExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraSpatialAudioExtension.xcframework; sourceTree = "<group>"; };
+		634337DB29128F6F00B249A5 /* AgoraSuperResolutionExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraSuperResolutionExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraSuperResolutionExtension.xcframework; sourceTree = "<group>"; };
+		634337DD29128F6F00B249A5 /* AgoraVideoProcessExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraVideoProcessExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraVideoProcessExtension.xcframework; sourceTree = "<group>"; };
+		634337DF29128F6F00B249A5 /* AgoraVideoSegmentationExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraVideoSegmentationExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraVideoSegmentationExtension.xcframework; sourceTree = "<group>"; };
+		634337E129128F6F00B249A5 /* BVLinearGradient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BVLinearGradient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337E329128F6F00B249A5 /* DoubleConversion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DoubleConversion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337E529128F6F00B249A5 /* fmt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = fmt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337E729128F6F00B249A5 /* glog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = glog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337E929128F6F00B249A5 /* Pods_Brilliant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Brilliant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337ED29128F6F00B249A5 /* folly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = folly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337EF29128F6F00B249A5 /* RCTTypeSafety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTTypeSafety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337F129128F6F00B249A5 /* react_bridging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_bridging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337F329128F6F00B249A5 /* React_Codegen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = React_Codegen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337F529128F6F00B249A5 /* React.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = React.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337F729128F6F00B249A5 /* CoreModules.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CoreModules.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337F929128F6F00B249A5 /* cxxreact.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cxxreact.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337FB29128F6F00B249A5 /* jsi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = jsi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337FD29128F6F00B249A5 /* jsireact.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = jsireact.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		634337FF29128F6F00B249A5 /* jsinspector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = jsinspector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343380129128F6F00B249A5 /* logger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = logger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343380329128F6F00B249A5 /* react_native_agora.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_native_agora.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343380529128F6F00B249A5 /* react_native_ble_manager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_native_ble_manager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343380729128F6F00B249A5 /* react_native_contacts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_native_contacts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343380929128F6F00B249A5 /* react_native_maps.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_native_maps.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343380B29128F6F00B249A5 /* react_native_netinfo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_native_netinfo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343380D29128F6F00B249A5 /* react_native_nodemediaclient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_native_nodemediaclient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343380F29128F6F00B249A5 /* react_native_safe_area_context.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_native_safe_area_context.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343381129128F6F00B249A5 /* react_native_simple_toast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_native_simple_toast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343381329128F6F00B249A5 /* react_native_video.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_native_video.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343381529128F6F00B249A5 /* reactperflogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = reactperflogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343381729128F6F00B249A5 /* RCTAnimation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTAnimation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343381929128F6F00B249A5 /* RCTBlob.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTBlob.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343381B29128F6F00B249A5 /* RCTImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343381D29128F6F00B249A5 /* RCTLinking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTLinking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343381F29128F6F00B249A5 /* RCTNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343382129128F6F00B249A5 /* RCTSettings.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTSettings.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343382329128F6F00B249A5 /* RCTText.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTText.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343382529128F6F00B249A5 /* RCTVibration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTVibration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343382729128F6F00B249A5 /* ReactCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343382929128F6F00B249A5 /* ReactNativeGetLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactNativeGetLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343382B29128F6F00B249A5 /* RNCAsyncStorage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNCAsyncStorage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343382D29128F6F00B249A5 /* RNCMaskedView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNCMaskedView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343382F29128F6F00B249A5 /* RNDeviceInfo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNDeviceInfo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343383129128F6F00B249A5 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343383329128F6F00B249A5 /* RNImageCropPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNImageCropPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343383529128F6F00B249A5 /* RNNotifee.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNNotifee.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343383729128F6F00B249A5 /* RNPermissions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNPermissions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343383929128F6F00B249A5 /* RNReanimated.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNReanimated.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343383B29128F6F00B249A5 /* RNScreens.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNScreens.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343383D29128F6F00B249A5 /* RNSVG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNSVG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343383F29128F6F00B249A5 /* RNVectorIcons.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNVectorIcons.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343384129128F6F00B249A5 /* Toast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Toast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343384329128F6F00B249A5 /* TOCropViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TOCropViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6343384529128F6F00B249A5 /* yoga.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = yoga.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		63A1E3E82912874C0012E814 /* folly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = folly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		63A1E3EA291287520012E814 /* RCTTypeSafety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTTypeSafety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C6B7A211A874872AA217699 /* ApercuProMediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProMediumItalic.otf; path = ../src/assets/fonts/ApercuProMediumItalic.otf; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Brilliant/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Brilliant-BrilliantTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant-BrilliantTests.release.xcconfig"; path = "Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests.release.xcconfig"; sourceTree = "<group>"; };
-		91540333D9424958968CE056 /* ApercuProLightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProLightItalic.otf; path = ../src/assets/fonts/ApercuProLightItalic.otf; sourceTree = "<group>"; };
-		B523E360D8494D5793D85068 /* ApercuProBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProBold.otf; path = ../src/assets/fonts/ApercuProBold.otf; sourceTree = "<group>"; };
-		CCE1D66C9497466DBDE3BFDE /* ApercuProItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProItalic.otf; path = ../src/assets/fonts/ApercuProItalic.otf; sourceTree = "<group>"; };
-		D3B1576F57024906857C1F6B /* ApercuProBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProBoldItalic.otf; path = ../src/assets/fonts/ApercuProBoldItalic.otf; sourceTree = "<group>"; };
+		91540333D9424958968CE056 /* ApercuProLightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProLightItalic.otf; path = ../src/assets/fonts/ApercuProLightItalic.otf; sourceTree = "<group>"; };
+		B523E360D8494D5793D85068 /* ApercuProBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProBold.otf; path = ../src/assets/fonts/ApercuProBold.otf; sourceTree = "<group>"; };
+		CCE1D66C9497466DBDE3BFDE /* ApercuProItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProItalic.otf; path = ../src/assets/fonts/ApercuProItalic.otf; sourceTree = "<group>"; };
+		D3B1576F57024906857C1F6B /* ApercuProBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProBoldItalic.otf; path = ../src/assets/fonts/ApercuProBoldItalic.otf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F3DC2D2FDC034841ADD3ACC2 /* ApercuProRegular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProRegular.otf; path = ../src/assets/fonts/ApercuProRegular.otf; sourceTree = "<group>"; };
-		FCA9270D17404801949A0B33 /* ApercuProLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProLight.otf; path = ../src/assets/fonts/ApercuProLight.otf; sourceTree = "<group>"; };
+		F3DC2D2FDC034841ADD3ACC2 /* ApercuProRegular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProRegular.otf; path = ../src/assets/fonts/ApercuProRegular.otf; sourceTree = "<group>"; };
+		FCA9270D17404801949A0B33 /* ApercuProLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProLight.otf; path = ../src/assets/fonts/ApercuProLight.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-Brilliant-BrilliantTests.a in Frameworks */,
+				EE1586FDD89D84408E76ABF4 /* Pods_Brilliant_BrilliantTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +143,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-Brilliant.a in Frameworks */,
+				AF321134F22237712EC87077 /* Pods_Brilliant.framework in Frameworks */,
+				AEA1E158B5FF8297C72DCBAA /* Pods_Brilliant.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,9 +184,76 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				634337C329128F6F00B249A5 /* AgoraAIDenoiseExtension.xcframework */,
+				634337C529128F6F00B249A5 /* AgoraCIExtension.xcframework */,
+				634337C729128F6F00B249A5 /* AgoraCore.xcframework */,
+				634337C929128F6F00B249A5 /* AgoraDav1dExtension.xcframework */,
+				634337CB29128F6F00B249A5 /* AgoraFDExtension.xcframework */,
+				634337CD29128F6F00B249A5 /* Agorafdkaac.xcframework */,
+				634337CF29128F6F00B249A5 /* Agoraffmpeg.xcframework */,
+				634337D129128F6F00B249A5 /* AgoraFullAudioFormatExtension.xcframework */,
+				634337D329128F6F00B249A5 /* AgoraReplayKitExtension.xcframework */,
+				634337D529128F6F00B249A5 /* AgoraRtcKit.xcframework */,
+				634337D729128F6F00B249A5 /* AgoraSoundTouch.xcframework */,
+				634337D929128F6F00B249A5 /* AgoraSpatialAudioExtension.xcframework */,
+				634337DB29128F6F00B249A5 /* AgoraSuperResolutionExtension.xcframework */,
+				634337DD29128F6F00B249A5 /* AgoraVideoProcessExtension.xcframework */,
+				634337DF29128F6F00B249A5 /* AgoraVideoSegmentationExtension.xcframework */,
+				634337E129128F6F00B249A5 /* BVLinearGradient.framework */,
+				634337E329128F6F00B249A5 /* DoubleConversion.framework */,
+				634337E529128F6F00B249A5 /* fmt.framework */,
+				634337E729128F6F00B249A5 /* glog.framework */,
+				634337E929128F6F00B249A5 /* Pods_Brilliant.framework */,
+				634337ED29128F6F00B249A5 /* folly.framework */,
+				634337EF29128F6F00B249A5 /* RCTTypeSafety.framework */,
+				634337F129128F6F00B249A5 /* react_bridging.framework */,
+				634337F329128F6F00B249A5 /* React_Codegen.framework */,
+				634337F529128F6F00B249A5 /* React.framework */,
+				634337F729128F6F00B249A5 /* CoreModules.framework */,
+				634337F929128F6F00B249A5 /* cxxreact.framework */,
+				634337FB29128F6F00B249A5 /* jsi.framework */,
+				634337FD29128F6F00B249A5 /* jsireact.framework */,
+				634337FF29128F6F00B249A5 /* jsinspector.framework */,
+				6343380129128F6F00B249A5 /* logger.framework */,
+				6343380329128F6F00B249A5 /* react_native_agora.framework */,
+				6343380529128F6F00B249A5 /* react_native_ble_manager.framework */,
+				6343380729128F6F00B249A5 /* react_native_contacts.framework */,
+				6343380929128F6F00B249A5 /* react_native_maps.framework */,
+				6343380B29128F6F00B249A5 /* react_native_netinfo.framework */,
+				6343380D29128F6F00B249A5 /* react_native_nodemediaclient.framework */,
+				6343380F29128F6F00B249A5 /* react_native_safe_area_context.framework */,
+				6343381129128F6F00B249A5 /* react_native_simple_toast.framework */,
+				6343381329128F6F00B249A5 /* react_native_video.framework */,
+				6343381529128F6F00B249A5 /* reactperflogger.framework */,
+				6343381729128F6F00B249A5 /* RCTAnimation.framework */,
+				6343381929128F6F00B249A5 /* RCTBlob.framework */,
+				6343381B29128F6F00B249A5 /* RCTImage.framework */,
+				6343381D29128F6F00B249A5 /* RCTLinking.framework */,
+				6343381F29128F6F00B249A5 /* RCTNetwork.framework */,
+				6343382129128F6F00B249A5 /* RCTSettings.framework */,
+				6343382329128F6F00B249A5 /* RCTText.framework */,
+				6343382529128F6F00B249A5 /* RCTVibration.framework */,
+				6343382729128F6F00B249A5 /* ReactCommon.framework */,
+				6343382929128F6F00B249A5 /* ReactNativeGetLocation.framework */,
+				6343382B29128F6F00B249A5 /* RNCAsyncStorage.framework */,
+				6343382D29128F6F00B249A5 /* RNCMaskedView.framework */,
+				6343382F29128F6F00B249A5 /* RNDeviceInfo.framework */,
+				6343383129128F6F00B249A5 /* RNGestureHandler.framework */,
+				6343383329128F6F00B249A5 /* RNImageCropPicker.framework */,
+				6343383529128F6F00B249A5 /* RNNotifee.framework */,
+				6343383729128F6F00B249A5 /* RNPermissions.framework */,
+				6343383929128F6F00B249A5 /* RNReanimated.framework */,
+				6343383B29128F6F00B249A5 /* RNScreens.framework */,
+				6343383D29128F6F00B249A5 /* RNSVG.framework */,
+				6343383F29128F6F00B249A5 /* RNVectorIcons.framework */,
+				6343384129128F6F00B249A5 /* Toast.framework */,
+				6343384329128F6F00B249A5 /* TOCropViewController.framework */,
+				6343384529128F6F00B249A5 /* yoga.framework */,
+				63A1E3EA291287520012E814 /* RCTTypeSafety.framework */,
+				63A1E3E82912874C0012E814 /* folly.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-Brilliant.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-Brilliant-BrilliantTests.a */,
+				10632CB6F6844FEA0A888CE8 /* Pods_Brilliant.framework */,
+				18381B22DABE58526D026B5A /* Pods_Brilliant_BrilliantTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -135,7 +271,6 @@
 				F3DC2D2FDC034841ADD3ACC2 /* ApercuProRegular.otf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -192,7 +327,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
 				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -215,7 +349,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -307,23 +440,6 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Brilliant/Pods-Brilliant-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Brilliant/Pods-Brilliant-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Brilliant/Pods-Brilliant-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -366,23 +482,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
@@ -527,8 +626,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H4W763P627;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Brilliant/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -553,7 +654,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H4W763P627;
 				INFOPLIST_FILE = Brilliant/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

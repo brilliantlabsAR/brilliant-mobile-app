@@ -35,7 +35,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     const [fullName, setfullName] = useState<string>("");
     const [showLoading, setshowLoading] = useState<boolean>(false);
     const [modalVisible, setmodalVisible] = useState<boolean>(false);
-    let file = '';
+    let file:any = '';
 
 
     const getData =
