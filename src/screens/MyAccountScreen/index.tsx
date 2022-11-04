@@ -25,8 +25,7 @@ import { Loading } from '../../components/loading';
 import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
 import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
 import Footer from "../../components/footer";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { FetchLoginData } from "../../redux/slices/loginSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
 
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
@@ -37,19 +36,6 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     const [modalVisible, setmodalVisible] = useState<boolean>(false);
     let file: any = '';
 
-    const dispatch = useAppDispatch();
-    const status = useAppSelector(state => state.login.status)
-
-
-    useEffect(() => {
-        console.log(API_SLUG_CONTENT);
-        dispatch(FetchLoginData({
-            phone: "(973) 59-41814",
-            cc: "+91",
-            fcmToken: "ijoidfjoijweoifjopkjwcfkopvk operjioivjeoirtgujiojeriotjgioerjop berk pogtker'ktgerpgkrepok",
-            deviceType: "android"
-        }))
-    }, [])
 
     const openModal = () => {
         setmodalVisible(true);
