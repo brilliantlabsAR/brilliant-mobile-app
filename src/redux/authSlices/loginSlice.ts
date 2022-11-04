@@ -38,14 +38,18 @@ const LoginSlice = createSlice({
         state.status = apiStatus.loading;
       })
       .addCase(FetchLoginData.fulfilled, (state, action) => {
-        state.status = apiStatus.success;
-        console.log("ydg8ysdgvuyyu", action.payload.data);
-
-        state.loginData = action.payload.data;
+        if (action.payload.error === false) {
+          state.status = apiStatus.success;
+          console.log("ydg8ysdgvuyyu", action.payload.data);
+          state.loginData = action.payload.data;
+        } else {
+          state.status = apiStatus.failed;
+          console.log(action.payload.message);
+        }
       })
       .addCase(FetchLoginData.rejected, (state, action) => {
         state.status = apiStatus.failed;
-        console.log(action);
+        console.log(action.error);
       });
   },
 });

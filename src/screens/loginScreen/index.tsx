@@ -24,7 +24,7 @@ import { Loading } from '../../components/loading';
 import { WELCOME_TO_APP, LOGIN, DONT_HAVE_ACCN, SIGNUP } from "../../models/constants";
 import * as Routes from "../../models/routes";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { FetchLoginData } from "../../redux/slices/loginSlice";
+import { FetchLoginData } from "../../redux/authSlices/loginSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 
 const LoginScreen = (props: LoginNavigationProps) => {
