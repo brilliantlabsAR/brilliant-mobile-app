@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import LoginSlice from "./slices/loginSlice";
+import LoginSlice from "./authSlices/loginSlice";
 
 const store = configureStore({
   reducer: {
