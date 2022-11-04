@@ -1,13 +1,9 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import tutorialSlice from "./slice/tutorialSlice";
-import bluetoothPairingSlice from "./slice/bluetoothPairingSlice";
-import dashboardDataSlice from "./slice/dashboardDataSlice";
+import LoginSlice from "./slices/loginSlice";
 
 const store = configureStore({
   reducer: {
-    tutorial: tutorialSlice,
-    pairing: bluetoothPairingSlice,
-    dashboardData: dashboardDataSlice,
+    login: LoginSlice,
   },
 });
 

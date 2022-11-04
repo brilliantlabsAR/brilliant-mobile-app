@@ -25,18 +25,18 @@ import { Loading } from "../../components/loading";
 import { ShowToast } from "../../utils/toastUtils";
 import * as Strings from '../../models';
 import * as Routes from "../../models/routes";
+import { useAppSelector } from "../../redux/hooks";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
 let timerEnable = true;
 const LoginOtpVerify = (props: Props) => {
     const { navigation, route } = props;
-
     const [phoneNumber] = useState<string>(route.params.phoneNumber);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [timer, setTimer] = useState<number>(240);
     const [otp, setOtp] = useState<string>('');
-
+    const userDetails = useAppSelector(state => state.login.loginData);
 
     useEffect(() => {
         console.log('LoLO', timer);
@@ -76,6 +76,7 @@ const LoginOtpVerify = (props: Props) => {
     }
 
     function verifyOTPCall() {
+        console.log("fjhbd", userDetails.phoneNumber);
         navigation.replace(Routes.NAV_SUCCESS_LOGIN);
     }
 
@@ -144,7 +145,7 @@ const LoginOtpVerify = (props: Props) => {
 
                                 <Text style={styles.verifyButtonText}>{VERIFY_NOW}</Text>
                             </TouchableOpacity>
-                            
+
                         </View>
 
                     </View>
