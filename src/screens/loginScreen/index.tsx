@@ -23,6 +23,9 @@ import { leftarrow, smartphone } from "../../assets";
 import { Loading } from '../../components/loading';
 import { WELCOME_TO_APP, LOGIN, DONT_HAVE_ACCN, SIGNUP } from "../../models/constants";
 import * as Routes from "../../models/routes";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchLoginData } from "../../redux/slices/loginSlice";
+import { apiStatus } from "../../redux/apiDataTypes";
 
 const LoginScreen = (props: LoginNavigationProps) => {
 
@@ -32,7 +35,26 @@ const LoginScreen = (props: LoginNavigationProps) => {
   const [phoneNumber, setphoneNumber] = useState<string>('');
   let newPhoneNumber = countryCode + phoneNumber;
   const { navigation } = props;
+  const dispatch = useAppDispatch();
+  const status = useAppSelector(state => state.login.status)
 
+  useEffect(() => {
+    if (status === apiStatus.success) {
+      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: phoneNumber })
+    }
+  }, [status])
+
+
+  const loginApiFunc = () => {
+
+    dispatch(FetchLoginData({
+      phone: "(973) 59-41814",
+      cc: "+91",
+      fcmToken: "ijoidfjoijweoifjopkjwcfkopvk operjioivjeoirtgujiojeriotjgioerjop berk pogtker'ktgerpgkrepok",
+      deviceType: "android"
+    }))
+
+  }
   const textInputStyle = {
     colors: {
       placeholder: '#A1A1A1',
@@ -118,12 +140,11 @@ const LoginScreen = (props: LoginNavigationProps) => {
             </View>
 
             <TouchableOpacity activeOpacity={0.6}
-              onPress={() =>
+              onPress={loginApiFunc
                 // this.LoginMember()
                 //showErrorAlert('Register Successfully!')
                 //    this.props.navigation.navigate("LoginOtpVerifyScreen")
                 //  console.log("Register", "Hii")
-                navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: phoneNumber })
 
               }
               style={styles.loginButtonStyle}>
@@ -159,7 +180,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
           {
             isLoading ?
-            <Loading /> : null
+              <Loading /> : null
           }
         </ScrollView>
 

@@ -9,20 +9,21 @@ import {
   LogBox,
 } from "react-native";
 import RootNavigation from "./navigations";
+import { Provider } from 'react-redux';
+import store from "./redux/store";
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function () {
   return (
-    <>
+    <Provider store={store}>
       <StatusBar
         animated={true}
         barStyle={Platform.OS === "ios" ? "dark-content" : "light-content"}
         showHideTransition={"none"}
         hidden={false}
       />
-    <RootNavigation/>
 
-      
-    </>
+      <RootNavigation />
+    </Provider>
   );
 }

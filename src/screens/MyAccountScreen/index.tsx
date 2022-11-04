@@ -25,9 +25,8 @@ import { Loading } from '../../components/loading';
 import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
 import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
 import Footer from "../../components/footer";
-import axios from 'axios';
-import api, { getApi, REQUEST_METHODS } from "../../models/apiStructure";
-import { ILoginData } from "../../redux/apiDataTypes";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchLoginData } from "../../redux/slices/loginSlice";
 
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
@@ -36,38 +35,21 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     const [fullName, setfullName] = useState<string>("");
     const [showLoading, setshowLoading] = useState<boolean>(false);
     const [modalVisible, setmodalVisible] = useState<boolean>(false);
-    let file:any = '';
+    let file: any = '';
+
+    const dispatch = useAppDispatch();
+    const status = useAppSelector(state => state.login.status)
 
 
-    const getData =
-        () => {
-            return (
-                api(API_SLUG_CONTENT, { method: REQUEST_METHODS.GET })
-            )
-        };
-
-    const postData =
-        (params: ILoginData) => {
-            return (
-                api(API_LOGIN, { method: REQUEST_METHODS.POST, params: params })
-            )
-        };
     useEffect(() => {
         console.log(API_SLUG_CONTENT);
-        // getApi(API_SLUG_CONTENT).then((res) => {
-        //     console.log("res", res);
-        // })
-
-        // api(API_SLUG_CONTENT, [])
-        // getData().then((res) => { console.log("res", res); })
-        const params: ILoginData = {
+        dispatch(FetchLoginData({
             phone: "(973) 59-41814",
             cc: "+91",
             fcmToken: "ijoidfjoijweoifjopkjwcfkopvk operjioivjeoirtgujiojeriotjgioerjop berk pogtker'ktgerpgkrepok",
             deviceType: "android"
-        };
-        postData(params).then((res) => { console.log("res", res.data); })
-    })
+        }))
+    }, [])
 
     const openModal = () => {
         setmodalVisible(true);
@@ -255,7 +237,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                     </View>
                     {
                         showLoading ?
-                        <Loading /> : null
+                            <Loading /> : null
                     }
                 </ScrollView>
                 <Modal
