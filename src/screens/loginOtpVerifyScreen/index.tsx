@@ -36,7 +36,7 @@ const LoginOtpVerify = (props: Props) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [timer, setTimer] = useState<number>(240);
     const [otp, setOtp] = useState<string>('');
-    const userDetails = useAppSelector(state => state.login.loginData);
+    const userDetails = useAppSelector(state => state.login.userData);
 
     useEffect(() => {
         console.log('LoLO', timer);

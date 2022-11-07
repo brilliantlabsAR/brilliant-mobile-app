@@ -21,6 +21,9 @@ import { styles } from "./styles";
 import { Loading } from '../../components/loading';
 import { TextInput } from 'react-native-paper';
 import { CountryCodePicker } from "../../utils/countryCodePicker";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchUpdateProfileData } from "../../redux/appSlices/updateProfileSlice";
+import { apiStatus } from "../../redux/apiDataTypes";
 
 const textInputStyle = {
     colors: {
@@ -58,6 +61,26 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
     const [countryCode, setCountryCode] = useState<string>('');
     const [phoneNumber, setPhoneNumber] = useState<string>('');
     const [email, setEmail] = useState<string>('');
+    const dispatch = useAppDispatch();
+    const status = useAppSelector(state => state.updateProfile.status)
+
+    useEffect(() => {
+        if (status === apiStatus.success) {
+            console.log("succesfully updated");
+
+        }
+    }, [status])
+
+    const updateProfileApiFunc = () => {
+
+        dispatch(FetchUpdateProfileData({
+            "cc": "+91",
+            "name": "Shayankar Datta",
+            "phone": "9735941814",
+            "email": "shayankardatta@gmail.com"
+        }))
+
+    }
 
     return (
         <SafeAreaView
@@ -178,7 +201,8 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
                         // this.registerMember()
                         //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
                         // 
-                        console.log("Register", "Hii")
+                        // console.log("Register", "Hii")
+                        updateProfileApiFunc()
 
                     }
                     style={styles.updateButtonStyle}>
@@ -191,7 +215,7 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
 
             {
                 isLoading ?
-                <Loading /> : null
+                    <Loading /> : null
             }
 
 
