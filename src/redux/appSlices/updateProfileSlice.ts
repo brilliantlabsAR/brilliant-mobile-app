@@ -26,10 +26,10 @@ export const FetchUpdateProfileData = createAsyncThunk(
 );
 
 const UpdateProfileSlice = createSlice({
-  name: "loginSlice",
+  name: "updateProfileSlice",
   initialState,
   reducers: {
-    resetLogin: (state) => {
+    resetData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -56,5 +56,5 @@ const UpdateProfileSlice = createSlice({
   },
 });
 
-export const { resetLogin } = UpdateProfileSlice.actions;
+export const { resetData } = UpdateProfileSlice.actions;
 export default UpdateProfileSlice.reducer;
