@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
-import { apiStatus, ILoginProps, IStateProps } from "../apiDataTypes";
+import { apiStatus, ISignupProps, IStateProps } from "../apiDataTypes";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
   userData: {},
 };
 
-export const FetchLoginData = createAsyncThunk(
-  "loginSlice/fetchLoginData",
-  async (options: ILoginProps) => {
+export const FetchSignupData = createAsyncThunk(
+  "signupSlice/fetchLoginData",
+  async (options: ISignupProps) => {
     try {
       const response = await axios.post(
-        Const.API_BASE_URL + Const.API_LOGIN,
+        Const.API_BASE_URL + Const.API_SIGNUP,
         options
       );
       return response.data;
@@ -23,36 +23,36 @@ export const FetchLoginData = createAsyncThunk(
   }
 );
 
-const LoginSlice = createSlice({
-  name: "loginSlice",
+const SignupSlice = createSlice({
+  name: "signupSlice",
   initialState,
   reducers: {
-    resetLogin: (state) => {
+    resetData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(FetchLoginData.pending, (state) => {
+      .addCase(FetchSignupData.pending, (state) => {
         state.status = apiStatus.loading;
       })
-      .addCase(FetchLoginData.fulfilled, (state, action) => {
+      .addCase(FetchSignupData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          console.log("ydg8ysdgvuyyu", action.payload.data);
+          console.log("Payload Data", action.payload);
           state.userData = action.payload.data;
         } else {
           state.status = apiStatus.failed;
           console.log(action.payload.message);
         }
       })
-      .addCase(FetchLoginData.rejected, (state, action) => {
+      .addCase(FetchSignupData.rejected, (state, action) => {
         state.status = apiStatus.failed;
         console.log(action.error);
       });
   },
 });
 
-export const { resetLogin } = LoginSlice.actions;
-export default LoginSlice.reducer;
+export const { resetData } = SignupSlice.actions;
+export default SignupSlice.reducer;

@@ -23,6 +23,8 @@ import { leftarrow, smartphone } from "../../assets";
 import { Loading } from '../../components/loading';
 import { WELCOME_TO_APP, LOGIN, DONT_HAVE_ACCN, SIGNUP } from "../../models/constants";
 import * as Routes from "../../models/routes";
+import {ShowToast} from "../../utils/toastUtils";
+import {Validations} from "../../utils/validationUtils";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchLoginData } from "../../redux/authSlices/loginSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
@@ -40,19 +42,24 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
   useEffect(() => {
     if (status === apiStatus.success) {
-      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: phoneNumber })
+
+      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: phoneNumber ,screen:LOGIN})
     }
   }, [status])
 
 
   const loginApiFunc = () => {
-
-    dispatch(FetchLoginData({
-      phone: "(973) 59-41814",
-      cc: "+91",
-      fcmToken: "ijoidfjoijweoifjopkjwcfkopvk operjioivjeoirtgujiojeriotjgioerjop berk pogtker'ktgerpgkrepok",
-      deviceType: "android"
-    }))
+    if(Validations.verifyRequired(phoneNumber)== true && Validations.verifyPhone(phoneNumber)== true){
+      dispatch(FetchLoginData({
+        phone: phoneNumber,
+        cc: countryCode,
+        fcmToken: "ijoidfjoijweoifjopkjwcfkopvk operjioivjeoirtgujiojeriotjgioerjop berk pogtker'ktgerpgkrepok",
+        deviceType: "android"
+      }))
+    }else{
+      ShowToast("Please enter correct no");
+    }
+    
 
   }
   const textInputStyle = {

@@ -18,14 +18,19 @@ import { Theme } from "../../models";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
-import { VERIFY_NOW, RESEND_OTP } from "../../models/constants";
+import { VERIFY_NOW, RESEND_OTP, } from "../../models/constants";
 import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
 import { Loading } from "../../components/loading";
-import { ShowToast } from "../../utils/toastUtils";
 import * as Strings from '../../models';
 import * as Routes from "../../models/routes";
-import { useAppSelector } from "../../redux/hooks";
+import {ShowToast} from "../../utils/toastUtils";
+import {Validations} from "../../utils/validationUtils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchOtpData } from "../../redux/authSlices/otpVerifySlice";
+import { FetchResendOtpData } from "../../redux/authSlices/otpResendSlice";
+import { apiStatus } from "../../redux/apiDataTypes";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
@@ -36,10 +41,13 @@ const LoginOtpVerify = (props: Props) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [timer, setTimer] = useState<number>(240);
     const [otp, setOtp] = useState<string>('');
-    const userDetails = useAppSelector(state => state.login.loginData);
+    const userDetails = useAppSelector(state => state.login.userData);
+    const dispatch = useAppDispatch();
+    const status = useAppSelector(state => state.otp.status);
+    const resendOtpStatus = useAppSelector(state => state.resendOtp.userData);
 
     useEffect(() => {
-        console.log('LoLO', timer);
+        //console.log('LoLO', timer);
         let clockCall = setInterval(() => {
             if (timer === 0) {
                 clearInterval(clockCall);
@@ -53,8 +61,22 @@ const LoginOtpVerify = (props: Props) => {
         }
     })
 
+    useEffect(() => {
+        if (status === apiStatus.success) {
+          navigation.navigate(Routes.NAV_SUCCESS_LOGIN)
+        }
+    }, [status])
+
+    useEffect(() => {
+        if(resendOtpStatus != null){
+            console.log("from redddjnkf", resendOtpStatus);
+            //ShowToast(resendOtpStatus);
+        }
+        
+    }, [resendOtpStatus])
+
     const calculateTimer = () => {
-        console.log("timerlog", timer);
+        //console.log("timerlog", timer);
         if (timer === 0) {
             timerEnable = false;
             return ('00:00');
@@ -66,18 +88,35 @@ const LoginOtpVerify = (props: Props) => {
     };
 
     function resendOtp() {
-        if (otp == '' || otp == ' ') {
+        if (phoneNumber == '' || phoneNumber == '') {
             ShowToast(Strings.OTP_VERIFY);
         } else {
             Keyboard.dismiss();
             setIsLoading(true);
-            // this.props.verifyOTP({ phone: phoneNumber, otp: otp })
+            if(Validations.verifyRequired(phoneNumber)== true){
+                dispatch(FetchResendOtpData({
+                    phone: phoneNumber,
+                  }))
+                  setIsLoading(false);
+                  
+            }else{
+                ShowToast("Please check Phone no");
+            }
         }
     }
 
     function verifyOTPCall() {
         console.log("fjhbd", userDetails.phoneNumber);
-        navigation.replace(Routes.NAV_SUCCESS_LOGIN);
+        console.log(phoneNumber + '//// ' +otp)
+        if(Validations.verifyRequired(otp)== true){
+            dispatch(FetchOtpData({
+                phone: phoneNumber,
+                otp: otp,
+              }))
+        }else{
+            ShowToast("Please fill OTP");
+        }
+        
     }
 
     return (
