@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import LoginSlice from "./authSlices/loginSlice";
+import UpdateProfileSlice from "./appSlices/updateProfileSlice";
 
 const store = configureStore({
   reducer: {
     login: LoginSlice,
+    updateProfile: UpdateProfileSlice,
   },
 });
 

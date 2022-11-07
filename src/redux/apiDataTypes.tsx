@@ -6,11 +6,18 @@ export enum apiStatus {
 }
 export interface ILoginProps {
     phone: string;
-    cc: any;
-    fcmToken: any;
-    deviceType: any;
+    cc: string;
+    fcmToken: string;
+    deviceType: string;
 }
-export interface ILoginState {
+export interface IStateProps {
     status: apiStatus;
-    loginData: { [key: string]: string | number }
+    userData: { [key: string]: string | number }
+}
+
+export interface IUpdateProfileProps {
+    cc: string,
+    name: string,
+    phone: string,
+    email: string
 }
