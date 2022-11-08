@@ -33,6 +33,13 @@ import { TextInput } from "react-native-paper";
 import { Loading } from '../../components/loading';
 import * as String from '../../models/constants';
 import GetLocation from "react-native-get-location";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchStreamerAudienceData } from "../../redux/appSlices/streamerAudienceSlice";
+import { apiStatus } from "../../redux/apiDataTypes";
+import { ShowToast } from "../../utils/toastUtils";
+import { FetchLocationData } from "../../redux/appSlices/appLocationSlice";
+import { FetchNotificationData } from "../../redux/appSlices/notificationCreateSlice";
+import { FetchUserBlockData } from "../../redux/appSlices/userBlockSlice";
 
 
 type Props = LiveMomentNavigationProps
@@ -66,63 +73,27 @@ const LiveMomentScreen = (props: Props) => {
         }
     ]);
 
-    const [streamerList, setStreamerList] = useState<any[]>([
-        {
-            "id": "1",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "21 Jan 2022"
-        },
-        {
-            "id": "2",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "28 Jan 2021"
-        },
-        {
-            "id": "3",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "4",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "5",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "6",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "7",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "8",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "9",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-    ]);
+    const [streamerList, setStreamerList] = useState<any | null[]>([]);
     const [names, setNames] = useState<string[]>([]);
 
     const [backendContacts, setbackendContacts] = useState([]);
     const [contactList, setcontactList] = useState<any[]>([]);
-    const [audienceList, setaudienceList] = useState<any[]>([]);
+    const [audienceList, setaudienceList] = useState<any | null[]>(null);
     const [itemClick, setItemClick] = useState<boolean>(false);
+
+    const dispatch = useAppDispatch();
+    const status = useAppSelector(state => state.streamerAudienceSlice.status);
+    const streamAudienceData = useAppSelector(state => state.streamerAudienceSlice.userData);
+    const locationStatus = useAppSelector(state => state.appLocationSlice.status);
+    const notificationStatus = useAppSelector(state => state.notificationCreateSlice.status);
+    const blockUserStatus = useAppSelector(state => state.userBlockSlice.status);
+
+
+
+
 
     const ref = useRef<BottomSheetRefProps>(null);
     useEffect(() => {
-        getLocation();
         const isActive = ref?.current?.isActive();
         if (isActive) {
             ref?.current?.scrollTo(-400);
@@ -133,23 +104,77 @@ const LiveMomentScreen = (props: Props) => {
                 ref?.current?.scrollTo(-100)
             )
         }
+
+        if (status === apiStatus.success) {
+            console.log("data");
+            console.log("data-->", streamAudienceData.streamers);
+            setStreamerList(streamAudienceData.streamers);
+            setaudienceList(streamAudienceData.audience);
+        }
+
+    }, [status])
+    useEffect(() => {
+        if (locationStatus === apiStatus.success) {
+            console.log("data-->");
+
+        }
+    }, [locationStatus]);
+    useEffect(() => {
+        if (notificationStatus === apiStatus.success) {
+            console.log("Notification-->");
+
+        }
+    }, [notificationStatus]);
+    useEffect(() => {
+        if (blockUserStatus === apiStatus.success) {
+            console.log("user Block-->");
+
+        }
+    }, [blockUserStatus]);
+    useEffect(() => {
+        if (blockUserStatus === apiStatus.success) {
+            console.log("user Block-->");
+
+        }
+    }, [blockUserStatus]);
+    useEffect(() => {
+        getLocation();
+        dispatch(FetchStreamerAudienceData({}))
     }, [])
 
-    async  function getLocation() {
+
+    const sendNotificationApiFunc = (userId: any) => {
+        dispatch(FetchNotificationData({
+            "userId": userId
+        }))
+    }
+    const streamerUserBlock = (userId: any) => {
+        dispatch(FetchUserBlockData({
+            "blockedUser": userId,
+            "type": "streamer"
+        }))
+    }
+
+    async function getLocation() {
 
         await GetLocation.getCurrentPosition({
-          enableHighAccuracy: true,
-          timeout: 15000,
+            enableHighAccuracy: true,
+            timeout: 15000,
         })
-          .then(location => {
-            console.log('Location', location);
-            
-          })
-          .catch(error => {
-            const { code, message } = error;
-            console.warn(code, message);
-          })
-      }
+            .then(location => {
+                console.log('Location', location);
+                dispatch(FetchLocationData({
+                    "latitude": location.latitude.toString(),
+                    "longitude": location.longitude.toString(),
+                    "time": location.time.toString()
+                }))
+
+            })
+            .catch(error => {
+                const { code, message } = error;
+                console.warn(code, message);
+            })
+    }
     async function requestContactPermission() {
         try {
             const OsVeri = Platform.Version;
@@ -213,6 +238,7 @@ const LiveMomentScreen = (props: Props) => {
             });
         });
         getContact();
+
     }, []);
 
 
@@ -228,12 +254,12 @@ const LiveMomentScreen = (props: Props) => {
                 }
             ).then(async () => {
                 await Contact.getAll().then((contact) => {
-                   // console.log('CONTACT', contact);
+                    // console.log('CONTACT', contact);
 
                     let result = contact.filter(item => {
                         if (item.phoneNumbers && item.phoneNumbers.length > 0) {
                             var number = item.phoneNumbers[0].number.toString();
-                          //  console.log('new', number);
+                            //  console.log('new', number);
 
                             return backendContacts.toString().indexOf(number.replace(/ /g, '').replace('(', '').replace(')', '').replace('-', '')) > -1
                         } else {
@@ -242,11 +268,11 @@ const LiveMomentScreen = (props: Props) => {
                     }
                     )
 
-                   // console.log('result', result);
+                    // console.log('result', result);
                     setcontactList(result);
                     setaudienceList(result);
 
-                 //   console.log('HIHIOKOK', contactList)
+                    //   console.log('HIHIOKOK', contactList)
                 })
             }).catch((e) => {
                 console.log(e)
@@ -255,6 +281,78 @@ const LiveMomentScreen = (props: Props) => {
             console.log(e);
         }
 
+    }
+
+    const render_streamerList: ListRenderItem<any> = ({ item, index }) => {
+        return (
+            <View style={styles.contactListContainer}>
+                <View style={styles.profilePictureContainer} >
+                    {item?.profilePicture == "" ?
+                        <View style={styles.placeholder}>
+                            <Text style={styles.txt}>{item?.name.substring(0, 1)}</Text>
+                        </View> :
+                        <View style={styles.placeholder}>
+                            <Image
+                                style={styles.profileImage}
+                                source={{ uri: item?.profilePicture }}
+                                resizeMode='cover'
+                            />
+                        </View>
+                    }
+                </View>
+                <View style={styles.nameListContainer} >
+                    <Text style={styles.name}>{item.name}</Text>
+                </View>
+                {/* {!this.state.audienceList.includes(item) && */}
+                <TouchableOpacity style={styles.iconContainer}
+                    onPress={() => {
+                        //   this.setState({ audienceList: this.state.audienceList.push(item), popupOpen: true })
+                        //  this.setState({ audienceList: [...this.state.audienceList, item], popupOpen: true })
+                        // this.sentNotification(item.id);
+                        // this.setState({ popupOpen: true })
+                        // this.setState({ itemClick: true })
+                        sendNotificationApiFunc(item.id);
+
+                    }} >
+                    <View>
+                        {itemClick == true ?
+
+                            <Image
+                                style={styles.iconStyle}
+                                source={blackBell}
+                                // source={require('../img/bell_fill.png')}
+                                resizeMode='contain'
+                            /> :
+                            <Image
+                                style={styles.iconStyle}
+                                // source={require('../img/black_bell.png')}
+                                source={bellFill}
+                                resizeMode='contain'
+                            />
+                        }
+                    </View>
+                </TouchableOpacity>
+
+
+                <TouchableOpacity style={styles.iconContainer}
+                    onPress={() => {
+                        // this.setState({ popupOpen: true }, () => {
+
+                        //     this.streamerUserBlock(item.id, item);
+                        // });
+                        streamerUserBlock(item.id)
+                    }}
+                >
+                    <View >
+                        <Image
+                            style={styles.iconStyle}
+                            source={roundMinus}
+                            resizeMode='contain'
+                        />
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
     }
 
     const render_contactList: ListRenderItem<any> = ({ item, index }) => {
@@ -336,8 +434,8 @@ const LiveMomentScreen = (props: Props) => {
                         <MapView
                             style={StyleSheet.absoluteFillObject}
                             // mapType={'terrain'}
-                            
-                          //  mapType={Platform.OS == "ios" ? "hybridFlyover" : "hybrid"}
+
+                            //  mapType={Platform.OS == "ios" ? "hybridFlyover" : "hybrid"}
                             mapType={Platform.OS == 'ios' ? 'satelliteFlyover' : 'hybrid'}
 
                             zoomEnabled
@@ -407,12 +505,12 @@ const LiveMomentScreen = (props: Props) => {
                                     scrollEnabled={false}
                                     showsVerticalScrollIndicator={false}
                                     // ItemSeparatorComponent={this.FlatListItemSeparator}
-                                    renderItem={render_contactList}
+                                    renderItem={render_streamerList}
                                     keyExtractor={(item, index) => index.toString()}
                                 />
                                 <Text style={styles.headerStyle}>{String.AUDIENCE}</Text>
                                 <FlatList
-                                    data={streamerList}
+                                    data={audienceList}
                                     scrollEnabled={false}
                                     showsVerticalScrollIndicator={false}
                                     // ItemSeparatorComponent={this.FlatListItemSeparator}

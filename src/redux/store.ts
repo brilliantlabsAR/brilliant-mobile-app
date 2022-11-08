@@ -1,11 +1,21 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import LoginSlice from "./authSlices/loginSlice";
 import UpdateProfileSlice from "./appSlices/updateProfileSlice";
+import SendInviteSlice from "./appSlices/sendInviteSlice";
+import StreamerAudienceSlice from "./appSlices/streamerAudienceSlice";
+import AppLocationSlice from "./appSlices/appLocationSlice";
+import NotificationCreateSlice from "./appSlices/notificationCreateSlice";
+import UserBlockSlice from "./appSlices/userBlockSlice";
 
 const store = configureStore({
   reducer: {
     login: LoginSlice,
     updateProfile: UpdateProfileSlice,
+    sendInviteSlice: SendInviteSlice,
+    streamerAudienceSlice: StreamerAudienceSlice,
+    appLocationSlice: AppLocationSlice,
+    notificationCreateSlice: NotificationCreateSlice,
+    userBlockSlice: UserBlockSlice,
   },
 });
 
