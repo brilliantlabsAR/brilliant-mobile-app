@@ -62,7 +62,7 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
     const [phoneNumber, setPhoneNumber] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const dispatch = useAppDispatch();
-    const status = useAppSelector(state => state.updateProfile.status)
+    const status = useAppSelector(state => state.updateProfile.status);
 
     useEffect(() => {
         if (status === apiStatus.success) {
@@ -74,10 +74,10 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
     const updateProfileApiFunc = () => {
 
         dispatch(FetchUpdateProfileData({
-            "cc": "+91",
-            "name": "Shayankar Datta",
-            "phone": "9735941814",
-            "email": "shayankardatta@gmail.com"
+            "cc": countryCode,
+            "name": firstName,
+            "phone": phoneNumber,
+            "email": email
         }))
 
     }
