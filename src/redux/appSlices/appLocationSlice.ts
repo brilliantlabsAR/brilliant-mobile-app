@@ -1,20 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
-import { apiStatus, ILoginProps, IStateProps } from "../apiDataTypes";
+import { apiStatus, ILocationStoreProps, IStateProps } from "../apiDataTypes";
+import { headers } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
   userData: {},
 };
 
-export const FetchLoginData = createAsyncThunk(
-  "loginSlice/fetchLoginData",
-  async (options: ILoginProps) => {
+export const FetchLocationData = createAsyncThunk(
+  "appLocationSlice/fetchLocationData",
+  async (options: ILocationStoreProps) => {
     try {
       const response = await axios.post(
-        Const.API_BASE_URL + Const.API_LOGIN,
-        options
+        Const.API_BASE_URL + Const.API_STORE_LOCATION,
+        options,
+        { headers }
       );
       return response.data;
     } catch (error) {
@@ -23,37 +25,36 @@ export const FetchLoginData = createAsyncThunk(
   }
 );
 
-const LoginSlice = createSlice({
-  name: "loginSlice",
+const AppLocationSlice = createSlice({
+  name: "appLocationSlice",
   initialState,
   reducers: {
-    resetLogin: (state) => {
+    resetData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(FetchLoginData.pending, (state) => {
+      .addCase(FetchLocationData.pending, (state) => {
         state.status = apiStatus.loading;
       })
-      .addCase(FetchLoginData.fulfilled, (state, action) => {
+      .addCase(FetchLocationData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          // console.log("ydg8ysdgvuyyu", action.payload.data);
+          // console.log("User Location", action.payload);
           state.userData = action.payload.data;
         } else {
           state.status = apiStatus.failed;
-          state.userData = action.payload.message;
           console.log(action.payload.message);
         }
       })
-      .addCase(FetchLoginData.rejected, (state, action) => {
+      .addCase(FetchLocationData.rejected, (state, action) => {
         state.status = apiStatus.failed;
         console.log(action.error);
       });
   },
 });
 
-export const { resetLogin } = LoginSlice.actions;
-export default LoginSlice.reducer;
+export const { resetData } = AppLocationSlice.actions;
+export default AppLocationSlice.reducer;

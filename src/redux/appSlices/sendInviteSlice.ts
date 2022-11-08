@@ -1,20 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
-import { apiStatus, ILoginProps, IStateProps } from "../apiDataTypes";
+import { apiStatus, ISendInviteProps, IStateProps } from "../apiDataTypes";
+import { headers } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
   userData: {},
 };
 
-export const FetchLoginData = createAsyncThunk(
-  "loginSlice/fetchLoginData",
-  async (options: ILoginProps) => {
+export const FetchSendInviteData = createAsyncThunk(
+  "sendInviteSlice/FetchSendInviteData",
+  async (options: ISendInviteProps) => {
     try {
       const response = await axios.post(
-        Const.API_BASE_URL + Const.API_LOGIN,
-        options
+        Const.API_BASE_URL + Const.API_SEND_INVITE,
+        options,
+        { headers }
       );
       return response.data;
     } catch (error) {
@@ -23,37 +25,36 @@ export const FetchLoginData = createAsyncThunk(
   }
 );
 
-const LoginSlice = createSlice({
-  name: "loginSlice",
+const SendInviteSlice = createSlice({
+  name: "SendInviteSlice",
   initialState,
   reducers: {
-    resetLogin: (state) => {
+    resetData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(FetchLoginData.pending, (state) => {
+      .addCase(FetchSendInviteData.pending, (state) => {
         state.status = apiStatus.loading;
       })
-      .addCase(FetchLoginData.fulfilled, (state, action) => {
+      .addCase(FetchSendInviteData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          // console.log("ydg8ysdgvuyyu", action.payload.data);
-          state.userData = action.payload.data;
+          // console.log("Invitation Sent-->", action.payload);
+          state.userData = action.payload;
         } else {
           state.status = apiStatus.failed;
-          state.userData = action.payload.message;
           console.log(action.payload.message);
         }
       })
-      .addCase(FetchLoginData.rejected, (state, action) => {
+      .addCase(FetchSendInviteData.rejected, (state, action) => {
         state.status = apiStatus.failed;
         console.log(action.error);
       });
   },
 });
 
-export const { resetLogin } = LoginSlice.actions;
-export default LoginSlice.reducer;
+export const { resetData } = SendInviteSlice.actions;
+export default SendInviteSlice.reducer;

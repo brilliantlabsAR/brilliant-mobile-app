@@ -25,35 +25,46 @@ import { Loading } from '../../components/loading';
 import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
 import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
 import Footer from "../../components/footer";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks"
-
+import { useAppDispatch } from "../../redux/hooks"
+import { FetchProfilePictureData } from "../../redux/appSlices/profilePictureSlice";
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
     const { navigation } = props;
-    const [userImageState, setuserImageState] = useState<string>("");
-    const [fullName, setfullName] = useState<string>("");
-    const [showLoading, setshowLoading] = useState<boolean>(false);
-    const [modalVisible, setmodalVisible] = useState<boolean>(false);
+    const [userImageState, setUserImageState] = useState<string>("");
+    const [fullName, setFullName] = useState<string>("");
+    const [showLoading, setShowLoading] = useState<boolean>(false);
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
     let file: any = '';
 
-
     const openModal = () => {
-        setmodalVisible(true);
+        setModalVisible(true);
     }
     const openGallery = () => {
         ImageCropPicker.openPicker({
             compressImageQuality: 0.9,
-        }).then(image => {
+        }).then(async image => {
             file = {
                 uri: Platform.OS === 'android' ? image.path : image.path.replace("file://", ""),
-                type: 'image/jpeg',
-                name: image.path.split("/")[image.path.split("/").length - 1]
+                name: image.path.split("/")[image.path.split("/").length - 1],
+                type: 'image/jpeg'
             }
+            console.log("check image path", file);
 
-            setmodalVisible(false)
-            setuserImageState(image.path);
-            setshowLoading(true);
-            //uploadProfileImage();
+            setModalVisible(false)
+            setUserImageState(image.path);
+            setShowLoading(true);
+            // await axios.post(
+            //     Const.API_BASE_URL + Const.API_UPDATE_IMAGE,
+            //     data,
+            //     { headers: imageHeaders }
+            // ).then((res) => {
+            //     console.log("image data", res.data)
+            // }).catch((e) => {
+            //     console.log(e);
+            // })
+            dispatch(FetchProfilePictureData(file));
+            setShowLoading(false);
         })
             .catch(error => console.log(error))
     }
@@ -67,7 +78,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                 type: 'image/jpeg',
                 name: image.path.split("/")[image.path.split("/").length - 1]
             }
-            setuserImageState(image.path);
+            setUserImageState(image.path);
 
         }).catch(error => console.log(error))
     }
@@ -228,7 +239,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                 </ScrollView>
                 <Modal
                     isVisible={modalVisible}
-                    onBackdropPress={() => setmodalVisible(false)}
+                    onBackdropPress={() => setModalVisible(false)}
                 >
                     <View style={styles.modalMainView}>
 
@@ -250,7 +261,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                             activeOpacity={0.6}
                             style={styles.modalBox}
                             onPress={() =>
-                                setmodalVisible(false)}>
+                                setModalVisible(false)}>
                             <Text style={styles.modalText}>{CANCEL}</Text>
                         </TouchableOpacity>
                     </View>
@@ -262,3 +273,4 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
 };
 
 export default MyAccountScreen;
+

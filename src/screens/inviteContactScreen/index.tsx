@@ -28,7 +28,10 @@ import { Loading } from '../../components/loading';
 import { search, closeIcon, shareIcon } from "../../assets";
 import { INVITE_CONTACT, SHARE_LINK, NO_CONTACT_LIST } from "../../models/constants";
 import Contact from 'react-native-contacts';
-
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchSendInviteData } from "../../redux/appSlices/sendInviteSlice";
+import { apiStatus } from "../../redux/apiDataTypes";
+import { ShowToast } from "../../utils/toastUtils";
 
 
 type Props = InviteContactScreenNavigationProps
@@ -38,7 +41,9 @@ const InviteContactScreen = (props: Props) => {
     const [contactList, setContactList] = React.useState<any[]>([]);
     const [backendContacts, setBackendContacts] = React.useState<any[]>([]);
     const [contactCount, setContactCount] = useState<number>();
-
+    const dispatch = useAppDispatch();
+    const status = useAppSelector(state => state.sendInviteSlice.status);
+    const inviteContactMessage = useAppSelector(state => state.sendInviteSlice.userData);
 
     useEffect(() => {
         if (Platform.OS === 'android') {
@@ -47,7 +52,15 @@ const InviteContactScreen = (props: Props) => {
         } else {
             getContact();
         }
-    }, []);
+
+        if (status === apiStatus.success) {
+            // console.log("Invitation sent",inviteContactMessage.message);
+            // console.log("Invitation sent--->",inviteContactMessage);
+            ShowToast(inviteContactMessage.message)
+
+        }
+
+    }, [status]);
     const onShare = async () => {
         try {
             const result = await Share.share({
@@ -72,6 +85,15 @@ const InviteContactScreen = (props: Props) => {
             //alert(error.message);
         }
     };
+    const sendInviteApiFunction = (cc: string, phoneNumber: string) => {
+
+        dispatch(FetchSendInviteData({
+            "cc": cc,
+            "receiver": phoneNumber
+        }))
+
+    }
+
 
 
     async function requestContactPermission() {
@@ -144,10 +166,10 @@ const InviteContactScreen = (props: Props) => {
                         }
                     }
                     )
-                    console.log('result', result);
+                    //  console.log('result', result);
 
                     setContactList(result);
-                    console.log('HIHIOKOK', contactList)
+                    //  console.log('HIHIOKOK', contactList)
                     Contact.getCount().then(count => {
                         setContactCount(count);
                     });
@@ -180,10 +202,12 @@ const InviteContactScreen = (props: Props) => {
             console.log("hiii", subNumber);
             console.log("hiii", subCc);
             // this.props.sendContactInvite({cc:subCc, receiver: subNumber, token: this.state.token });
+            sendInviteApiFunction(subCc, subNumber);
         } else {
             console.log("hello");
             var subNumber: any = number.replace(/ /g, '').replace('(', '').replace(')', '').replace('-', '');
             // this.props.sendContactInvite({cc:'', receiver: subNumber, token: this.state.token });
+            sendInviteApiFunction("", subNumber);
 
         }
 
@@ -199,7 +223,7 @@ const InviteContactScreen = (props: Props) => {
 
 
     const FlatListItemSeparator = ({ item }: { item: any }) => {
-        <View style={styles.viewLine}/>
+        <View style={styles.viewLine} />
     }
 
     const ContactListItem = ({ item }: { item: any }) => (
@@ -254,11 +278,11 @@ const InviteContactScreen = (props: Props) => {
                     onPress={() => navigation.goBack()}
                     style={styles.backButtonStyle}
                 >
-                <Image
-                    style={styles.homeMenu}
-                    source={closeIcon}
-                    resizeMode='contain'
-                />
+                    <Image
+                        style={styles.homeMenu}
+                        source={closeIcon}
+                        resizeMode='contain'
+                    />
                 </TouchableOpacity>
                 <Text
                     style={styles.headerText}
@@ -330,7 +354,7 @@ const InviteContactScreen = (props: Props) => {
                     }
                     {
                         isLoading ?
-                        <Loading /> : null
+                            <Loading /> : null
                     }
                 </ScrollView>
 
