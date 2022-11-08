@@ -9,6 +9,8 @@ import UserBlockSlice from "./appSlices/userBlockSlice";
 import otpVerifySlice from "./authSlices/otpVerifySlice";
 import SignupSlice from "./authSlices/signupSlice";
 import otpResendSlice from "./authSlices/otpResendSlice";
+import HelpSlice from "./appSlices/helpSlice";
+import MyAccountSlice from "./appSlices/myAccountSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +24,8 @@ const store = configureStore({
     appLocationSlice: AppLocationSlice,
     notificationCreateSlice: NotificationCreateSlice,
     userBlockSlice: UserBlockSlice,
+    helpSlice:HelpSlice,
+    myAccountSlice:MyAccountSlice
   },
 });
 

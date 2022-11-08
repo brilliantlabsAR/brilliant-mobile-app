@@ -1,20 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
-import { apiStatus, ILoginProps, IStateProps } from "../apiDataTypes";
+import { apiStatus, IStreamAudienceProps, IStateProps } from "../apiDataTypes";
+import { headers } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
   userData: {},
 };
 
-export const FetchLoginData = createAsyncThunk(
-  "loginSlice/fetchLoginData",
-  async (options: ILoginProps) => {
+export const FetchMyAccountData = createAsyncThunk(
+  "myAccountSlice/fetchMyAccountData",
+  async (options: IStreamAudienceProps) => {
     try {
-      const response = await axios.post(
-        Const.API_BASE_URL + Const.API_LOGIN,
-        options
+      const response = await axios.get(
+        Const.API_BASE_URL + Const.API_DASHBOARD,
+        { headers }
       );
       return response.data;
     } catch (error) {
@@ -23,37 +24,35 @@ export const FetchLoginData = createAsyncThunk(
   }
 );
 
-const LoginSlice = createSlice({
-  name: "loginSlice",
+const MyAccountSlice = createSlice({
+  name: "myAccountSlice",
   initialState,
   reducers: {
-    resetLogin: (state) => {
+    resetData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(FetchLoginData.pending, (state) => {
+      .addCase(FetchMyAccountData.pending, (state) => {
         state.status = apiStatus.loading;
       })
-      .addCase(FetchLoginData.fulfilled, (state, action) => {
-        if (action.payload.error === false) {
+      .addCase(FetchMyAccountData.fulfilled, (state, action) => {
+        if (action.payload.error == false) {
           state.status = apiStatus.success;
-         console.log("LOGINLOGIN", action.payload.data);
           state.userData = action.payload.data;
         } else {
           state.status = apiStatus.failed;
-          state.userData = action.payload.message;
           console.log(action.payload.message);
         }
       })
-      .addCase(FetchLoginData.rejected, (state, action) => {
+      .addCase(FetchMyAccountData.rejected, (state, action) => {
         state.status = apiStatus.failed;
         console.log(action.error);
       });
   },
 });
 
-export const { resetLogin } = LoginSlice.actions;
-export default LoginSlice.reducer;
+export const { resetData } = MyAccountSlice.actions;
+export default MyAccountSlice.reducer;

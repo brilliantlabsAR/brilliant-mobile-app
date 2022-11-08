@@ -25,8 +25,9 @@ import { Loading } from '../../components/loading';
 import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
 import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
 import Footer from "../../components/footer";
-import { useAppDispatch } from "../../redux/hooks"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchProfilePictureData } from "../../redux/appSlices/profilePictureSlice";
+import { apiStatus } from "../../redux/apiDataTypes";
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
     const { navigation } = props;
@@ -36,6 +37,31 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     let file: any = '';
+    const status = useAppSelector(state => state.myAccountSlice.status);
+    const userDetails = useAppSelector(state => state.myAccountSlice.userData);
+
+    useEffect(() => {
+        setShowLoading(true);
+        dispatch(FetchProfilePictureData({}))
+    }, []);
+    useEffect(() => {
+        if (status === apiStatus.success) {
+            setShowLoading(false);
+            console.log("data-->", userDetails);
+            console.log("data-->2", userDetails[0].name);
+            setFullName(userDetails.name);
+            if (userDetails.profilePicture == "") {
+                setUserImageState('');
+            } else {
+                setUserImageState(userDetails.profilePicture);
+            }
+        } else if (status === apiStatus.failed) {
+            setShowLoading(false);
+        }
+    }, [status]);
+
+
+
 
     const openModal = () => {
         setModalVisible(true);
@@ -177,11 +203,9 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                             <TouchableOpacity
                                 activeOpacity={0.6}
                                 style={styles.menuBox}
-                                onPress={() => { }
-                                    // navigation.navigate("SlugScreen", {
-                                    //     pageNo: "1"
-                                    // })
-                                }>
+                                onPress={() => {
+                                    navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "1" });
+                                }}>
                                 <Image
                                     style={styles.menuIcon}
                                     source={menuLicence}
@@ -192,10 +216,10 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                             <TouchableOpacity
                                 activeOpacity={0.6}
                                 style={styles.menuBox}
-                                onPress={() => { }
-                                    // navigation.navigate("SlugScreen", {
-                                    //     pageNo: "2"
-                                    // })
+                                onPress={() => {
+                                    navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "2" });
+                                }
+
                                 }>
                                 <Image
                                     style={styles.menuIcon}
@@ -207,12 +231,9 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                             <TouchableOpacity
                                 activeOpacity={0.6}
                                 style={styles.menuBox}
-                                onPress={() =>
-                                // navigation.navigate("SlugScreen", {
-                                //     pageNo: "3"
-                                // })
-                                // navigation.navigate('RtmpStreamerScreen')
-                                { }
+                                onPress={() => {
+                                    navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "3" });
+                                }
                                 }>
                                 <Image
                                     style={styles.menuIcon}

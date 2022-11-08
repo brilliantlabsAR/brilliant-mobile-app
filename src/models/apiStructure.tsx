@@ -10,8 +10,7 @@ export const imageHeaders = {
 
 export const headers = {
     "x-access-token":
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJkYTllNmZmOTBkMmIxMTI0ODI4MTczIiwiaWF0IjoxNjU4OTg2MzIyfQ.20Or7oxPotxjUok7gnA2-teG-nIPszEA3HyQsJOjyJM",
-    "content-type": "application/x-www-form-urlencoded",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJkZTIxNjM3MDljYmM3MWY3NmNlYTczIiwiaWF0IjoxNjY3NTQwNTMyfQ.qeGLM118MZym8g-9U8pV-riFt0_eyi_emqh28KzbNnY",
 };
 
 export const getToken = {
