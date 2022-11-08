@@ -124,10 +124,11 @@ export const RESEND_OTP = "Resend OTP";
 export const WELCOME_TO_APP = "Welcome to Frame App";
 export const DONT_HAVE_ACCN = "Don\'t have an account?";
 export const SEARCH_MEDIA = "Search media";
-export const RENAME = "Rename"; 
-export const DOWNLOAD = "Download"; 
-export const DELETE = "Delete"; 
+export const RENAME = "Rename";
+export const DOWNLOAD = "Download";
+export const DELETE = "Delete";
 export const SIGNUP_AND = "Sign up and";
 export const START_LIVE_STREAMING = "Start live streaming";
 export const BROADCAST_YOUR_LIFE = "Broadcast your life as it happens";
-
+export const PROFILE_IMAGE_SUCCESS = "Profile image uploaded successfully";
+export const PROFILE_IMAGE_ERROR = "There is some error";

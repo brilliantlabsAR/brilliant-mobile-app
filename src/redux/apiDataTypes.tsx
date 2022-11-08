@@ -12,7 +12,7 @@ export interface ILoginProps {
 }
 export interface IStateProps {
     status: apiStatus;
-    userData: { [key: string]: string | number }
+    userData: { [key: string]: any }
 }
 
 export interface IUpdateProfileProps {
@@ -20,4 +20,7 @@ export interface IUpdateProfileProps {
     name: string,
     phone: string,
     email: string
+}
+export interface IProfilePictureProps {
+    profilePicture: any
 }

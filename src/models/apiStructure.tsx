@@ -2,9 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from './api';
 
-// export const headers = {
-//     "Content-type": "application/json"
-// };
+export const imageHeaders = {
+    Accept: 'application/json',
+    'Content-Type': 'multipart/form-data',
+    'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjJkYTllNmZmOTBkMmIxMTI0ODI4MTczIiwiaWF0IjoxNjU4OTg2MzIyfQ.20Or7oxPotxjUok7gnA2-teG-nIPszEA3HyQsJOjyJM"
+};
 
 export const headers = {
     "x-access-token":

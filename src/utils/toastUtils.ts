@@ -8,3 +8,10 @@ export function ShowToast(message: string) {
     SimpleToast.show(message, SimpleToast.SHORT);
   }
 }
+export function ShowToastLong(message: string) {
+  if (Platform.OS == "android") {
+    ToastAndroid.show(message, ToastAndroid.LONG);
+  } else {
+    SimpleToast.show(message, SimpleToast.LONG);
+  }
+}
