@@ -12,7 +12,8 @@ import {
   Image,
   BackHandler,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from "react-native";
 import { FontFamily, Theme } from "../../models";
 import { LoginNavigationProps } from "../../navigations/types";
@@ -39,11 +40,13 @@ const LoginScreen = (props: LoginNavigationProps) => {
   const { navigation } = props;
   const dispatch = useAppDispatch();
   const status = useAppSelector(state => state.login.status)
+  const userDetails = useAppSelector(state => state.login.userData);
 
   useEffect(() => {
     if (status === apiStatus.success) {
-
-      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: phoneNumber ,screen:LOGIN})
+      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: countryCode+phoneNumber ,screen:LOGIN})
+    }else if(status === apiStatus.failed){
+      ShowToast(userDetails);
     }
   }, [status])
 
@@ -177,7 +180,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
               <Text style={styles.dontSignUp}>{DONT_HAVE_ACCN}
                 <Text style={styles.signupTextStyle}
-                  onPress={() => { }}>{SIGNUP}
+                  onPress={() => { navigation.navigate(Routes.NAV_SIGNUP_SCREEN)}}>{SIGNUP}
                 </Text>
               </Text>
               {/* onPress={() => this.props.navigation.navigate("InviteContactScreen")}>Signup</Text></Text> */}

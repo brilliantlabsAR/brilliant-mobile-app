@@ -44,6 +44,7 @@ const LoginSlice = createSlice({
           state.userData = action.payload.data;
         } else {
           state.status = apiStatus.failed;
+          state.userData = action.payload.message;
           console.log(action.payload.message);
         }
       })

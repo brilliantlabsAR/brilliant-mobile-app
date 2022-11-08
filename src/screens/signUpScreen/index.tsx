@@ -38,10 +38,13 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
     const { navigation } = props;
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.signup.status)
+    const userDetails = useAppSelector(state => state.signup.userData);
 
     useEffect(() => {
         if (status === apiStatus.success) {
           navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: countryCode+phoneNumber,screen: SIGNUP})
+        }else if(status === apiStatus.failed){
+            ShowToast(userDetails);
         }
     }, [status])
 

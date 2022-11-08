@@ -45,6 +45,7 @@ const OtpVerifySlice = createSlice({
         } else {
           state.status = apiStatus.failed;
           console.log(action.payload.message);
+          state.userData = action.payload.message;
         }
       })
       .addCase(FetchOtpData.rejected, (state, action) => {

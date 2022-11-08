@@ -31,6 +31,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchOtpData } from "../../redux/authSlices/otpVerifySlice";
 import { FetchResendOtpData } from "../../redux/authSlices/otpResendSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
+import { Alert } from "react-native";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
@@ -41,10 +42,11 @@ const LoginOtpVerify = (props: Props) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [timer, setTimer] = useState<number>(240);
     const [otp, setOtp] = useState<string>('');
-    const userDetails = useAppSelector(state => state.login.userData);
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.otp.status);
-    const resendOtpStatus = useAppSelector(state => state.resendOtp.userData);
+    const resendOtpstatus = useAppSelector(state => state.resendOtp.status);
+    const resendOtpDetails = useAppSelector(state => state.resendOtp.userData);
+    const userDetails = useAppSelector(state => state.otp.userData);
 
     useEffect(() => {
         //console.log('LoLO', timer);
@@ -62,18 +64,34 @@ const LoginOtpVerify = (props: Props) => {
     })
 
     useEffect(() => {
+        console.log(status);
+         
         if (status === apiStatus.success) {
-          navigation.navigate(Routes.NAV_SUCCESS_LOGIN)
+            setIsLoading(false)
+            AsyncStorage.setItem('userId', JSON.stringify(userDetails.id));
+            AsyncStorage.setItem('accessToken', JSON.stringify(userDetails.token));
+            AsyncStorage.setItem('phone', JSON.stringify(userDetails.phone));
+            //console.log('from otp screen ',userDetails);
+            if(route.params.screen == 'Signup'){
+                navigation.navigate(Routes.NAV_SUCCESS_LOGIN)
+            }else if(route.params.screen == 'Login'){
+                navigation.navigate(Routes.NAV_APP)
+            }
+        }else if(status === apiStatus.failed){
+            ShowToast(userDetails)
         }
     }, [status])
 
     useEffect(() => {
-        if(resendOtpStatus != null){
-            console.log("from redddjnkf", resendOtpStatus);
-            //ShowToast(resendOtpStatus);
+        if (resendOtpstatus === apiStatus.success) {
+            setIsLoading(false);
+            console.log("from redddjnkf", resendOtpDetails);
+            //ShowToast("Please check Phone no");
+        }else if(resendOtpstatus === apiStatus.failed){
+            ShowToast(resendOtpDetails)
         }
         
-    }, [resendOtpStatus])
+    }, [resendOtpstatus])
 
     const calculateTimer = () => {
         //console.log("timerlog", timer);
@@ -92,13 +110,12 @@ const LoginOtpVerify = (props: Props) => {
             ShowToast(Strings.OTP_VERIFY);
         } else {
             Keyboard.dismiss();
+            setTimer(240);
             setIsLoading(true);
             if(Validations.verifyRequired(phoneNumber)== true){
                 dispatch(FetchResendOtpData({
                     phone: phoneNumber,
                   }))
-                  setIsLoading(false);
-                  
             }else{
                 ShowToast("Please check Phone no");
             }
@@ -106,6 +123,7 @@ const LoginOtpVerify = (props: Props) => {
     }
 
     function verifyOTPCall() {
+        setIsLoading(true)
         console.log("fjhbd", userDetails.phoneNumber);
         console.log(phoneNumber + '//// ' +otp)
         if(Validations.verifyRequired(otp)== true){
@@ -113,6 +131,7 @@ const LoginOtpVerify = (props: Props) => {
                 phone: phoneNumber,
                 otp: otp,
               }))
+              
         }else{
             ShowToast("Please fill OTP");
         }
