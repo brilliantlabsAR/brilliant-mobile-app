@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
-import { apiStatus, ILoginProps, IStateProps } from "../apiDataTypes";
+import { apiStatus, IResedOtpProps, IStateProps } from "../apiDataTypes";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
   userData: {},
 };
 
-export const FetchLoginData = createAsyncThunk(
-  "loginSlice/fetchLoginData",
-  async (options: ILoginProps) => {
+export const FetchResendOtpData = createAsyncThunk(
+  "otpResendSlice/fetchResendOtpData",
+  async (options: IResedOtpProps) => {
     try {
       const response = await axios.post(
-        Const.API_BASE_URL + Const.API_LOGIN,
+        Const.API_BASE_URL + Const.API_RESEND_OTP,
         options
       );
       return response.data;
@@ -23,24 +23,24 @@ export const FetchLoginData = createAsyncThunk(
   }
 );
 
-const LoginSlice = createSlice({
-  name: "loginSlice",
+const OtpResendSlice = createSlice({
+  name: "otpResendSlice",
   initialState,
   reducers: {
-    resetLogin: (state) => {
+    resetData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(FetchLoginData.pending, (state) => {
+      .addCase(FetchResendOtpData.pending, (state) => {
         state.status = apiStatus.loading;
       })
-      .addCase(FetchLoginData.fulfilled, (state, action) => {
+      .addCase(FetchResendOtpData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          // console.log("ydg8ysdgvuyyu", action.payload.data);
+          console.log("Resend otp Payload Data", action.payload);
           state.userData = action.payload.data;
         } else {
           state.status = apiStatus.failed;
@@ -48,12 +48,12 @@ const LoginSlice = createSlice({
           console.log(action.payload.message);
         }
       })
-      .addCase(FetchLoginData.rejected, (state, action) => {
+      .addCase(FetchResendOtpData.rejected, (state, action) => {
         state.status = apiStatus.failed;
         console.log(action.error);
       });
   },
 });
 
-export const { resetLogin } = LoginSlice.actions;
-export default LoginSlice.reducer;
+export const { resetData } = OtpResendSlice.actions;
+export default OtpResendSlice.reducer;

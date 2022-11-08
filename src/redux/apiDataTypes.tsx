@@ -10,6 +10,19 @@ export interface ILoginProps {
     fcmToken: string;
     deviceType: string;
 }
+export interface ISignupProps {
+    phone: string;
+    cc: any;
+    name: any;
+    email: any;
+}
+export interface IOtpProps {
+    phone: string;
+    otp: any;
+}
+export interface IResedOtpProps {
+    phone: string;
+}
 export interface IStateProps {
     status: apiStatus;
     userData: { [key: string]: any }

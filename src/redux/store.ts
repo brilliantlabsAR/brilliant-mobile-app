@@ -6,10 +6,16 @@ import StreamerAudienceSlice from "./appSlices/streamerAudienceSlice";
 import AppLocationSlice from "./appSlices/appLocationSlice";
 import NotificationCreateSlice from "./appSlices/notificationCreateSlice";
 import UserBlockSlice from "./appSlices/userBlockSlice";
+import otpVerifySlice from "./authSlices/otpVerifySlice";
+import SignupSlice from "./authSlices/signupSlice";
+import otpResendSlice from "./authSlices/otpResendSlice";
 
 const store = configureStore({
   reducer: {
     login: LoginSlice,
+    signup: SignupSlice,
+    otp: otpVerifySlice,
+    resendOtp: otpResendSlice,
     updateProfile: UpdateProfileSlice,
     sendInviteSlice: SendInviteSlice,
     streamerAudienceSlice: StreamerAudienceSlice,

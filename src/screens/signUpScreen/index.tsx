@@ -20,7 +20,12 @@ import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { leftarrow, smartphone, userIcon, mailIcon } from "../../assets";
 import { CountryCodePicker } from "../../utils/countryCodePicker";
-import { SIGNUP_TITLE, ALREADY_TITLE, AGREE_TITLE, TERMS_CONDITIONS, LOGIN } from "../../models/constants"
+import { SIGNUP_TITLE, ALREADY_TITLE, AGREE_TITLE, TERMS_CONDITIONS, LOGIN,SIGNUP} from "../../models/constants"
+import {ShowToast} from "../../utils/toastUtils";
+import {Validations} from "../../utils/validationUtils";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchSignupData } from "../../redux/authSlices/signupSlice";
+import { apiStatus } from "../../redux/apiDataTypes";
 
 const SignUpScreen = (props: SignUpNavigationProps) => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -31,6 +36,43 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
     const [email, setemail] = useState<string>("");
     const [show, setShow] = useState(false);
     const { navigation } = props;
+    const dispatch = useAppDispatch();
+    const status = useAppSelector(state => state.signup.status)
+    const userDetails = useAppSelector(state => state.signup.userData);
+
+    useEffect(() => {
+        if (status === apiStatus.success) {
+          navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: countryCode+phoneNumber,screen: SIGNUP})
+        }else if(status === apiStatus.failed){
+            ShowToast(userDetails);
+        }
+    }, [status])
+
+    const signupApiFunc = () => {
+        
+        if(Validations.verifyRequired(firstName)== true && 
+            Validations.verifyRequired(countryCode)== true &&
+            Validations.verifyRequired(phoneNumber)== true && 
+            Validations.verifyRequired(email)== true){
+            if(Validations.verifyEmail(email)== true && Validations.verifyPhone(phoneNumber)== true){
+                dispatch(FetchSignupData({
+                    phone: phoneNumber,
+                    cc: countryCode,
+                    name: firstName,
+                    email: email
+                  }))
+            }else{
+                 return false;
+            }
+             
+         }else{
+             ShowToast("Please fill all the fields");
+         }
+        
+      }
+
+
+
     const textInputStyle = {
         colors: {
             placeholder: "#A1A1A1",
@@ -57,6 +99,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
             borderRadius: 10,
         },
     }
+    
     return (
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.mainView}>
@@ -160,7 +203,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                         //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
                                         //
                                         // console.log("Register", "Hii")
-                                        navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: phoneNumber })
+                                        signupApiFunc()
                                     }
                                     style={styles.touchOpacityView}
                                 >
@@ -171,7 +214,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                         {ALREADY_TITLE}
                                         <Text
                                             style={{ textDecorationLine: "underline" }}
-                                            onPress={() => console.log("loginscreen")}
+                                            onPress={() => navigation.navigate(Routes.NAV_LOGIN_SCREEN)}
                                         >
                                             {LOGIN}
                                         </Text>
