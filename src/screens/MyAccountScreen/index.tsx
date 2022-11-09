@@ -51,6 +51,10 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
             console.log("data-->", userDetails);
             console.log("data-->2", userDetails.name);
             setFullName(userDetails.name);
+            AsyncStorage.setItem('name',userDetails.name);
+            AsyncStorage.setItem('countryCode',userDetails.cc);
+            AsyncStorage.setItem('phone',userDetails.phone);
+            AsyncStorage.setItem('email',userDetails.email);
             if (userDetails.profilePicture == "") {
                 setUserImageState('');
             } else {

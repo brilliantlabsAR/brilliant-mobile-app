@@ -59,7 +59,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
         phone: phoneNumber,
         cc: countryCode,
         fcmToken: "ijoidfjoijweoifjopkjwcfkopvk operjioivjeoirtgujiojeriotjgioerjop berk pogtker'ktgerpgkrepok",
-        deviceType: "android"
+        deviceType: Platform.OS === 'android' ? 'android' : 'ios'
       }))
     }
   }

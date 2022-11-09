@@ -11,6 +11,7 @@ import LiveMomentScreen from "./liveMoment";
 import MediaScreen from "./mediaScreen";
 import InviteContactScreen from "./inviteContactScreen";
 import HelpScreen from "./helpScreen";
+import ProfileOtpVerify from "./profileOtpVerifyScreen";
 
 export default {
   SplashScreen,
@@ -25,5 +26,6 @@ export default {
   LiveMomentScreen,
   MediaScreen,
   InviteContactScreen,
-  HelpScreen
+  HelpScreen,
+  ProfileOtpVerify
 };

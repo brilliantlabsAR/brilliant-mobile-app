@@ -77,9 +77,27 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
         extrapolate: 'clamp',
     })
 
+    useEffect(()=>{
+        console.log('Use effect');
+        AsyncStorage.getItem('userId').then((userId) => {
+            if (userId === null) {
+                console.log('Use effect nulol');
+
+                setIsLogin(false);
+                setIsShow(false);
+            }else{
+                console.log('Use effect true');
+                setIsLogin(true);
+                setIsShow(true);
+            }
+        })
+    },[])
+
 
 
     useEffect(() => {
+        console.log('Use effect 2');
+
         const translateUp =
             Animated.timing(animated, {
                 toValue: 1,
@@ -102,11 +120,14 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
                 useNativeDriver: true,
             }).start();
 
+
+            { console.log("Ho858258", isLogin) }
             if (isLogin) {
-                // setIsShow(false);
+                setIsShow(false);
             } else {
                 setIsShow(true);
                 { console.log("Ho", isShow) }
+               navigation.navigate(Routes.NAV_APP)
 
 
             }
@@ -149,7 +170,7 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
         <SafeAreaView
             style={styles.bodyContainer}>
             <View style={styles.topView}>
-                {isShow == true ?
+                {isShow === true ?
 
                     <Animated.View style={[
                         styles.animatedView,

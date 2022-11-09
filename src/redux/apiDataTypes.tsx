@@ -57,3 +57,13 @@ export interface IUserBlockProps {
 export interface IProfilePictureProps {
     profilePicture: any
 }
+
+export interface IProfileUpdateVerifyProps {
+    name: string | any,
+    email: string | any,
+    cc: string | any,
+    phone: string | any,
+    oldPhoneNumber: string | any,
+    otp: string | any
+
+}
