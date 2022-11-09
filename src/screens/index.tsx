@@ -10,6 +10,7 @@ import SuccessLogin from "./successLogin";
 import LiveMomentScreen from "./liveMoment";
 import MediaScreen from "./mediaScreen";
 import InviteContactScreen from "./inviteContactScreen";
+import HelpScreen from "./helpScreen";
 
 export default {
   SplashScreen,
@@ -23,5 +24,6 @@ export default {
   SuccessLogin,
   LiveMomentScreen,
   MediaScreen,
-  InviteContactScreen
+  InviteContactScreen,
+  HelpScreen
 };

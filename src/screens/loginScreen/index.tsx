@@ -24,8 +24,8 @@ import { leftarrow, smartphone } from "../../assets";
 import { Loading } from '../../components/loading';
 import { WELCOME_TO_APP, LOGIN, DONT_HAVE_ACCN, SIGNUP } from "../../models/constants";
 import * as Routes from "../../models/routes";
-import {ShowToast} from "../../utils/toastUtils";
-import {Validations} from "../../utils/validationUtils";
+import { ShowToast } from "../../utils/toastUtils";
+import { Validations } from "../../utils/validationUtils";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchLoginData } from "../../redux/authSlices/loginSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
@@ -35,8 +35,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [countryCode, setCountryCode] = useState<string>('');
-  const [phoneNumber, setphoneNumber] = useState<string>('');
-  let newPhoneNumber = countryCode + phoneNumber;
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const { navigation } = props;
   const dispatch = useAppDispatch();
   const status = useAppSelector(state => state.login.status)
@@ -44,26 +43,25 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
   useEffect(() => {
     if (status === apiStatus.success) {
-      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: countryCode+phoneNumber ,screen:LOGIN})
-    }else if(status === apiStatus.failed){
+      setIsLoading(false);
+      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: countryCode + phoneNumber, screen: LOGIN })
+    } else if (status === apiStatus.failed) {
+      setIsLoading(false);
       ShowToast(userDetails);
     }
   }, [status])
 
 
   const loginApiFunc = () => {
-    if(Validations.verifyRequired(phoneNumber)== true && Validations.verifyPhone(phoneNumber)== true){
+    if (Validations.verifyRequired(countryCode) && Validations.verifyRequired(phoneNumber) && Validations.verifyPhone(phoneNumber)) {
+      setIsLoading(true);
       dispatch(FetchLoginData({
         phone: phoneNumber,
         cc: countryCode,
         fcmToken: "ijoidfjoijweoifjopkjwcfkopvk operjioivjeoirtgujiojeriotjgioerjop berk pogtker'ktgerpgkrepok",
         deviceType: "android"
       }))
-    }else{
-      ShowToast("Please enter correct no");
     }
-    
-
   }
   const textInputStyle = {
     colors: {
@@ -141,14 +139,13 @@ const LoginScreen = (props: LoginNavigationProps) => {
                   label="Phone No."
                   keyboardType="phone-pad"
                   value={phoneNumber}
-                  onChangeText={(phoneNumber) => setphoneNumber(phoneNumber.replace(/\s/g, ''))}
+                  onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber.replace(/\s/g, ''))}
                   right={<TextInput.Icon name={smartphone} size={15} />}
                   theme={textInputStyle}
 
                 />
               </View>
             </View>
-
             <TouchableOpacity activeOpacity={0.6}
               onPress={loginApiFunc
                 // this.LoginMember()
@@ -158,8 +155,6 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
               }
               style={styles.loginButtonStyle}>
-
-
               <Text style={styles.loginTextStyle}>{LOGIN}</Text>
 
             </TouchableOpacity>
@@ -180,7 +175,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
               <Text style={styles.dontSignUp}>{DONT_HAVE_ACCN}
                 <Text style={styles.signupTextStyle}
-                  onPress={() => { navigation.navigate(Routes.NAV_SIGNUP_SCREEN)}}>{SIGNUP}
+                  onPress={() => { navigation.navigate(Routes.NAV_SIGNUP_SCREEN) }}>{SIGNUP}
                 </Text>
               </Text>
               {/* onPress={() => this.props.navigation.navigate("InviteContactScreen")}>Signup</Text></Text> */}

@@ -21,8 +21,8 @@ export const Validations = {
       return false;
     }
   },
-  verifyPhone(phoneNo) {
-    if (phoneNo) {
+  verifyPhone(phoneNo: string) {
+    if (phoneNo !== "") {
       var phoneNoFormat = /^\d{10}$/;
       if (phoneNo.match(phoneNoFormat)) {
         return true;
@@ -56,7 +56,7 @@ export const Validations = {
     }
   },
 
-  verifyRequired(text) {
+  verifyRequired(text: any) {
     if (text && text.trim().length > 0) {
       return true;
     } else {
@@ -97,11 +97,12 @@ export const Validations = {
       return false;
     }
   },
-  verifyOtp(otp) {
+  verifyOtp(otp: string) {
     if (otp && otp.length == 4) {
       return true;
     } else {
-      false;
+      ShowToast(Strings.OTP_VERIFY);
+      return false;
     }
   },
   verifyOptionalMail(text) {
