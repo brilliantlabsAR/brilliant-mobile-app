@@ -28,6 +28,7 @@ import Footer from "../../components/footer";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
+import { FetchProfilePictureData } from "../../redux/appSlices/profilePictureSlice";
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
     const { navigation } = props;
@@ -126,7 +127,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                 {userImageState != '' &&
                                     <Image
                                         style={styles.userProfileImage}
-                                        source={{ uri: userImageState}}
+                                        source={{ uri: userImageState }}
                                         resizeMode='cover'
 
                                     />
