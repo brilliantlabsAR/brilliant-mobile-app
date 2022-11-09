@@ -40,7 +40,7 @@ const OtpResendSlice = createSlice({
       .addCase(FetchResendOtpData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          console.log("Resend otp Payload Data", action.payload);
+          // console.log("Resend otp Payload Data", action.payload);
           state.userData = action.payload.data;
         } else {
           state.status = apiStatus.failed;

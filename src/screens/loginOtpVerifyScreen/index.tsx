@@ -44,7 +44,7 @@ const LoginOtpVerify = (props: Props) => {
     const [otp, setOtp] = useState<string>('');
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.otp.status);
-    const resendOtpstatus = useAppSelector(state => state.resendOtp.status);
+    const resendOtpStatus = useAppSelector(state => state.resendOtp.status);
     const resendOtpDetails = useAppSelector(state => state.resendOtp.userData);
     const userDetails = useAppSelector(state => state.otp.userData);
 
@@ -65,7 +65,6 @@ const LoginOtpVerify = (props: Props) => {
 
     useEffect(() => {
         console.log(status);
-
         if (status === apiStatus.success) {
             setIsLoading(false)
             AsyncStorage.setItem('userId', JSON.stringify(userDetails.id));
@@ -78,20 +77,23 @@ const LoginOtpVerify = (props: Props) => {
                 navigation.navigate(Routes.NAV_APP)
             }
         } else if (status === apiStatus.failed) {
+            setOtp('');
+            setIsLoading(false);
             ShowToast(userDetails)
         }
     }, [status])
 
     useEffect(() => {
-        if (resendOtpstatus === apiStatus.success) {
+        if (resendOtpStatus === apiStatus.success) {
             setIsLoading(false);
-            console.log("from redddjnkf", resendOtpDetails);
-            //ShowToast("Please check Phone no");
-        } else if (resendOtpstatus === apiStatus.failed) {
+            ShowToast(JSON.stringify(resendOtpDetails.otp));
+            // console.log("from redddjnkf", resendOtpDetails);
+            // ShowToast();
+        } else if (resendOtpStatus === apiStatus.failed) {
+            setIsLoading(false);
             ShowToast(resendOtpDetails)
         }
-
-    }, [resendOtpstatus])
+    }, [resendOtpStatus])
 
     const calculateTimer = () => {
         //console.log("timerlog", timer);
@@ -106,34 +108,28 @@ const LoginOtpVerify = (props: Props) => {
     };
 
     function resendOtp() {
-        if (phoneNumber == '' || phoneNumber == '') {
-            ShowToast(Strings.OTP_VERIFY);
+        setOtp('');
+        if (!Validations.verifyRequired(phoneNumber)) {
+            navigation.replace(Routes.NAV_LOGIN_SCREEN)
         } else {
             Keyboard.dismiss();
             setTimer(240);
             setIsLoading(true);
-            if (Validations.verifyRequired(phoneNumber) == true) {
-                dispatch(FetchResendOtpData({
-                    phone: phoneNumber,
-                }))
-            } else {
-                ShowToast("Please check Phone no");
-            }
+            dispatch(FetchResendOtpData({
+                phone: phoneNumber,
+            }))
         }
     }
 
     function verifyOTPCall() {
-        setIsLoading(true)
-        console.log("fjhbd", userDetails.phoneNumber);
-        console.log(phoneNumber + '//// ' + otp)
-        if (Validations.verifyRequired(otp) == true) {
+        // console.log("fjhbd", userDetails.phoneNumber);
+        // console.log(phoneNumber + '//// ' + otp)
+        if (Validations.verifyRequired(otp)) {
+            setIsLoading(true)
             dispatch(FetchOtpData({
                 phone: phoneNumber,
                 otp: otp,
             }))
-
-        } else {
-            ShowToast("Please fill OTP");
         }
 
     }

@@ -78,7 +78,7 @@
 
 // STRINGS
 export const FULL_NAME_ERROR = "Please enter full name";
-export const PHONE_ERROR = "Please enter phone number";
+export const PHONE_ERROR = "Please enter a correct phone number";
 export const EMAIL_ERROR = "Please enter valid email";
 export const COUNTRY_ERROR = "Please choose country code";
 export const EMPTY_PHONE_ERROR = "Please Provide a Phone number!";
@@ -122,7 +122,7 @@ export const NO_CONTACT_LIST = "No Contact List found";
 export const VERIFY_NOW = "Verify Now";
 export const RESEND_OTP = "Resend OTP";
 export const WELCOME_TO_APP = "Welcome to Frame App";
-export const DONT_HAVE_ACCN = "Don\'t have an account?";
+export const DONT_HAVE_ACCN = "Don't have an account?";
 export const SEARCH_MEDIA = "Search media";
 export const RENAME = "Rename";
 export const DOWNLOAD = "Download";
