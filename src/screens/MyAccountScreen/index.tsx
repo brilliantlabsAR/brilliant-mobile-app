@@ -26,7 +26,7 @@ import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveSt
 import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
 import Footer from "../../components/footer";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { FetchProfilePictureData } from "../../redux/appSlices/profilePictureSlice";
+import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
@@ -42,13 +42,13 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
 
     useEffect(() => {
         setShowLoading(true);
-        dispatch(FetchProfilePictureData({}))
+        dispatch(FetchMyAccountData({}))
     }, []);
     useEffect(() => {
         if (status === apiStatus.success) {
             setShowLoading(false);
             console.log("data-->", userDetails);
-            console.log("data-->2", userDetails[0].name);
+            console.log("data-->2", userDetails.name);
             setFullName(userDetails.name);
             if (userDetails.profilePicture == "") {
                 setUserImageState('');
@@ -121,13 +121,12 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                         style={styles.userImage}
                                         source={mainUser}
                                         resizeMode='cover'
-
                                     />
                                 }
                                 {userImageState != '' &&
                                     <Image
                                         style={styles.userProfileImage}
-                                        source={{ uri: userImageState }}
+                                        source={{ uri: userImageState}}
                                         resizeMode='cover'
 
                                     />
