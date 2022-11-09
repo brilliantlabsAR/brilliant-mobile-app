@@ -9,6 +9,7 @@ export interface IOtpContainer {
   containerStyle: any;
   onFinish: (code: string) => void;
   onTyping?: (code: string) => void;
+  blankCheck: boolean;
 }
 export interface IFooter {
   selectedTab: string;

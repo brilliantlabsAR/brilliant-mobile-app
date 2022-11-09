@@ -11,7 +11,7 @@ const height = Dimensions.get('window').height;
 const initCodes: Array<string> = [];
 
 const OTPContainer = (props: IOtpContainer) => {
-  const { codeCount, containerStyle, onFinish, onTyping } = props
+  const { codeCount, containerStyle, onFinish, onTyping,blankCheck } = props
   const inputCodeRef = useRef(new Array());
   const [codes, setCodes] = useState<Array<string>>(initCodes);
   useEffect(() => {
@@ -20,9 +20,11 @@ const OTPContainer = (props: IOtpContainer) => {
       codes.push('');
     }
     setCodes(codes);
+    
   }, []);
 
   useEffect(() => {
+    //console.log('from oto container',codes)
     onTyping && onTyping(getCodes());
     const isTypeFinish = codes.every(function (i) {
       return i !== '';
@@ -31,6 +33,15 @@ const OTPContainer = (props: IOtpContainer) => {
       onFinish && onFinish(getCodes());
     }
   }, [codes]);
+
+  useEffect(() => {
+    console.log(blankCheck);
+    if(blankCheck == false){
+      //console.log(codeCount);
+      setCodes(['','','','']);
+    }
+    
+}, [blankCheck]);
 
   const getCodes = () => {
     let codeString = '';

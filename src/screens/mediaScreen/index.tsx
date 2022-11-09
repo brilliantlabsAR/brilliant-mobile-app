@@ -19,9 +19,10 @@ import {
     PermissionsAndroid
 } from "react-native";
 import { Theme } from "../../models";
+import LinearGradient from 'react-native-linear-gradient';
 import { MediaScreenNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
-import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage } from "../../assets";
+import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage,logoButton } from "../../assets";
 import {SEARCH_MEDIA, RENAME, DOWNLOAD, DELETE} from "../../models/constants";
 import * as CONST from '../../models';
 import { styles } from "./styles";
@@ -126,7 +127,7 @@ const MediaScreen = (props: Props) => {
 
             <View style={styles.topView}>
                 <ScrollView style={styles.scrollviewStyle}>
-                    <View style={styles.searchView}>
+                    {/* <View style={styles.searchView}>
                         <Text style={styles.searchText}>{SEARCH_MEDIA}</Text>
 
                         <View style={styles.searchIconView}>
@@ -138,7 +139,7 @@ const MediaScreen = (props: Props) => {
                             />
                         </View>
 
-                    </View>
+                    </View> */}
 
                     <MenuProvider>
                         <FlatList
@@ -227,7 +228,24 @@ const MediaScreen = (props: Props) => {
                 </ScrollView>
 
             </View>
-            <Footer selectedTab="MediaScreen" />
+            {/* <Footer selectedTab="MediaScreen" /> */}
+            <TouchableOpacity onPress={()=>Alert.alert('ghchgchch')}>
+            <View style={styles.footerButtonView}>
+                <LinearGradient
+                    style={styles.footerLinearStyle}
+                    colors={['#FFFFFF', '#FFFFFF','#FFFFFF']}
+                    start={{x: 0, y: 0}}
+                    end={{x: 1, y: 0}}>
+                
+                        <Image
+                        style={styles.footerButtonImage}
+                        source={logoButton}
+                        resizeMode='cover'
+                        />
+                </LinearGradient>        
+            </View>
+            </TouchableOpacity>
+            
         </SafeAreaView>
     )
 
