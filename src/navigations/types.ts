@@ -54,6 +54,10 @@ export type AccountNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "MyAccountScreen"
 >;
+export type HelpNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "HelpScreen"
+>;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Settings"

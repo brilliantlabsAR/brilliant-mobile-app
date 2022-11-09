@@ -41,7 +41,7 @@ const LoginSlice = createSlice({
       .addCase(FetchLoginData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          // console.log("ydg8ysdgvuyyu", action.payload.data);
+          //  console.log("LOGINLOGIN", action.payload.data);
           state.userData = action.payload.data;
           ShowToast(JSON.stringify(action.payload.data.otp));
         } else {
