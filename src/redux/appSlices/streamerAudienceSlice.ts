@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
 import { apiStatus, IStreamAudienceProps, IStateProps } from "../apiDataTypes";
-import { headers } from "../../models/apiStructure";
+import { headers, postApi } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -13,12 +13,8 @@ export const FetchStreamerAudienceData = createAsyncThunk(
   "streamerAudienceSlice/FetchStreamerAudienceData",
   async (options: IStreamAudienceProps) => {
     try {
-      const response = await axios.post(
-        Const.API_BASE_URL + Const.API_STREAMER_AUDIENCE,
-        options,
-        { headers }
-      );
-      return response.data;
+      const response = await postApi(Const.API_STREAMER_AUDIENCE, options);
+      return response;
     } catch (error) {
       return error;
     }

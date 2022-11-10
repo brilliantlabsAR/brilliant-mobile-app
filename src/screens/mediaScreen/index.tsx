@@ -19,20 +19,18 @@ import {
     PermissionsAndroid
 } from "react-native";
 import { Theme } from "../../models";
+import LinearGradient from 'react-native-linear-gradient';
 import { MediaScreenNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
-import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage } from "../../assets";
-import {SEARCH_MEDIA, RENAME, DOWNLOAD, DELETE} from "../../models/constants";
-import * as CONST from '../../models';
+import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage, logoButton } from "../../assets";
+import { STRINGS } from "../../models/constants";
 import { styles } from "./styles";
-import Footer from '../../components/footer'
-const { height: SCREEN_HEIGHT } = Dimensions.get('screen');
-const { width: SCREEN_WIDTH } = Dimensions.get('screen');
+import Footer from '../../components/footer';
 import MapView, { Marker } from "react-native-maps";
 import { normalize } from "../../utils/dimentionUtils";
 import Contacts from 'react-native-contacts';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import * as Routes from "../../models/routes";
 import {
     MenuProvider,
     Menu,
@@ -42,10 +40,13 @@ import {
 } from 'react-native-popup-menu';
 
 type Props = MediaScreenNavigationProps
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('screen');
+const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 const MediaScreen = (props: Props) => {
     const { navigation, route } = props;
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [mediaList, setmediaList] = React.useState([
+    const [mediaList, setMediaList] = React.useState([
 
         {
             "id": "1",
@@ -115,19 +116,12 @@ const MediaScreen = (props: Props) => {
 
     ]);
 
-
-
-
-
     return (
-
-
         <SafeAreaView style={styles.bodyContainer}>
-
             <View style={styles.topView}>
                 <ScrollView style={styles.scrollviewStyle}>
-                    <View style={styles.searchView}>
-                        <Text style={styles.searchText}>{SEARCH_MEDIA}</Text>
+                    {/* <View style={styles.searchView}>
+                        <Text style={styles.searchText}>{STRINGS.SEARCH_MEDIA}</Text>
 
                         <View style={styles.searchIconView}>
                             <Image
@@ -138,7 +132,7 @@ const MediaScreen = (props: Props) => {
                             />
                         </View>
 
-                    </View>
+                    </View> */}
 
                     <MenuProvider>
                         <FlatList
@@ -198,19 +192,19 @@ const MediaScreen = (props: Props) => {
                                                     <MenuOption onSelect={() => { 'function download' }} style={styles.menuView}>
                                                         <Text
                                                             style={styles.menuText}
-                                                        >{RENAME}</Text>
+                                                        >{STRINGS.RENAME}</Text>
                                                     </MenuOption>
                                                     <View style={styles.menuSeparator} />
                                                     <MenuOption onSelect={() => { 'jo' }} style={styles.menuViewOtion}>
                                                         <Text
                                                             style={styles.menuOptionText}
-                                                        >{DOWNLOAD}</Text>
+                                                        >{STRINGS.DOWNLOAD}</Text>
                                                     </MenuOption>
                                                     <View style={styles.menuSeparator} />
                                                     <MenuOption onSelect={() => { 'pokl' }} style={styles.menuViewOtion}>
                                                         <Text
                                                             style={styles.menuOptionText}
-                                                        >{DELETE}</Text>
+                                                        >{STRINGS.DELETE}</Text>
                                                     </MenuOption>
                                                 </MenuOptions>
                                             </Menu>
@@ -223,15 +217,27 @@ const MediaScreen = (props: Props) => {
                             keyExtractor={item => item.id}
                         />
                     </MenuProvider>
-
                 </ScrollView>
-
             </View>
-            <Footer selectedTab="MediaScreen" />
+            {/* <Footer selectedTab="MediaScreen" /> */}
+            <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_ACCOUNT_SCREEN)}>
+                <View style={styles.footerButtonView}>
+                    <LinearGradient
+                        style={styles.footerLinearStyle}
+                        colors={['#FFFFFF', '#FFFFFF', '#FFFFFF']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}>
+
+                        <Image
+                            style={styles.footerButtonImage}
+                            source={logoButton}
+                            resizeMode='cover'
+                        />
+                    </LinearGradient>
+                </View>
+            </TouchableOpacity>
+
         </SafeAreaView>
     )
-
-
-
 }
 export default MediaScreen;

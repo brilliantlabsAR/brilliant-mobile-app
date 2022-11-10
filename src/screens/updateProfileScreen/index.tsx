@@ -5,13 +5,8 @@ import {
     View,
     Text,
     SafeAreaView,
-    Platform,
-    LogBox,
     TouchableOpacity,
     Image,
-    BackHandler,
-    ScrollView,
-    ActivityIndicator
 } from "react-native";
 import { FontFamily, Theme } from "../../models";
 import { LoginVerifyNavigationProps, UpdateProfileNavigationProps } from "../../navigations/types";
@@ -24,6 +19,11 @@ import { CountryCodePicker } from "../../utils/countryCodePicker";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchUpdateProfileData } from "../../redux/appSlices/updateProfileSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Validations } from "../../utils/validationUtils";
+import { ShowToast } from "../../utils/toastUtils";
+import { State } from "react-native-gesture-handler";
+import * as Routes from "../../models/routes";
 
 const textInputStyle = {
     colors: {
@@ -57,28 +57,71 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
     const { navigation } = props;
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [show, setShow] = useState(false);
-    const [firstName, setFirstName] = useState<string>('');
-    const [countryCode, setCountryCode] = useState<string>('');
-    const [phoneNumber, setPhoneNumber] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
+    const [firstName, setFirstName] = useState<string | any>('');
+    const [countryCode, setCountryCode] = useState<string | any>('');
+    const [oldCountryCode, setOldCountryCode] = useState<string | any>('');
+    const [phoneNumber, setPhoneNumber] = useState<string | any>('');
+    const [oldPhoneNumber, setOldPhoneNumber] = useState<string | any>('');
+    const [email, setEmail] = useState<string | any>('');
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.updateProfile.status);
+    const userDetails = useAppSelector(state => state.updateProfile.userData);
 
     useEffect(() => {
         if (status === apiStatus.success) {
+            setIsLoading(false);
             console.log("succesfully updated");
-
+            //ShowToast("Succesfully updated");
+            //navigation.goBack();phoneNumber: string,countryCode:string|any,phone:string|any,email:string|any,name:string|any
+            navigation.navigate(Routes.NAV_PROFILE_OTP_SCREEN,{phoneNumber:phoneNumber,countryCode:countryCode,phone:oldCountryCode+oldPhoneNumber,email:email,name:firstName})
+        } else if (status === apiStatus.failed) {
+            setIsLoading(false);
+            ShowToast(userDetails);
         }
     }, [status])
 
-    const updateProfileApiFunc = () => {
+    useEffect(() => {
 
-        dispatch(FetchUpdateProfileData({
-            "cc": countryCode,
-            "name": firstName,
-            "phone": phoneNumber,
-            "email": email
-        }))
+        AsyncStorage.getItem('name').then((name) => {
+            setFirstName(name)
+        })
+        AsyncStorage.getItem('phone').then((phone) => {
+            setPhoneNumber(phone);
+            setOldPhoneNumber(phone);
+        })
+        AsyncStorage.getItem('email').then((emailId) => {
+            setEmail(emailId)
+        })
+        AsyncStorage.getItem('countryCode').then((countryCode) => {
+            setCountryCode(countryCode);
+            setOldCountryCode(countryCode);
+        })
+    }, [])
+
+    const updateProfileApiFunc = () => {
+        if (Validations.verifyRequired(firstName) == true &&
+            Validations.verifyRequired(countryCode) == true &&
+            Validations.verifyRequired(phoneNumber) == true &&
+            Validations.verifyRequired(email) == true) {
+            if (Validations.verifyEmail(email) == true && Validations.verifyPhone(phoneNumber) == true) {
+                setIsLoading(true);
+                dispatch(FetchUpdateProfileData({
+                    cc: countryCode,
+                    name: firstName,
+                    phone: phoneNumber,
+                    email: email
+                }))
+
+            } else {
+                return false;
+            }
+
+        } else {
+            ShowToast("Please fill all the fields");
+        }
+
+
+
 
     }
 

@@ -23,7 +23,7 @@ import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 //import { check, PERMISSIONS, RESULTS, checkMultiple, requestMultiple,request } from 'react-native-permissions';
 import { chasmaIcon, blackRightArrowIcon, grayRightArrowIcon, blackLeftArrowIcon, grayLeftArrowIcon } from "../../assets";
-import { START_TITLE, START_INST_TITLE, START_TUTORIAL_TITLE } from "../../models/constants"
+import { STRINGS } from "../../models/constants"
 
 const StartScreen = (props: StartNavigationProps) => {
     const { navigation } = props;
@@ -37,10 +37,6 @@ const StartScreen = (props: StartNavigationProps) => {
     const [boardingIndex, setboardingIndex] = useState<number>(0);
     const [nextButtonVisible, setnextButtonVisible] = useState<boolean>(true);
     const [backButtonVisible, setbackButtonVisible] = useState<boolean>(false);
-
-
-
-
 
     useEffect(() => {
         if (Platform.OS === 'android' && Platform.Version >= 23) {
@@ -60,18 +56,18 @@ const StartScreen = (props: StartNavigationProps) => {
 
 
             if (Platform.Version >= 30) {
-                
+
                 try {
-                   PermissionsAndroid.requestMultiple(
+                    PermissionsAndroid.requestMultiple(
                         [PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
                         PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT]
                     ).then((result) => {
                         if (result['android.permission.BLUETOOTH_SCAN']
                             && result['android.permission.BLUETOOTH_CONNECT'] === 'granted') {
                             console.log('You can use the bluetooth');
-                        }else{
+                        } else {
                             console.log('Permission denied');
-                            return;    
+                            return;
                         }
                     });
 
@@ -141,7 +137,7 @@ const StartScreen = (props: StartNavigationProps) => {
             <View style={styles.bodyContainerView}>
                 <ScrollView style={styles.scrollContainer}>
                     <View style={styles.titleView}>
-                        <Text style={styles.titleText}>{START_TITLE}</Text>
+                        <Text style={styles.titleText}>{STRINGS.START_TITLE}</Text>
                     </View>
                     <View style={styles.swiperView}>
                         <SwiperFlatList
@@ -172,7 +168,7 @@ const StartScreen = (props: StartNavigationProps) => {
 
                         />
                     </View>
-                    <Text style={styles.instructionTitle}>{START_INST_TITLE}</Text>
+                    <Text style={styles.instructionTitle}>{STRINGS.START_INST_TITLE}</Text>
                     <View style={styles.nextButtonView}>
                         <TouchableOpacity
                             activeOpacity={0.6}
@@ -214,7 +210,7 @@ const StartScreen = (props: StartNavigationProps) => {
 
                         <Text
                             style={styles.skipTutorialText} onPress={() => navigation.navigate(Routes.NAV_PAIRING_SCREEN)}
-                        >{START_TUTORIAL_TITLE}
+                        >{STRINGS.START_TUTORIAL_TITLE}
                         </Text>
 
                         <View style={styles.marginTopStyle}>

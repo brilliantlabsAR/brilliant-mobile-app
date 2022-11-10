@@ -16,8 +16,6 @@ import {
     PermissionsAndroid
 } from "react-native";
 import { connect } from "react-redux";
-
-
 // import Color from '../themes/Colors';
 // import Dimension from "../utils/Dimension";
 // import WelcomeScreen from "./WelcomeScreen";
@@ -27,19 +25,14 @@ import notifee, { EventType } from '@notifee/react-native';
 import GetLocation from "react-native-get-location";
 import { styles } from "./styles";
 import { Theme } from "../../models/themes";
-import {SIGNUP_AND, START_LIVE_STREAMING, BROADCAST_YOUR_LIFE,LOGIN,SIGNUP} from "../../models/constants";
+import { STRINGS } from "../../models/constants";
 import { RootStackParamList } from "../../navigations";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Routes from "../../models/routes";
+
+
 const windowHeight = Dimensions.get('window').height;
 
-
-// import React, { useEffect } from "react";
-
-// import { Wrapper, TitleFont } from "./styles";
-// import { DevicePairingStatus, FirmwareProgressStatus } from "../../../models";
-// import { AsyncConst } from "../../../models";
-// import * as mainDao from '../../../database'
 
 type SplashScreenProps = NativeStackScreenProps<
     RootStackParamList,
@@ -50,7 +43,6 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
     const [isShow, setIsShow] = useState<boolean>(false);
     //var isShow:boolean=false;
-    const [isLogin, setIsLogin] = useState<boolean>(false);
     const animated = useRef(new Animated.Value(0)).current;
     const animated2 = useRef(new Animated.Value(0)).current;
     const animated3 = useRef(new Animated.Value(1)).current;
@@ -77,9 +69,24 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
         extrapolate: 'clamp',
     })
 
+    useEffect(() => {
+        console.log('Use effect');
+        AsyncStorage.getItem('userId').then((userId) => {
+            if (userId === null) {
+                console.log('Use effect nulol');
+                setIsShow(true);
+            } else {
+                console.log('Use effect true');
+                navigation.navigate(Routes.NAV_APP)
+            }
+        })
+    }, [])
+
 
 
     useEffect(() => {
+        console.log('Use effect 2');
+
         const translateUp =
             Animated.timing(animated, {
                 toValue: 1,
@@ -102,14 +109,15 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
                 useNativeDriver: true,
             }).start();
 
-            if (isLogin) {
-                // setIsShow(false);
-            } else {
-                setIsShow(true);
-                { console.log("Ho", isShow) }
+            // if (isLogin) {
+            //     setIsShow(false);
+            // } else {
+            //     setIsShow(true);
+            //     { console.log("Ho", isShow) }
+            //     navigation.navigate(Routes.NAV_APP)
 
 
-            }
+            // }
         });
         { console.log("HIHIHI") }
         if (Platform.OS === 'android' && Platform.Version >= 23) {
@@ -129,77 +137,63 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
         }
         getLocation();
     }, []);
-    async  function getLocation() {
+    async function getLocation() {
 
         await GetLocation.getCurrentPosition({
-          enableHighAccuracy: true,
-          timeout: 15000,
+            enableHighAccuracy: true,
+            timeout: 15000,
         })
-          .then(location => {
-            console.log('Location', location);
-            
-          })
-          .catch(error => {
-            const { code, message } = error;
-            console.warn(code, message);
-          })
-      }
+            .then(location => {
+                console.log('Location', location);
+
+            })
+            .catch(error => {
+                const { code, message } = error;
+                console.warn(code, message);
+            })
+    }
 
     return (
         <SafeAreaView
             style={styles.bodyContainer}>
             <View style={styles.topView}>
-                {isShow == true ?
+                {isShow === true ?
 
                     <Animated.View style={[
                         styles.animatedView,
                         {
                             opacity: fadeInValue
                         }
-
                     ]}>
-
                         <View>
-
-                            <Text style={styles.signUpTextStyle}>{SIGNUP_AND}</Text>
-                            <Text style={styles.liveStreamingText}>{START_LIVE_STREAMING}</Text>
-                            <Text style={styles.broadCastText}>{BROADCAST_YOUR_LIFE}</Text>
+                            <Text style={styles.signUpTextStyle}>{STRINGS.SIGNUP_AND}</Text>
+                            <Text style={styles.liveStreamingText}>{STRINGS.START_LIVE_STREAMING}</Text>
+                            <Text style={styles.broadCastText}>{STRINGS.BROADCAST_YOUR_LIFE}</Text>
 
                         </View>
-
-
-
                         <View style={styles.middleView}>
-
-
                             <TouchableOpacity style={styles.signUpTouchableView}
                                 onPress={() =>
                                     navigation.navigate(Routes.NAV_SIGNUP_SCREEN)
                                 }
                             >
-                                <Text style={styles.middleSignUpText}>{SIGNUP}</Text>
+                                <Text style={styles.middleSignUpText}>{STRINGS.SIGNUP}</Text>
                             </TouchableOpacity>
 
 
                             <TouchableOpacity style={styles.signInText}
                                 onPress={() =>
                                     navigation.navigate(Routes.NAV_LOGIN_SCREEN)
-                                   
+
                                 }
                             >
-
-
-                                <Text style={styles.loginText}>{LOGIN}</Text>
-
-
+                                <Text style={styles.loginText}>{STRINGS.LOGIN}</Text>
                             </TouchableOpacity>
                         </View>
                     </Animated.View>
                     :
                     null
                 }
-
-
                 {/* <Text
                     style={styles.brilliantTextSmall}
                 >{'BRILLIANT'}</Text> */}

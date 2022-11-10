@@ -18,7 +18,7 @@ export const FetchOtpData = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
@@ -27,7 +27,7 @@ const OtpVerifySlice = createSlice({
   name: "otpVerifySlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetOTPData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -55,5 +55,5 @@ const OtpVerifySlice = createSlice({
   },
 });
 
-export const { resetData } = OtpVerifySlice.actions;
+export const { resetOTPData } = OtpVerifySlice.actions;
 export default OtpVerifySlice.reducer;

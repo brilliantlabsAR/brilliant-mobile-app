@@ -54,6 +54,10 @@ export type AccountNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "MyAccountScreen"
 >;
+export type UpdateProfileVerifyNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "ProfileOtpVerifyScreen"
+>;
 export type HelpNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "HelpScreen"

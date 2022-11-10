@@ -20,7 +20,7 @@ import {
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { Modal, Portal, Provider, TextInput } from 'react-native-paper';
 import BleManager from 'react-native-ble-manager';
-import  {stringToBytes}  from "convert-string";
+import { stringToBytes } from "convert-string";
 import NetInfo from '@react-native-community/netinfo';
 
 import { normalize } from "../../utils/dimentionUtils";
@@ -30,9 +30,9 @@ import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { Loading } from '../../components/loading';
 import { chasmaIcon } from "../../assets";
-const peripherals = new Map();
+import { STRINGS } from "../../models/constants";
 
-import { ENSURE_TITLE, LETS_PAIR_TITLE, SUBMIT, CONNECT } from "../../models/constants";
+const peripherals = new Map();
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -92,7 +92,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                             });
                         }
                     });
-                  
+
                 }
                 BleManager.enableBluetooth()
                     .then(() => {
@@ -179,7 +179,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
 
 
-           
+
 
         } catch (e) {
             console.log(e)
@@ -332,7 +332,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                         p.connected = true;
                         peripherals.set(peripheral.id, p);
                         // setList(Array.from(peripherals.values()));
-                        
+
                         setdevices(Array.from(peripherals.values()))
                     }
                     console.log('Connected to ' + peripheral.id);
@@ -345,8 +345,8 @@ const PairingScreen = (props: PairingNavigationProps) => {
                     await BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
                         console.log('Retrieved peripheral services', peripheralData);
                         console.log('Retrieved peripheral charac', peripheralData.characteristics);
-                       // console.log('Retrieved peripheral services', peripheralData.value);
-                       // this.setState({ peripheralID: peripheral.id });
+                        // console.log('Retrieved peripheral services', peripheralData.value);
+                        // this.setState({ peripheralID: peripheral.id });
                         setPeripheralID(peripheral.id);
                         BleManager.readRSSI(peripheral.id).then((rssi) => {
                             console.log('Retrieved actual RSSI value', rssi);
@@ -355,7 +355,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                 p.rssi = rssi;
                                 peripherals.set(peripheral.id, p);
                                 //setList(Array.from(peripherals.values()));
-                              //  this.setState({ devices: peripherals.values() })
+                                //  this.setState({ devices: peripherals.values() })
                                 setdevices(Array.from(peripherals.values()))
 
                             }
@@ -412,7 +412,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                 // Failure code
                                 console.log("Read data failure", error);
                             });
-                        var stringdata:string = '';
+                        var stringdata: string = '';
 
                         setTimeout(() => {//\\001
                             stringdata = 'import machine\r\n';
@@ -556,7 +556,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                         }}
                     >
                         <View style={styles.connectView} >
-                            <Text style={styles.connectText}>{CONNECT}</Text>
+                            <Text style={styles.connectText}>{STRINGS.CONNECT}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -608,7 +608,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                                     //console.log("Register", "Hii")
                                                 }}>
                                                 <View style={styles.submitButtonView}>
-                                                    <Text style={styles.submitText}>{SUBMIT}</Text>
+                                                    <Text style={styles.submitText}>{STRINGS.SUBMIT}</Text>
 
                                                 </View>
                                             </TouchableOpacity>
@@ -634,13 +634,13 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
                                 />
                                 {scanning ?
-                                     <Loading /> : null
+                                    <Loading /> : null
                                 }
                             </View>
 
                             :
                             <View style={styles.pairTitleView}>
-                                <Text style={styles.pairTitle}>{LETS_PAIR_TITLE}</Text>
+                                <Text style={styles.pairTitle}>{STRINGS.LETS_PAIR_TITLE}</Text>
                                 <View style={styles.circularProgressView}>
                                     <AnimatedCircularProgress
                                         size={300}
@@ -663,7 +663,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                             )
                                         }
                                     </AnimatedCircularProgress>
-                                    <Text style={styles.ensureText}>{ENSURE_TITLE}</Text>
+                                    <Text style={styles.ensureText}>{STRINGS.ENSURE_TITLE}</Text>
                                 </View>
                             </View>
                         }

@@ -11,6 +11,7 @@ import {
 import RootNavigation from "./navigations";
 import { Provider } from 'react-redux';
 import store from "./redux/store";
+
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function () {

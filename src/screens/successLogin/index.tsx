@@ -13,7 +13,7 @@ import {
 import { Theme } from "../../models";
 import { ShowToast } from "../../utils/toastUtils";
 import { styles } from "./styles";
-import * as Strings from "../../models";
+import { STRINGS } from "../../models/constants";
 import { SuccessLoginNavigationProps } from '../../navigations/types';
 import * as Routes from "../../models/routes";
 
@@ -40,8 +40,8 @@ const SuccessLogin = (props: SuccessLoginNavigationProps) => {
             <View style={styles.container}>
 
                 <View style={styles.successTextContainer}>
-                    <Text style={styles.successTitle}>{Strings.SUCCESS_TEXT}</Text>
-                    <Text style={styles.successText}>{Strings.SUCCESS_LOGIN}</Text>
+                    <Text style={styles.successTitle}>{STRINGS.SUCCESS_TEXT}</Text>
+                    <Text style={styles.successText}>{STRINGS.SUCCESS_LOGIN}</Text>
                 </View>
 
                 <View style={styles.navigateContainer}>

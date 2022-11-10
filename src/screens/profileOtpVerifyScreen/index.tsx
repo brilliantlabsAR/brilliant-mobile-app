@@ -15,13 +15,14 @@ import {
     Keyboard
 } from "react-native";
 import { Theme } from "../../models";
-import { LoginVerifyNavigationProps } from "../../navigations/types";
+import { UpdateProfileVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
+import { VERIFY_NOW, RESEND_OTP, } from "../../models/constants";
 import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
 import { Loading } from "../../components/loading";
-import { STRINGS, ASYNC_CONST } from '../../models/constants';
+import * as Strings from '../../models';
 import * as Routes from "../../models/routes";
 import { ShowToast } from "../../utils/toastUtils";
 import { Validations } from "../../utils/validationUtils";
@@ -31,27 +32,24 @@ import { FetchOtpData } from "../../redux/authSlices/otpVerifySlice";
 import { FetchResendOtpData } from "../../redux/authSlices/otpResendSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { Alert } from "react-native";
-import { countdownTimer } from "../../utils";
-import { setStringData } from "../../utils/asyncUtils";
+import { FetchProfileVerifyData } from "../../redux/appSlices/updateProfileVerifySlice";
 
-type Props = ILoginVerification & LoginVerifyNavigationProps
-
+type Props = UpdateProfileVerifyNavigationProps
+//phoneNumber:countryCode+phoneNumber,countryCode:countryCode,phone:phoneNumber,email:email,name:firstName
 let timerEnable = true;
-
-const LoginOtpVerify = (props: Props) => {
+const ProfileOtpVerify = (props: Props) => {
     const { navigation, route } = props;
-    const loginDetails = useAppSelector(state => state.login.userData);
-    const [phoneNumber] = useState<string>(loginDetails.phoneNumber);
+    const [phoneNumber] = useState<string>(route.params.phoneNumber);
+    const [countryCode] = useState<string>(route.params.countryCode);
+    const [phone] = useState<string>(route.params.phone);
+    const [email] = useState<string>(route.params.email);
+    const [name] = useState<string>(route.params.name);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [timer, setTimer] = useState<number>(240);
     const [otp, setOtp] = useState<string>('');
-    const [codeCount, setcodeCount] = useState<number>(4);
-    const [blankCheck, setblankCheck] = useState<boolean>(true);
     const dispatch = useAppDispatch();
-    const status = useAppSelector(state => state.otp.status);
-    const resendOtpStatus = useAppSelector(state => state.resendOtp.status);
-    const resendOtpDetails = useAppSelector(state => state.resendOtp.userData);
-    const userDetails = useAppSelector(state => state.otp.userData);
+    const status = useAppSelector(state => state.updateProfileVerifySlice.status);
+    const userDetails = useAppSelector(state => state.updateProfileVerifySlice.userData);
 
     useEffect(() => {
         //console.log('LoLO', timer);
@@ -69,35 +67,25 @@ const LoginOtpVerify = (props: Props) => {
     })
 
     useEffect(() => {
-        // console.log(status);
         if (status === apiStatus.success) {
-            setIsLoading(false);
-            setStringData(ASYNC_CONST.userId, userDetails.id);
-            setStringData(ASYNC_CONST.accessToken, userDetails.token)
-            setStringData(ASYNC_CONST.phone, userDetails.phone);
+            setIsLoading(false)
+            AsyncStorage.setItem('userId', JSON.stringify(userDetails.id));
+            AsyncStorage.setItem('accessToken', JSON.stringify(userDetails.token));
+            AsyncStorage.setItem('phone', JSON.stringify(userDetails.phone));
             //console.log('from otp screen ',userDetails);
-            if (route.params.screen == STRINGS.SIGNUP) {
-                navigation.navigate(Routes.NAV_SUCCESS_LOGIN)
-            } else if (route.params.screen == STRINGS.LOGIN) {
-                navigation.navigate(Routes.NAV_APP)
-            }
+            // if (route.params.screen == 'Signup') {
+            //     navigation.navigate(Routes.NAV_SUCCESS_LOGIN)
+            // } else if (route.params.screen == 'Login') {
+            //     navigation.navigate(Routes.NAV_APP)
+            // }
         } else if (status === apiStatus.failed) {
             setOtp('');
             setIsLoading(false);
-            ShowToast(userDetails)
+            ShowToast(userDetails);
         }
     }, [status])
 
-    useEffect(() => {
-        if (resendOtpStatus === apiStatus.success) {
-            setIsLoading(false);
-            setblankCheck(false);
-            ShowToast(JSON.stringify(resendOtpDetails.otp));
-        } else if (resendOtpStatus === apiStatus.failed) {
-            setIsLoading(false);
-            ShowToast(resendOtpDetails)
-        }
-    }, [resendOtpStatus])
+   
 
     const calculateTimer = () => {
         //console.log("timerlog", timer);
@@ -105,15 +93,16 @@ const LoginOtpVerify = (props: Props) => {
             timerEnable = false;
             return ('00:00');
         } else {
-            return countdownTimer(timer)
+            var m = Math.floor(timer % 3600 / 60);
+            var s = Math.floor(timer % 3600 % 60);
+            return ((m < 10 ? `0${m} :` : `${m} :`) + (s < 10 ? `0${s}` : `${s}`))
         }
     };
 
     function resendOtp() {
-        setblankCheck(true);
-        // setOtp('');
+        setOtp('');
         if (!Validations.verifyRequired(phoneNumber)) {
-            navigation.replace(Routes.NAV_LOGIN_SCREEN)
+           // navigation.replace(Routes.NAV_LOGIN_SCREEN)
         } else {
             Keyboard.dismiss();
             setTimer(240);
@@ -129,9 +118,17 @@ const LoginOtpVerify = (props: Props) => {
         // console.log(phoneNumber + '//// ' + otp)
         if (Validations.verifyRequired(otp)) {
             setIsLoading(true)
-            dispatch(FetchOtpData({
-                phone: phoneNumber,
-                otp: otp,
+            // dispatch(FetchOtpData({
+            //     phone: phoneNumber,
+            //     otp: otp,
+            // }))
+            dispatch(FetchProfileVerifyData({
+                    name:name,
+                    email:email,
+                    cc:countryCode,
+                    phone:phoneNumber,
+                    oldPhoneNumber:phone,
+                    otp:otp
             }))
         }
 
@@ -156,19 +153,18 @@ const LoginOtpVerify = (props: Props) => {
                 <ScrollView style={styles.backgroundWhite}
                     keyboardShouldPersistTaps={'handled'}>
                     <View>
-                        <Text style={styles.verifyText}>{STRINGS.VERIFY_OTP_TEXT}</Text>
-                        <Text style={styles.phoneNumberText}>{STRINGS.SEND_OTP + phoneNumber}</Text>
+                        <Text style={styles.verifyText}>{Strings.VERIFY_OTP_TEXT}</Text>
+                        <Text style={styles.phoneNumberText}>{Strings.SEND_OTP + countryCode+phoneNumber}</Text>
                     </View>
                     <View style={styles.otpViewContainer}>
 
                         <View style={styles.otpViewBox}>
                             <OTPContainer
-                                codeCount={codeCount}
+                                codeCount={4}
                                 containerStyle={styles.otpContainerStyle}
                                 onFinish={(code) => {
                                     setOtp(code)
                                 }}
-                                blankCheck={blankCheck}
                             />
                             <View style={styles.marginView}>
                                 <View style={styles.timerView}>
@@ -187,7 +183,7 @@ const LoginOtpVerify = (props: Props) => {
                                         onPress={() =>
                                             resendOtp()
                                         }>
-                                        <Text style={styles.resendText}>{STRINGS.RESEND_OTP}</Text>
+                                        <Text style={styles.resendText}>{RESEND_OTP}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -201,7 +197,7 @@ const LoginOtpVerify = (props: Props) => {
                                 }
                                 style={styles.verifyButtonStyle}>
 
-                                <Text style={styles.verifyButtonText}>{STRINGS.VERIFY_NOW}</Text>
+                                <Text style={styles.verifyButtonText}>{VERIFY_NOW}</Text>
                             </TouchableOpacity>
 
                         </View>
@@ -215,4 +211,4 @@ const LoginOtpVerify = (props: Props) => {
     )
 
 }
-export default LoginOtpVerify;
+export default ProfileOtpVerify;

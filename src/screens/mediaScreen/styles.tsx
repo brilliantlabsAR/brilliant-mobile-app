@@ -83,10 +83,17 @@ export const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center'
-    }, playButtonImage: {
+    },
+    playButtonImage: {
         height: normalize(10),
         width: normalize(10),
-    }, textviewStyle: { flex: 3, marginTop: normalize(15), marginLeft: normalize(15), flexDirection: 'column' },
+    },
+    textviewStyle: {
+        flex: 3,
+        marginTop: normalize(15),
+        marginLeft: normalize(15),
+        flexDirection: 'column'
+    },
     textStyle: {
         fontSize: normalize(12),
         color: Theme.color.Black,
@@ -133,5 +140,30 @@ export const styles = StyleSheet.create({
         color: Theme.color.Black,
         fontFamily: FontFamily.regular
 
+    },
+    footerButtonView: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1,
+        elevation: 20,
+        shadowColor: 'red',
+    },
+    footerButtonImage: {
+        height: normalize(50),
+        width: normalize(50),
+    },
+    footerLinearStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: normalize(60),
+        height: normalize(60),
+        borderRadius: normalize(30),
+        backgroundColor: 'blue',
+        borderColor: '#FFFFFF00',
+        borderWidth: 12,
     }
 })

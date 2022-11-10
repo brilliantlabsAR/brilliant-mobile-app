@@ -31,7 +31,7 @@ import BottomSheet, { BottomSheetRefProps } from '../../components/bottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TextInput } from "react-native-paper";
 import { Loading } from '../../components/loading';
-import * as String from '../../models/constants';
+import { STRINGS } from '../../models/constants';
 import GetLocation from "react-native-get-location";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchStreamerAudienceData } from "../../redux/appSlices/streamerAudienceSlice";
@@ -106,7 +106,7 @@ const LiveMomentScreen = (props: Props) => {
         }
 
         if (status === apiStatus.success) {
-            console.log("data");
+            // console.log("data");
             console.log("data-->", streamAudienceData.streamers);
             setStreamerList(streamAudienceData.streamers);
             setaudienceList(streamAudienceData.audience);
@@ -495,11 +495,11 @@ const LiveMomentScreen = (props: Props) => {
                                         resizeMode='cover'
                                     />
                                 </View>
-                                <Text style={styles.inviteContactText}>{String.INVITE_CONTACT}</Text>
+                                <Text style={styles.inviteContactText}>{STRINGS.INVITE_CONTACT}</Text>
                             </TouchableOpacity>
 
                             <ScrollView scrollEnabled={true} style={styles.contactList}>
-                                <Text style={styles.headerStyle}>{String.STREAMER}</Text>
+                                <Text style={styles.headerStyle}>{STRINGS.STREAMER}</Text>
                                 <FlatList
                                     data={streamerList}
                                     scrollEnabled={false}
@@ -508,7 +508,7 @@ const LiveMomentScreen = (props: Props) => {
                                     renderItem={render_streamerList}
                                     keyExtractor={(item, index) => index.toString()}
                                 />
-                                <Text style={styles.headerStyle}>{String.AUDIENCE}</Text>
+                                <Text style={styles.headerStyle}>{STRINGS.AUDIENCE}</Text>
                                 <FlatList
                                     data={audienceList}
                                     scrollEnabled={false}
