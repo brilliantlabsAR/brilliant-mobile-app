@@ -16,6 +16,7 @@ export const NAV_START_SCREEN = "StartScreen";
 export const NAV_PAIRING_SCREEN = "PairingScreen";
 export const NAV_ACCOUNT_SCREEN = "MyAccountScreen";
 export const NAV_HELP_SCREEN = "HelpScreen";
+export const NAV_PROFILE_OTP_SCREEN = "ProfileOtpVerifyScreen";
 // export const NAV_BLUETOOTH_PAIRING = "BluetoothPairing";
 // export const NAV_TUTORIALS = "Tutorials";
 // export const NAV_DASHBOARD = "Dashboard";

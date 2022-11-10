@@ -20,6 +20,7 @@ export type AppStackParamList = {
   [Routes.NAV_MEDIA_SCREEN]: undefined;
   [Routes.NAV_INVITE_CONTACT_SCREEN]: undefined;
   [Routes.NAV_HELP_SCREEN]:  { pageNo: string };
+  [Routes.NAV_PROFILE_OTP_SCREEN]:  { phoneNumber: string,countryCode:string|any,phone:string|any,email:string|any,name:string|any };
   // [Routes.NAV_BLUETOOTH_PAIRING]: undefined;
   // [Routes.NAV_TUTORIALS]: undefined;
   // [Routes.NAV_DASHBOARD]: undefined;
@@ -82,6 +83,11 @@ const AppNavigation = () => {
         <AppStack.Screen
         name={Routes.NAV_HELP_SCREEN}
         component={Screens.HelpScreen}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_PROFILE_OTP_SCREEN}
+        component={Screens.ProfileOtpVerify}
         options={{ title: "" }}
       />
       {/* <AppStack.Screen
