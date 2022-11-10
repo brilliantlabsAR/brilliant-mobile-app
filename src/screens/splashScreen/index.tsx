@@ -43,7 +43,6 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
     const [isShow, setIsShow] = useState<boolean>(false);
     //var isShow:boolean=false;
-    const [isLogin, setIsLogin] = useState<boolean>(false);
     const animated = useRef(new Animated.Value(0)).current;
     const animated2 = useRef(new Animated.Value(0)).current;
     const animated3 = useRef(new Animated.Value(1)).current;
@@ -75,13 +74,10 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
         AsyncStorage.getItem('userId').then((userId) => {
             if (userId === null) {
                 console.log('Use effect nulol');
-
-                setIsLogin(false);
-                setIsShow(false);
+                setIsShow(true);
             } else {
                 console.log('Use effect true');
-                setIsLogin(true);
-                setIsShow(true);
+                navigation.navigate(Routes.NAV_APP)
             }
         })
     }, [])
@@ -113,17 +109,15 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
                 useNativeDriver: true,
             }).start();
 
-
-            { console.log("Ho858258", isLogin) }
-            if (isLogin) {
-                setIsShow(false);
-            } else {
-                setIsShow(true);
-                { console.log("Ho", isShow) }
-                navigation.navigate(Routes.NAV_APP)
+            // if (isLogin) {
+            //     setIsShow(false);
+            // } else {
+            //     setIsShow(true);
+            //     { console.log("Ho", isShow) }
+            //     navigation.navigate(Routes.NAV_APP)
 
 
-            }
+            // }
         });
         { console.log("HIHIHI") }
         if (Platform.OS === 'android' && Platform.Version >= 23) {

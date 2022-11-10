@@ -46,7 +46,7 @@ export const postApi = async (url: string, params?: any) => {
             },
         }
     );
-    console.log("stremmers", response.data);
+    // console.log("stremmers", response.data);
 
     return response.data;
     // return await axios.post(

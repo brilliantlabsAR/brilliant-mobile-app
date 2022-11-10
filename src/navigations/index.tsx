@@ -20,7 +20,7 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 const RootNavigation: React.FC = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={Routes.NAV_APP}>
+      <RootStack.Navigator initialRouteName={Routes.NAV_SPLASH_SCREEN}>
         <RootStack.Screen
           name={Routes.NAV_SPLASH_SCREEN}
           component={screens.SplashScreen}
