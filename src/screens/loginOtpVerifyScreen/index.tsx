@@ -37,11 +37,13 @@ import { setStringData } from "../../utils/asyncUtils";
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
 let timerEnable = true;
+
 const LoginOtpVerify = (props: Props) => {
     const { navigation, route } = props;
-    const [phoneNumber] = useState<string>(route.params.phoneNumber);
+    const loginDetails = useAppSelector(state => state.login.userData);
+    const [phoneNumber] = useState<string>(loginDetails.phoneNumber);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [timer, setTimer] = useState<number>(40);
+    const [timer, setTimer] = useState<number>(240);
     const [otp, setOtp] = useState<string>('');
     const [codeCount, setcodeCount] = useState<number>(4);
     const [blankCheck, setblankCheck] = useState<boolean>(true);
@@ -114,7 +116,7 @@ const LoginOtpVerify = (props: Props) => {
             navigation.replace(Routes.NAV_LOGIN_SCREEN)
         } else {
             Keyboard.dismiss();
-            setTimer(40);
+            setTimer(240);
             setIsLoading(true);
             dispatch(FetchResendOtpData({
                 phone: phoneNumber,

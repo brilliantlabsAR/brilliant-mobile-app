@@ -85,6 +85,7 @@ export const CountryCodePicker = ({
         if (show) {
             setShowModal(true);
         } else {
+            setSearchValue("");
             closeModal();
         }
     }, [show]);

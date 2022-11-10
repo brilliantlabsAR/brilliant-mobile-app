@@ -31,7 +31,9 @@ import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { FetchProfilePictureData } from "../../redux/appSlices/profilePictureSlice";
 import { cleanStorageItem } from "../../utils/asyncUtils";
-import { resetData } from "../../redux/authSlices/otpVerifySlice";
+import {  resetOTPData } from "../../redux/authSlices/otpVerifySlice";
+import { resetLogin } from "../../redux/authSlices/loginSlice";
+import { resetResendData } from "../../redux/authSlices/otpResendSlice";
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
     const { navigation } = props;
@@ -131,10 +133,14 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                     style: "cancel"
                 },
                 {
-                    text: "OK", onPress: () => {
-                        cleanStorageItem();
-                        resetData();
-                        navigation.navigate(Routes.NAV_SPLASH_SCREEN)
+                    text: "OK", onPress: async() => {
+                        dispatch(resetLogin());
+                        dispatch(resetOTPData());
+                        dispatch(resetResendData());
+                        cleanStorageItem().then(()=>{
+                            navigation.replace(Routes.NAV_SPLASH_SCREEN)
+                        });
+                        
                     }
                 }
             ]

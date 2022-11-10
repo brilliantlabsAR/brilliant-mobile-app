@@ -48,5 +48,6 @@ export const getStringData = async (key: any) => {
 export const cleanStorageItem = async () => {
     const keys = await AsyncStorage.getAllKeys();
     await AsyncStorage.multiRemove(keys);
+    AsyncStorage.clear();
 };
 

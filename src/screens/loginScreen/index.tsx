@@ -44,11 +44,16 @@ const LoginScreen = (props: LoginNavigationProps) => {
   useEffect(() => {
     if (status === apiStatus.success) {
       setIsLoading(false);
-      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: countryCode + phoneNumber, screen: STRINGS.LOGIN })
+      setCountryCode("");
+      setPhoneNumber("");
+      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, {screen: STRINGS.LOGIN })
     } else if (status === apiStatus.failed) {
       setIsLoading(false);
       ShowToast(userDetails);
     }
+
+
+
   }, [status])
 
 

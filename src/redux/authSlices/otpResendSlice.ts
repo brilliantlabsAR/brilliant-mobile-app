@@ -27,7 +27,7 @@ const OtpResendSlice = createSlice({
   name: "otpResendSlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetResendData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -55,5 +55,5 @@ const OtpResendSlice = createSlice({
   },
 });
 
-export const { resetData } = OtpResendSlice.actions;
+export const { resetResendData } = OtpResendSlice.actions;
 export default OtpResendSlice.reducer;

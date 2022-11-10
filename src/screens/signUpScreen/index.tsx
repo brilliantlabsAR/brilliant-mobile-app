@@ -38,10 +38,14 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
 
     useEffect(() => {
         if (status === apiStatus.success) {
-            setIsLoading(true);
-            navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: countryCode + phoneNumber, screen: STRINGS.SIGNUP })
+            setIsLoading(false);
+            setfirstName("");
+            setphoneNumber("");
+            setCountryCode("")
+            setemail("");
+            navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { screen: STRINGS.SIGNUP })
         } else if (status === apiStatus.failed) {
-            setIsLoading(true);
+            setIsLoading(false);
             ShowToast(userDetails);
         }
     }, [status])
