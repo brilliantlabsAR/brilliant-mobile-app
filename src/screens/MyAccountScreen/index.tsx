@@ -12,10 +12,11 @@ import {
     ScrollView,
     ActivityIndicator,
     FlatList,
-    TouchableHighlight
+    TouchableHighlight,
+    Alert
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ImageCropPicker from "react-native-image-crop-picker";
+import ImageCropPicker, { clean } from "react-native-image-crop-picker";
 import Modal from 'react-native-modal';
 import { API_SLUG_CONTENT, API_LOGIN, Theme } from "../../models";
 import { AccountNavigationProps } from "../../navigations/types";
@@ -29,6 +30,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { FetchProfilePictureData } from "../../redux/appSlices/profilePictureSlice";
+import { cleanStorageItem } from "../../utils/asyncUtils";
+import { resetData } from "../../redux/authSlices/otpVerifySlice";
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
     const { navigation } = props;
@@ -43,26 +46,11 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     const userDetails = useAppSelector(state => state.myAccountSlice.userData);
 
 
-
     useEffect(() => {
         setShowLoading(true);
         dispatch(FetchMyAccountData());
     }, []);
 
-    // const getData = async () => {
-    //     try {
-    //         await AsyncStorage.getItem(ASYNC_CONST.accessToken).then((token) => {
-    //             console.log('TOKEN', token);
-    //             setToken(JSON.stringify(token)), () => {
-    //                 console.log('userToken', token);
-    //                 dispatch(FetchMyAccountData(JSON.stringify(token)));
-    //             }
-    //         })
-
-    //     } catch (error) {
-    //         // Error retrieving data
-    //     }
-    // }
 
     useEffect(() => {
         if (status === apiStatus.success) {
@@ -70,10 +58,10 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
             console.log("data-->", userDetails);
             // console.log("data-->2", userDetails.name);
             setFullName(userDetails.name);
-            AsyncStorage.setItem('name',userDetails.name);
-            AsyncStorage.setItem('countryCode',userDetails.cc);
-            AsyncStorage.setItem('phone',userDetails.phone);
-            AsyncStorage.setItem('email',userDetails.email);
+            AsyncStorage.setItem('name', userDetails.name);
+            AsyncStorage.setItem('countryCode', userDetails.cc);
+            AsyncStorage.setItem('phone', userDetails.phone);
+            AsyncStorage.setItem('email', userDetails.email);
             if (userDetails.profilePicture == "") {
                 setUserImageState('');
             } else {
@@ -132,7 +120,26 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
 
         }).catch(error => console.log(error))
     }
-
+    const logout = () => {
+        Alert.alert(
+            "Alert",
+            "Are you want to logout?",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                {
+                    text: "OK", onPress: () => {
+                        cleanStorageItem();
+                        resetData();
+                        navigation.navigate(Routes.NAV_SPLASH_SCREEN)
+                    }
+                }
+            ]
+        )
+    }
     return (
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.mainContainer}>
@@ -267,8 +274,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                             </TouchableOpacity>
                             <TouchableOpacity activeOpacity={0.6}
                                 onPress={() =>
-                                // logout()
-                                { }
+                                    logout()
                                 }
                                 style={styles.logoutView}>
                                 <Text style={styles.logoutText}>Logout</Text>
@@ -311,7 +317,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                     </View>
                 </Modal>
             </View>
-            <Footer selectedTab="MyAccount" />
+            {/* <Footer selectedTab="MyAccount" /> */}
         </SafeAreaView>
     )
 };

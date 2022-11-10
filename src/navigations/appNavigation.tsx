@@ -19,8 +19,8 @@ export type AppStackParamList = {
   [Routes.NAV_LIVE_MOMENT]: { selectedTab: string } | undefined;
   [Routes.NAV_MEDIA_SCREEN]: undefined;
   [Routes.NAV_INVITE_CONTACT_SCREEN]: undefined;
-  [Routes.NAV_HELP_SCREEN]:  { pageNo: string };
-  [Routes.NAV_PROFILE_OTP_SCREEN]:  { phoneNumber: string,countryCode:string|any,phone:string|any,email:string|any,name:string|any };
+  [Routes.NAV_HELP_SCREEN]: { pageNo: string };
+  [Routes.NAV_PROFILE_OTP_SCREEN]: { phoneNumber: string, countryCode: string | any, phone: string | any, email: string | any, name: string | any };
   // [Routes.NAV_BLUETOOTH_PAIRING]: undefined;
   // [Routes.NAV_TUTORIALS]: undefined;
   // [Routes.NAV_DASHBOARD]: undefined;
@@ -38,7 +38,7 @@ const AppNavigation = () => {
 
   return (
     <AppStack.Navigator
-      // initialRouteName={Routes.NAV_INVITE_CONTACT_SCREEN}
+      initialRouteName={Routes.NAV_MEDIA_SCREEN}
       screenOptions={{
         headerShown: false,
         headerBackVisible: false
@@ -80,7 +80,7 @@ const AppNavigation = () => {
         component={Screens.MyAccountScreen}
         options={{ title: "" }}
       />
-        <AppStack.Screen
+      <AppStack.Screen
         name={Routes.NAV_HELP_SCREEN}
         component={Screens.HelpScreen}
         options={{ title: "" }}

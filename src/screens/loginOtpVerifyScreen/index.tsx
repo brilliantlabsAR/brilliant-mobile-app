@@ -41,8 +41,10 @@ const LoginOtpVerify = (props: Props) => {
     const { navigation, route } = props;
     const [phoneNumber] = useState<string>(route.params.phoneNumber);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [timer, setTimer] = useState<number>(240);
+    const [timer, setTimer] = useState<number>(40);
     const [otp, setOtp] = useState<string>('');
+    const [codeCount, setcodeCount] = useState<number>(4);
+    const [blankCheck, setblankCheck] = useState<boolean>(true);
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.otp.status);
     const resendOtpStatus = useAppSelector(state => state.resendOtp.status);
@@ -87,6 +89,7 @@ const LoginOtpVerify = (props: Props) => {
     useEffect(() => {
         if (resendOtpStatus === apiStatus.success) {
             setIsLoading(false);
+            setblankCheck(false);
             ShowToast(JSON.stringify(resendOtpDetails.otp));
         } else if (resendOtpStatus === apiStatus.failed) {
             setIsLoading(false);
@@ -105,12 +108,13 @@ const LoginOtpVerify = (props: Props) => {
     };
 
     function resendOtp() {
-        setOtp('');
+        setblankCheck(true);
+        // setOtp('');
         if (!Validations.verifyRequired(phoneNumber)) {
             navigation.replace(Routes.NAV_LOGIN_SCREEN)
         } else {
             Keyboard.dismiss();
-            setTimer(240);
+            setTimer(40);
             setIsLoading(true);
             dispatch(FetchResendOtpData({
                 phone: phoneNumber,
@@ -157,11 +161,12 @@ const LoginOtpVerify = (props: Props) => {
 
                         <View style={styles.otpViewBox}>
                             <OTPContainer
-                                codeCount={4}
+                                codeCount={codeCount}
                                 containerStyle={styles.otpContainerStyle}
                                 onFinish={(code) => {
                                     setOtp(code)
                                 }}
+                                blankCheck={blankCheck}
                             />
                             <View style={styles.marginView}>
                                 <View style={styles.timerView}>

@@ -49,7 +49,6 @@ const RootNavigation: React.FC = () => {
           options={{ headerShown: false }}
         />
 
-
         <RootStack.Screen
           name={Routes.NAV_APP}
           component={AppNavigation}
