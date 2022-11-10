@@ -5,13 +5,8 @@ import {
     View,
     Text,
     SafeAreaView,
-    Platform,
-    LogBox,
     TouchableOpacity,
     Image,
-    BackHandler,
-    ScrollView,
-    ActivityIndicator
 } from "react-native";
 import { FontFamily, Theme } from "../../models";
 import { LoginVerifyNavigationProps, UpdateProfileNavigationProps } from "../../navigations/types";

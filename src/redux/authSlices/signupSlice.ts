@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
+import { ShowToast } from "../../utils/toastUtils";
 import { apiStatus, ISignupProps, IStateProps } from "../apiDataTypes";
 
 const initialState: IStateProps = {
@@ -18,7 +19,7 @@ export const FetchSignupData = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
@@ -40,8 +41,9 @@ const SignupSlice = createSlice({
       .addCase(FetchSignupData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          console.log("Payload Data", action.payload);
+          // console.log("Payload Data", action.payload.data);
           state.userData = action.payload.data;
+          ShowToast(JSON.stringify(action.payload.data.otp));
         } else {
           state.status = apiStatus.failed;
           state.userData = action.payload.message;

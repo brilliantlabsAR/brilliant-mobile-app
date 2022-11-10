@@ -10,7 +10,7 @@ export type RootStackParamList = {
   [Routes.NAV_SPLASH_SCREEN]: undefined;
   [Routes.NAV_APP]: undefined;
   [Routes.NAV_LOGIN_SCREEN]: undefined;
-  [Routes.NAV_LOGIN_VERIFY_SCREEN]: { phoneNumber: string,screen: string };
+  [Routes.NAV_LOGIN_VERIFY_SCREEN]: { phoneNumber: string, screen: string };
   [Routes.NAV_SIGNUP_SCREEN]: undefined;
   [Routes.NAV_SUCCESS_LOGIN]: undefined;
 };
@@ -20,7 +20,7 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 const RootNavigation: React.FC = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={Routes.NAV_SPLASH_SCREEN}>
+      <RootStack.Navigator initialRouteName={Routes.NAV_APP}>
         <RootStack.Screen
           name={Routes.NAV_SPLASH_SCREEN}
           component={screens.SplashScreen}

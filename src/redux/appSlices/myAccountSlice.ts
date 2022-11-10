@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
 import { apiStatus, IStreamAudienceProps, IStateProps } from "../apiDataTypes";
-import { headers } from "../../models/apiStructure";
+import { getApi, headers } from "../../models/apiStructure";
+import { ASYNC_CONST } from "../../models";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -11,15 +13,12 @@ const initialState: IStateProps = {
 
 export const FetchMyAccountData = createAsyncThunk(
   "myAccountSlice/fetchMyAccountData",
-  async (options: IStreamAudienceProps) => {
+  async () => {
     try {
-      const response = await axios.get(
-        Const.API_BASE_URL + Const.API_DASHBOARD,
-        { headers }
-      );
-      return response.data;
+      const response = getApi(Const.API_DASHBOARD);
+      return response;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );

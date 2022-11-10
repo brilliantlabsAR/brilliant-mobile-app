@@ -18,7 +18,7 @@ export const FetchResendOtpData = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );

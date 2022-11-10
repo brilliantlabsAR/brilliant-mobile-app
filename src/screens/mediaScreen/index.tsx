@@ -22,12 +22,9 @@ import { Theme } from "../../models";
 import { MediaScreenNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage } from "../../assets";
-import {SEARCH_MEDIA, RENAME, DOWNLOAD, DELETE} from "../../models/constants";
-import * as CONST from '../../models';
+import { STRINGS } from "../../models/constants";
 import { styles } from "./styles";
-import Footer from '../../components/footer'
-const { height: SCREEN_HEIGHT } = Dimensions.get('screen');
-const { width: SCREEN_WIDTH } = Dimensions.get('screen');
+import Footer from '../../components/footer';
 import MapView, { Marker } from "react-native-maps";
 import { normalize } from "../../utils/dimentionUtils";
 import Contacts from 'react-native-contacts';
@@ -42,10 +39,13 @@ import {
 } from 'react-native-popup-menu';
 
 type Props = MediaScreenNavigationProps
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('screen');
+const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 const MediaScreen = (props: Props) => {
     const { navigation, route } = props;
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [mediaList, setmediaList] = React.useState([
+    const [mediaList, setMediaList] = React.useState([
 
         {
             "id": "1",
@@ -115,19 +115,12 @@ const MediaScreen = (props: Props) => {
 
     ]);
 
-
-
-
-
     return (
-
-
         <SafeAreaView style={styles.bodyContainer}>
-
             <View style={styles.topView}>
                 <ScrollView style={styles.scrollviewStyle}>
                     <View style={styles.searchView}>
-                        <Text style={styles.searchText}>{SEARCH_MEDIA}</Text>
+                        <Text style={styles.searchText}>{STRINGS.SEARCH_MEDIA}</Text>
 
                         <View style={styles.searchIconView}>
                             <Image
@@ -198,19 +191,19 @@ const MediaScreen = (props: Props) => {
                                                     <MenuOption onSelect={() => { 'function download' }} style={styles.menuView}>
                                                         <Text
                                                             style={styles.menuText}
-                                                        >{RENAME}</Text>
+                                                        >{STRINGS.RENAME}</Text>
                                                     </MenuOption>
                                                     <View style={styles.menuSeparator} />
                                                     <MenuOption onSelect={() => { 'jo' }} style={styles.menuViewOtion}>
                                                         <Text
                                                             style={styles.menuOptionText}
-                                                        >{DOWNLOAD}</Text>
+                                                        >{STRINGS.DOWNLOAD}</Text>
                                                     </MenuOption>
                                                     <View style={styles.menuSeparator} />
                                                     <MenuOption onSelect={() => { 'pokl' }} style={styles.menuViewOtion}>
                                                         <Text
                                                             style={styles.menuOptionText}
-                                                        >{DELETE}</Text>
+                                                        >{STRINGS.DELETE}</Text>
                                                     </MenuOption>
                                                 </MenuOptions>
                                             </Menu>
@@ -223,15 +216,10 @@ const MediaScreen = (props: Props) => {
                             keyExtractor={item => item.id}
                         />
                     </MenuProvider>
-
                 </ScrollView>
-
             </View>
             <Footer selectedTab="MediaScreen" />
         </SafeAreaView>
     )
-
-
-
 }
 export default MediaScreen;

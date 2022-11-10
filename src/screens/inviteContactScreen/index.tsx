@@ -26,7 +26,7 @@ import { InviteContactScreenNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import { Loading } from '../../components/loading';
 import { search, closeIcon, shareIcon } from "../../assets";
-import { INVITE_CONTACT, SHARE_LINK, NO_CONTACT_LIST } from "../../models/constants";
+import { STRINGS } from "../../models/constants";
 import Contact from 'react-native-contacts';
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchSendInviteData } from "../../redux/appSlices/sendInviteSlice";
@@ -286,7 +286,7 @@ const InviteContactScreen = (props: Props) => {
                 </TouchableOpacity>
                 <Text
                     style={styles.headerText}
-                >{INVITE_CONTACT}</Text>
+                >{STRINGS.INVITE_CONTACT}</Text>
             </View>
             <View style={styles.viewSpace} />
 
@@ -330,7 +330,7 @@ const InviteContactScreen = (props: Props) => {
                             </View>
                             <Text
                                 style={styles.shareLinkText}
-                            >{SHARE_LINK}</Text>
+                            >{STRINGS.SHARE_LINK}</Text>
 
                         </View>
                     </TouchableOpacity>
@@ -350,7 +350,7 @@ const InviteContactScreen = (props: Props) => {
                         /> :
                         <Text
                             style={styles.noConttact}
-                        >{NO_CONTACT_LIST}</Text>
+                        >{STRINGS.NO_CONTACT_LIST}</Text>
                     }
                     {
                         isLoading ?

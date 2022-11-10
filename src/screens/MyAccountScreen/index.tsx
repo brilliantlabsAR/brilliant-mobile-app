@@ -23,7 +23,7 @@ import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { Loading } from '../../components/loading';
 import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
-import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
+import { ASYNC_CONST, STRINGS } from "../../models/constants";
 import Footer from "../../components/footer";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
@@ -34,6 +34,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     const { navigation } = props;
     const [userImageState, setUserImageState] = useState<string>("");
     const [fullName, setFullName] = useState<string>("");
+    const [token, setToken] = useState<string>("");
     const [showLoading, setShowLoading] = useState<boolean>(false);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const dispatch = useAppDispatch();
@@ -41,15 +42,33 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     const status = useAppSelector(state => state.myAccountSlice.status);
     const userDetails = useAppSelector(state => state.myAccountSlice.userData);
 
+
+
     useEffect(() => {
         setShowLoading(true);
-        dispatch(FetchMyAccountData({}))
+        dispatch(FetchMyAccountData());
     }, []);
+
+    // const getData = async () => {
+    //     try {
+    //         await AsyncStorage.getItem(ASYNC_CONST.accessToken).then((token) => {
+    //             console.log('TOKEN', token);
+    //             setToken(JSON.stringify(token)), () => {
+    //                 console.log('userToken', token);
+    //                 dispatch(FetchMyAccountData(JSON.stringify(token)));
+    //             }
+    //         })
+
+    //     } catch (error) {
+    //         // Error retrieving data
+    //     }
+    // }
+
     useEffect(() => {
         if (status === apiStatus.success) {
             setShowLoading(false);
             console.log("data-->", userDetails);
-            console.log("data-->2", userDetails.name);
+            // console.log("data-->2", userDetails.name);
             setFullName(userDetails.name);
             if (userDetails.profilePicture == "") {
                 setUserImageState('');
@@ -158,7 +177,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                     source={userIcon}
                                     resizeMode='contain'
                                 />
-                                <Text style={styles.menuText}>{UPDATE_PROFILE}</Text>
+                                <Text style={styles.menuText}>{STRINGS.UPDATE_PROFILE}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 activeOpacity={0.6}
@@ -170,7 +189,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                     source={menuBluetooth}
                                     resizeMode='contain'
                                 />
-                                <Text style={styles.menuText}>{UNPAIR_DEVICE}</Text>
+                                <Text style={styles.menuText}>{STRINGS.UNPAIR_DEVICE}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 activeOpacity={0.6}
@@ -184,7 +203,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                     source={menuDeviceFrame}
                                     resizeMode='contain'
                                 />
-                                <Text style={styles.menuText}>{UPDATE_DEVICE_FIRMWARE}</Text>
+                                <Text style={styles.menuText}>{STRINGS.UPDATE_DEVICE_FIRMWARE}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 activeOpacity={0.6}
@@ -198,7 +217,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                     source={liveStreaming}
                                     resizeMode='contain'
                                 />
-                                <Text style={styles.menuText}>{START_LIVE}</Text>
+                                <Text style={styles.menuText}>{STRINGS.START_LIVE}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 activeOpacity={0.6}
@@ -211,7 +230,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                     source={menuLicence}
                                     resizeMode='contain'
                                 />
-                                <Text style={styles.menuText}>{LICENSE}</Text>
+                                <Text style={styles.menuText}>{STRINGS.LICENSE}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 activeOpacity={0.6}
@@ -226,7 +245,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                     source={menuData}
                                     resizeMode='contain'
                                 />
-                                <Text style={styles.menuText}>{PRIVACY}</Text>
+                                <Text style={styles.menuText}>{STRINGS.PRIVACY}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 activeOpacity={0.6}
@@ -240,7 +259,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                     source={menuHelp}
                                     resizeMode='contain'
                                 />
-                                <Text style={styles.menuText}>{HELP}</Text>
+                                <Text style={styles.menuText}>{STRINGS.HELP}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity activeOpacity={0.6}
                                 onPress={() =>
@@ -275,7 +294,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                             activeOpacity={0.6}
                             style={styles.modalBox}
                             onPress={() => openGallery()}>
-                            <Text style={styles.modalText}>{CHOOSE_GALLARY}</Text>
+                            <Text style={styles.modalText}>{STRINGS.CHOOSE_GALLARY}</Text>
                         </TouchableOpacity>
                         <View style={styles.modalHeight} />
                         <TouchableOpacity
@@ -283,7 +302,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                             style={styles.modalBox}
                             onPress={() =>
                                 setModalVisible(false)}>
-                            <Text style={styles.modalText}>{CANCEL}</Text>
+                            <Text style={styles.modalText}>{STRINGS.CANCEL}</Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>

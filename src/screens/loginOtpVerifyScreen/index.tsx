@@ -18,11 +18,10 @@ import { Theme } from "../../models";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
-import { VERIFY_NOW, RESEND_OTP, } from "../../models/constants";
 import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
 import { Loading } from "../../components/loading";
-import * as Strings from '../../models';
+import { STRINGS, ASYNC_CONST } from '../../models/constants';
 import * as Routes from "../../models/routes";
 import { ShowToast } from "../../utils/toastUtils";
 import { Validations } from "../../utils/validationUtils";
@@ -32,6 +31,8 @@ import { FetchOtpData } from "../../redux/authSlices/otpVerifySlice";
 import { FetchResendOtpData } from "../../redux/authSlices/otpResendSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { Alert } from "react-native";
+import { countdownTimer } from "../../utils";
+import { setStringData } from "../../utils/asyncUtils";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
@@ -64,16 +65,16 @@ const LoginOtpVerify = (props: Props) => {
     })
 
     useEffect(() => {
-        console.log(status);
+        // console.log(status);
         if (status === apiStatus.success) {
-            setIsLoading(false)
-            AsyncStorage.setItem('userId', JSON.stringify(userDetails.id));
-            AsyncStorage.setItem('accessToken', JSON.stringify(userDetails.token));
-            AsyncStorage.setItem('phone', JSON.stringify(userDetails.phone));
+            setIsLoading(false);
+            setStringData(ASYNC_CONST.userId, userDetails.id);
+            setStringData(ASYNC_CONST.accessToken, userDetails.token)
+            setStringData(ASYNC_CONST.phone, userDetails.phone);
             //console.log('from otp screen ',userDetails);
-            if (route.params.screen == 'Signup') {
+            if (route.params.screen == STRINGS.SIGNUP) {
                 navigation.navigate(Routes.NAV_SUCCESS_LOGIN)
-            } else if (route.params.screen == 'Login') {
+            } else if (route.params.screen == STRINGS.LOGIN) {
                 navigation.navigate(Routes.NAV_APP)
             }
         } else if (status === apiStatus.failed) {
@@ -87,8 +88,6 @@ const LoginOtpVerify = (props: Props) => {
         if (resendOtpStatus === apiStatus.success) {
             setIsLoading(false);
             ShowToast(JSON.stringify(resendOtpDetails.otp));
-            // console.log("from redddjnkf", resendOtpDetails);
-            // ShowToast();
         } else if (resendOtpStatus === apiStatus.failed) {
             setIsLoading(false);
             ShowToast(resendOtpDetails)
@@ -101,9 +100,7 @@ const LoginOtpVerify = (props: Props) => {
             timerEnable = false;
             return ('00:00');
         } else {
-            var m = Math.floor(timer % 3600 / 60);
-            var s = Math.floor(timer % 3600 % 60);
-            return ((m < 10 ? `0${m} :` : `${m} :`) + (s < 10 ? `0${s}` : `${s}`))
+            return countdownTimer(timer)
         }
     };
 
@@ -153,8 +150,8 @@ const LoginOtpVerify = (props: Props) => {
                 <ScrollView style={styles.backgroundWhite}
                     keyboardShouldPersistTaps={'handled'}>
                     <View>
-                        <Text style={styles.verifyText}>{Strings.VERIFY_OTP_TEXT}</Text>
-                        <Text style={styles.phoneNumberText}>{Strings.SEND_OTP + phoneNumber}</Text>
+                        <Text style={styles.verifyText}>{STRINGS.VERIFY_OTP_TEXT}</Text>
+                        <Text style={styles.phoneNumberText}>{STRINGS.SEND_OTP + phoneNumber}</Text>
                     </View>
                     <View style={styles.otpViewContainer}>
 
@@ -183,7 +180,7 @@ const LoginOtpVerify = (props: Props) => {
                                         onPress={() =>
                                             resendOtp()
                                         }>
-                                        <Text style={styles.resendText}>{RESEND_OTP}</Text>
+                                        <Text style={styles.resendText}>{STRINGS.RESEND_OTP}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -197,7 +194,7 @@ const LoginOtpVerify = (props: Props) => {
                                 }
                                 style={styles.verifyButtonStyle}>
 
-                                <Text style={styles.verifyButtonText}>{VERIFY_NOW}</Text>
+                                <Text style={styles.verifyButtonText}>{STRINGS.VERIFY_NOW}</Text>
                             </TouchableOpacity>
 
                         </View>

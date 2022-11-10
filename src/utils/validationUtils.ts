@@ -3,90 +3,101 @@
  */
 import React from "react";
 import { AsyncStorage } from "react-native";
-import * as Strings from "../models";
+import { STRINGS } from "../models";
 import { ShowToast } from "../utils/toastUtils";
 
 export const Validations = {
-  verifyEmail(email) {
-    if (email) {
-      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      if (email.match(mailformat)) {
-        return true;
-      } else {
-        ShowToast(Strings.EMAIL_ERROR);
-        return false;
-      }
-    } else {
-      ShowToast(Strings.EMPTY_EMAIL_ERROR);
-      return false;
-    }
-  },
-  verifyPhone(phoneNo: string) {
-    if (phoneNo !== "") {
-      var phoneNoFormat = /^\d{10}$/;
-      if (phoneNo.match(phoneNoFormat)) {
-        return true;
-      } else {
-        ShowToast(Strings.PHONE_ERROR);
-        return false;
-      }
-    } else {
-      ShowToast(Strings.EMPTY_PHONE_ERROR);
-      return false;
-    }
-  },
-
-  verifyPass(text) {
-    // if (text && text.length > 0) {
-    //     var passFormat = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
-    //     if (passFormat.test(text)) {
-    //         return true;
-    //     }else {
-    //         showErrorAlert(Strings.errPassChecking)
-    //     }
-    // } else {
-    //     showErrorAlert(Strings.errEmptyPass)
-    //     return false
-    // }
-    if (text && text.length > 0) {
-      return true;
-    } else {
-      ShowToast(Strings.PASSWORD_ERROR);
-      return false;
-    }
-  },
+  /**
+   * desc: Method of all validation
+   * @returns boolean
+   */
 
   verifyRequired(text: any) {
     if (text && text.trim().length > 0) {
       return true;
     } else {
-      ShowToast(Strings.VERIFY_REQUIRE);
+      ShowToast(STRINGS.VERIFY_REQUIRE);
       return false;
     }
   },
 
-  VerifySignup1(fName, lName, email, contactNo, pass, location) {
+  verifyEmail(email: string): boolean {
+    if (email) {
+      var mailformat =
+        /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+      if (email.match(mailformat)) {
+        return true;
+      } else {
+        ShowToast(STRINGS.EMAIL_ERROR);
+        return false;
+      }
+    } else {
+      ShowToast(STRINGS.EMPTY_EMAIL_ERROR);
+      return false;
+    }
+  },
+
+  verifyPhone(phoneNo: string): boolean {
+    if (phoneNo !== "") {
+      // var phoneNoFormat = /^\d{10}$/;
+      // if (phoneNo.match(phoneNoFormat)) {
+      return true;
+      // } else {
+      //   ShowToast(STRINGS.PHONE_ERROR);
+      //   return false;
+      // }
+    } else {
+      ShowToast(STRINGS.EMPTY_PHONE_ERROR);
+      return false;
+    }
+  },
+
+  verifyPass(text: string) {
+    // if (text && text.length > 0) {
+    //     var passFormat = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
+    //     if (passFormat.test(text)) {
+    //         return true;
+    //     }else {
+    //         showErrorAlert(STRINGS.errPassChecking)
+    //     }
+    // } else {
+    //     showErrorAlert(STRINGS.errEmptyPass)
+    //     return false
+    // }
+    if (text && text.length > 0) {
+      return true;
+    } else {
+      ShowToast(STRINGS.PASSWORD_ERROR);
+      return false;
+    }
+  },
+
+  VerifySignup(phnNo: string, cc: string, name: string, email: string) {
     if (
-      this.verifyRequired(fName) &&
-      this.verifyRequired(lName) &&
-      this.verifyEmail(email) &&
-      this.verifyPhone(contactNo) &&
-      this.verifyPass(pass) &&
-      this.verifyRequired(location)
+      this.verifyPhone(phnNo) &&
+      this.verifyRequired(cc) &&
+      this.verifyRequired(name) &&
+      this.verifyEmail(email)
     ) {
       return true;
     } else {
       return false;
     }
   },
-  VerifyLogin(email, pswrd) {
-    if (this.verifyEmail(email) && this.verifyPass(pswrd)) {
+
+  /**
+   * desc: Method of login validation
+   * @returns boolean
+   */
+  VerifyLogin(cc: string, phone: string) {
+    if (this.verifyPhone(phone) && this.verifyRequired(cc)) {
       return true;
     } else {
       return false;
     }
   },
-  verifyChangePass(oldPass, newPass, confPass) {
+
+  verifyChangePass(oldPass: string, newPass: string, confPass: string) {
     if (
       this.verifyPass(oldPass) &&
       this.verifyPass(newPass) &&
@@ -97,34 +108,13 @@ export const Validations = {
       return false;
     }
   },
+
   verifyOtp(otp: string) {
     if (otp && otp.length == 4) {
       return true;
     } else {
-      ShowToast(Strings.OTP_VERIFY);
+      ShowToast(STRINGS.OTP_VERIFY);
       return false;
-    }
-  },
-  verifyOptionalMail(text) {
-    if (text) {
-      if (this.verifyEmail(text)) {
-        return true; //valid email
-      } else {
-        return false;
-      }
-    } else {
-      return true; //no mail
-    }
-  },
-  verifyOptionalPhone(text) {
-    if (text) {
-      if (this.verifyPhone(text)) {
-        return true; //valid phone
-      } else {
-        return false;
-      }
-    } else {
-      return true; //no phone
     }
   },
 };

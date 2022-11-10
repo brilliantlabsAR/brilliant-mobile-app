@@ -1,31 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-    StatusBar,
     View,
     Text,
     SafeAreaView,
-    Platform,
-    LogBox,
     TouchableOpacity,
     Image,
-    BackHandler,
     ScrollView,
-    ActivityIndicator,
+    Keyboard,
 } from "react-native";
 import { TextInput } from "react-native-paper";
-
 import { FontFamily, Theme } from "../../models";
 import { SignUpNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { leftarrow, smartphone, userIcon, mailIcon } from "../../assets";
 import { CountryCodePicker } from "../../utils/countryCodePicker";
-import { SIGNUP_TITLE, ALREADY_TITLE, AGREE_TITLE, TERMS_CONDITIONS, LOGIN,SIGNUP} from "../../models/constants"
-import {ShowToast} from "../../utils/toastUtils";
-import {Validations} from "../../utils/validationUtils";
+import { STRINGS } from "../../models/constants"
+import { ShowToast } from "../../utils/toastUtils";
+import { Validations } from "../../utils/validationUtils";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchSignupData } from "../../redux/authSlices/signupSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
+import { Loading } from "../../components/loading";
 
 const SignUpScreen = (props: SignUpNavigationProps) => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -42,36 +38,29 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
 
     useEffect(() => {
         if (status === apiStatus.success) {
-          navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: countryCode+phoneNumber,screen: SIGNUP})
-        }else if(status === apiStatus.failed){
+            setIsLoading(true);
+            navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { phoneNumber: countryCode + phoneNumber, screen: STRINGS.SIGNUP })
+        } else if (status === apiStatus.failed) {
+            setIsLoading(true);
             ShowToast(userDetails);
         }
     }, [status])
 
     const signupApiFunc = () => {
-        
-        if(Validations.verifyRequired(firstName)== true && 
-            Validations.verifyRequired(countryCode)== true &&
-            Validations.verifyRequired(phoneNumber)== true && 
-            Validations.verifyRequired(email)== true){
-            if(Validations.verifyEmail(email)== true && Validations.verifyPhone(phoneNumber)== true){
-                dispatch(FetchSignupData({
-                    phone: phoneNumber,
-                    cc: countryCode,
-                    name: firstName,
-                    email: email
-                  }))
-            }else{
-                 return false;
-            }
-             
-         }else{
-             ShowToast("Please fill all the fields");
-         }
-        
-      }
+        console.log("email checking", email);
 
-
+        if (Validations.VerifySignup(phoneNumber, countryCode, firstName, email)) {
+            setIsLoading(true);
+            dispatch(FetchSignupData({
+                phone: phoneNumber,
+                cc: countryCode,
+                name: firstName,
+                email: email
+            }))
+        } else {
+            return false;
+        }
+    }
 
     const textInputStyle = {
         colors: {
@@ -99,7 +88,12 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
             borderRadius: 10,
         },
     }
-    
+
+    const openCountry = () => {
+        setShow(true);
+        Keyboard.dismiss();
+    }
+
     return (
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.mainView}>
@@ -116,9 +110,9 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
             <View style={styles.mainContainer}>
                 <ScrollView style={styles.scrollContainer}>
                     <View style={styles.headerContainer}>
-                        <Text style={styles.signupText}>{"Sign up"}</Text>
+                        <Text style={styles.signupText}>{STRINGS.SIGN_UP}</Text>
                         <Text style={styles.signupdescText}>
-                            {SIGNUP_TITLE}
+                            {STRINGS.SIGNUP_TITLE}
                         </Text>
                     </View>
                     <View style={styles.inputContainer}>
@@ -148,10 +142,10 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                             editable={false}
                                             value={countryCode}
                                             onFocus={() => {
-                                                setIsShow(true);
+                                                openCountry()
                                             }}
                                             onKeyPress={(keyPress) => {
-                                                setIsShow(false);
+                                                setShow(false);
                                             }}
                                             onChangeText={(countryCode) =>
                                                 setCountryCode(countryCode)
@@ -211,12 +205,12 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                 </TouchableOpacity>
                                 <View style={styles.alreadyaccountView}>
                                     <Text style={styles.alreadyaccountText}>
-                                        {ALREADY_TITLE}
+                                        {STRINGS.ALREADY_TITLE}
                                         <Text
                                             style={{ textDecorationLine: "underline" }}
                                             onPress={() => navigation.navigate(Routes.NAV_LOGIN_SCREEN)}
                                         >
-                                            {LOGIN}
+                                            {STRINGS.LOGIN}
                                         </Text>
                                     </Text>
                                 </View>
@@ -224,16 +218,21 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                         </View>
                         <View style={styles.termsView}>
                             <Text style={styles.termsText}>
-                                {AGREE_TITLE}
+                                {STRINGS.AGREE_TITLE}
                                 <Text
                                     style={{ textDecorationLine: "underline" }}
-                                    onPress={() => "Coming soon"}
+                                    onPress={() => console.log("Comming soon")
+                                    }
                                 >
-                                    {TERMS_CONDITIONS}
+                                    {STRINGS.TERMS_CONDITIONS}
                                 </Text>
                             </Text>
                         </View>
                     </View>
+                    {
+                        isLoading ?
+                            <Loading /> : null
+                    }
                 </ScrollView>
             </View>
         </SafeAreaView>
