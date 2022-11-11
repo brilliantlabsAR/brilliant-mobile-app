@@ -51,6 +51,10 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     useEffect(() => {
         setShowLoading(true);
         dispatch(FetchMyAccountData());
+        BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+        }
     }, []);
 
 
@@ -72,7 +76,17 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
         } else if (status === apiStatus.failed) {
             setShowLoading(false);
         }
+       
+
     }, [status]);
+
+
+    const handleBackButton = () => {
+        //this.props.navigation.goBack();
+        //BackHandler.exitApp();
+        navigation.goBack();
+        return true;
+    }
 
 
 

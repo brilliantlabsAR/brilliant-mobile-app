@@ -63,11 +63,21 @@ const LoginOtpVerify = (props: Props) => {
                 setTimer(timer - 1);
             }
         }, 1000);
+        const backHandler=BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
         return () => {
-            clearInterval(clockCall)
+            clearInterval(clockCall);
+            backHandler.remove();
+
         }
     })
 
+    const handleBackButton = () => {
+        //this.props.navigation.goBack();
+       
+        BackHandler.exitApp();
+        return true;
+    }
     useEffect(() => {
         // console.log(status);
         if (status === apiStatus.success) {

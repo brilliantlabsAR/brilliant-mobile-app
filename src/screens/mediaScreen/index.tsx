@@ -116,6 +116,24 @@ const MediaScreen = (props: Props) => {
 
     ]);
 
+
+    useEffect(() => {
+        const backHandler=BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+        return () => {
+           backHandler.remove();
+        }
+    }, [])
+
+    const handleBackButton = () => {
+        //this.props.navigation.goBack();
+       
+        BackHandler.exitApp();
+        return true;
+    }
+
+
+
     return (
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.topView}>
