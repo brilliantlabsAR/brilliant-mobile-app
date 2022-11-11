@@ -74,15 +74,13 @@ const HelpScreen = (props: Props) => {
                         navigation.goBack()
                     }
                 >
-                    <View>
+                   
+                    <Image
+                        style={styles.homeMenu}
+                        source={leftarrow}
+                        resizeMode='contain'
+                    />
 
-                        <Image
-                            style={styles.homeMenu}
-                            source={leftarrow}
-                            resizeMode='contain'
-                        />
-
-                    </View>
                 </TouchableOpacity>
                 <Text
                     style={styles.headerTextStyle}

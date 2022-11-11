@@ -343,13 +343,13 @@ const LiveMomentScreen = (props: Props) => {
                         streamerUserBlock(item.id)
                     }}
                 >
-                    <View >
-                        <Image
-                            style={styles.iconStyle}
-                            source={roundMinus}
-                            resizeMode='contain'
-                        />
-                    </View>
+                    
+                    <Image
+                        style={styles.iconStyle}
+                        source={roundMinus}
+                        resizeMode='contain'
+                    />
+                    
                 </TouchableOpacity>
             </View>
         )

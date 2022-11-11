@@ -144,12 +144,12 @@ const LoginOtpVerify = (props: Props) => {
                 <TouchableOpacity
                     activeOpacity={0.6}
                     onPress={() => navigation.goBack()}>
-                    <View>
-                        <Image
-                            style={styles.homeMenu}
-                            source={leftarrow}
-                            resizeMode='contain' />
-                    </View>
+                    
+                    <Image
+                        style={styles.homeMenu}
+                        source={leftarrow}
+                        resizeMode='contain' />
+                    
                 </TouchableOpacity>
             </View>
             <View style={styles.middleView}>
