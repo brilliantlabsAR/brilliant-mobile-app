@@ -15,20 +15,21 @@ import {
   ActivityIndicator,
   Alert
 } from "react-native";
-import { FontFamily, Theme } from "../../models";
+import { FontFamily, Theme, STRINGS } from "../../models";
 import { LoginNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import { CountryCodePicker } from "../../utils/countryCodePicker";
 import { TextInput } from 'react-native-paper';
 import { leftarrow, smartphone } from "../../assets";
 import { Loading } from '../../components/loading';
-import { STRINGS } from "../../models/constants";
 import * as Routes from "../../models/routes";
 import { ShowToast } from "../../utils/toastUtils";
 import { Validations } from "../../utils/validationUtils";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchLoginData } from "../../redux/authSlices/loginSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
+import { countryPickerStyle, textInputStyle } from "../../utils/stylesUtils";
+import { TopBar } from "../../components/topBar";
 
 const LoginScreen = (props: LoginNavigationProps) => {
 
@@ -46,7 +47,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
       setIsLoading(false);
       setCountryCode("");
       setPhoneNumber("");
-      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, {screen: STRINGS.LOGIN })
+      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { screen: STRINGS.LOGIN })
     } else if (status === apiStatus.failed) {
       setIsLoading(false);
       ShowToast(userDetails);
@@ -68,50 +69,12 @@ const LoginScreen = (props: LoginNavigationProps) => {
       }))
     }
   }
-  const textInputStyle = {
-    colors: {
-      placeholder: '#A1A1A1',
-      text: '#000000',
-      primary: '#A1A1A1',
-      // underlineColor: 'transparent',
-      background: 'white',
 
-    }, fonts: {
-      regular: {
-        fontFamily: FontFamily.regular
-      }
-    },
-    roundness: 10
-  }
-  const countryPickerStyle = {
-    // Styles for whole modal [View]
-    modal: {
-      backgroundColor: Theme.color.White,
-      height: '70%'
-    },
-    // Styles for input [TextInput]
-    textInput: {
-      borderRadius: 10,
-    },
-  }
   return (
     <SafeAreaView
       style={styles.bodyContainer}>
       <StatusBar barStyle="dark-content" backgroundColor={Theme.color.White} />
-
-      <View style={styles.topView}>
-
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() => navigation.goBack()}
-        >
-          <Image
-            style={styles.homeMenu}
-            source={leftarrow}
-            resizeMode='contain'
-          />
-        </TouchableOpacity>
-      </View>
+      <TopBar />
       <View style={styles.middleView}>
         <ScrollView style={styles.backgroundWhite}>
           <View>

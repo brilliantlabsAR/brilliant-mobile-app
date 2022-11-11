@@ -18,7 +18,6 @@ import {
     Alert,
     PermissionsAndroid
 } from "react-native";
-import { Theme } from "../../models";
 import LinearGradient from 'react-native-linear-gradient';
 import { MediaScreenNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";

@@ -18,7 +18,7 @@ import {
     ListRenderItem,
     FlatList,
 } from "react-native";
-import { Theme } from "../../models";
+import { Theme, STRINGS } from "../../models";
 import { LiveMomentNavigationProps } from "../../navigations/types";
 import { mediaLive, whiteUser, search, blackBell, bellFill, roundMinus } from "../../assets";
 import MapView, { Marker } from "react-native-maps";
@@ -31,7 +31,6 @@ import BottomSheet, { BottomSheetRefProps } from '../../components/bottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TextInput } from "react-native-paper";
 import { Loading } from '../../components/loading';
-import { STRINGS } from '../../models/constants';
 import GetLocation from "react-native-get-location";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchStreamerAudienceData } from "../../redux/appSlices/streamerAudienceSlice";
@@ -88,10 +87,6 @@ const LiveMomentScreen = (props: Props) => {
     const notificationStatus = useAppSelector(state => state.notificationCreateSlice.status);
     const blockUserStatus = useAppSelector(state => state.userBlockSlice.status);
 
-
-
-
-
     const ref = useRef<BottomSheetRefProps>(null);
     useEffect(() => {
         const isActive = ref?.current?.isActive();
@@ -104,7 +99,6 @@ const LiveMomentScreen = (props: Props) => {
                 ref?.current?.scrollTo(-100)
             )
         }
-
         if (status === apiStatus.success) {
             // console.log("data");
             console.log("data-->", streamAudienceData.streamers);
@@ -113,6 +107,7 @@ const LiveMomentScreen = (props: Props) => {
         }
 
     }, [status])
+
     useEffect(() => {
         if (locationStatus === apiStatus.success) {
             console.log("data-->");
@@ -131,12 +126,7 @@ const LiveMomentScreen = (props: Props) => {
 
         }
     }, [blockUserStatus]);
-    useEffect(() => {
-        if (blockUserStatus === apiStatus.success) {
-            console.log("user Block-->");
 
-        }
-    }, [blockUserStatus]);
     useEffect(() => {
         getLocation();
         dispatch(FetchStreamerAudienceData({}))
@@ -214,14 +204,10 @@ const LiveMomentScreen = (props: Props) => {
 
                 }
             }
-
-
         } catch (err) {
             console.warn(err)
         }
     }
-
-
 
 
     useEffect(() => {

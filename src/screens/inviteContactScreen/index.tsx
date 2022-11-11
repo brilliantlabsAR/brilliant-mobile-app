@@ -21,17 +21,17 @@ import {
     PermissionsAndroid,
     Linking
 } from "react-native";
-import { Theme } from "../../models";
+import { Theme, STRINGS } from "../../models";
 import { InviteContactScreenNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import { Loading } from '../../components/loading';
 import { search, closeIcon, shareIcon } from "../../assets";
-import { STRINGS } from "../../models/constants";
 import Contact from 'react-native-contacts';
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchSendInviteData } from "../../redux/appSlices/sendInviteSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { ShowToast } from "../../utils/toastUtils";
+import { TopBar } from "../../components/topBar";
 
 
 type Props = InviteContactScreenNavigationProps
@@ -85,16 +85,13 @@ const InviteContactScreen = (props: Props) => {
             //alert(error.message);
         }
     };
-    const sendInviteApiFunction = (cc: string, phoneNumber: string) => {
 
+    const sendInviteApiFunction = (cc: string, phoneNumber: string) => {
         dispatch(FetchSendInviteData({
             "cc": cc,
             "receiver": phoneNumber
         }))
-
     }
-
-
 
     async function requestContactPermission() {
         try {

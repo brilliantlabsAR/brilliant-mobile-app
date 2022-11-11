@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import * as Const from "../../models/api";
 import { apiStatus, INotificationProps, IStateProps } from "../apiDataTypes";
-import { headers } from "../../models/apiStructure";
+import { postApi } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -13,14 +12,10 @@ export const FetchNotificationData = createAsyncThunk(
   "notificationCreateSlice/fetchNotificationData",
   async (options: INotificationProps) => {
     try {
-      const response = await axios.post(
-        Const.API_BASE_URL + Const.API_SEND_NOTIFICATION,
-        options,
-        { headers }
-      );
-      return response.data;
+      const response = await postApi(Const.API_SEND_NOTIFICATION, options);
+      return response;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
@@ -29,7 +24,7 @@ const NotificationCreateSlice = createSlice({
   name: "NotificationCreateSlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetNotificationData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -42,7 +37,7 @@ const NotificationCreateSlice = createSlice({
       .addCase(FetchNotificationData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          // console.log("User Notification", action.payload);
+          // console.log("User Notification", action.payload.data);
           state.userData = action.payload.data;
         } else {
           state.status = apiStatus.failed;
@@ -56,5 +51,5 @@ const NotificationCreateSlice = createSlice({
   },
 });
 
-export const { resetData } = NotificationCreateSlice.actions;
+export const { resetNotificationData } = NotificationCreateSlice.actions;
 export default NotificationCreateSlice.reducer;

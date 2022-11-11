@@ -10,10 +10,9 @@ import {
     ScrollView,
     BackHandler
 } from "react-native";
-import { Theme } from "../../models";
+import { Theme, STRINGS } from "../../models";
 import { ShowToast } from "../../utils/toastUtils";
 import { styles } from "./styles";
-import { STRINGS } from "../../models/constants";
 import { SuccessLoginNavigationProps } from '../../navigations/types';
 import * as Routes from "../../models/routes";
 

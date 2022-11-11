@@ -31,6 +31,7 @@ import * as Routes from "../../models/routes";
 import { Loading } from '../../components/loading';
 import { chasmaIcon } from "../../assets";
 import { STRINGS } from "../../models/constants";
+import { textInputStyle } from "../../utils/stylesUtils";
 
 const peripherals = new Map();
 
@@ -49,21 +50,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
     const [devices, setdevices] = useState<any[]>([]);
 
 
-
-    const textInputOutlineStyle = {
-        colors: {
-            placeholder: '#A1A1A1',
-            text: '#000000', primary: '#A1A1A1',
-            underlineColor: 'transparent',
-            background: 'white',
-
-        }, fonts: {
-            regular: {
-                fontFamily: FontFamily.regular
-            }
-        },
-        roundness: 10,
-    }
     const showModal = () => {
         setvisibleModal(true)
     }
@@ -75,6 +61,8 @@ const PairingScreen = (props: PairingNavigationProps) => {
             <View style={styles.itemSeparatorView} />
         );
     }
+
+
     useEffect(() => {
         try {
             if (Platform.OS == 'android') {
@@ -194,7 +182,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         { console.log('Name---->', peripheral.name) }
         { console.log('Name-IOS--->', peripheral.advertising.localName) }
         if (Platform.OS == 'android') {
-            if (peripheral.name === "FRAME" || peripheral.name === "Frame") {
+            if (peripheral.name === "FRAME" || peripheral.name === "Frame" || peripheral.name === "Monocle") {
                 peripherals.set(peripheral.id, peripheral);
                 console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
                 setdevices(Array.from(peripherals.values()))
@@ -203,7 +191,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                 setDeviceFound(false);
             }
         } else {
-            if (peripheral.advertising.localName === "FRAME" || peripheral.advertising.localNam === "Frame") {
+            if (peripheral.advertising.localName === "FRAME" || peripheral.advertising.localNam === "Frame" || peripheral.advertising.localNam === "Monocle") {
                 peripherals.set(peripheral.id, peripheral);
                 console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
                 setdevices(Array.from(peripherals.values()))
@@ -585,7 +573,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                                 //fontSize={15}
                                                 editable={false}
                                                 onChangeText={(ssid) => setssid(ssid)}
-                                                theme={textInputOutlineStyle}
+                                                theme={textInputStyle}
 
                                             />
                                             <View style={styles.height15} />
@@ -597,7 +585,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                                 value={password}
                                                 //fontSize={15}
                                                 onChangeText={(password) => setpassword(password)}
-                                                theme={textInputOutlineStyle}
+                                                theme={textInputStyle}
 
                                             />
                                             <TouchableOpacity activeOpacity={0.6}

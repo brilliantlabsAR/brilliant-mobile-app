@@ -25,6 +25,7 @@ export const STRINGS = {
   LETS_PAIR_TITLE: "Let’s Pair Your\nDevice",
   SUBMIT: "Submit",
   CONNECT: "Connect",
+  UPDATE: "Update",
   UPDATE_PROFILE: "Update Profile",
   UNPAIR_DEVICE: "Unpair Device",
   UPDATE_DEVICE_FIRMWARE: "Update Device Firmware",

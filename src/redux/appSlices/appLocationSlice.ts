@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import * as Const from "../../models/api";
 import { apiStatus, ILocationStoreProps, IStateProps } from "../apiDataTypes";
-import { headers } from "../../models/apiStructure";
+import { postApi } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -13,14 +12,10 @@ export const FetchLocationData = createAsyncThunk(
   "appLocationSlice/fetchLocationData",
   async (options: ILocationStoreProps) => {
     try {
-      const response = await axios.post(
-        Const.API_BASE_URL + Const.API_STORE_LOCATION,
-        options,
-        { headers }
-      );
-      return response.data;
+      const response = await postApi(Const.API_STORE_LOCATION, options);
+      return response;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
@@ -29,7 +24,7 @@ const AppLocationSlice = createSlice({
   name: "appLocationSlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetLocationData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -56,5 +51,5 @@ const AppLocationSlice = createSlice({
   },
 });
 
-export const { resetData } = AppLocationSlice.actions;
+export const { resetLocationData } = AppLocationSlice.actions;
 export default AppLocationSlice.reducer;

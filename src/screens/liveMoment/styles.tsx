@@ -11,9 +11,6 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.WhiteSix,
         flex: 1,
         flexDirection: 'column'
-    }, homeMenu: {
-        width: 25,
-        height: 25,
     },
     imgCon: {},
     placeholder: {

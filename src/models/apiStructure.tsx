@@ -46,13 +46,5 @@ export const postApi = async (url: string, params?: any) => {
             },
         }
     );
-    // console.log("stremmers", response.data);
-
     return response.data;
-    // return await axios.post(
-    //     API_BASE_URL + url, params,
-    //     { headers }
-    // )
-    //     .then(response => response)
-    //     .catch(error => error)
 }

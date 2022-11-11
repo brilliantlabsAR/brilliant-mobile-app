@@ -35,7 +35,7 @@ export const FetchProfilePictureData = createAsyncThunk(
       })
       .catch((e) => {
         console.log(e);
-        return e;
+        throw e;
       });
   }
 );

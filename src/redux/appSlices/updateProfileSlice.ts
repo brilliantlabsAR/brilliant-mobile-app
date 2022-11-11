@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import * as Const from "../../models/api";
 import { apiStatus, IUpdateProfileProps, IStateProps } from "../apiDataTypes";
-import { headers } from "../../models/apiStructure";
+import { postApi } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -13,14 +12,10 @@ export const FetchUpdateProfileData = createAsyncThunk(
   "updateProfileSlice/fetchUpdateProfileData",
   async (options: IUpdateProfileProps) => {
     try {
-      const response = await axios.post(
-        Const.API_BASE_URL + Const.API_UPDATE_USER,
-        options,
-        { headers }
-      );
-      return response.data;
+      const response = await postApi(Const.API_UPDATE_USER, options);
+      return response;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
@@ -29,7 +24,7 @@ const UpdateProfileSlice = createSlice({
   name: "updateProfileSlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetProfileData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -42,7 +37,7 @@ const UpdateProfileSlice = createSlice({
       .addCase(FetchUpdateProfileData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          console.log("UserData", action.payload.data);
+          // console.log("UserData", action.payload.data);
           state.userData = action.payload.data;
         } else {
           state.status = apiStatus.failed;
@@ -56,5 +51,5 @@ const UpdateProfileSlice = createSlice({
   },
 });
 
-export const { resetData } = UpdateProfileSlice.actions;
+export const { resetProfileData } = UpdateProfileSlice.actions;
 export default UpdateProfileSlice.reducer;

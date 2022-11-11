@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import {
     StatusBar,
     View,
@@ -8,7 +7,7 @@ import {
     TouchableOpacity,
     Image,
 } from "react-native";
-import { FontFamily, Theme } from "../../models";
+import { FontFamily, STRINGS, Theme } from "../../models";
 import { LoginVerifyNavigationProps, UpdateProfileNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, userIcon, smartphone, timeIcon, mailIcon } from "../../assets";
@@ -24,6 +23,7 @@ import { Validations } from "../../utils/validationUtils";
 import { ShowToast } from "../../utils/toastUtils";
 import { State } from "react-native-gesture-handler";
 import * as Routes from "../../models/routes";
+import { TopBar } from "../../components/topBar";
 
 const textInputStyle = {
     colors: {
@@ -73,7 +73,7 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
             console.log("succesfully updated");
             //ShowToast("Succesfully updated");
             //navigation.goBack();phoneNumber: string,countryCode:string|any,phone:string|any,email:string|any,name:string|any
-            navigation.navigate(Routes.NAV_PROFILE_OTP_SCREEN,{phoneNumber:phoneNumber,countryCode:countryCode,phone:oldCountryCode+oldPhoneNumber,email:email,name:firstName})
+            navigation.navigate(Routes.NAV_PROFILE_OTP_SCREEN, { phoneNumber: phoneNumber, countryCode: countryCode, phone: oldCountryCode + oldPhoneNumber, email: email, name: firstName })
         } else if (status === apiStatus.failed) {
             setIsLoading(false);
             ShowToast(userDetails);
@@ -119,35 +119,11 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
         } else {
             ShowToast("Please fill all the fields");
         }
-
-
-
-
     }
 
     return (
-        <SafeAreaView
-            style={styles.bodyContainer}>
-            <View style={styles.topView}>
-                <TouchableOpacity
-                    activeOpacity={0.6}
-                    onPress={() => navigation.goBack()}>
-                    <View>
-
-                        <Image
-                            style={styles.homeMenu}
-                            source={leftarrow}
-                            resizeMode='contain'
-                        />
-
-                    </View>
-                </TouchableOpacity>
-                <Text
-                    style={styles.topTextStyle}
-                >{'Update Profile'}</Text>
-
-
-            </View>
+        <SafeAreaView style={styles.bodyContainer}>
+            <TopBar title={STRINGS.UPDATE_PROFILE} isTextVisible={true} />
 
             <View style={styles.spaceView} />
             <CountryCodePicker
@@ -235,10 +211,6 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
                     style={styles.marginTop}
 
                 />
-
-
-
-
                 <TouchableOpacity activeOpacity={0.6}
                     onPress={() =>
                         // this.registerMember()
@@ -249,9 +221,7 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
 
                     }
                     style={styles.updateButtonStyle}>
-
-                    <Text style={styles.updateText}>Update</Text>
-
+                    <Text style={styles.updateText}>{STRINGS.UPDATE}</Text>
                 </TouchableOpacity>
 
             </View>

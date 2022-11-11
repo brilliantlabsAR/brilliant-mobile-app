@@ -18,7 +18,6 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImageCropPicker, { clean } from "react-native-image-crop-picker";
 import Modal from 'react-native-modal';
-import { API_SLUG_CONTENT, API_LOGIN, Theme } from "../../models";
 import { AccountNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
@@ -31,7 +30,7 @@ import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { FetchProfilePictureData } from "../../redux/appSlices/profilePictureSlice";
 import { cleanStorageItem } from "../../utils/asyncUtils";
-import {  resetOTPData } from "../../redux/authSlices/otpVerifySlice";
+import { resetOTPData } from "../../redux/authSlices/otpVerifySlice";
 import { resetLogin } from "../../redux/authSlices/loginSlice";
 import { resetResendData } from "../../redux/authSlices/otpResendSlice";
 
@@ -133,14 +132,14 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                     style: "cancel"
                 },
                 {
-                    text: "OK", onPress: async() => {
+                    text: "OK", onPress: async () => {
                         dispatch(resetLogin());
                         dispatch(resetOTPData());
                         dispatch(resetResendData());
-                        cleanStorageItem().then(()=>{
+                        cleanStorageItem().then(() => {
                             navigation.replace(Routes.NAV_SPLASH_SCREEN)
                         });
-                        
+
                     }
                 }
             ]

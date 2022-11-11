@@ -17,13 +17,12 @@ import { TextInput } from "react-native-paper";
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import PaginationDot from 'react-native-animated-pagination-dot';
 import { normalize } from "../../utils/dimentionUtils";
-import { Theme } from "../../models";
+import { Theme, STRINGS } from "../../models";
 import { StartNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 //import { check, PERMISSIONS, RESULTS, checkMultiple, requestMultiple,request } from 'react-native-permissions';
 import { chasmaIcon, blackRightArrowIcon, grayRightArrowIcon, blackLeftArrowIcon, grayLeftArrowIcon } from "../../assets";
-import { STRINGS } from "../../models/constants"
 
 const StartScreen = (props: StartNavigationProps) => {
     const { navigation } = props;

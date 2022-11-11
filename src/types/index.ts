@@ -14,3 +14,8 @@ export interface IOtpContainer {
 export interface IFooter {
   selectedTab: string;
 }
+
+export interface ITopBar {
+  title?: string;
+  isTextVisible?: boolean;
+}
