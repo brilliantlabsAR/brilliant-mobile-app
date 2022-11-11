@@ -75,7 +75,7 @@ const LoginOtpVerify = (props: Props) => {
     const handleBackButton = () => {
         //this.props.navigation.goBack();
        
-        BackHandler.exitApp();
+        navigation.goBack();
         return true;
     }
     useEffect(() => {
