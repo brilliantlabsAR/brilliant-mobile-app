@@ -17,12 +17,13 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImageCropPicker, { clean } from "react-native-image-crop-picker";
+import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
 import { AccountNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { Loading } from '../../components/loading';
-import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
+import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp,logoButton } from "../../assets";
 import { ASYNC_CONST, STRINGS } from "../../models/constants";
 import Footer from "../../components/footer";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -149,144 +150,144 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.mainContainer}>
                 <ScrollView style={styles.firstScrollView}>
-                    <View>
-                        <View style={styles.insideFirstScrollView}>
-                            <View style={styles.profileImageView}>
-                                {userImageState == '' &&
-                                    <Image
-                                        style={styles.userImage}
-                                        source={mainUser}
-                                        resizeMode='cover'
-                                    />
-                                }
-                                {userImageState != '' &&
-                                    <Image
-                                        style={styles.userProfileImage}
-                                        source={{ uri: userImageState }}
-                                        resizeMode='cover'
+                    
+                    <View style={styles.insideFirstScrollView}>
+                        <View style={styles.profileImageView}>
+                            {userImageState == '' &&
+                                <Image
+                                    style={styles.userImage}
+                                    source={mainUser}
+                                    resizeMode='cover'
+                                />
+                            }
+                            {userImageState != '' &&
+                                <Image
+                                    style={styles.userProfileImage}
+                                    source={{ uri: userImageState }}
+                                    resizeMode='cover'
 
-                                    />
-                                }
+                                />
+                            }
+                        </View>
+                        <TouchableOpacity style={styles.openModalTouch}
+                            onPress={() => openModal()}>
+                            <View >
+
+                                <Image
+                                    style={styles.cameraImageView}
+                                    source={blackCamera}
+                                    resizeMode='cover'
+
+                                />
                             </View>
-                            <TouchableOpacity style={styles.openModalTouch}
-                                onPress={() => openModal()}>
-                                <View >
-
-                                    <Image
-                                        style={styles.cameraImageView}
-                                        source={blackCamera}
-                                        resizeMode='cover'
-
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                            <Text style={styles.nameText}>{fullName}</Text>
-                        </View>
-                        <View>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() =>
-                                    navigation.navigate(Routes.NAV_UPDATE_PROFILE_SCREEN)}>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={userIcon}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{STRINGS.UPDATE_PROFILE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() =>
-                                    navigation.navigate(Routes.NAV_START_SCREEN)}>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuBluetooth}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{STRINGS.UNPAIR_DEVICE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() => { }
-                                    // navigation.navigate('RtmpStreamScreen')
-                                    //showToast('coming soon')
-                                }>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuDeviceFrame}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{STRINGS.UPDATE_DEVICE_FIRMWARE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() =>
-                                // navigation.navigate("LiveStreamingScreen")
-                                { }
-                                }>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={liveStreaming}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{STRINGS.START_LIVE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() => {
-                                    navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "1" });
-                                }}>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuLicence}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{STRINGS.LICENSE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() => {
-                                    navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "2" });
-                                }
-
-                                }>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuData}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{STRINGS.PRIVACY}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() => {
-                                    navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "3" });
-                                }
-                                }>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuHelp}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{STRINGS.HELP}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity activeOpacity={0.6}
-                                onPress={() =>
-                                    logout()
-                                }
-                                style={styles.logoutView}>
-                                <Text style={styles.logoutText}>Logout</Text>
-                            </TouchableOpacity>
-                            <View style={styles.heightView} />
-                        </View>
+                        </TouchableOpacity>
+                        <Text style={styles.nameText}>{fullName}</Text>
                     </View>
+                    <View>
+                        <TouchableOpacity
+                            activeOpacity={0.6}
+                            style={styles.menuBox}
+                            onPress={() =>
+                                navigation.navigate(Routes.NAV_UPDATE_PROFILE_SCREEN)}>
+                            <Image
+                                style={styles.menuIcon}
+                                source={userIcon}
+                                resizeMode='contain'
+                            />
+                            <Text style={styles.menuText}>{STRINGS.UPDATE_PROFILE}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.6}
+                            style={styles.menuBox}
+                            onPress={() =>
+                                navigation.navigate(Routes.NAV_START_SCREEN)}>
+                            <Image
+                                style={styles.menuIcon}
+                                source={menuBluetooth}
+                                resizeMode='contain'
+                            />
+                            <Text style={styles.menuText}>{STRINGS.UNPAIR_DEVICE}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.6}
+                            style={styles.menuBox}
+                            onPress={() => { }
+                                // navigation.navigate('RtmpStreamScreen')
+                                //showToast('coming soon')
+                            }>
+                            <Image
+                                style={styles.menuIcon}
+                                source={menuDeviceFrame}
+                                resizeMode='contain'
+                            />
+                            <Text style={styles.menuText}>{STRINGS.UPDATE_DEVICE_FIRMWARE}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.6}
+                            style={styles.menuBox}
+                            onPress={() =>
+                            // navigation.navigate("LiveStreamingScreen")
+                            { }
+                            }>
+                            <Image
+                                style={styles.menuIcon}
+                                source={liveStreaming}
+                                resizeMode='contain'
+                            />
+                            <Text style={styles.menuText}>{STRINGS.START_LIVE}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.6}
+                            style={styles.menuBox}
+                            onPress={() => {
+                                navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "1" });
+                            }}>
+                            <Image
+                                style={styles.menuIcon}
+                                source={menuLicence}
+                                resizeMode='contain'
+                            />
+                            <Text style={styles.menuText}>{STRINGS.LICENSE}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.6}
+                            style={styles.menuBox}
+                            onPress={() => {
+                                navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "2" });
+                            }
+
+                            }>
+                            <Image
+                                style={styles.menuIcon}
+                                source={menuData}
+                                resizeMode='contain'
+                            />
+                            <Text style={styles.menuText}>{STRINGS.PRIVACY}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.6}
+                            style={styles.menuBox}
+                            onPress={() => {
+                                navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "3" });
+                            }
+                            }>
+                            <Image
+                                style={styles.menuIcon}
+                                source={menuHelp}
+                                resizeMode='contain'
+                            />
+                            <Text style={styles.menuText}>{STRINGS.HELP}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={0.6}
+                            onPress={() =>
+                                logout()
+                            }
+                            style={styles.logoutView}>
+                            <Text style={styles.logoutText}>Logout</Text>
+                        </TouchableOpacity>
+                        <View style={styles.heightView} />
+                    </View>
+                    
                     {
                         showLoading ?
                             <Loading /> : null
@@ -323,6 +324,22 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                 </Modal>
             </View>
             {/* <Footer selectedTab="MyAccount" /> */}
+            <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}>
+                <View style={styles.footerButtonView}>
+                    <LinearGradient
+                        style={styles.footerLinearStyle}
+                        colors={['#000000', '#000000', '#000000']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}>
+
+                        <Image
+                            style={styles.footerButtonImage}
+                            source={logoButton}
+                            resizeMode='cover'
+                        />
+                    </LinearGradient>
+                </View>
+            </TouchableOpacity>
         </SafeAreaView>
     )
 };

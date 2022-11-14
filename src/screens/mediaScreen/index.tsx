@@ -223,7 +223,7 @@ const MediaScreen = (props: Props) => {
                 <View style={styles.footerButtonView}>
                     <LinearGradient
                         style={styles.footerLinearStyle}
-                        colors={['#FFFFFF', '#FFFFFF', '#FFFFFF']}
+                        colors={['#000000', '#000000', '#000000']}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}>
 

@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
     },
     footerButtonView: {
         position: 'absolute',
-        left: 0,
+        left: normalize(250),
         right: 0,
         bottom: 5,
         justifyContent: 'center',
@@ -163,7 +163,7 @@ export const styles = StyleSheet.create({
         height: normalize(50),
         borderRadius: normalize(25),
         backgroundColor: 'blue',
-        borderColor: Theme.color.gray15,
+        borderColor: Theme.color.Black,
         borderWidth: 2,
     }
 })
