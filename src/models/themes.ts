@@ -50,6 +50,7 @@ export const Theme = {
     red_color: "#FE5F5F",
     transparentWhite: "#B0FFFFFF",
     blue_four: "#210170",
+    place_holder: "#A1A1A1",
   },
 };
 

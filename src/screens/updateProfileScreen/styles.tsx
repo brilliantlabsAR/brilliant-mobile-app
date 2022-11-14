@@ -10,22 +10,6 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column'
-    }, homeMenu: {
-        width: 35,
-        height: 20,
-    },
-    topView: {
-        height: normalize(56),
-        backgroundColor: Theme.color.White,
-        marginLeft: normalize(15),
-        flexDirection: 'row',
-        alignItems: 'center'
-
-    },
-    topTextStyle: {
-        fontSize: normalize(15),
-        color: Theme.color.Black,
-        fontFamily: FontFamily.regular
     },
     spaceView: {
         backgroundColor: Theme.color.Black,

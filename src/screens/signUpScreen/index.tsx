@@ -9,7 +9,6 @@ import {
     Keyboard,
 } from "react-native";
 import { TextInput } from "react-native-paper";
-import { FontFamily, Theme } from "../../models";
 import { SignUpNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
@@ -22,14 +21,16 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchSignupData } from "../../redux/authSlices/signupSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { Loading } from "../../components/loading";
+import { countryPickerStyle, textInputStyle } from "../../utils/stylesUtils";
+import { TopBar } from "../../components/topBar";
 
 const SignUpScreen = (props: SignUpNavigationProps) => {
     const [isShow, setIsShow] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [firstName, setfirstName] = useState<string>("");
+    const [firstName, setFirstName] = useState<string>("");
     const [countryCode, setCountryCode] = useState<string>("");
-    const [phoneNumber, setphoneNumber] = useState<string>("");
-    const [email, setemail] = useState<string>("");
+    const [phoneNumber, setPhoneNumber] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
     const [show, setShow] = useState(false);
     const { navigation } = props;
     const dispatch = useAppDispatch();
@@ -39,10 +40,10 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
     useEffect(() => {
         if (status === apiStatus.success) {
             setIsLoading(false);
-            setfirstName("");
-            setphoneNumber("");
+            setFirstName("");
+            setPhoneNumber("");
             setCountryCode("")
-            setemail("");
+            setEmail("");
             navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { screen: STRINGS.SIGNUP })
         } else if (status === apiStatus.failed) {
             setIsLoading(false);
@@ -66,33 +67,6 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
         }
     }
 
-    const textInputStyle = {
-        colors: {
-            placeholder: "#A1A1A1",
-            text: "#000000",
-            primary: "#A1A1A1",
-            underlineColor: "transparent",
-            background: "white",
-        },
-        fonts: {
-            regular: {
-                fontFamily: FontFamily.regular,
-            },
-        },
-        roundness: 10,
-    };
-    const codePickerStyle = {
-        // Styles for whole modal [View]
-        modal: {
-            backgroundColor: Theme.color.White,
-            height: "70%",
-        },
-        // Styles for input [TextInput]
-        textInput: {
-            borderRadius: 10,
-        },
-    }
-
     const openCountry = () => {
         setShow(true);
         Keyboard.dismiss();
@@ -100,17 +74,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
 
     return (
         <SafeAreaView style={styles.bodyContainer}>
-            <View style={styles.mainView}>
-                <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
-                    <View>
-                        <Image
-                            style={styles.homeMenu}
-                            source={leftarrow}
-                            resizeMode="contain"
-                        />
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <TopBar />
             <View style={styles.mainContainer}>
                 <ScrollView style={styles.scrollContainer}>
                     <View style={styles.headerContainer}>
@@ -128,7 +92,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                     keyboardType="default"
                                     value={firstName}
                                     //fontSize={15}
-                                    onChangeText={(firstName) => setfirstName(firstName)}
+                                    onChangeText={(firstName) => setFirstName(firstName)}
                                     right={<TextInput.Icon name={userIcon} size={15} />}
                                     theme={textInputStyle}
                                 />
@@ -165,7 +129,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                             keyboardType="phone-pad"
                                             value={phoneNumber}
                                             onChangeText={(phoneNumber) =>
-                                                setphoneNumber(phoneNumber)
+                                                setPhoneNumber(phoneNumber)
                                             }
                                             right={<TextInput.Icon name={smartphone} size={15} />}
                                             theme={textInputStyle}
@@ -178,14 +142,14 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                                     label="Email"
                                     keyboardType="email-address"
                                     value={email}
-                                    onChangeText={(email) => setemail(email.replace(/\s/g, ""))}
+                                    onChangeText={(email) => setEmail(email.replace(/\s/g, ""))}
                                     right={<TextInput.Icon name={mailIcon} size={15} />}
                                     theme={textInputStyle}
                                 />
                                 <CountryCodePicker
                                     show={show}
                                     lang={"en"}
-                                    style={codePickerStyle}
+                                    style={countryPickerStyle}
                                     // when picker button press you will get the country object with dial code
                                     pickerButtonOnPress={(item) => {
                                         console.log("hii", item.dial_code);

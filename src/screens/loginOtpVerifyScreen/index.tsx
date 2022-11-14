@@ -14,7 +14,6 @@ import {
     ActivityIndicator,
     Keyboard
 } from "react-native";
-import { Theme } from "../../models";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
@@ -33,6 +32,7 @@ import { apiStatus } from "../../redux/apiDataTypes";
 import { Alert } from "react-native";
 import { countdownTimer } from "../../utils";
 import { setStringData } from "../../utils/asyncUtils";
+import { TopBar } from "../../components/topBar";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
@@ -46,7 +46,7 @@ const LoginOtpVerify = (props: Props) => {
     const [timer, setTimer] = useState<number>(240);
     const [otp, setOtp] = useState<string>('');
     const [codeCount, setcodeCount] = useState<number>(4);
-    const [blankCheck, setblankCheck] = useState<boolean>(true);
+    const [blankCheck, setBlankCheck] = useState<boolean>(true);
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.otp.status);
     const resendOtpStatus = useAppSelector(state => state.resendOtp.status);
@@ -63,11 +63,21 @@ const LoginOtpVerify = (props: Props) => {
                 setTimer(timer - 1);
             }
         }, 1000);
+        const backHandler=BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
         return () => {
-            clearInterval(clockCall)
+            clearInterval(clockCall);
+            backHandler.remove();
+
         }
     })
 
+    const handleBackButton = () => {
+        //this.props.navigation.goBack();
+       
+        navigation.goBack();
+        return true;
+    }
     useEffect(() => {
         // console.log(status);
         if (status === apiStatus.success) {
@@ -91,10 +101,11 @@ const LoginOtpVerify = (props: Props) => {
     useEffect(() => {
         if (resendOtpStatus === apiStatus.success) {
             setIsLoading(false);
-            setblankCheck(false);
+            setBlankCheck(false);
             ShowToast(JSON.stringify(resendOtpDetails.otp));
         } else if (resendOtpStatus === apiStatus.failed) {
             setIsLoading(false);
+            setBlankCheck(false);
             ShowToast(resendOtpDetails)
         }
     }, [resendOtpStatus])
@@ -110,7 +121,7 @@ const LoginOtpVerify = (props: Props) => {
     };
 
     function resendOtp() {
-        setblankCheck(true);
+        setBlankCheck(true);
         // setOtp('');
         if (!Validations.verifyRequired(phoneNumber)) {
             navigation.replace(Routes.NAV_LOGIN_SCREEN)
@@ -140,18 +151,7 @@ const LoginOtpVerify = (props: Props) => {
     return (
         <SafeAreaView
             style={styles.bodyContainer}>
-            <View style={styles.topView}>
-                <TouchableOpacity
-                    activeOpacity={0.6}
-                    onPress={() => navigation.goBack()}>
-                    <View>
-                        <Image
-                            style={styles.homeMenu}
-                            source={leftarrow}
-                            resizeMode='contain' />
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <TopBar />
             <View style={styles.middleView}>
                 <ScrollView style={styles.backgroundWhite}
                     keyboardShouldPersistTaps={'handled'}>

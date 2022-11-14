@@ -14,15 +14,13 @@ import {
     ActivityIndicator,
     Keyboard
 } from "react-native";
-import { Theme } from "../../models";
 import { UpdateProfileVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
 import { leftarrow, smartphone, timeIcon } from "../../assets";
-import { VERIFY_NOW, RESEND_OTP, } from "../../models/constants";
+import { STRINGS } from "../../models/constants";
 import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
 import { Loading } from "../../components/loading";
-import * as Strings from '../../models';
 import * as Routes from "../../models/routes";
 import { ShowToast } from "../../utils/toastUtils";
 import { Validations } from "../../utils/validationUtils";
@@ -33,6 +31,7 @@ import { FetchResendOtpData } from "../../redux/authSlices/otpResendSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { Alert } from "react-native";
 import { FetchProfileVerifyData } from "../../redux/appSlices/updateProfileVerifySlice";
+import { TopBar } from "../../components/topBar";
 
 type Props = UpdateProfileVerifyNavigationProps
 //phoneNumber:countryCode+phoneNumber,countryCode:countryCode,phone:phoneNumber,email:email,name:firstName
@@ -47,6 +46,7 @@ const ProfileOtpVerify = (props: Props) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [timer, setTimer] = useState<number>(240);
     const [otp, setOtp] = useState<string>('');
+    const [blankCheck, setBlankCheck] = useState<boolean>(true);
     const dispatch = useAppDispatch();
     const status = useAppSelector(state => state.updateProfileVerifySlice.status);
     const userDetails = useAppSelector(state => state.updateProfileVerifySlice.userData);
@@ -69,6 +69,7 @@ const ProfileOtpVerify = (props: Props) => {
     useEffect(() => {
         if (status === apiStatus.success) {
             setIsLoading(false)
+            setBlankCheck(false);
             AsyncStorage.setItem('userId', JSON.stringify(userDetails.id));
             AsyncStorage.setItem('accessToken', JSON.stringify(userDetails.token));
             AsyncStorage.setItem('phone', JSON.stringify(userDetails.phone));
@@ -81,11 +82,12 @@ const ProfileOtpVerify = (props: Props) => {
         } else if (status === apiStatus.failed) {
             setOtp('');
             setIsLoading(false);
+            setBlankCheck(false);
             ShowToast(userDetails);
         }
     }, [status])
 
-   
+
 
     const calculateTimer = () => {
         //console.log("timerlog", timer);
@@ -100,9 +102,10 @@ const ProfileOtpVerify = (props: Props) => {
     };
 
     function resendOtp() {
-        setOtp('');
+        setBlankCheck(true);
+        // setOtp('');
         if (!Validations.verifyRequired(phoneNumber)) {
-           // navigation.replace(Routes.NAV_LOGIN_SCREEN)
+            // navigation.replace(Routes.NAV_LOGIN_SCREEN)
         } else {
             Keyboard.dismiss();
             setTimer(240);
@@ -123,12 +126,12 @@ const ProfileOtpVerify = (props: Props) => {
             //     otp: otp,
             // }))
             dispatch(FetchProfileVerifyData({
-                    name:name,
-                    email:email,
-                    cc:countryCode,
-                    phone:phoneNumber,
-                    oldPhoneNumber:phone,
-                    otp:otp
+                name: name,
+                email: email,
+                cc: countryCode,
+                phone: phoneNumber,
+                oldPhoneNumber: phone,
+                otp: otp
             }))
         }
 
@@ -137,24 +140,13 @@ const ProfileOtpVerify = (props: Props) => {
     return (
         <SafeAreaView
             style={styles.bodyContainer}>
-            <View style={styles.topView}>
-                <TouchableOpacity
-                    activeOpacity={0.6}
-                    onPress={() => navigation.goBack()}>
-                    <View>
-                        <Image
-                            style={styles.homeMenu}
-                            source={leftarrow}
-                            resizeMode='contain' />
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <TopBar />
             <View style={styles.middleView}>
                 <ScrollView style={styles.backgroundWhite}
                     keyboardShouldPersistTaps={'handled'}>
                     <View>
-                        <Text style={styles.verifyText}>{Strings.VERIFY_OTP_TEXT}</Text>
-                        <Text style={styles.phoneNumberText}>{Strings.SEND_OTP + countryCode+phoneNumber}</Text>
+                        <Text style={styles.verifyText}>{STRINGS.VERIFY_OTP_TEXT}</Text>
+                        <Text style={styles.phoneNumberText}>{STRINGS.SEND_OTP + countryCode + phoneNumber}</Text>
                     </View>
                     <View style={styles.otpViewContainer}>
 
@@ -165,6 +157,7 @@ const ProfileOtpVerify = (props: Props) => {
                                 onFinish={(code) => {
                                     setOtp(code)
                                 }}
+                                blankCheck={blankCheck}
                             />
                             <View style={styles.marginView}>
                                 <View style={styles.timerView}>
@@ -183,7 +176,7 @@ const ProfileOtpVerify = (props: Props) => {
                                         onPress={() =>
                                             resendOtp()
                                         }>
-                                        <Text style={styles.resendText}>{RESEND_OTP}</Text>
+                                        <Text style={styles.resendText}>{STRINGS.RESEND_OTP}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -197,7 +190,7 @@ const ProfileOtpVerify = (props: Props) => {
                                 }
                                 style={styles.verifyButtonStyle}>
 
-                                <Text style={styles.verifyButtonText}>{VERIFY_NOW}</Text>
+                                <Text style={styles.verifyButtonText}>{STRINGS.VERIFY_NOW}</Text>
                             </TouchableOpacity>
 
                         </View>

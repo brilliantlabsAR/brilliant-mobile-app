@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import * as Const from "../../models/api";
-import { apiStatus, IStreamAudienceProps, IStateProps } from "../apiDataTypes";
-import { headers } from "../../models/apiStructure";
+import { apiStatus, IStateProps } from "../apiDataTypes";
+import { getApi } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -11,14 +10,12 @@ const initialState: IStateProps = {
 
 export const FetchHelpData = createAsyncThunk(
   "helpSlice/fetchHelpData",
-  async (options: IStreamAudienceProps) => {
+  async () => {
     try {
-      const response = await axios.get(
-        Const.API_BASE_URL + Const.API_SLUG_CONTENT
-      );
-      return response.data;
+      const response = await getApi(Const.API_SLUG_CONTENT);
+      return response;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
@@ -27,7 +24,7 @@ const HelpSlice = createSlice({
   name: "helpSlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetHelpData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -38,7 +35,7 @@ const HelpSlice = createSlice({
         state.status = apiStatus.loading;
       })
       .addCase(FetchHelpData.fulfilled, (state, action) => {
-        if (action.payload.status === 'success') {
+        if (action.payload.status === "success") {
           state.status = apiStatus.success;
           state.userData = action.payload.data;
         } else {
@@ -53,5 +50,5 @@ const HelpSlice = createSlice({
   },
 });
 
-export const { resetData } = HelpSlice.actions;
+export const { resetHelpData } = HelpSlice.actions;
 export default HelpSlice.reducer;

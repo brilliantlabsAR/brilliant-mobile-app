@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import * as Const from "../../models/api";
 import { apiStatus, IUserBlockProps, IStateProps } from "../apiDataTypes";
-import { headers } from "../../models/apiStructure";
+import { postApi } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -13,14 +12,10 @@ export const FetchUserBlockData = createAsyncThunk(
   "userBlockSlice/fetchUserBlockData",
   async (options: IUserBlockProps) => {
     try {
-      const response = await axios.post(
-        Const.API_BASE_URL + Const.API_BLOCK_USER,
-        options,
-        { headers }
-      );
-      return response.data;
+      const response = await postApi(Const.API_BLOCK_USER, options);
+      return response;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
@@ -29,7 +24,7 @@ const UserBlockSlice = createSlice({
   name: "UserBlockSlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetBlockData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -42,7 +37,7 @@ const UserBlockSlice = createSlice({
       .addCase(FetchUserBlockData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          // console.log("User Notification", action.payload);
+          // console.log("Block User", action.payload);
           state.userData = action.payload.data;
         } else {
           state.status = apiStatus.failed;
@@ -56,5 +51,5 @@ const UserBlockSlice = createSlice({
   },
 });
 
-export const { resetData } = UserBlockSlice.actions;
+export const { resetBlockData } = UserBlockSlice.actions;
 export default UserBlockSlice.reducer;

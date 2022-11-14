@@ -15,7 +15,6 @@ import {
     Platform,
     PermissionsAndroid
 } from "react-native";
-import { connect } from "react-redux";
 // import Color from '../themes/Colors';
 // import Dimension from "../utils/Dimension";
 // import WelcomeScreen from "./WelcomeScreen";
@@ -24,7 +23,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import notifee, { EventType } from '@notifee/react-native';
 import GetLocation from "react-native-get-location";
 import { styles } from "./styles";
-import { Theme } from "../../models/themes";
 import { STRINGS } from "../../models/constants";
 import { RootStackParamList } from "../../navigations";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";

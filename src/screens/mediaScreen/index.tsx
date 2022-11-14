@@ -18,7 +18,6 @@ import {
     Alert,
     PermissionsAndroid
 } from "react-native";
-import { Theme } from "../../models";
 import LinearGradient from 'react-native-linear-gradient';
 import { MediaScreenNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
@@ -115,6 +114,24 @@ const MediaScreen = (props: Props) => {
         }
 
     ]);
+
+
+    useEffect(() => {
+        const backHandler=BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+        return () => {
+           backHandler.remove();
+        }
+    }, [])
+
+    const handleBackButton = () => {
+        //this.props.navigation.goBack();
+       
+        BackHandler.exitApp();
+        return true;
+    }
+
+
 
     return (
         <SafeAreaView style={styles.bodyContainer}>
@@ -224,7 +241,7 @@ const MediaScreen = (props: Props) => {
                 <View style={styles.footerButtonView}>
                     <LinearGradient
                         style={styles.footerLinearStyle}
-                        colors={['#FFFFFF', '#FFFFFF', '#FFFFFF']}
+                        colors={['#000000', '#000000', '#000000']}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}>
 

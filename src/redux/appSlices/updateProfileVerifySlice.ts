@@ -1,8 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import * as Const from "../../models/api";
-import { apiStatus, IProfileUpdateVerifyProps, IStateProps } from "../apiDataTypes";
-import { headers } from "../../models/apiStructure";
+import {
+  apiStatus,
+  IProfileUpdateVerifyProps,
+  IStateProps,
+} from "../apiDataTypes";
+import { postApi } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -13,14 +16,10 @@ export const FetchProfileVerifyData = createAsyncThunk(
   "updateProfileVerifySlice/fetchProfileVerifyData",
   async (options: IProfileUpdateVerifyProps) => {
     try {
-      const response = await axios.post(
-        Const.API_BASE_URL + Const.API_PROFILE_UPDATE,
-        options,
-        { headers }
-      );
-      return response.data;
+      const response = await postApi(Const.API_PROFILE_UPDATE, options);
+      return response;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
@@ -29,7 +28,7 @@ const UpdateProfileVerifySlice = createSlice({
   name: "updateProfileVerifySlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetProfileOtpData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -56,5 +55,5 @@ const UpdateProfileVerifySlice = createSlice({
   },
 });
 
-export const { resetData } = UpdateProfileVerifySlice.actions;
+export const { resetProfileOtpData } = UpdateProfileVerifySlice.actions;
 export default UpdateProfileVerifySlice.reducer;

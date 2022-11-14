@@ -11,17 +11,6 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column'
     },
-    homeMenu: {
-        width: 25,
-        height: 25,
-    },
-    topView: {
-        height: normalize(56),
-        backgroundColor: Theme.color.White,
-        justifyContent: 'center',
-        marginTop: normalize(0),
-        marginLeft: normalize(23)
-    },
     middleView: {
         backgroundColor: Theme.color.White,
         flex: 1,

@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import * as Const from "../../models/api";
 import { apiStatus, ISendInviteProps, IStateProps } from "../apiDataTypes";
-import { headers } from "../../models/apiStructure";
+import { postApi } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -13,14 +12,10 @@ export const FetchSendInviteData = createAsyncThunk(
   "sendInviteSlice/FetchSendInviteData",
   async (options: ISendInviteProps) => {
     try {
-      const response = await axios.post(
-        Const.API_BASE_URL + Const.API_SEND_INVITE,
-        options,
-        { headers }
-      );
-      return response.data;
+      const response = await postApi(Const.API_SEND_INVITE, options);
+      return response;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
@@ -29,7 +24,7 @@ const SendInviteSlice = createSlice({
   name: "SendInviteSlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetInviteData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -56,5 +51,5 @@ const SendInviteSlice = createSlice({
   },
 });
 
-export const { resetData } = SendInviteSlice.actions;
+export const { resetInviteData } = SendInviteSlice.actions;
 export default SendInviteSlice.reducer;

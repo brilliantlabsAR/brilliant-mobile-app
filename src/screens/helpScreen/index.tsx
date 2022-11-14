@@ -21,6 +21,7 @@ import { Theme } from "../../models";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchHelpData } from "../../redux/appSlices/helpSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
+import { TopBar } from "../../components/topBar";
 
 type Props = HelpNavigationProps
 
@@ -28,9 +29,6 @@ type Props = HelpNavigationProps
 const HelpScreen = (props: Props) => {
     const { navigation, route } = props;
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [contactList, setContactList] = React.useState<any[]>([]);
-    const [backendContacts, setBackendContacts] = React.useState<any[]>([]);
-    const [contactCount, setContactCount] = useState<number>();
     const [title, setTitle] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const [pageNo] = useState<string>(route.params.pageNo);
@@ -40,7 +38,7 @@ const HelpScreen = (props: Props) => {
 
     useEffect(() => {
         setIsLoading(true);
-        dispatch(FetchHelpData({}))
+        dispatch(FetchHelpData())
     }, [])
     useEffect(() => {
         if (status === apiStatus.success) {
@@ -64,32 +62,7 @@ const HelpScreen = (props: Props) => {
     return (
         <SafeAreaView
             style={styles.bodyContainer}>
-
-            <View style={styles.topView}>
-
-                <TouchableOpacity
-                    activeOpacity={0.6}
-                    style={styles.backButtonStyle}
-                    onPress={() =>
-                        navigation.goBack()
-                    }
-                >
-                    <View>
-
-                        <Image
-                            style={styles.homeMenu}
-                            source={leftarrow}
-                            resizeMode='contain'
-                        />
-
-                    </View>
-                </TouchableOpacity>
-                <Text
-                    style={styles.headerTextStyle}
-                >{title}</Text>
-
-
-            </View>
+            <TopBar title={title} isTextVisible={true} />
             <View style={styles.middleView}>
                 <ScrollView>
                     <View style={styles.lowerView}>

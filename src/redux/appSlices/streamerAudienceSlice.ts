@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import * as Const from "../../models/api";
 import { apiStatus, IStreamAudienceProps, IStateProps } from "../apiDataTypes";
-import { headers, postApi } from "../../models/apiStructure";
+import { postApi } from "../../models/apiStructure";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -16,7 +15,7 @@ export const FetchStreamerAudienceData = createAsyncThunk(
       const response = await postApi(Const.API_STREAMER_AUDIENCE, options);
       return response;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 );
