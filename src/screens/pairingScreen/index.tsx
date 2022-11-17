@@ -594,8 +594,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                                  // dataWrite("print('hi')\x04", peripheral.id);
         
                                             }, 4000);
-        
-        
+                
                                         }, 5000);
             
                                     }).catch(()=>{
