@@ -44,6 +44,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
     const [ssid, setssid] = useState<string>("");
     const [password, setpassword] = useState<string>("");
     const [peripheralId, setPeripheralID] = useState<string>("");
+    const [peripheralName, setPeripheralName] = useState<string>("");
     const [scanning, setScanning] = useState<boolean>(false);
     const [deviceFound, setDeviceFound] = useState<boolean>(false);
     const [devices, setdevices] = useState<any[]>([]);
@@ -199,6 +200,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                 console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
                 setdevices(Array.from(peripherals.values()))
                 setDeviceFound(true);
+                setPeripheralName(peripheral.name);
             } else {
                 setDeviceFound(false);
             }
@@ -564,56 +566,67 @@ const PairingScreen = (props: PairingNavigationProps) => {
                             setdevices(Array.from(peripherals.values()))
                         }
                         console.log('Connected to ' + peripheral.id);
-                        BleManager.requestMTU(peripheral.id, 256)
-                            .then((mtu) => {
-                                // Success code
-                                console.log("MTU size changed to " + mtu + " bytes");
-                                BleManager.retrieveServices(peripheral.id).then(async (peripheralData) => {
-                                    console.log('Retrieved peripheral services', peripheralData);
-                                    var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
-                                    var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
-                                    var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
-                                    await BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
-                                        console.log('Start notification: ');
-                                        setTimeout(() => {    //1st Command
-                                            console.log("1st Command");
+                        console.log('Device Name ' + peripheral.name);
+                        if (peripheral.name == 'Frame' || peripheral.name == 'FRAME') {
+                            BleManager.requestMTU(peripheral.id, 256)
+                                .then((mtu) => {
+                                    // Success code
+                                    console.log("MTU size changed to " + mtu + " bytes");
+                                    BleManager.retrieveServices(peripheral.id).then(async (peripheralData) => {
+                                        console.log('Retrieved peripheral services', peripheralData);
+                                        var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
+                                        var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
+                                        var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
+                                        await BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
+                                            console.log('Start notification: ');
+                                            setTimeout(() => {    //1st Command
+                                                console.log("1st Command");
 
-                                            dataWrite("\x03", peripheral.id);
+                                                dataWrite("\x03", peripheral.id);
 
-                                            setTimeout(() => {//2nd Command
-                                                console.log("2nd Command");
+                                                setTimeout(() => {//2nd Command
+                                                    console.log("2nd Command");
 
-                                                dataWrite("\x01", peripheral.id);
+                                                    dataWrite("\x01", peripheral.id);
 
-                                            }, 3000);
+                                                }, 3000);
 
-                                            setTimeout(() => {//3rd Command
-                                                console.log("3rd Command \\x04");
+                                                setTimeout(() => {//3rd Command
+                                                    console.log("3rd Command \\x04");
 
-                                                dataWrite("from machine import WiFi \nprint('IMPORT')\x04", peripheral.id);
-                                                // dataWrite("print('hi')\x04", peripheral.id);
+                                                    dataWrite("from machine import WiFi \nprint('IMPORT')\x04", peripheral.id);
+                                                    // dataWrite("print('hi')\x04", peripheral.id);
 
-                                            }, 4000);
+                                                }, 4000);
 
-                                        }, 5000);
+                                            }, 5000);
+
+                                        }).catch(() => {
+                                            console.log("Notification error");
+
+                                        });
 
                                     }).catch(() => {
-                                        console.log("Notification error");
+                                        console.log("Retrive error");
 
-                                    });
-
-                                }).catch(() => {
-                                    console.log("Retrive error");
-
+                                    })
                                 })
-                            })
-                            .catch((error) => {
-                                // Failure code
-                                console.log("MTU error ", error);
+                                .catch((error) => {
+                                    // Failure code
+                                    console.log("MTU error ", error);
+                                });
+                        }else{
+                            BleManager.isPeripheralConnected(
+                                peripheral.id,
+                                []
+                            ).then((isConnected) => {
+                                if (isConnected) {
+                                    console.log("Monocle is connected!");
+                                  
+
+                                }
                             });
-
-
-
+                        }
 
 
                     }).catch(() => {
