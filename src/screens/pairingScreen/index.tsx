@@ -37,7 +37,7 @@ const peripherals = new Map();
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 let concatData: any = '', importWIFI = 'from machine import WiFi';
-let scanOK=false,addOK=false;
+let scanOK = false, addOK = false;
 const PairingScreen = (props: PairingNavigationProps) => {
     const [showBLE, setshowBLE] = useState<boolean>(false);
     const [visibleModal, setvisibleModal] = useState<boolean>(false);
@@ -194,7 +194,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         { console.log('Name---->', peripheral.name) }
         { console.log('Name-IOS--->', peripheral.advertising.localName) }
         if (Platform.OS == 'android') {
-            if (peripheral.name === "FRAME" || peripheral.name === "Frame") {
+            if (peripheral.name === "FRAME" || peripheral.name === "Frame" || peripheral.name === "Monocle") {
                 peripherals.set(peripheral.id, peripheral);
                 console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
                 setdevices(Array.from(peripherals.values()))
@@ -203,7 +203,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                 setDeviceFound(false);
             }
         } else {
-            if (peripheral.advertising.localName === "FRAME" || peripheral.advertising.localNam === "Frame") {
+            if (peripheral.advertising.localName === "FRAME" || peripheral.advertising.localName === "Frame" || peripheral.advertising.localName === "Monocle") {
                 peripherals.set(peripheral.id, peripheral);
                 console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
                 setdevices(Array.from(peripherals.values()))
@@ -221,20 +221,20 @@ const PairingScreen = (props: PairingNavigationProps) => {
         var receiveData = String.fromCharCode.apply(String, data.value);
         var subData = '';
         concatData = concatData + receiveData;//OK1
-        console.log("Receive data" ,typeof(receiveData));
+        console.log("Receive data", typeof (receiveData));
         if (receiveData.includes('OKIMPORT')) {
             console.log("ok response coming");
-             //dataWrite("WiFi.add('Sanatan Personal','passpass')\0x4", data.peripheral)
-             dataWrite("WiFi.add('A','12345678')\0x4", data.peripheral)
-                    //dataWrite("p=WiFi.scan() \nprint('SCAN') \nprint(p)\x04", data.peripheral)
-              
-            
-        }else if(receiveData.includes("OKSCAN")){
+            //dataWrite("WiFi.add('Sanatan Personal','passpass')\0x4", data.peripheral)
+            dataWrite("WiFi.add('A','12345678')\0x4", data.peripheral)
+            //dataWrite("p=WiFi.scan() \nprint('SCAN') \nprint(p)\x04", data.peripheral)
+
+
+        } else if (receiveData.includes("OKSCAN")) {
             console.log("ok scan response coming");
-            
-                dataWrite('WiFi.add("A","12345678")\0x4', data.peripheral)
-               // dataWrite("print('HI')\x04", data.peripheral);
-              } else{
+
+            dataWrite('WiFi.add("A","12345678")\0x4', data.peripheral)
+            // dataWrite("print('HI')\x04", data.peripheral);
+        } else {
             console.log("ok response not coming");
         }
 
@@ -564,7 +564,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                             setdevices(Array.from(peripherals.values()))
                         }
                         console.log('Connected to ' + peripheral.id);
-                         BleManager.requestMTU(peripheral.id, 256)
+                        BleManager.requestMTU(peripheral.id, 256)
                             .then((mtu) => {
                                 // Success code
                                 console.log("MTU size changed to " + mtu + " bytes");
@@ -573,39 +573,39 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                     var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
                                     var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
                                     var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
-                                  await  BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
+                                    await BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
                                         console.log('Start notification: ');
                                         setTimeout(() => {    //1st Command
                                             console.log("1st Command");
-        
+
                                             dataWrite("\x03", peripheral.id);
-        
+
                                             setTimeout(() => {//2nd Command
                                                 console.log("2nd Command");
-        
+
                                                 dataWrite("\x01", peripheral.id);
-        
+
                                             }, 3000);
-                                          
+
                                             setTimeout(() => {//3rd Command
                                                 console.log("3rd Command \\x04");
-        
+
                                                 dataWrite("from machine import WiFi \nprint('IMPORT')\x04", peripheral.id);
-                                                 // dataWrite("print('hi')\x04", peripheral.id);
-        
+                                                // dataWrite("print('hi')\x04", peripheral.id);
+
                                             }, 4000);
-        
-        
+
+
                                         }, 5000);
-            
-                                    }).catch(()=>{
+
+                                    }).catch(() => {
                                         console.log("Notification error");
-        
+
                                     });
-                                   
+
                                 }).catch(() => {
                                     console.log("Retrive error");
-        
+
                                 })
                             })
                             .catch((error) => {
@@ -613,7 +613,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                 console.log("MTU error ", error);
                             });
 
-                       
+
 
 
 
@@ -645,7 +645,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         )
             .then((readData) => {
                 // Success code
-                console.log('write:---> '+readData);
+                console.log('write:---> ' + readData);
 
                 // const buffer = Buffer.Buffer.from(readData); //https://github.com/feross/buffer#convert-arraybuffer-to-buffer
                 // const sensorData = buffer.readUInt8(1, true);
@@ -665,7 +665,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         )
             .then(() => {
                 // Success code
-                console.log("Writed:-----"+ data);
+                console.log("Writed:-----" + data);
             })
             .catch((error) => {
                 // Failure code
