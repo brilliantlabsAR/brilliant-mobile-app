@@ -238,22 +238,15 @@ const MediaScreen = (props: Props) => {
             </View>
             {/* <Footer selectedTab="MediaScreen" /> */}
             <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_ACCOUNT_SCREEN)}>
-                <View style={styles.footerButtonView}>
-                    <LinearGradient
-                        style={styles.footerLinearStyle}
-                        colors={['#000000', '#000000', '#000000']}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}>
-
-                        <Image
-                            style={styles.footerButtonImage}
-                            source={logoButton}
-                            resizeMode='cover'
-                        />
-                    </LinearGradient>
+                <View
+                    style={styles.footerLinearStyle}>
+                    <Image
+                        style={styles.footerButtonImage}
+                        source={logoButton}
+                        resizeMode='cover'
+                    />
                 </View>
             </TouchableOpacity>
-
         </SafeAreaView>
     )
 }

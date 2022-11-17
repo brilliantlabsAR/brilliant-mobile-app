@@ -10,9 +10,6 @@ import {
     Image,
     BackHandler,
     ScrollView,
-    ActivityIndicator,
-    FlatList,
-    TouchableHighlight,
     Alert
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -23,7 +20,7 @@ import { AccountNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { Loading } from '../../components/loading';
-import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp,logoButton } from "../../assets";
+import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp, logoButton } from "../../assets";
 import { ASYNC_CONST, STRINGS } from "../../models/constants";
 import Footer from "../../components/footer";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -61,7 +58,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     useEffect(() => {
         if (status === apiStatus.success) {
             setShowLoading(false);
-            console.log("data-->", userDetails);
+            // console.log("data-->", userDetails);
             // console.log("data-->2", userDetails.name);
             setFullName(userDetails.name);
             AsyncStorage.setItem('name', userDetails.name);
@@ -76,7 +73,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
         } else if (status === apiStatus.failed) {
             setShowLoading(false);
         }
-       
+
 
     }, [status]);
 
@@ -138,16 +135,16 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     }
     const logout = () => {
         Alert.alert(
-            "Alert",
-            "Are you want to logout?",
+            STRINGS.ALERT,
+            STRINGS.ALERT_LOGOUT,
             [
                 {
-                    text: "Cancel",
+                    text: STRINGS.CANCEL,
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                 },
                 {
-                    text: "OK", onPress: async () => {
+                    text: STRINGS.OK, onPress: async () => {
                         dispatch(resetLogin());
                         dispatch(resetOTPData());
                         dispatch(resetResendData());
@@ -164,7 +161,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.mainContainer}>
                 <ScrollView style={styles.firstScrollView}>
-                    
+
                     <View style={styles.insideFirstScrollView}>
                         <View style={styles.profileImageView}>
                             {userImageState == '' &&
@@ -301,7 +298,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                         </TouchableOpacity>
                         <View style={styles.heightView} />
                     </View>
-                    
+
                     {
                         showLoading ?
                             <Loading /> : null

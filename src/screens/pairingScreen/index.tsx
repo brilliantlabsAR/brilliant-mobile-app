@@ -22,7 +22,6 @@ import { Modal, Portal, Provider, TextInput } from 'react-native-paper';
 import BleManager from 'react-native-ble-manager';
 import { stringToBytes } from "convert-string";
 import NetInfo from '@react-native-community/netinfo';
-
 import { normalize } from "../../utils/dimentionUtils";
 import { FontFamily, Theme } from "../../models";
 import { PairingNavigationProps } from "../../navigations/types";
@@ -31,14 +30,15 @@ import * as Routes from "../../models/routes";
 import { Loading } from '../../components/loading';
 import { chasmaIcon } from "../../assets";
 import { STRINGS } from "../../models/constants";
+import { ShowToast } from "../../utils/toastUtils";
 
 const peripherals = new Map();
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 let concatData: any = '', importWIFI = 'from machine import WiFi';
-let scanOK = false, addOK = false;
 const PairingScreen = (props: PairingNavigationProps) => {
+    const { navigation } = props;
     const [showBLE, setshowBLE] = useState<boolean>(false);
     const [visibleModal, setvisibleModal] = useState<boolean>(false);
     const [ssid, setssid] = useState<string>("");
@@ -177,10 +177,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
                 console.log("Received for characteristic----->", args);
 
             });
-
-
-
-
 
         } catch (e) {
             console.log(e)
@@ -615,15 +611,17 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                     // Failure code
                                     console.log("MTU error ", error);
                                 });
-                        }else{
+                        } else {
                             BleManager.isPeripheralConnected(
                                 peripheral.id,
                                 []
                             ).then((isConnected) => {
                                 if (isConnected) {
                                     console.log("Monocle is connected!");
-                                  
-
+                                    ShowToast(STRINGS.MONOCLE_CONNECTED)
+                                    setTimeout(() => {
+                                        navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+                                    }, 2000);
                                 }
                             });
                         }
