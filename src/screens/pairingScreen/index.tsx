@@ -37,7 +37,7 @@ const peripherals = new Map();
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 let concatData: any = '', importWIFI = 'from machine import WiFi';
-
+let scanOK=false,addOK=false;
 const PairingScreen = (props: PairingNavigationProps) => {
     const [showBLE, setshowBLE] = useState<boolean>(false);
     const [visibleModal, setvisibleModal] = useState<boolean>(false);
@@ -225,15 +225,16 @@ const PairingScreen = (props: PairingNavigationProps) => {
         if (receiveData.includes('OKIMPORT')) {
             console.log("ok response coming");
              //dataWrite("WiFi.add('Sanatan Personal','passpass')\0x4", data.peripheral)
-           
-                dataWrite("p=WiFi.scan() \nprint('SCAN') \nprint(p)\x04", data.peripheral)
+             dataWrite("WiFi.add('A','12345678')\0x4", data.peripheral)
+                    //dataWrite("p=WiFi.scan() \nprint('SCAN') \nprint(p)\x04", data.peripheral)
+              
             
         }else if(receiveData.includes("OKSCAN")){
             console.log("ok scan response coming");
-
-             dataWrite("WiFi.add('Sanatan Home-2G','passpass') \nprint('ADD')\0x4", data.peripheral)
-
-        } else{
+            
+                dataWrite('WiFi.add("A","12345678")\0x4', data.peripheral)
+               // dataWrite("print('HI')\x04", data.peripheral);
+              } else{
             console.log("ok response not coming");
         }
 
