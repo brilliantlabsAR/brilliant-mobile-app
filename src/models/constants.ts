@@ -24,6 +24,7 @@ export const STRINGS = {
   ENSURE_TITLE: "Ensure Bluetooth & Wifi is on",
   LETS_PAIR_TITLE: "Let’s Pair Your\nDevice",
   SUBMIT: "Submit",
+  OK: "Ok",
   CONNECT: "Connect",
   UPDATE: "Update",
   UPDATE_PROFILE: "Update Profile",
@@ -57,6 +58,9 @@ export const STRINGS = {
   BROADCAST_YOUR_LIFE: "Broadcast your life as it happens",
   PROFILE_IMAGE_SUCCESS: "Profile image uploaded successfully",
   PROFILE_IMAGE_ERROR: "There is some error",
+  MONOCLE_CONNECTED: "Monocle is connected successfully",
+  ALERT: "Alert",
+  ALERT_LOGOUT: "Are you want to logout?",
 };
 
 export const ASYNC_CONST = {

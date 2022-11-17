@@ -141,28 +141,24 @@ export const styles = StyleSheet.create({
         fontFamily: FontFamily.regular
 
     },
-    footerButtonView: {
-        position: 'absolute',
-        left: normalize(250),
-        right: 0,
-        bottom: 5,
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1,
-        elevation: 20,
-        //shadowColor: 'red',
-    },
+
     footerButtonImage: {
         height: normalize(40),
         width: normalize(40),
     },
     footerLinearStyle: {
+        position: 'absolute',
+        left: normalize(250),
+        right: 0,
+        bottom: 5,
+        zIndex: 1,
+        elevation: 20,
         justifyContent: 'center',
         alignItems: 'center',
         width: normalize(50),
         height: normalize(50),
         borderRadius: normalize(25),
-        backgroundColor: 'blue',
+        backgroundColor: Theme.color.Black,
         borderColor: Theme.color.Black,
         borderWidth: 2,
     }

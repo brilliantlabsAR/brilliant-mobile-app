@@ -101,7 +101,7 @@ const LiveMomentScreen = (props: Props) => {
         }
         if (status === apiStatus.success) {
             // console.log("data");
-            console.log("data-->", streamAudienceData.streamers);
+            // console.log("data-->", streamAudienceData.streamers);
             setStreamerList(streamAudienceData.streamers);
             setaudienceList(streamAudienceData.audience);
         }
@@ -329,13 +329,13 @@ const LiveMomentScreen = (props: Props) => {
                         streamerUserBlock(item.id)
                     }}
                 >
-                    
+
                     <Image
                         style={styles.iconStyle}
                         source={roundMinus}
                         resizeMode='contain'
                     />
-                    
+
                 </TouchableOpacity>
             </View>
         )
