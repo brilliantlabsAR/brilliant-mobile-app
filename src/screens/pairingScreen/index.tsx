@@ -15,10 +15,11 @@ import {
     TouchableHighlight,
     NativeModules,
     NativeEventEmitter,
-    PermissionsAndroid
+    PermissionsAndroid,
+    Modal
 } from "react-native";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { Modal, Portal, Provider, TextInput } from 'react-native-paper';
+import { Portal, Provider, TextInput } from 'react-native-paper';
 import BleManager from 'react-native-ble-manager';
 import { stringToBytes } from "convert-string";
 import NetInfo from '@react-native-community/netinfo';
@@ -31,6 +32,7 @@ import * as Routes from "../../models/routes";
 import { Loading } from '../../components/loading';
 import { chasmaIcon } from "../../assets";
 import { STRINGS } from "../../models/constants";
+import { Item } from "react-native-paper/lib/typescript/components/List/List";
 
 const peripherals = new Map();
 
@@ -48,6 +50,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
     const [scanning, setScanning] = useState<boolean>(false);
     const [deviceFound, setDeviceFound] = useState<boolean>(false);
     const [devices, setdevices] = useState<any[]>([]);
+    const [ssidList, setSsidList] = useState<any[]>([]);
 
 
 
@@ -66,7 +69,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         roundness: 10,
     }
     const showModal = () => {
-        setvisibleModal(true)
+        
     }
     const hideModal = () => {
         setvisibleModal(false)
@@ -130,6 +133,8 @@ const PairingScreen = (props: PairingNavigationProps) => {
         }
     }, []);
 
+    // useEffect(() => {
+    // }, [ssidList]);
 
     async function connectedDevice() {
         try {
@@ -226,57 +231,29 @@ const PairingScreen = (props: PairingNavigationProps) => {
         console.log("Receive data", typeof (receiveData));
         if (receiveData.includes('OKIMPORT')) {
             console.log("ok response coming");
-            //dataWrite("WiFi.add('Sanatan Personal','passpass')\0x4", data.peripheral)
-            dataWrite("WiFi.add('A','12345678')\0x4", data.peripheral)
-            //dataWrite("p=WiFi.scan() \nprint('SCAN') \nprint(p)\x04", data.peripheral)
-
-
+            dataWrite("p=WiFi.scan() \nprint('SCAN') \nprint(p) \x04", data.peripheral)
+            //dataWrite("WiFi.clear() \nprint('SCAN') \x04", data.peripheral)
         } else if (receiveData.includes("OKSCAN")) {
             console.log("ok scan response coming");
 
-            dataWrite('WiFi.add("A","12345678")\0x4', data.peripheral)
-            // dataWrite("print('HI')\x04", data.peripheral);
+            let subData = receiveData.substring(receiveData.indexOf("["), receiveData.indexOf("]") + 1).replace(/'/g, '"').trim();
+            console.log(JSON.parse(subData));
+            setSsidList(JSON.parse(subData))
+            setvisibleModal(true)
+
+            //   dataWrite("WiFi.add('Sanatan Home-2G','passpass') \nprint('ADD') \x04", data.peripheral)
+        } else if (receiveData.includes("OKADD")) {
+            setTimeout(() => {
+                console.log("Wait for 3 sec");
+                dataWrite("p=WiFi.status() \nprint('STATUS') \nprint(p)\x04", data.peripheral)
+            }, 5000);
+        } else if (receiveData.includes('OKSTATUS')) {
+            dataWrite("p=WiFi.list() \nprint('LIST') \nprint(p)\x04", data.peripheral)
+
         } else {
             console.log("ok response not coming");
         }
-
-        // if (concatData.includes(">>>")) {
-        //     console.log('COnCATDATA------>', concatData);
-
-        //     //   subData = concatData.substring(concatData.indexOf(">") + 1, concatData.indexOf(">>>")).trim();
-        //     subData = concatData.substring(0, concatData.indexOf(">>>")).trim();
-        //     console.log('subdata------>', subData);
-        //     if (subData == importWIFI) {
-
-        //         console.log('CONDATA------>', importWIFI);
-        //         concatData = '';
-        //         //goWriteData();
-        //     } else if (subData == 'import machine') {
-        //         console.log('IMPORT DATA------>', subData);
-
-        //         setTimeout(() => {
-        //             //goTesteData();
-        //         }, 2000);
-        //     } else if (subData.startsWith('WiFi.add(')) {
-        //         console.log('DATADATA', subData);
-        //         //goWriteStatusData();
-        //     }
-        //     concatData = ""
-        // } else if (receiveData.startsWith('WiFi.add(')) {
-        //     console.log('DATADATA', receiveData);
-        //     setTimeout(() => {
-        //         //goWriteStatusData();
-        //     }, 5000);
-
-        // }
-        // if (concatData.includes(importWIFI)) {
-        //     console.log('CONDATA------>', importWIFI);
-        //     this.goWriteData("WiFi.scan()")
-
-        // }
-        // console.log('DATAD------>', concatData);
-        console.log('----------------------------------');
-        //from machine import WiFi >>>
+        console.log('----------------------------------END');
 
     }
 
@@ -615,14 +592,14 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                     // Failure code
                                     console.log("MTU error ", error);
                                 });
-                        }else{
+                        } else {
                             BleManager.isPeripheralConnected(
                                 peripheral.id,
                                 []
                             ).then((isConnected) => {
                                 if (isConnected) {
                                     console.log("Monocle is connected!");
-                                  
+
 
                                 }
                             });
@@ -658,31 +635,26 @@ const PairingScreen = (props: PairingNavigationProps) => {
             .then((readData) => {
                 // Success code
                 console.log('write:---> ' + readData);
-
-                // const buffer = Buffer.Buffer.from(readData); //https://github.com/feross/buffer#convert-arraybuffer-to-buffer
-                // const sensorData = buffer.readUInt8(1, true);
-                // console.log('Read:2 ' + sensorData);
-
             })
             .catch((error) => {
                 // Failure code
                 console.log("write data failure", error);
             });
-        BleManager.writeWithoutResponse(
-            peripheralId,
-            service,
-            UUID,
-            stringToBytes(data),
-            256
-        )
-            .then(() => {
-                // Success code
-                console.log("Writed:-----" + data);
-            })
-            .catch((error) => {
-                // Failure code
-                console.log("WRITE----??", error);
-            });
+        // BleManager.writeWithoutResponse(
+        //     peripheralId,
+        //     service,
+        //     UUID,
+        //     stringToBytes(data),
+        //     256
+        // )
+        //     .then(() => {
+        //         // Success code
+        //         console.log("Writed:-----" + data);
+        //     })
+        //     .catch((error) => {
+        //         // Failure code
+        //         console.log("WRITE----??", error);
+        //     });
 
     }
 
@@ -723,14 +695,25 @@ const PairingScreen = (props: PairingNavigationProps) => {
         );
     }
 
+    const renderSSIDItem = (item: any) => {
+        return (
+            <TouchableHighlight onPress={() => console.log('Click')}>
+
+                    <Text style={styles.renderItemText}>{item.ssid}</Text>
+
+            </TouchableHighlight>
+
+        );
+    }
+
     return (
         <SafeAreaView style={styles.bodyContainer}>
-            <Provider>
-                <View style={styles.mainContainer}>
-                    <View style={styles.mainContainer2} >
-                        {showBLE == true ?
-                            <View style={styles.marginTopView}>
-                                <Portal>
+
+            <View style={styles.mainContainer}>
+                <View style={styles.mainContainer2} >
+                    {showBLE == true ?
+                        <View style={styles.marginTopView}>
+                            {/* <Portal>
                                     <Modal visible={visibleModal} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
 
                                         <View style={styles.insideModalView}>
@@ -772,62 +755,77 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                             </TouchableOpacity>
                                         </View>
                                     </Modal>
-                                </Portal>
-                                <View style={styles.TouchableView}>
-                                    <TouchableOpacity style={styles.TouchableStyle}
-                                        onPress={() => {
-                                            startScan()
-                                        }}
-                                    >
-                                        <Text style={styles.TouchableText}>{'Scan Bluetooth (' + (scanning ? 'on' : 'off') + ')'}</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                </Portal> */}
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={visibleModal}
+                                onRequestClose={hideModal}
+                            >
                                 <FlatList
-                                    data={devices}
-                                    scrollEnabled={false}
+                                    data={ssidList}
+                                    scrollEnabled={true}
                                     showsVerticalScrollIndicator={false}
-                                    ItemSeparatorComponent={FlatListItemSeparator}
-                                    renderItem={({ item }) => renderItem(item)}
-                                    keyExtractor={item => item.id}
+                                    renderItem={({ item }) => renderSSIDItem(item)}
+                                    keyExtractor={item => item.auth}
 
                                 />
-                                {scanning ?
-                                    <Loading /> : null
-                                }
-                            </View>
 
-                            :
-                            <View style={styles.pairTitleView}>
-                                <Text style={styles.pairTitle}>{STRINGS.LETS_PAIR_TITLE}</Text>
-                                <View style={styles.circularProgressView}>
-                                    <AnimatedCircularProgress
-                                        size={300}
-                                        width={8}
-                                        fill={100}
-                                        duration={5000}
-                                        tintColor={Theme.color.Black}
-                                        onAnimationComplete={() => {
-                                            setshowBLE(true)
-                                        }}
-                                        backgroundColor={Theme.color.gray15} >
-
-                                        {
-                                            (fill) => (
-                                                <Image
-                                                    style={styles.imageView}
-                                                    source={chasmaIcon}
-                                                    resizeMode='contain'
-                                                />
-                                            )
-                                        }
-                                    </AnimatedCircularProgress>
-                                    <Text style={styles.ensureText}>{STRINGS.ENSURE_TITLE}</Text>
-                                </View>
+                            </Modal>
+                            <View style={styles.TouchableView}>
+                                <TouchableOpacity style={styles.TouchableStyle}
+                                    onPress={() => {
+                                        startScan()
+                                    }}
+                                >
+                                    <Text style={styles.TouchableText}>{'Scan Bluetooth (' + (scanning ? 'on' : 'off') + ')'}</Text>
+                                </TouchableOpacity>
                             </View>
-                        }
-                    </View>
+                            <FlatList
+                                data={devices}
+                                scrollEnabled={false}
+                                showsVerticalScrollIndicator={false}
+                                ItemSeparatorComponent={FlatListItemSeparator}
+                                renderItem={({ item }) => renderItem(item)}
+                                keyExtractor={item => item.id}
+
+                            />
+                            {scanning ?
+                                <Loading /> : null
+                            }
+                        </View>
+
+                        :
+                        <View style={styles.pairTitleView}>
+                            <Text style={styles.pairTitle}>{STRINGS.LETS_PAIR_TITLE}</Text>
+                            <View style={styles.circularProgressView}>
+                                <AnimatedCircularProgress
+                                    size={300}
+                                    width={8}
+                                    fill={100}
+                                    duration={5000}
+                                    tintColor={Theme.color.Black}
+                                    onAnimationComplete={() => {
+                                        setshowBLE(true)
+                                    }}
+                                    backgroundColor={Theme.color.gray15} >
+
+                                    {
+                                        (fill) => (
+                                            <Image
+                                                style={styles.imageView}
+                                                source={chasmaIcon}
+                                                resizeMode='contain'
+                                            />
+                                        )
+                                    }
+                                </AnimatedCircularProgress>
+                                <Text style={styles.ensureText}>{STRINGS.ENSURE_TITLE}</Text>
+                            </View>
+                        </View>
+                    }
                 </View>
-            </Provider>
+            </View>
         </SafeAreaView>
     )
 };

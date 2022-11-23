@@ -236,7 +236,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                             />
                             <Text style={styles.menuText}>{STRINGS.UPDATE_DEVICE_FIRMWARE}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             activeOpacity={0.6}
                             style={styles.menuBox}
                             onPress={() =>
@@ -249,7 +249,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                                 resizeMode='contain'
                             />
                             <Text style={styles.menuText}>{STRINGS.START_LIVE}</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         <TouchableOpacity
                             activeOpacity={0.6}
                             style={styles.menuBox}
