@@ -38,6 +38,7 @@ export const Theme = {
     gray13: "#DBE0EA",
     gray14: "#CFD4DF",
     gray15: "#D9D9D9",
+    darkGray: "#202020",
     greenOne: "#ddedc8",
     pinkOne: "#F5AEBE",
     pinkTwo: "#E6529E",

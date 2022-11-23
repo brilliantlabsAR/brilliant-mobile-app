@@ -23,7 +23,7 @@ import BleManager from 'react-native-ble-manager';
 import { stringToBytes } from "convert-string";
 import NetInfo from '@react-native-community/netinfo';
 import { normalize } from "../../utils/dimentionUtils";
-import { FontFamily, Theme } from "../../models";
+import { DevicePairingStatus, FontFamily, Theme } from "../../models";
 import { PairingNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
@@ -31,6 +31,8 @@ import { Loading } from '../../components/loading';
 import { chasmaIcon } from "../../assets";
 import { STRINGS } from "../../models/constants";
 import { ShowToast } from "../../utils/toastUtils";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { setDevicePairingStatus } from "../../redux/appSlices/pairingStatusSlice";
 
 const peripherals = new Map();
 
@@ -47,9 +49,9 @@ const PairingScreen = (props: PairingNavigationProps) => {
     const [peripheralName, setPeripheralName] = useState<string>("");
     const [scanning, setScanning] = useState<boolean>(false);
     const [deviceFound, setDeviceFound] = useState<boolean>(false);
-    const [devices, setdevices] = useState<any[]>([]);
-
-
+    const [devices, setDevices] = useState<any[]>([]);
+    const dispatch = useAppDispatch();
+    const pairingStatus: DevicePairingStatus = useAppSelector((state) => state.pairing.status);
 
     const textInputOutlineStyle = {
         colors: {
@@ -194,7 +196,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
             if (peripheral.name === "FRAME" || peripheral.name === "Frame" || peripheral.name === "Monocle") {
                 peripherals.set(peripheral.id, peripheral);
                 console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
-                setdevices(Array.from(peripherals.values()))
+                setDevices(Array.from(peripherals.values()))
                 setDeviceFound(true);
                 setPeripheralName(peripheral.name);
             } else {
@@ -204,7 +206,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
             if (peripheral.advertising.localName === "FRAME" || peripheral.advertising.localName === "Frame" || peripheral.advertising.localName === "Monocle") {
                 peripherals.set(peripheral.id, peripheral);
                 console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
-                setdevices(Array.from(peripherals.values()))
+                setDevices(Array.from(peripherals.values()))
                 setDeviceFound(true);
             } else {
                 setDeviceFound(false);
@@ -295,7 +297,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
             peripheral.connected = false;
             peripherals.set(peripheral.id, peripheral);
             //setList(Array.from(peripherals.values()));
-            setdevices(Array.from(peripherals.values()))
+            setDevices(Array.from(peripherals.values()))
 
         }
         console.log('DATA ' + data);
@@ -311,9 +313,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
         return item.name;
     };
-
-
-
 
 
 
@@ -364,7 +363,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                 peripherals.set(peripheral.id, p);
                                 // setList(Array.from(peripherals.values()));
 
-                                setdevices(Array.from(peripherals.values()))
+                                setDevices(Array.from(peripherals.values()))
                             }
                             console.log('Connected to ' + peripheral.id);
 
@@ -387,7 +386,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                                         peripherals.set(peripheral.id, p);
                                         //setList(Array.from(peripherals.values()));
                                         //  this.setState({ devices: peripherals.values() })
-                                        setdevices(Array.from(peripherals.values()))
+                                        setDevices(Array.from(peripherals.values()))
 
                                     }
                                 });
@@ -559,7 +558,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                         if (p) {
                             p.connected = true;
                             peripherals.set(peripheral.id, p);
-                            setdevices(Array.from(peripherals.values()))
+                            setDevices(Array.from(peripherals.values()))
                         }
                         console.log('Connected to ' + peripheral.id);
                         console.log('Device Name ' + peripheral.name);
@@ -618,7 +617,8 @@ const PairingScreen = (props: PairingNavigationProps) => {
                             ).then((isConnected) => {
                                 if (isConnected) {
                                     console.log("Monocle is connected!");
-                                    ShowToast(STRINGS.MONOCLE_CONNECTED)
+                                    ShowToast(STRINGS.MONOCLE_CONNECTED);
+                                    dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
                                     setTimeout(() => {
                                         navigation.navigate(Routes.NAV_MEDIA_SCREEN);
                                     }, 2000);
@@ -629,7 +629,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
                     }).catch(() => {
                         console.log("Device not connected");
-
+                        dispatch(setDevicePairingStatus(DevicePairingStatus.PairingError));
                     });
                 }
 

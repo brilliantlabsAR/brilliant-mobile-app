@@ -62,6 +62,10 @@ export type HelpNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "HelpScreen"
 >;
+export type UpdateFirmwareNavigationProps = NativeStackNavigationProp<
+  AppStackParamList,
+  "UpdateFirmware"
+>;
 // export type AppNavigationScreenProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Settings"
@@ -89,10 +93,6 @@ export type HelpNavigationProps = NativeStackScreenProps<
 // export type TutorialsComponentNavigationProps = NativeStackNavigationProp<
 //   AppStackParamList,
 //   "Tutorials"
-// >;
-// export type UpdateFirmwareNavigationProps = NativeStackNavigationProp<
-//   AppStackParamList,
-//   "UpdateFirmware"
 // >;
 // export type SingleMediaViewNavigationProps = NativeStackScreenProps<
 //   AppStackParamList,

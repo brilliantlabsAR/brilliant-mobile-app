@@ -19,3 +19,20 @@ export interface ITopBar {
   title?: string;
   isTextVisible?: boolean;
 }
+
+export interface CommonButtonProps {
+  buttonLabel: string;
+  handlePress: () => void;
+}
+
+export interface UpdateFirmwareFileComponentProps {
+  textLabel: string;
+  fileNameLabel: string;
+}
+
+export interface CustomModalProps {
+  modalVisible: boolean;
+  modalVisibleOff: () => void;
+  pairNow: () => void;
+  title: string;
+}

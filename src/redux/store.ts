@@ -12,6 +12,7 @@ import otpResendSlice from "./authSlices/otpResendSlice";
 import HelpSlice from "./appSlices/helpSlice";
 import MyAccountSlice from "./appSlices/myAccountSlice";
 import UpdateProfileVerifySlice from "./appSlices/updateProfileVerifySlice";
+import BluetoothPairingSlice from "./appSlices/pairingStatusSlice";
 
 const store = configureStore({
   reducer: {
@@ -25,10 +26,10 @@ const store = configureStore({
     appLocationSlice: AppLocationSlice,
     notificationCreateSlice: NotificationCreateSlice,
     userBlockSlice: UserBlockSlice,
-    helpSlice:HelpSlice,
-    myAccountSlice:MyAccountSlice,
-    updateProfileVerifySlice:UpdateProfileVerifySlice
-
+    helpSlice: HelpSlice,
+    myAccountSlice: MyAccountSlice,
+    updateProfileVerifySlice: UpdateProfileVerifySlice,
+    pairing: BluetoothPairingSlice,
   },
 });
 

@@ -19,8 +19,10 @@ export type AppStackParamList = {
   [Routes.NAV_LIVE_MOMENT]: { selectedTab: string } | undefined;
   [Routes.NAV_MEDIA_SCREEN]: undefined;
   [Routes.NAV_INVITE_CONTACT_SCREEN]: undefined;
+  [Routes.NAV_UPDATE_FIRMWARE]: undefined;
   [Routes.NAV_HELP_SCREEN]: { pageNo: string };
   [Routes.NAV_PROFILE_OTP_SCREEN]: { phoneNumber: string, countryCode: string | any, phone: string | any, email: string | any, name: string | any };
+
   // [Routes.NAV_BLUETOOTH_PAIRING]: undefined;
   // [Routes.NAV_TUTORIALS]: undefined;
   // [Routes.NAV_DASHBOARD]: undefined;
@@ -88,6 +90,11 @@ const AppNavigation = () => {
       <AppStack.Screen
         name={Routes.NAV_PROFILE_OTP_SCREEN}
         component={Screens.ProfileOtpVerify}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_UPDATE_FIRMWARE}
+        component={Screens.UpdateFirmwareScreen}
         options={{ title: "" }}
       />
       {/* <AppStack.Screen
