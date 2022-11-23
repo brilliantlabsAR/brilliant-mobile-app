@@ -176,16 +176,16 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     if (pairingStatus === DevicePairingStatus.Paired) {
       dispatch(setDevicePairingStatus(DevicePairingStatus.Unpaired));
     }
-    // setIsFirmwareModalVisible(false);
+    setIsFirmwareModalVisible(false);
     navigation.navigate(Routes.NAV_START_SCREEN);
   };
 
   const handleFirmware = () => {
-    // if (pairingStatus === DevicePairingStatus.Paired) {
-    navigation.navigate(Routes.NAV_UPDATE_FIRMWARE);
-    // } else {
-    //   setIsFirmwareModalVisible(true);
-    // }
+    if (pairingStatus === DevicePairingStatus.Paired) {
+      navigation.navigate(Routes.NAV_UPDATE_FIRMWARE);
+    } else {
+      setIsFirmwareModalVisible(true);
+    }
   };
 
   const modalClose = () => {
