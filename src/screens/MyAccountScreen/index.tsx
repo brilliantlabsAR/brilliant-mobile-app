@@ -32,7 +32,7 @@ import {
   menuHelp,
   logoButton,
 } from "../../assets";
-import { ASYNC_CONST, STRINGS } from "../../models/constants";
+import { ASYNC_CONST, STRINGS } from "../../models";
 import Footer from "../../components/footer";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
@@ -337,18 +337,18 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
 
           {showLoading ? <Loading /> : null}
         </ScrollView>
-        <Modal
-          isVisible={modalVisible}
-          onBackdropPress={() => setModalVisible(false)}
+        <CustomModal
+          modalVisible={modalVisible}
+          modalVisibleOff={() => setModalVisible(false)}
         >
           <View style={styles.modalMainView}>
             {/* <TouchableOpacity
-                        activeOpacity={0.6}
-                        style={styles.modalBox}
-                        onPress={() => this.openCamera()}>
+                            activeOpacity={0.6}
+                            style={styles.modalBox}
+                            onPress={() => this.openCamera()}>
 
-                        <Text style={styles.modalText}>{'Open Camera'}</Text>
-                    </TouchableOpacity> */}
+                            <Text style={styles.modalText}>{'Open Camera'}</Text>
+                        </TouchableOpacity> */}
             <TouchableOpacity
               activeOpacity={0.6}
               style={styles.modalBox}
@@ -365,16 +365,27 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
               <Text style={styles.modalText}>{STRINGS.CANCEL}</Text>
             </TouchableOpacity>
           </View>
-        </Modal>
+        </CustomModal>
 
-        {isFirmwareModalVisible && (
-          <CustomModal
-            modalVisible={isFirmwareModalVisible}
-            modalVisibleOff={modalClose}
-            pairNow={handleMonoclePairing}
-            title={'update firmware'}
-          />
-        )}
+
+        {/* {isFirmwareModalVisible && ( */}
+        <CustomModal
+          modalVisible={isFirmwareModalVisible}
+          modalVisibleOff={modalClose}
+        >
+          <View style={styles.modalView}>
+            <Text style={styles.textView}>{STRINGS.FIRMWARE_UPDATE_PAIR}</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.buttonView} onPress={modalClose}>
+                <Text style={styles.btnTextView}>{STRINGS.CLOSE}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonView} onPress={handleMonoclePairing}>
+                <Text style={styles.btnTextView}>{STRINGS.PAIR_NOW}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </CustomModal>
+        {/* )} */}
       </View>
       {/* <Footer selectedTab="MyAccount" /> */}
       <TouchableOpacity

@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
-import { UpdateFirmwareFileComponentProps } from "../../types";
-type Props = UpdateFirmwareFileComponentProps;
+import { IUpdateFirmwareFileComponentProps } from "../../types";
+type Props = IUpdateFirmwareFileComponentProps;
 
 const FileSelectionComponent = (props: Props) => {
     const { textLabel, fileNameLabel } = props;

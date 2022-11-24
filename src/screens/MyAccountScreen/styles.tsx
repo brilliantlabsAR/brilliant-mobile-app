@@ -124,7 +124,7 @@ export const styles = StyleSheet.create({
     },
     modalMainView: {
         alignSelf: 'center',
-        backgroundColor: 'white',
+        backgroundColor: Theme.color.White,
         width: normalize(220),
         borderRadius: normalize(10)
     },
@@ -170,6 +170,40 @@ export const styles = StyleSheet.create({
         backgroundColor: 'blue',
         borderColor: Theme.color.Black,
         borderWidth: 2,
-    }
+    },
+    // device firmware modal view
+    modalView: {
+        alignSelf: 'center',
+        width: normalize(300),
+        borderRadius: normalize(10),
+        backgroundColor: Theme.color.White,
+        padding: 35,
+        alignItems: 'center',
+    },
+    buttonContainer: {
+        flexDirection: 'row'
+    },
+    textView: {
+        fontFamily: FontFamily.regular,
+        fontSize: normalize(15),
+        fontStyle: 'normal',
+        fontWeight: '600',
+        lineHeight: 20,
+        color: Theme.color.darkGray,
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    btnTextView: {
+        color: Theme.color.Black,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    buttonView: {
+        borderRadius: 20,
+        margin: 10,
+        padding: 10,
+        elevation: 2,
+        backgroundColor: Theme.color.gray15
+    },
 
 })

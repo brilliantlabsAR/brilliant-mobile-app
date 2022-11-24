@@ -1,33 +1,21 @@
 import React, { useState } from "react";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
-import { CustomModalProps } from "../../types";
-import { styles } from "./styles";
+import Modal from "react-native-modal";
+// import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { IChildrenProps, ICustomModalProps } from "../../types";
 
-export const CustomModal = (props: CustomModalProps) => {
-  const { modalVisible, modalVisibleOff, pairNow, title } = props;
-  const [IsModalVisible] = useState(modalVisible);
+type Props = IChildrenProps & ICustomModalProps;
+export const CustomModal = (props: Props) => {
+  const { modalVisible, modalVisibleOff, children } = props;
   return (
     <Modal
-      animationType="slide"
-      transparent={true}
-      visible={IsModalVisible}
-      onRequestClose={modalVisibleOff}
+      isVisible={modalVisible}
+      onBackdropPress={modalVisibleOff}
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
+      animationOutTiming={800}
+      hasBackdrop={true}
     >
-      <TouchableOpacity style={styles.bodyContainer} onPress={modalVisibleOff}>
-        <View style={styles.bodyContainer}>
-          <View style={styles.modalView}>
-            <Text style={styles.textView}>Pair with your Monocle to {title}.</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.buttonView} onPress={modalVisibleOff}>
-                <Text style={styles.btnTextView}>Close</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonView} onPress={pairNow}>
-                <Text style={styles.btnTextView}>Pair now</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
+      {children}
     </Modal>
   );
 };

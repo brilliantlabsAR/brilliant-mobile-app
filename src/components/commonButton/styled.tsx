@@ -11,6 +11,8 @@ export const styles = StyleSheet.create({
     minWidth: 180,
     maxWidth: 250,
     backgroundColor: Theme.color.gray15,
+    borderWidth: 1,
+    borderColor: Theme.color.darkGray,
     borderRadius: 10,
     elevation: 5,
     paddingHorizontal: 15,
