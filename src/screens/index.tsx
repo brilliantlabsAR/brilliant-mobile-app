@@ -12,6 +12,7 @@ import MediaScreen from "./mediaScreen";
 import InviteContactScreen from "./inviteContactScreen";
 import HelpScreen from "./helpScreen";
 import ProfileOtpVerify from "./profileOtpVerifyScreen";
+import UpdateFirmwareScreen from "./updateFirmwareScreen";
 
 export default {
   SplashScreen,
@@ -27,5 +28,6 @@ export default {
   MediaScreen,
   InviteContactScreen,
   HelpScreen,
-  ProfileOtpVerify
+  ProfileOtpVerify,
+  UpdateFirmwareScreen
 };

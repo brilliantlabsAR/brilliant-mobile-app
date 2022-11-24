@@ -61,6 +61,9 @@ export const STRINGS = {
   MONOCLE_CONNECTED: "Monocle is connected successfully",
   ALERT: "Alert",
   ALERT_LOGOUT: "Are you want to logout?",
+  CLOSE: "Close",
+  PAIR_NOW: "Pair now",
+  FIRMWARE_UPDATE_PAIR: "Pair with your Monocle to update firmware.",
 };
 
 export const ASYNC_CONST = {

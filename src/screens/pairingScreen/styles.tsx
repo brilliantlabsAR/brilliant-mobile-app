@@ -141,6 +141,30 @@ export const styles = StyleSheet.create({
         color: Theme.color.Black,
         marginTop: normalize(40),
         fontFamily: FontFamily.regular,
+    },
+    modalContainer: {
+        width: "80%",
+        alignSelf: 'center',
+        borderRadius: normalize(10),
+        backgroundColor: Theme.color.White,
+        padding: 35,
+        alignItems: 'center',
+    },
+    modalView: {
+        padding: 20,
+    },
+    modalViewText: {
+        paddingBottom: 10
+    },
+    modalSubmitView: {
+        height: 40
+    },
+    modalTextInput: {
+        height: 50,
+        borderColor: Theme.color.darkGray,
+        borderWidth: 1,
+        marginBottom: 20,
+        paddingHorizontal: 10,
+        borderRadius: 5
     }
-
 })

@@ -1,3 +1,7 @@
+export interface IChildrenProps {
+  children?: Element;
+}
+
 export interface ILoginVerification {
   route: {
     [key: string]: string | number | any;
@@ -18,4 +22,21 @@ export interface IFooter {
 export interface ITopBar {
   title?: string;
   isTextVisible?: boolean;
+}
+
+export interface ICommonButtonProps {
+  buttonLabel: string;
+  handlePress: () => void;
+}
+
+export interface IUpdateFirmwareFileComponentProps {
+  textLabel: string;
+  fileNameLabel: string;
+}
+
+export interface ICustomModalProps {
+  modalVisible: boolean;
+  modalVisibleOff: () => void;
+  // pairNow: () => void;
+  // title: string;
 }
