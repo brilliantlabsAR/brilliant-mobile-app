@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   StatusBar,
   View,
@@ -14,7 +14,9 @@ import {
   NativeEventEmitter,
   PermissionsAndroid,
   Modal,
-  TextInput
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView
 } from "react-native";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import BleManager from 'react-native-ble-manager';
@@ -682,31 +684,10 @@ const PairingScreen = (props: PairingNavigationProps) => {
   const renderSSIDItem = (item: any) => {
     return (
       <TouchableOpacity style={styles.modalView} onPress={() => setSsid(item.ssid)}>
-        <Text style={[styles.renderItemText, styles.modalViewText]}>{item.ssid}</Text>
+        <Text style={styles.renderItemText}>{item.ssid}</Text>
       </TouchableOpacity>
 
     );
-  }
-
-  const RenderSSIDPass = () => {
-    return (
-      <>
-        <Text style={[styles.renderItemText, styles.modalViewText]}>{ssid}</Text>
-        <TextInput
-          placeholder="Enter your Wifi password"
-          keyboardType="default"
-          value={password}
-          onChangeText={(password) => setPassword(password)}
-          style={styles.modalTextInput}
-        />
-        <View style={styles.modalSubmitView}>
-          <CommonButton
-            buttonLabel={STRINGS.SUBMIT}
-            handlePress={() => { }}
-          />
-        </View>
-      </>
-    )
   }
 
   return (
@@ -715,24 +696,45 @@ const PairingScreen = (props: PairingNavigationProps) => {
         <View style={styles.mainContainer2} >
           {showBLE == true ?
             <View style={styles.marginTopView}>
-              <CustomModal
-                modalVisible={visibleModal}
-                modalVisibleOff={() => setVisibleModal(false)}
+              <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
               >
-                <View style={styles.modalContainer}>
-                  {ssid ? (
-                    <RenderSSIDPass />
-                  ) : (
-                    <FlatList
-                      data={ssidList}
-                      scrollEnabled={true}
-                      showsVerticalScrollIndicator={false}
-                      renderItem={({ item }) => renderSSIDItem(item)}
-                      keyExtractor={item => item.auth}
-                    />
-                  )}
-                </View>
-              </CustomModal>
+                <CustomModal
+                  modalVisible={visibleModal}
+                  modalVisibleOff={() => setVisibleModal(false)}
+                >
+                  <View style={styles.modalContainer}>
+
+                    {ssid ? (
+                      <>
+                        <Text style={styles.renderItemText}>{ssid}</Text>
+                        <TextInput
+                          placeholder={STRINGS.ENTER_WIFI_PASS}
+                          keyboardType="default"
+                          value={password}
+                          onChangeText={(password) => setPassword(password)}
+                          style={styles.modalTextInput}
+                        />
+                        <View style={styles.modalSubmitView}>
+                          <CommonButton
+                            buttonLabel={STRINGS.SUBMIT}
+                            handlePress={() => { }}
+                          />
+                        </View>
+                      </>
+                    ) : (
+                      <FlatList
+                        data={ssidList}
+                        scrollEnabled={true}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={({ item }) => renderSSIDItem(item)}
+                        ListHeaderComponent={() => <Text style={styles.renderItemText}>{[STRINGS.CHOOSE_WIFI_NETWORK]}</Text>}
+                        keyExtractor={item => item.auth}
+                      />
+                    )}
+                  </View>
+                </CustomModal>
+              </KeyboardAvoidingView>
               <View style={styles.TouchableView}>
                 <TouchableOpacity style={styles.TouchableStyle}
                   onPress={() => {
@@ -787,7 +789,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
           }
         </View>
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   )
 };
 

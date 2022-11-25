@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Modal from "react-native-modal";
-// import { Modal, Text, TouchableOpacity, View } from "react-native";
 import { IChildrenProps, ICustomModalProps } from "../../types";
 
 type Props = IChildrenProps & ICustomModalProps;

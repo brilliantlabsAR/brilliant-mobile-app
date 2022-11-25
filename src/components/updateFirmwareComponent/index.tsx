@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import { CommonButton } from "../commonButton";
 import { UpdateFirmwareNavigationProps } from "../../navigations/types";
 import { normalize } from "../../utils/dimentionUtils";
+import { STRINGS } from "../../models";
 
 const UpdateFirmwareComponent = () => {
   const [fileName, setFileName] = useState("");
@@ -21,10 +22,10 @@ const UpdateFirmwareComponent = () => {
       type: DocumentPicker.types.zip,
       // copyTo: "documentDirectory",
     })
-      .then((res) => {
+      .then((res: any) => {
         if (res?.name.substring(res?.name.length - 4) !== ".zip") {
           Snackbar.show({
-            text: "Only zip file is supported",
+            text: STRINGS.ZIP_FILE_SUPPORTED,
             duration: Snackbar.LENGTH_SHORT,
           });
         } else {
@@ -36,7 +37,7 @@ const UpdateFirmwareComponent = () => {
       .catch((err) => {
         if (DocumentPicker.isCancel(err)) {
           Snackbar.show({
-            text: "You cancelled the picker",
+            text: STRINGS.CANCEL_PICKER,
             duration: Snackbar.LENGTH_SHORT,
           });
         } else {
@@ -50,7 +51,7 @@ const UpdateFirmwareComponent = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.styledHeader}>Update Firmware</Text>
+      <Text style={styles.styledHeader}>{STRINGS.UPDATE_FIRMWARE}</Text>
       <Text style={[styles.actionTextStyle, styles.componentActionText]}>
         To perform a firmware update on your {"\n"} Monocle,{" "}
         <Text style={[styles.actionTextStyle, styles.actionTextBold]}>
@@ -76,7 +77,7 @@ const UpdateFirmwareComponent = () => {
       <View style={styles.wrapperButtons}>
         {fileName !== "" && fileName.length > 3 ? (
           <FileSelectionComponent
-            textLabel={"File Selected: "}
+            textLabel={STRINGS.FILE_SELECTED}
             fileNameLabel={fileName}
           />
         ) : null}
@@ -84,14 +85,14 @@ const UpdateFirmwareComponent = () => {
       <View style={styles.wrapperButtons}>
         {fileName === "" ? (
           <CommonButton
-            buttonLabel={"Select Update File"}
+            buttonLabel={STRINGS.SELECT_UPDATE_FILE}
             handlePress={() => {
               handleUploadFile();
             }}
           />
         ) : (
           <CommonButton
-            buttonLabel={"Perform Firmware Update"}
+            buttonLabel={STRINGS.PERFORM_FIRMWARE_UPDATE}
             handlePress={() => {
               setFileName("");
               setFilePath("");

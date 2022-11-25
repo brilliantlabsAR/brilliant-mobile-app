@@ -11,11 +11,11 @@ import {
   BackHandler,
   ScrollView,
   Alert,
+  TextInput
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImageCropPicker, { clean } from "react-native-image-crop-picker";
 import LinearGradient from "react-native-linear-gradient";
-import Modal from "react-native-modal";
 import { AccountNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
@@ -61,7 +61,6 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
   const pairingStatus: DevicePairingStatus = useAppSelector(
     (state) => state.pairing.status
   );
-
   useEffect(() => {
     setShowLoading(true);
     dispatch(FetchMyAccountData());
@@ -181,11 +180,11 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
   };
 
   const handleFirmware = () => {
-    if (pairingStatus === DevicePairingStatus.Paired) {
-      navigation.navigate(Routes.NAV_UPDATE_FIRMWARE);
-    } else {
-      setIsFirmwareModalVisible(true);
-    }
+    // if (pairingStatus === DevicePairingStatus.Paired) {
+    navigation.navigate(Routes.NAV_UPDATE_FIRMWARE);
+    // } else {
+    //   setIsFirmwareModalVisible(true);
+    // }
   };
 
   const modalClose = () => {
