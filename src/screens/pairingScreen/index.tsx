@@ -44,7 +44,7 @@ let concatData: any = '', importWIFI = 'from machine import WiFi';
 const PairingScreen = (props: PairingNavigationProps) => {
   const { navigation } = props;
   const [showBLE, setShowBLE] = useState<boolean>(false);
-  const [visibleModal, setVisibleModal] = useState<boolean>(true);
+  const [visibleModal, setVisibleModal] = useState<boolean>(false);
   const [ssid, setSsid] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [peripheralId, setPeripheralID] = useState<string>("");
@@ -52,7 +52,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   const [scanning, setScanning] = useState<boolean>(false);
   const [deviceFound, setDeviceFound] = useState<boolean>(false);
   const [devices, setDevices] = useState<any[]>([]);
-  const [ssidList, setSsidList] = useState<any[]>([{ "auth": 3, "rssi": -34, "ssid": "Sanatan Personal" }, { "auth": 4, "rssi": -61, "ssid": "Sanatan Home-2G" }]);
+  const [ssidList, setSsidList] = useState<any[]>([]);
   const dispatch = useAppDispatch();
   const pairingStatus: DevicePairingStatus = useAppSelector((state) => state.pairing.status);
 
@@ -222,14 +222,15 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
       let subData = receiveData.substring(receiveData.indexOf("["), receiveData.indexOf("]") + 1).replace(/'/g, '"').trim();
       console.log(JSON.parse(subData));
-      setSsidList(JSON.parse(subData))
-      setVisibleModal(true)
+      setSsidList(JSON.parse(subData));
+      setVisibleModal(true);
 
       //   dataWrite("WiFi.add('Sanatan Home-2G','passpass') \nprint('ADD') \x04", data.peripheral)
     } else if (receiveData.includes("OKADD")) {
       setTimeout(() => {
         console.log("Wait for 3 sec");
         dataWrite("p=WiFi.status() \nprint('STATUS') \nprint(p)\x04", data.peripheral)
+        ShowToast("Device connected successfully");
       }, 5000);
     } else if (receiveData.includes('OKSTATUS')) {
       dataWrite("p=WiFi.list() \nprint('LIST') \nprint(p)\x04", data.peripheral)
@@ -642,7 +643,11 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
   }
 
-
+  const addWifi = () => {
+    // dataWrite("WiFi.add('Sanatan Home-2G','passpass') \nprint('ADD') \x04", data.peripheral)
+    dataWrite(`WiFi.add('${ssid}','${password.trim()}') \nprint('ADD') \x04`, peripheralId)
+    hideModal();
+  }
 
 
   const renderItem = (item: any) => {
@@ -718,7 +723,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                         <View style={styles.modalSubmitView}>
                           <CommonButton
                             buttonLabel={STRINGS.SUBMIT}
-                            handlePress={() => { }}
+                            handlePress={() => { addWifi() }}
                           />
                         </View>
                       </>
