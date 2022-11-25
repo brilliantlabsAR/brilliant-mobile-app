@@ -151,11 +151,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalView: {
-        padding: 20,
+        alignItems: 'center',
+        backgroundColor: Theme.color.gray15,
+        padding: 10,
+        borderRadius: normalize(10),
+        borderColor: Theme.color.darkGray,
+        borderWidth: 1,
+        marginVertical: 10
     },
-    modalViewText: {
-        paddingBottom: 10
-    },
+
     modalSubmitView: {
         height: 40
     },
@@ -163,7 +167,7 @@ export const styles = StyleSheet.create({
         height: 50,
         borderColor: Theme.color.darkGray,
         borderWidth: 1,
-        marginBottom: 20,
+        marginVertical: 20,
         paddingHorizontal: 10,
         borderRadius: 5
     }

@@ -7,6 +7,7 @@ export const STRINGS = {
   EMPTY_PHONE_ERROR: "Please Provide a Phone number!",
   EMPTY_EMAIL_ERROR: "Please Fill All the details!",
   PASSWORD_ERROR: "Please Provide a Password!",
+  ENTER_WIFI_PASS: "Enter your Wifi password",
   INCORRECT_PASSWORD:
     "Password should be at least 8 characters, one uppercase and one special character and one number",
   VERIFY_REQUIRE: "Please Provide Required Details!",
@@ -64,6 +65,13 @@ export const STRINGS = {
   CLOSE: "Close",
   PAIR_NOW: "Pair now",
   FIRMWARE_UPDATE_PAIR: "Pair with your Monocle to update firmware.",
+  CHOOSE_WIFI_NETWORK: "Choose Your Personal Network :",
+  UPDATE_FIRMWARE: "Update Firmware",
+  ZIP_FILE_SUPPORTED: "Only zip file is supported",
+  CANCEL_PICKER: "You cancelled the picker",
+  FILE_SELECTED: "File Selected: ",
+  SELECT_UPDATE_FILE: "Select Update File",
+  PERFORM_FIRMWARE_UPDATE: "Perform Firmware Update",
 };
 
 export const ASYNC_CONST = {
