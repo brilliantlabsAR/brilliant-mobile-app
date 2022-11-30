@@ -35,6 +35,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setDevicePairingStatus } from "../../redux/appSlices/pairingStatusSlice";
 import { CustomModal } from "../../components/customModal";
 import { CommonButton } from "../../components/commonButton";
+import {  fromByteArray } from "react-native-quick-base64";
+import { encode, decode } from "uint8-to-base64";
 
 const peripherals = new Map();
 
@@ -53,6 +55,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   const [deviceFound, setDeviceFound] = useState<boolean>(false);
   const [devices, setDevices] = useState<any[]>([]);
   const [ssidList, setSsidList] = useState<any[]>([]);
+  const [imageArray, setImageArray] = useState<any[]>([]);
   const dispatch = useAppDispatch();
   const pairingStatus: DevicePairingStatus = useAppSelector((state) => state.pairing.status);
 
@@ -126,14 +129,15 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
   async function connectedDevice() {
     try {
+      let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+      let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
 
-      await BleManager.scan([], 5, true).then(() => {
+      await BleManager.scan([nordicUartServiceUuid, rawDataServiceUuid], 5, true).then((res) => {
         // Success code
-        console.log("Scan started");
+        console.log("Scan started--->" + res);
         setScanning(true);
 
       });
-
       await BleManager.getConnectedPeripherals([]).then((peripheralsArray) => {
         // Success code
         console.log("Connected peripherals: " + peripheralsArray.length);
@@ -206,24 +210,81 @@ const PairingScreen = (props: PairingNavigationProps) => {
   }
 
   const handleUpdateValueForCharacteristic = (data: any) => {
-    //console.log('Received data from ' + data.peripheral + ' characteristic ' + data.characteristic, data.value);
+
+    //console.log('Received data from ' + data.peripheral + ' characteristic ' + data.characteristic);
+    console.log('Received data from Device IMAGE DEMO-----> ' + data.value);
+    console.log('Received data from Device Length-----> ', data.value.length);
+    let array = [];
+    if (data.value[0] >= 0 && data.value[0] <= 2) {
+      if (data.value[0] == 0) {
+        let fileSize = data.value[1];
+        let dataArray = data.value.slice(fileSize + 2);
+        console.log('DATATA', dataArray);
+        imageArray.push(...dataArray);
+      } else {
+        let dataArray = data.value.slice(1);
+        imageArray.push(...dataArray);
+      }
+
+      if (data.value[3]) {
+        const z = new Uint8Array(imageArray);
+        console.log('Uint8Array-----> ', z);
+
+     
+        let imageBase = fromByteArray(z)
+        console.log('ARRAY PUSH-----> ', imageBase);
+
+      }
+      console.log('ARRAY PUSH-----> ', data.value[0]);
+
+    }
+    //setImageArray(array);
+
     console.log('Received data from Device-----> ' + String.fromCharCode.apply(String, data.value));
+    console.log('Received array data from Device-----> ' + imageArray);
 
     var receiveData = String.fromCharCode.apply(String, data.value);
+
     var subData = '';
     concatData = concatData + receiveData;//OK1
-    console.log("Receive data", typeof (receiveData));
+    // if (receiveData.includes('OKIMPORT')) {
+    //   console.log("ok response coming");
+    //   dataWrite("p=WiFi.scan() \nprint('SCAN') \nprint(p) \x04", data.peripheral)
+    //   //dataWrite("WiFi.clear() \nprint('SCAN') \x04", data.peripheral)
+    // } else if (receiveData.includes("OKSCAN")) {
+    //   console.log("ok scan response coming");
+
+    //   let subData = receiveData.substring(receiveData.indexOf("["), receiveData.indexOf("]") + 1).replace(/'/g, '"').trim();
+    //   console.log(JSON.parse(subData));
+    //   setSsidList(JSON.parse(subData));
+    //   setVisibleModal(true);
+
+    //   //   dataWrite("WiFi.add('Sanatan Home-2G','passpass') \nprint('ADD') \x04", data.peripheral)
+    // } else if (receiveData.includes("OKADD")) {
+    //   setTimeout(() => {
+    //     console.log("Wait for 3 sec");
+    //     dataWrite("p=WiFi.status() \nprint('STATUS') \nprint(p)\x04", data.peripheral)
+    //     ShowToast("Device connected successfully");
+    //   }, 5000);
+    // } else if (receiveData.includes('OKSTATUS')) {
+    //   dataWrite("p=WiFi.list() \nprint('LIST') \nprint(p)\x04", data.peripheral)
+
+    // } else {
+    //   console.log("ok response not coming");
+    // }
+
+
     if (receiveData.includes('OKIMPORT')) {
       console.log("ok response coming");
-      dataWrite("p=WiFi.scan() \nprint('SCAN') \nprint(p) \x04", data.peripheral)
+      dataWrite("Camera.capture() \nprint('SCAN') \x04", data.peripheral)
       //dataWrite("WiFi.clear() \nprint('SCAN') \x04", data.peripheral)
     } else if (receiveData.includes("OKSCAN")) {
       console.log("ok scan response coming");
-
-      let subData = receiveData.substring(receiveData.indexOf("["), receiveData.indexOf("]") + 1).replace(/'/g, '"').trim();
-      console.log(JSON.parse(subData));
-      setSsidList(JSON.parse(subData));
-      setVisibleModal(true);
+      console.log('Receive data---->', data.value);
+      //   let subData = receiveData.substring(receiveData.indexOf("["), receiveData.indexOf("]") + 1).replace(/'/g, '"').trim();
+      //   console.log(JSON.parse(subData));
+      //  setSsidList(JSON.parse(subData));
+      //   setVisibleModal(true);
 
       //   dataWrite("WiFi.add('Sanatan Home-2G','passpass') \nprint('ADD') \x04", data.peripheral)
     } else if (receiveData.includes("OKADD")) {
@@ -238,6 +299,8 @@ const PairingScreen = (props: PairingNavigationProps) => {
     } else {
       console.log("ok response not coming");
     }
+
+
     console.log('----------------------------------END');
 
   }
@@ -247,9 +310,12 @@ const PairingScreen = (props: PairingNavigationProps) => {
     setScanning(false);
   }
   const startScan = () => {
-    BleManager.scan([], 5, true).then(() => {
+    let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+    let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
+
+    BleManager.scan([nordicUartServiceUuid, rawDataServiceUuid], 5, true).then((res) => {
       // Success code
-      console.log("Scan started");
+      console.log("Scan started--->" + res);
       setScanning(true);
 
     });
@@ -536,8 +602,42 @@ const PairingScreen = (props: PairingNavigationProps) => {
                     var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
                     var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
                     var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
-                    await BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
+
+                    let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+                    let uartRxCharacteristicUuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+                    let uartTxCharacteristicUuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+
+                    let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
+                    let rawDataRxCharacteristicUuid = "e5700002-7bac-429a-b4ce-57ff900f479d";
+                    let rawDataTxCharacteristicUuid = "e5700003-7bac-429a-b4ce-57ff900f479d";
+                    await BleManager.startNotification(peripheral.id, rawDataServiceUuid, rawDataTxCharacteristicUuid).then(() => {
+                      console.log('Start notification: ONE ');
+
+                    })
+                    //  await BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
+                    await BleManager.startNotification(peripheral.id, nordicUartServiceUuid, uartTxCharacteristicUuid).then(() => {
                       console.log('Start notification: ');
+                      // setTimeout(() => {    //1st Command
+                      //   console.log("1st Command");
+
+                      //   dataWrite("\x03", peripheral.id);
+
+                      //   setTimeout(() => {//2nd Command
+                      //     console.log("2nd Command");
+
+                      //     dataWrite("\x01", peripheral.id);
+
+                      //   }, 3000);
+
+                      //   setTimeout(() => {//3rd Command
+                      //     console.log("3rd Command \\x04");
+
+                      //     dataWrite("from machine import WiFi \nprint('IMPORT')\x04", peripheral.id);
+                      //     // dataWrite("print('hi')\x04", peripheral.id);
+
+                      //   }, 4000);
+
+                      // }, 5000);
                       setTimeout(() => {    //1st Command
                         console.log("1st Command");
 
@@ -553,7 +653,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                         setTimeout(() => {//3rd Command
                           console.log("3rd Command \\x04");
 
-                          dataWrite("from machine import WiFi \nprint('IMPORT')\x04", peripheral.id);
+                          dataWrite("from machine import Camera \nprint('IMPORT')\x04", peripheral.id);
                           // dataWrite("print('hi')\x04", peripheral.id);
 
                         }, 4000);
