@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 import { ASYNC_CONST } from "../models";
@@ -21,8 +22,13 @@ export const countdownTimer = (timer: number) => {
     return ((m < 10 ? `0${m} :` : `${m} :`) + (s < 10 ? `0${s}` : `${s}`))
 };
 
-const getToken = async () => {
-    const token = await AsyncStorage.getItem(ASYNC_CONST.accessToken);
-    return token;
-};
+// NOTE: this is NOT a cryptographically-strong random string generator
+export function GenerateRandomString() {
+    const r: string = (Math.random() + 1).toString(36).substring(2);
+    return r;
+}
+
+export function GenerateUuid(): string {
+    return uuidv4();
+}
 
