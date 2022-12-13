@@ -22,15 +22,6 @@ export type AppStackParamList = {
   [Routes.NAV_UPDATE_FIRMWARE]: undefined;
   [Routes.NAV_HELP_SCREEN]: { pageNo: string };
   [Routes.NAV_PROFILE_OTP_SCREEN]: { phoneNumber: string, countryCode: string | any, phone: string | any, email: string | any, name: string | any };
-
-  // [Routes.NAV_BLUETOOTH_PAIRING]: undefined;
-  // [Routes.NAV_TUTORIALS]: undefined;
-  // [Routes.NAV_DASHBOARD]: undefined;
-  // [Routes.NAV_SETTINGS]: undefined;
-  // [Routes.NAV_UPDATE_FIRMWARE]: undefined;
-  // [Routes.NAV_UPDATE_FPGA]: undefined;
-  // [Routes.NAV_FIRMWARE_PROGRESS]: { file: any };
-  // [Routes.NAV_SINGLE_MEDIA_VIEW]: { assetItem: any };
 };
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 const AppNavigation = () => {
@@ -40,7 +31,7 @@ const AppNavigation = () => {
 
   return (
     <AppStack.Navigator
-      initialRouteName={Routes.NAV_MEDIA_SCREEN}
+      initialRouteName={Routes.NAV_PAIRING_SCREEN}
       screenOptions={{
         headerShown: false,
         headerBackVisible: false
@@ -97,53 +88,6 @@ const AppNavigation = () => {
         component={Screens.UpdateFirmwareScreen}
         options={{ title: "" }}
       />
-      {/* <AppStack.Screen
-        name={Routes.NAV_BLUETOOTH_PAIRING}
-        component={Screens.BluetoothPairing}
-        options={{ title: "" }}
-      />
-      <AppStack.Screen
-        name={Routes.NAV_TUTORIALS}
-        component={Screens.Tutorials}
-        options={{ title: "" }}
-      />
-      <AppStack.Screen
-        name={Routes.NAV_DASHBOARD}
-        component={Screens.Dashboard}
-        options={{ title: "", headerRight: () => <SettingIcon /> }}
-      />
-      <AppStack.Screen
-        name={Routes.NAV_SETTINGS}
-        component={Screens.Settings}
-        options={{
-          title: "",
-          headerLeft: () => (
-            <BackIcon
-              navigateTo={() => navigation.navigate(Routes.NAV_DASHBOARD)}
-            />
-          ),
-        }}
-      />
-      <AppStack.Screen
-        name={Routes.NAV_UPDATE_FIRMWARE}
-        component={Screens.UpdateFirmware}
-        options={{ title: "", headerLeft: () => <BackIcon /> }}
-      />
-      <AppStack.Screen
-        name={Routes.NAV_UPDATE_FPGA}
-        component={Screens.UpdateFpga}
-        options={{ title: "", headerLeft: () => <BackIcon /> }}
-      />
-      <AppStack.Screen
-        name={Routes.NAV_FIRMWARE_PROGRESS}
-        component={Screens.FirmwareProgress}
-        options={{ title: "" }}
-      />
-      <AppStack.Screen
-        name={Routes.NAV_SINGLE_MEDIA_VIEW}
-        component={Screens.SingleMediaView}
-        options={{ title: "", headerLeft: () => <BackIcon /> }}
-      /> */}
     </AppStack.Navigator>
   );
 };

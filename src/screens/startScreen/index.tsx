@@ -22,15 +22,15 @@ import { StartNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 //import { check, PERMISSIONS, RESULTS, checkMultiple, requestMultiple,request } from 'react-native-permissions';
-import { chasmaIcon, blackRightArrowIcon, grayRightArrowIcon, blackLeftArrowIcon, grayLeftArrowIcon } from "../../assets";
+import { logoButton, blackRightArrowIcon, grayRightArrowIcon, blackLeftArrowIcon, grayLeftArrowIcon } from "../../assets";
 
 const StartScreen = (props: StartNavigationProps) => {
     const { navigation } = props;
     const [onboard, setonboard] = useState([
-        chasmaIcon,
-        chasmaIcon,
-        chasmaIcon,
-        chasmaIcon
+        logoButton,
+        logoButton,
+        logoButton,
+        logoButton
     ]);
     const [currentIndex, setcurrentIndex] = useState<number>(0);
     const [boardingIndex, setboardingIndex] = useState<number>(0);
@@ -70,22 +70,12 @@ const StartScreen = (props: StartNavigationProps) => {
                         }
                     });
 
-
                 } catch (err) {
                     console.warn(err)
                 }
-
             }
-
-
-
-
-
-
         }
     })
-
-
 
 
     const nextButton = () => {

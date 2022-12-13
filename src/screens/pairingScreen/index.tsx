@@ -16,10 +16,11 @@ import {
   Modal,
   TextInput,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from "react-native";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import BleManager from 'react-native-ble-manager';
+import BleManager, { stopScan } from 'react-native-ble-manager';
 import { stringToBytes } from "convert-string";
 import NetInfo from '@react-native-community/netinfo';
 import { normalize } from "../../utils/dimentionUtils";
@@ -28,15 +29,16 @@ import { PairingNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { Loading } from '../../components/loading';
-import { chasmaIcon } from "../../assets";
+import { BLE_icon, downArrow, logoButton, monocleImage, phone, upArrow } from "../../assets";
 import { STRINGS } from "../../models/constants";
 import { ShowToast } from "../../utils/toastUtils";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setDevicePairingStatus } from "../../redux/appSlices/pairingStatusSlice";
 import { CustomModal } from "../../components/customModal";
 import { CommonButton } from "../../components/commonButton";
-import {  fromByteArray } from "react-native-quick-base64";
-import { encode, decode } from "uint8-to-base64";
+import { TopBar } from "../../components/topBar";
+import { UIActivityIndicator } from 'react-native-indicators';
+// import { fromByteArray } from "react-native-quick-base64";
 
 const peripherals = new Map();
 
@@ -46,6 +48,8 @@ let concatData: any = '', importWIFI = 'from machine import WiFi';
 const PairingScreen = (props: PairingNavigationProps) => {
   const { navigation } = props;
   const [showBLE, setShowBLE] = useState<boolean>(false);
+  const [showLoading, setShowLoading] = useState<boolean>(true);
+  const [connected, setConnected] = useState<boolean>(false);
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
   const [ssid, setSsid] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -65,11 +69,11 @@ const PairingScreen = (props: PairingNavigationProps) => {
   const hideModal = () => {
     setVisibleModal(false)
   }
-  const FlatListItemSeparator = () => {
-    return (
-      <View style={styles.itemSeparatorView} />
-    );
-  }
+  // const FlatListItemSeparator = () => {
+  //   return (
+  //     <View style={styles.itemSeparatorView} />
+  //   );
+  // }
   useEffect(() => {
     try {
       if (Platform.OS == 'android') {
@@ -194,6 +198,14 @@ const PairingScreen = (props: PairingNavigationProps) => {
         setDevices(Array.from(peripherals.values()))
         setDeviceFound(true);
         setPeripheralName(peripheral.name);
+        console.log("peripheral id here", peripheral.id);
+        console.log("connected or not", connected);
+
+        if (connected) {
+          stopScan
+        } else {
+          testPeripheral(peripheral);
+        }
       } else {
         setDeviceFound(false);
       }
@@ -203,6 +215,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
         setDevices(Array.from(peripherals.values()))
         setDeviceFound(true);
+        testPeripheral(peripheral.id);
       } else {
         setDeviceFound(false);
       }
@@ -210,7 +223,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
   }
 
   const handleUpdateValueForCharacteristic = (data: any) => {
-
     //console.log('Received data from ' + data.peripheral + ' characteristic ' + data.characteristic);
     console.log('Received data from Device IMAGE DEMO-----> ' + data.value);
     console.log('Received data from Device Length-----> ', data.value.length);
@@ -230,9 +242,9 @@ const PairingScreen = (props: PairingNavigationProps) => {
         const z = new Uint8Array(imageArray);
         console.log('Uint8Array-----> ', z);
 
-     
-        let imageBase = fromByteArray(z)
-        console.log('ARRAY PUSH-----> ', imageBase);
+
+        // let imageBase = fromByteArray(z)
+        // console.log('ARRAY PUSH-----> ', imageBase);
 
       }
       console.log('ARRAY PUSH-----> ', data.value[0]);
@@ -576,23 +588,54 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
 
   const testPeripheral = async (peripheral: any) => {
-    BleManager.createBond(peripheral.id)
-      .then(async () => {
-        console.log("createBond success or there is already an existing one");
-        setPeripheralID(peripheral.id);
+    console.log("peripheral", peripheral.id);
 
-        if (peripheral) {
-          await BleManager.connect(peripheral.id).then(async () => {
-            setPeripheralID(peripheral.id);
-            let p = peripherals.get(peripheral.id);
-            if (p) {
-              p.connected = true;
-              peripherals.set(peripheral.id, p);
-              setDevices(Array.from(peripherals.values()))
-            }
-            console.log('Connected to ' + peripheral.id);
-            console.log('Device Name ' + peripheral.name);
-            if (peripheral.name == 'Frame' || peripheral.name == 'FRAME') {
+    if (peripheral) {
+      await BleManager.connect(peripheral.id).then(async () => {
+        setPeripheralID(peripheral.id);
+        let p = peripherals.get(peripheral.id);
+        if (p) {
+          p.connected = true;
+          peripherals.set(peripheral.id, p);
+          setDevices(Array.from(peripherals.values()))
+        }
+        console.log('Connected to ' + peripheral.id);
+        console.log('Device Name ' + peripheral.name);
+      })
+
+      BleManager.isPeripheralConnected(
+        peripheral.id,
+        []
+      ).then((isConnected) => {
+        if (isConnected) {
+          setConnected(true);
+          console.log("Monocle is connected!");
+          ShowToast(STRINGS.MONOCLE_CONNECTED);
+          setShowLoading(false);
+          dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
+          setTimeout(() => {
+            navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+          }, 2000);
+        }
+      });
+    }
+    if (peripheral.name == 'Frame' || peripheral.name == 'FRAME') {
+      BleManager.createBond(peripheral.id)
+        .then(async () => {
+          console.log("createBond success or there is already an existing one");
+          setPeripheralID(peripheral.id);
+
+          if (peripheral) {
+            await BleManager.connect(peripheral.id).then(async () => {
+              setPeripheralID(peripheral.id);
+              let p = peripherals.get(peripheral.id);
+              if (p) {
+                p.connected = true;
+                peripherals.set(peripheral.id, p);
+                setDevices(Array.from(peripherals.values()))
+              }
+              console.log('Connected to ' + peripheral.id);
+              console.log('Device Name ' + peripheral.name);
               BleManager.requestMTU(peripheral.id, 256)
                 .then((mtu) => {
                   // Success code
@@ -674,33 +717,35 @@ const PairingScreen = (props: PairingNavigationProps) => {
                   // Failure code
                   console.log("MTU error ", error);
                 });
-            } else {
-              BleManager.isPeripheralConnected(
-                peripheral.id,
-                []
-              ).then((isConnected) => {
-                if (isConnected) {
-                  console.log("Monocle is connected!");
-                  ShowToast(STRINGS.MONOCLE_CONNECTED);
-                  dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
-                  setTimeout(() => {
-                    navigation.navigate(Routes.NAV_MEDIA_SCREEN);
-                  }, 2000);
-                }
-              });
-            }
+
+              // else {
+              //   BleManager.isPeripheralConnected(
+              //     peripheral.id,
+              //     []
+              //   ).then((isConnected) => {
+              //     if (isConnected) {
+              //       console.log("Monocle is connected!");
+              //       ShowToast(STRINGS.MONOCLE_CONNECTED);
+              //       dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
+              //       setTimeout(() => {
+              //         navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+              //       }, 2000);
+              //     }
+              //   });
+              // }
 
 
-          }).catch(() => {
-            console.log("Device not connected");
-            dispatch(setDevicePairingStatus(DevicePairingStatus.PairingError));
-          });
-        }
+            }).catch(() => {
+              console.log("Device not connected");
+              dispatch(setDevicePairingStatus(DevicePairingStatus.PairingError));
+            });
+          }
 
-      })
-      .catch(() => {
-        console.log("fail to bond");
-      });
+        })
+        .catch(() => {
+          console.log("fail to bond");
+        });
+    }
   }
 
 
@@ -750,149 +795,162 @@ const PairingScreen = (props: PairingNavigationProps) => {
   }
 
 
-  const renderItem = (item: any) => {
-    return (
-      <TouchableHighlight onPress={() => console.log('Click')}>
-        <View style={styles.renderItemMainView}>
+  // const renderItem = (item: any) => {
+  //   return (
+  //     <TouchableHighlight onPress={() => console.log('Click')}>
+  //       <View style={styles.renderItemMainView}>
+  //         <View style={styles.renderItemView} >
+  //           <Text style={styles.renderItemText}>{getPeripheralName(item)}</Text>
+  //           <View style={styles.marginTopView}>
+  //             <Text style={styles.renderItemText2}> {item.id}</Text>
+  //           </View>
+  //         </View>
+  //         <TouchableOpacity style={styles.connectTouchView}
+  //           onPress={() => {
+  //             // this.setState({ bluetoothDevice: item }, () => {
+  //             //     NetInfo.fetch().then((state) => {
+  //             //         console.log('net status', state)
+  //             //     })
+  //             //     // this.showModal()
+  //             //     // this.testPeripheral();
+  //             // })
 
-          <View style={styles.renderItemView} >
-            <Text style={styles.renderItemText}>{getPeripheralName(item)}</Text>
-            <View style={styles.marginTopView}>
-              <Text style={styles.renderItemText2}> {item.id}</Text>
-            </View>
-          </View>
-          <TouchableOpacity style={styles.connectTouchView}
-            onPress={() => {
-              // this.setState({ bluetoothDevice: item }, () => {
-              //     NetInfo.fetch().then((state) => {
-              //         console.log('net status', state)
-              //     })
-              //     // this.showModal()
-              //     // this.testPeripheral();
-              // })
+  //             testPeripheral(item)
+  //           }}
+  //         >
+  //           <View style={styles.connectView} >
+  //             <Text style={styles.connectText}>{STRINGS.CONNECT}</Text>
+  //           </View>
+  //         </TouchableOpacity>
+  //       </View>
+  //     </TouchableHighlight>
 
-              testPeripheral(item)
-            }}
-          >
-            <View style={styles.connectView} >
-              <Text style={styles.connectText}>{STRINGS.CONNECT}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </TouchableHighlight>
-
-    );
-  }
-
+  //   );
+  // }
 
 
-  const renderSSIDItem = (item: any) => {
-    return (
-      <TouchableOpacity style={styles.modalView} onPress={() => setSsid(item.ssid)}>
-        <Text style={styles.renderItemText}>{item.ssid}</Text>
-      </TouchableOpacity>
 
-    );
-  }
+  // const renderSSIDItem = (item: any) => {
+  //   return (
+  //     <TouchableOpacity style={styles.modalView} onPress={() => setSsid(item.ssid)}>
+  //       <Text style={styles.renderItemText}>{item.ssid}</Text>
+  //     </TouchableOpacity>
+  //   );
+  // }
 
   return (
-    <SafeAreaView style={styles.bodyContainer}>
-      <View style={styles.mainContainer}>
-        <View style={styles.mainContainer2} >
-          {showBLE == true ?
-            <View style={styles.marginTopView}>
-              <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-              >
-                <CustomModal
-                  modalVisible={visibleModal}
-                  modalVisibleOff={() => setVisibleModal(false)}
-                >
-                  <View style={styles.modalContainer}>
-
-                    {ssid ? (
-                      <>
-                        <Text style={styles.renderItemText}>{ssid}</Text>
-                        <TextInput
-                          placeholder={STRINGS.ENTER_WIFI_PASS}
-                          keyboardType="default"
-                          value={password}
-                          onChangeText={(password) => setPassword(password)}
-                          style={styles.modalTextInput}
-                        />
-                        <View style={styles.modalSubmitView}>
-                          <CommonButton
-                            buttonLabel={STRINGS.SUBMIT}
-                            handlePress={() => { addWifi() }}
-                          />
-                        </View>
-                      </>
-                    ) : (
-                      <FlatList
-                        data={ssidList}
-                        scrollEnabled={true}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={({ item }) => renderSSIDItem(item)}
-                        ListHeaderComponent={() => <Text style={styles.renderItemText}>{[STRINGS.CHOOSE_WIFI_NETWORK]}</Text>}
-                        keyExtractor={item => item.auth}
-                      />
-                    )}
-                  </View>
-                </CustomModal>
-              </KeyboardAvoidingView>
-              <View style={styles.TouchableView}>
-                <TouchableOpacity style={styles.TouchableStyle}
-                  onPress={() => {
-                    startScan()
-                  }}
-                >
-                  <Text style={styles.TouchableText}>{'Scan Bluetooth (' + (scanning ? 'on' : 'off') + ')'}</Text>
-                </TouchableOpacity>
-              </View>
-              <FlatList
-                data={devices}
-                scrollEnabled={false}
-                showsVerticalScrollIndicator={false}
-                ItemSeparatorComponent={FlatListItemSeparator}
-                renderItem={({ item }) => renderItem(item)}
-                keyExtractor={item => item.id}
-
-              />
-              {scanning ?
-                <Loading /> : null
-              }
-            </View>
-
-            :
-            <View style={styles.pairTitleView}>
-              <Text style={styles.pairTitle}>{STRINGS.LETS_PAIR_TITLE}</Text>
-              <View style={styles.circularProgressView}>
-                <AnimatedCircularProgress
-                  size={300}
-                  width={8}
-                  fill={100}
-                  duration={5000}
-                  tintColor={Theme.color.Black}
-                  onAnimationComplete={() => {
-                    setShowBLE(true)
-                  }}
-                  backgroundColor={Theme.color.gray15} >
-
-                  {
-                    (fill) => (
-                      <Image
-                        style={styles.imageView}
-                        source={chasmaIcon}
-                        resizeMode='contain'
-                      />
-                    )
-                  }
-                </AnimatedCircularProgress>
-                <Text style={styles.ensureText}>{STRINGS.ENSURE_TITLE}</Text>
-              </View>
-            </View>
-          }
+    <SafeAreaView
+      style={styles.bodyContainer}>
+      <TopBar />
+      <View style={styles.middleView}>
+        <View style={{ flexDirection: 'row', width: normalize(150), alignItems: 'center', paddingLeft: 20 }}>
+          <Text style={styles.verifyText}>{STRINGS.CONNECT}</Text>
+          <Image source={BLE_icon} style={styles.bleImageStyle} />
         </View>
+        <Text style={styles.phoneNumberText}>{STRINGS.CONNECT_TEXT}</Text>
+        <View style={{ alignItems: 'center', width: '100%' }}>
+          <Image source={monocleImage} style={styles.monocleImage} />
+          <Image source={downArrow} style={styles.arrowStyle} />
+          {showLoading &&
+            <UIActivityIndicator color='black' style={{ margin: 20 }} />
+          }
+          <Image source={upArrow} style={styles.arrowStyle} />
+          <Image source={phone} style={styles.phoneImage} />
+        </View>
+        {/* <View style={styles.mainContainer2} >
+        {showBLE == true ?
+          <View style={styles.marginTopView}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+              <CustomModal
+                modalVisible={visibleModal}
+                modalVisibleOff={() => setVisibleModal(false)}
+              >
+                <View style={styles.modalContainer}>
+
+                  {ssid ? (
+                    <>
+                      <Text style={styles.renderItemText}>{ssid}</Text>
+                      <TextInput
+                        placeholder={STRINGS.ENTER_WIFI_PASS}
+                        keyboardType="default"
+                        value={password}
+                        onChangeText={(password) => setPassword(password)}
+                        style={styles.modalTextInput}
+                      />
+                      <View style={styles.modalSubmitView}>
+                        <CommonButton
+                          buttonLabel={STRINGS.SUBMIT}
+                          handlePress={() => { addWifi() }}
+                        />
+                      </View>
+                    </>
+                  ) : (
+                    <FlatList
+                      data={ssidList}
+                      scrollEnabled={true}
+                      showsVerticalScrollIndicator={false}
+                      renderItem={({ item }) => renderSSIDItem(item)}
+                      ListHeaderComponent={() => <Text style={styles.renderItemText}>{[STRINGS.CHOOSE_WIFI_NETWORK]}</Text>}
+                      keyExtractor={item => item.auth}
+                    />
+                  )}
+                </View>
+              </CustomModal>
+            </KeyboardAvoidingView>
+            <View style={styles.TouchableView}>
+              <TouchableOpacity style={styles.TouchableStyle}
+                onPress={() => {
+                  startScan()
+                }}
+              >
+                <Text style={styles.TouchableText}>{'Scan Bluetooth (' + (scanning ? 'on' : 'off') + ')'}</Text>
+              </TouchableOpacity>
+            </View>
+            <FlatList
+              data={devices}
+              scrollEnabled={false}
+              showsVerticalScrollIndicator={false}
+              ItemSeparatorComponent={FlatListItemSeparator}
+              renderItem={({ item }) => renderItem(item)}
+              keyExtractor={item => item.id}
+            />
+            {scanning ?
+              <Loading /> : null
+            }
+          </View>
+
+          :
+          <View style={styles.pairTitleView}>
+            <Text style={styles.pairTitle}>{STRINGS.LETS_PAIR_TITLE}</Text>
+            <View style={styles.circularProgressView}>
+              <AnimatedCircularProgress
+                size={300}
+                width={8}
+                fill={100}
+                duration={5000}
+                tintColor={Theme.color.Black}
+                onAnimationComplete={() => {
+                  setShowBLE(true)
+                }}
+                backgroundColor={Theme.color.gray15} >
+
+                {
+                  (fill) => (
+                    <Image
+                      style={styles.imageView}
+                      source={logoButton}
+                      resizeMode='contain'
+                    />
+                  )
+                }
+              </AnimatedCircularProgress>
+              <Text style={styles.ensureText}>{STRINGS.ENSURE_TITLE}</Text>
+            </View>
+          </View>
+        }
+      </View> */}
       </View>
     </SafeAreaView >
   )

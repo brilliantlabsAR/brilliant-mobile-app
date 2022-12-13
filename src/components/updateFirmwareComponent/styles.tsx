@@ -8,8 +8,8 @@ export const styles = StyleSheet.create({
   },
   styledHeader: {
     fontFamily: FontFamily.regular,
-    fontWeight: '500',
-    fontSize: 38,
+    fontWeight: '600',
+    fontSize: 34,
     lineHeight: 47,
     color: Theme.color.darkGray,
     letterSpacing: -2.64,

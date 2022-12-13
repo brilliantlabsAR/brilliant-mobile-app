@@ -72,6 +72,17 @@ export const STRINGS = {
   FILE_SELECTED: "File Selected: ",
   SELECT_UPDATE_FILE: "Select Update File",
   PERFORM_FIRMWARE_UPDATE: "Perform Firmware Update",
+  CONNECT_TEXT: "Bring your Monocle close to your phone",
+};
+
+//micro python command
+export const COMMAND = {
+  X3: "\x03",
+  X1: "\x01",
+  IMPORT_CAMERA: "from machine import Camera \nprint('IMPORT')\x04",
+  CAMERA_CAPTURE: "Camera.capture() \nprint('SCAN') \x04",
+  WIFI_STATUS: "p=WiFi.status() \nprint('STATUS') \nprint(p)\x04",
+  WIFI_LIST: "p=WiFi.list() \nprint('LIST') \nprint(p)\x04",
 };
 
 export const ASYNC_CONST = {
