@@ -14,12 +14,11 @@ export const styles = StyleSheet.create({
         width: 25,
         height: 25,
     }, flatview: {
-        justifyContent: 'center',
-        height: normalize(120),
+        height: normalize(92),
         borderRadius: 2,
     }, userImage: {
         height: normalize(90),
-        width: normalize(110),
+        width: normalize(95),
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
@@ -72,7 +71,8 @@ export const styles = StyleSheet.create({
         flex: 2,
         alignContent: 'center',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        margin:normalize(1)
     }, playButtonView: {
         backgroundColor: Theme.color.White,
         opacity: 0.9,
@@ -80,13 +80,28 @@ export const styles = StyleSheet.create({
         width: normalize(25),
         borderRadius: normalize(50 / 2),
         position: 'absolute',
-        alignContent: 'center',
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignContent:'center',
+        justifyContent:"center",
+        alignItems:'center',
+        bottom:0,
+        left:0,
+        marginLeft:normalize(5),
+        marginBottom:normalize(5)
+
+    }, timeTextView: {
+        position: 'absolute',
+        alignContent:'center',
+        justifyContent:"center",
+        alignItems:'center',
+        bottom:0,
+        right:0,
+        marginRight:normalize(5),
+        marginBottom:normalize(5)
+
     },
     playButtonImage: {
         height: normalize(10),
-        width: normalize(10),
+        width: normalize(10)
     },
     textviewStyle: {
         flex: 3,
@@ -143,8 +158,8 @@ export const styles = StyleSheet.create({
     },
 
     footerButtonImage: {
-        height: normalize(40),
-        width: normalize(40),
+        height: normalize(30),
+        width: normalize(30),
     },
     footerLinearStyle: {
         position: 'absolute',
@@ -161,5 +176,21 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.Black,
         borderColor: Theme.color.Black,
         borderWidth: 2,
+    }, brillientTextBig: {
+        color: Theme.color.Black,
+        fontSize: normalize(15),
+        letterSpacing: 5,
+        alignSelf: 'center'
+    }, marginTopFlatList: {
+        marginTop: normalize(10)
+    },wishImage: {
+        height: normalize(20),
+        width: normalize(20),
+    },ItemText: {
+        fontSize: normalize(10),
+        color: Theme.color.White,
+        fontFamily: FontFamily.regular,
+        
     }
+
 })
