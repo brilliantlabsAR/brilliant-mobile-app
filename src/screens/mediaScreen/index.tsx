@@ -21,7 +21,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { MediaScreenNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
-import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage, logoButton } from "../../assets";
+import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage, logoButton,monocleIcon,heartIcon } from "../../assets";
 import { STRINGS } from "../../models/constants";
 import { styles } from "./styles";
 import Footer from '../../components/footer';
@@ -37,6 +37,8 @@ import {
     MenuOptions,
     MenuOption,
 } from 'react-native-popup-menu';
+
+import { } from 'react-native-super-grid'
 
 type Props = MediaScreenNavigationProps
 
@@ -137,32 +139,25 @@ const MediaScreen = (props: Props) => {
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.topView}>
                 <ScrollView style={styles.scrollviewStyle}>
-                    {/* <View style={styles.searchView}>
-                        <Text style={styles.searchText}>{STRINGS.SEARCH_MEDIA}</Text>
+                    <View style={styles.marginTopFlatList}>
+                        <Text style={styles.brillientTextBig}>{STRINGS.BRILLIANT_TEXT}</Text>
 
-                        <View style={styles.searchIconView}>
-                            <Image
-                                style={styles.searchIcon}
-                                source={search}
-                                resizeMode='cover'
+                        
 
-                            />
-                        </View>
+                    </View>
 
-                    </View> */}
-
-                    <MenuProvider>
+                  
                         <FlatList
+                           style={styles.marginTopFlatList}
                             data={mediaList}
                             scrollEnabled={false}
-
                             showsVerticalScrollIndicator={false}
                             // ItemSeparatorComponent={FlatListItemSeparator}
                             renderItem={({ item }) =>
 
                                 <View style={styles.flatview}>
-                                    <View style={styles.renderViewTop}>
-                                        <View style={styles.renderViewMiddle} >
+                                   
+                                    <View style={styles.renderViewMiddle} >
                                             <Image
                                                 style={styles.userImage}
                                                 source={mediaDemoImage}
@@ -172,68 +167,23 @@ const MediaScreen = (props: Props) => {
                                             <View style={styles.playButtonView}>
                                                 <Image
                                                     style={styles.playButtonImage}
-                                                    source={mediaPlay}
+                                                    source={heartIcon}
                                                     resizeMode='cover'
 
                                                 />
                                             </View>
-                                        </View>
-                                        <View style={styles.textviewStyle} >
-                                            <Text
-                                                style={styles.textStyle}
-                                            >{item.name}</Text>
-                                            <View style={styles.calenderTopView}>
-                                                <Image
-                                                    style={styles.calenderIcon}
-                                                    source={calendarIcon}
-                                                    resizeMode='cover'
+                                            <View style={styles.timeTextView}>
+                                            <Text style={styles.ItemText}>{'00:15'}</Text>
 
-                                                />
-                                                <Text
-                                                    style={styles.dateTextStyle}
-                                                >{item.date}</Text>
                                             </View>
-
                                         </View>
-                                        <View style={styles.moreButtonStyle} >
-
-
-                                            <Menu onSelect={value => Alert.alert(value)}>
-                                                <MenuTrigger><Image
-                                                    style={styles.playButtonImage}
-                                                    source={moreButton}
-                                                    resizeMode='cover'
-                                                /></MenuTrigger>
-                                                <MenuOptions optionsContainerStyle={styles.menuOptionView}>
-
-                                                    <MenuOption onSelect={() => { 'function download' }} style={styles.menuView}>
-                                                        <Text
-                                                            style={styles.menuText}
-                                                        >{STRINGS.RENAME}</Text>
-                                                    </MenuOption>
-                                                    <View style={styles.menuSeparator} />
-                                                    <MenuOption onSelect={() => { 'jo' }} style={styles.menuViewOtion}>
-                                                        <Text
-                                                            style={styles.menuOptionText}
-                                                        >{STRINGS.DOWNLOAD}</Text>
-                                                    </MenuOption>
-                                                    <View style={styles.menuSeparator} />
-                                                    <MenuOption onSelect={() => { 'pokl' }} style={styles.menuViewOtion}>
-                                                        <Text
-                                                            style={styles.menuOptionText}
-                                                        >{STRINGS.DELETE}</Text>
-                                                    </MenuOption>
-                                                </MenuOptions>
-                                            </Menu>
-
-                                        </View>
-                                    </View>
 
                                 </View>
                             }
                             keyExtractor={item => item.id}
+                            numColumns={3}
                         />
-                    </MenuProvider>
+                   
                 </ScrollView>
             </View>
             {/* <Footer selectedTab="MediaScreen" /> */}
@@ -242,8 +192,8 @@ const MediaScreen = (props: Props) => {
                     style={styles.footerLinearStyle}>
                     <Image
                         style={styles.footerButtonImage}
-                        source={logoButton}
-                        resizeMode='cover'
+                        source={monocleIcon}
+                        resizeMode='contain'
                     />
                 </View>
             </TouchableOpacity>

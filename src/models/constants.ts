@@ -72,6 +72,7 @@ export const STRINGS = {
   FILE_SELECTED: "File Selected: ",
   SELECT_UPDATE_FILE: "Select Update File",
   PERFORM_FIRMWARE_UPDATE: "Perform Firmware Update",
+  BRILLIANT_TEXT:"BRILLIANT",
 };
 
 export const ASYNC_CONST = {

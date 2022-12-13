@@ -35,3 +35,5 @@ export const blackBell = require("./images/black_bell.png");
 export const bellFill = require("./images/bell_fill.png");
 export const roundMinus = require("./images/round_minus.png");
 export const logoButton = require("./images/logo_button.png");
+export const monocleIcon = require("./images/monocle_icon.png");
+export const heartIcon = require("./images/heart.png");
