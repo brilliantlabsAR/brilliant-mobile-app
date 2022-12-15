@@ -35,7 +35,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setDevicePairingStatus } from "../../redux/appSlices/pairingStatusSlice";
 import { CustomModal } from "../../components/customModal";
 import { CommonButton } from "../../components/commonButton";
-import {  fromByteArray } from "react-native-quick-base64";
+import base64 from 'react-native-base64';
+import Buffer from '@craftzdog/react-native-buffer';
 
 const peripherals = new Map();
 
@@ -209,8 +210,8 @@ const PairingScreen = (props: PairingNavigationProps) => {
     let array = [];
     if (data.value[0] >= 0 && data.value[0] <= 2) {
       if (data.value[0] == 0) {
-        let fileSize = data.value[1];
-        let dataArray = data.value.slice(fileSize + 2);
+        let fileSize = data.value[5];
+        let dataArray = data.value.slice(fileSize + 6);
         console.log('DATATA', dataArray);
         imageArray.push(...dataArray);
       } else {
@@ -222,9 +223,11 @@ const PairingScreen = (props: PairingNavigationProps) => {
         const z = new Uint8Array(imageArray);
         console.log('Uint8Array-----> ', z);
 
-     
-        let imageBase = fromByteArray(z)
-        console.log('ARRAY PUSH-----> ', imageBase);
+        const buffer = Buffer.Buffer.from(imageArray)
+        console.log("buffer >> "+buffer) //[161,52]  
+         let imageBase = base64.encodeFromByteArray(z, Uint8Array);
+
+         console.log('ARRAY PUSH IMAGE BASE-----> ', imageBase);
 
       }
       console.log('ARRAY PUSH-----> ', data.value[0]);
