@@ -26,6 +26,8 @@ import NetInfo from '@react-native-community/netinfo';
 import { normalize } from "../../utils/dimentionUtils";
 import { DevicePairingStatus, FontFamily, Theme } from "../../models";
 import { PairingNavigationProps } from "../../navigations/types";
+import { mediaDemoImage } from "../../assets";
+
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { Loading } from '../../components/loading';
@@ -38,7 +40,9 @@ import { CustomModal } from "../../components/customModal";
 import { CommonButton } from "../../components/commonButton";
 import { TopBar } from "../../components/topBar";
 import { UIActivityIndicator } from 'react-native-indicators';
-// import { fromByteArray } from "react-native-quick-base64";
+import { base64TopBar } from 'react-native-base64';
+import Buffer from '@craftzdog/react-native-buffer';
+import * as RNFS from 'react-native-fs';
 
 const peripherals = new Map();
 
@@ -52,6 +56,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   const [connected, setConnected] = useState<boolean>(false);
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
   const [ssid, setSsid] = useState<string>("");
+  const [imageIcon, setImageIcon] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [peripheralId, setPeripheralID] = useState<string>("");
   const [peripheralName, setPeripheralName] = useState<string>("");
@@ -192,7 +197,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         setDeviceFound(true);
         setPeripheralName(peripheral.name);
         console.log("peripheral id here", peripheral.id);
-        console.log("connected or not", connected);
+        // console.log("connected or not", connected);
 
         if (connected) {
           stopScan
@@ -222,8 +227,8 @@ const PairingScreen = (props: PairingNavigationProps) => {
     let array = [];
     if (data.value[0] >= 0 && data.value[0] <= 2) {
       if (data.value[0] == 0) {
-        let fileSize = data.value[1];
-        let dataArray = data.value.slice(fileSize + 2);
+        let fileSize = data.value[5];
+        let dataArray = data.value.slice(fileSize + 6);
         console.log('DATATA', dataArray);
         imageArray.push(...dataArray);
       } else {
@@ -235,9 +240,33 @@ const PairingScreen = (props: PairingNavigationProps) => {
         const z = new Uint8Array(imageArray);
         console.log('Uint8Array-----> ', z);
 
+        const buffer = Buffer.Buffer.from(imageArray)
+        console.log("buffer >> " + buffer) //[161,52]  
+        let imageBase = base64.encodeFromByteArray(z, Uint8Array);
 
-        // let imageBase = fromByteArray(z)
-        // console.log('ARRAY PUSH-----> ', imageBase);
+        console.log('ARRAY PUSH IMAGE BASE-----> ', imageBase);
+        var base64Icon = 'data:image/png;base64,' + imageBase;
+        setImageIcon(base64Icon);
+        const myAlbumPath = RNFS.PicturesDirectoryPath + '/brillient'
+        const path = myAlbumPath + '/test.png'
+        // RNFS.writeFile(myAlbumPath, base64Icon, 'base64').then(()=>{
+        //   console.log("Success Copy")
+        RNFS.mkdir(myAlbumPath)
+          .then(() => {
+            console.log("Success Copy mkdr")
+
+            RNFS.writeFile(path, base64Icon, 'base64').then(() => {
+              console.log("Success Copy")
+            })
+          }
+
+          )
+        const imageData = imageBase;
+
+        const imagePath = `${RNFS.PicturesDirectoryPath}test5.jpg`;
+
+        RNFS.writeFile(imagePath, imageData, 'base64')
+          .then(() => console.log('Image converted to jpg and saved at ' + imagePath));
 
       }
       console.log('ARRAY PUSH-----> ', data.value[0]);
@@ -345,9 +374,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
     return item.name;
   };
-
-
-
 
   const testPeripheral = async (peripheral: any) => {
     console.log("peripheral", peripheral.id);
@@ -503,13 +529,11 @@ const PairingScreen = (props: PairingNavigationProps) => {
             });
           }
 
-        })
-        .catch(() => {
+        }).catch(() => {
           console.log("fail to bond");
         });
     }
   }
-
 
   const dataWrite = (data: any, peripheralId: any) => {
     var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
@@ -620,99 +644,99 @@ const PairingScreen = (props: PairingNavigationProps) => {
           <Image source={phone} style={styles.phoneImage} />
         </View>
         {/* <View style={styles.mainContainer2} >
-        {showBLE == true ?
-          <View style={styles.marginTopView}>
-            <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            >
-              <CustomModal
-                modalVisible={visibleModal}
-                modalVisibleOff={() => setVisibleModal(false)}
+          {showBLE == true ?
+            <View style={styles.marginTopView}>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
               >
-                <View style={styles.modalContainer}>
+                <CustomModal
+                  modalVisible={visibleModal}
+                  modalVisibleOff={() => setVisibleModal(false)}
+                >
+                  <View style={styles.modalContainer}>
 
-                  {ssid ? (
-                    <>
-                      <Text style={styles.renderItemText}>{ssid}</Text>
-                      <TextInput
-                        placeholder={STRINGS.ENTER_WIFI_PASS}
-                        keyboardType="default"
-                        value={password}
-                        onChangeText={(password) => setPassword(password)}
-                        style={styles.modalTextInput}
-                      />
-                      <View style={styles.modalSubmitView}>
-                        <CommonButton
-                          buttonLabel={STRINGS.SUBMIT}
-                          handlePress={() => { addWifi() }}
+                    {ssid ? (
+                      <>
+                        <Text style={styles.renderItemText}>{ssid}</Text>
+                        <TextInput
+                          placeholder={STRINGS.ENTER_WIFI_PASS}
+                          keyboardType="default"
+                          value={password}
+                          onChangeText={(password) => setPassword(password)}
+                          style={styles.modalTextInput}
                         />
-                      </View>
-                    </>
-                  ) : (
-                    <FlatList
-                      data={ssidList}
-                      scrollEnabled={true}
-                      showsVerticalScrollIndicator={false}
-                      renderItem={({ item }) => renderSSIDItem(item)}
-                      ListHeaderComponent={() => <Text style={styles.renderItemText}>{[STRINGS.CHOOSE_WIFI_NETWORK]}</Text>}
-                      keyExtractor={item => item.auth}
-                    />
-                  )}
-                </View>
-              </CustomModal>
-            </KeyboardAvoidingView>
-            <View style={styles.TouchableView}>
-              <TouchableOpacity style={styles.TouchableStyle}
-                onPress={() => {
-                  startScan()
-                }}
-              >
-                <Text style={styles.TouchableText}>{'Scan Bluetooth (' + (scanning ? 'on' : 'off') + ')'}</Text>
-              </TouchableOpacity>
+                        <View style={styles.modalSubmitView}>
+                          <CommonButton
+                            buttonLabel={STRINGS.SUBMIT}
+                            handlePress={() => { addWifi() }}
+                          />
+                        </View>
+                      </>
+                    ) : (
+                      <FlatList
+                        data={ssidList}
+                        scrollEnabled={true}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={({ item }) => renderSSIDItem(item)}
+                        ListHeaderComponent={() => <Text style={styles.renderItemText}>{[STRINGS.CHOOSE_WIFI_NETWORK]}</Text>}
+                        keyExtractor={item => item.auth}
+                      />
+                    )}
+                  </View>
+                </CustomModal>
+              </KeyboardAvoidingView>
+              <View style={styles.TouchableView}>
+                <TouchableOpacity style={styles.TouchableStyle}
+                  onPress={() => {
+                    startScan()
+                  }}
+                >
+                  <Text style={styles.TouchableText}>{'Scan Bluetooth (' + (scanning ? 'on' : 'off') + ')'}</Text>
+                </TouchableOpacity>
+              </View>
+              <FlatList
+                data={devices}
+                scrollEnabled={false}
+                showsVerticalScrollIndicator={false}
+                ItemSeparatorComponent={FlatListItemSeparator}
+                renderItem={({ item }) => renderItem(item)}
+                keyExtractor={item => item.id}
+              />
+              {scanning ?
+                <Loading /> : null
+              }
             </View>
-            <FlatList
-              data={devices}
-              scrollEnabled={false}
-              showsVerticalScrollIndicator={false}
-              ItemSeparatorComponent={FlatListItemSeparator}
-              renderItem={({ item }) => renderItem(item)}
-              keyExtractor={item => item.id}
-            />
-            {scanning ?
-              <Loading /> : null
-            }
-          </View>
 
-          :
-          <View style={styles.pairTitleView}>
-            <Text style={styles.pairTitle}>{STRINGS.LETS_PAIR_TITLE}</Text>
-            <View style={styles.circularProgressView}>
-              <AnimatedCircularProgress
-                size={300}
-                width={8}
-                fill={100}
-                duration={5000}
-                tintColor={Theme.color.Black}
-                onAnimationComplete={() => {
-                  setShowBLE(true)
-                }}
-                backgroundColor={Theme.color.gray15} >
+            :
+            <View style={styles.pairTitleView}>
+              <Text style={styles.pairTitle}>{STRINGS.LETS_PAIR_TITLE}</Text>
+              <View style={styles.circularProgressView}>
+                <AnimatedCircularProgress
+                  size={300}
+                  width={8}
+                  fill={100}
+                  duration={5000}
+                  tintColor={Theme.color.Black}
+                  onAnimationComplete={() => {
+                    setShowBLE(true)
+                  }}
+                  backgroundColor={Theme.color.gray15} >
 
-                {
-                  (fill) => (
-                    <Image
-                      style={styles.imageView}
-                      source={logoButton}
-                      resizeMode='contain'
-                    />
-                  )
-                }
-              </AnimatedCircularProgress>
-              <Text style={styles.ensureText}>{STRINGS.ENSURE_TITLE}</Text>
+                  {
+                    (fill) => (
+                      <Image
+                        style={styles.imageView}
+                        source={logoButton}
+                        resizeMode='contain'
+                      />
+                    )
+                  }
+                </AnimatedCircularProgress>
+                <Text style={styles.ensureText}>{STRINGS.ENSURE_TITLE}</Text>
+              </View>
             </View>
-          </View>
-        }
-        </View> */}
+          }
+          </View> */}
       </View>
     </SafeAreaView >
   )

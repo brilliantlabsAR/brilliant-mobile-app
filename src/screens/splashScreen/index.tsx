@@ -81,7 +81,9 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
         }, 4000);
       } else {
         console.log('Use effect true');
-        navigation.replace(Routes.NAV_APP)
+        setTimeout(() => {
+          navigation.replace(Routes.NAV_APP)
+        }, 4000);
       }
     })
   }, [])
