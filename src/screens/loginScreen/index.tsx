@@ -79,7 +79,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
         <ScrollView style={styles.backgroundWhite}>
           <View>
             <Text style={styles.loginText}>{STRINGS.LOGIN}</Text>
-            <Text style={styles.welcomeText}>{STRINGS.WELCOME_TO_APP}</Text>
+            <Text style={styles.welcomeText}>{STRINGS.LOGIN_TEXT}</Text>
           </View>
           <View style={styles.phoneBox}>
             <View style={styles.phoneBoxTwo}>

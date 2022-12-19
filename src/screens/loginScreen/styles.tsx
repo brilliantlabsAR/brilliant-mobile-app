@@ -35,7 +35,8 @@ export const styles = StyleSheet.create({
         marginTop: 10,
         color: Theme.color.Black,
         flexDirection: 'row',
-        fontFamily: FontFamily.regular
+        fontFamily: FontFamily.regular,
+        lineHeight: normalize(25)
     },
     phoneBox: {
         marginTop: 40,

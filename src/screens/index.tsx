@@ -1,4 +1,5 @@
 import SplashScreen from "./splashScreen";
+import LetsGoScreen from "./letsGo";
 import LoginScreen from "./loginScreen";
 import LoginOtpVerify from "./loginOtpVerifyScreen";
 import SignUpScreen from "./signUpScreen";
@@ -16,6 +17,7 @@ import UpdateFirmwareScreen from "./updateFirmwareScreen";
 
 export default {
   SplashScreen,
+  LetsGoScreen,
   LoginScreen,
   LoginOtpVerify,
   SignUpScreen,

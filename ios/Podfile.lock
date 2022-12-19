@@ -222,7 +222,7 @@ PODS:
   - React-jsinspector (0.69.1)
   - React-logger (0.69.1):
     - glog
-  - react-native-ble-manager (8.4.4):
+  - react-native-ble-manager (8.5.0):
     - React-Core
   - react-native-contacts (7.0.5):
     - React-Core
@@ -579,7 +579,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 758e70947c232828a66b5ddc42d02b4d010fa26e
   React-jsinspector: 55605caf04e02f9b0e05842b786f1c12dde08f4b
   React-logger: ca970551cb7eea2fd814d0d5f6fc1a471eb53b76
-  react-native-ble-manager: 5a36276ae7bdc382c6a0716c939024ffeb4e0a48
+  react-native-ble-manager: e1184e064e170de242ca12648ac31f8fcdc6ecab
   react-native-contacts: 0aa99963d8f29099d4725cd0d2f8b6ef5f0d9a2d
   react-native-document-picker: f5ec1a712ca2a975c233117f044817bb8393cad4
   react-native-maps: 085f614cf14d3637b2048bb9752da5b1c27c2886

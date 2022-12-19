@@ -13,7 +13,8 @@ import {
   Alert,
   LogBox,
   Platform,
-  PermissionsAndroid
+  PermissionsAndroid,
+  Image
 } from "react-native";
 // import Color from '../themes/Colors';
 // import Dimension from "../utils/Dimension";
@@ -28,6 +29,7 @@ import { RootStackParamList } from "../../navigations";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Routes from "../../models/routes";
 import * as mainDao from '../../database';
+import { startImage } from "../../assets";
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -45,27 +47,27 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
   const animated2 = useRef(new Animated.Value(0)).current;
   const animated3 = useRef(new Animated.Value(1)).current;
 
-  const translateY = animated.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, -(windowHeight / 2 - 75)],
-    extrapolate: 'clamp',
-  })
-  const scale = animated.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 0.577],
-    extrapolate: 'clamp',
-  })
-  const transform = [{
-    translateY: translateY,
-  }, {
-    scale: scale
-  }]
+  // const translateY = animated.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: [1, -(windowHeight / 2 - 75)],
+  //   extrapolate: 'clamp',
+  // })
+  // const scale = animated.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: [1, 0.577],
+  //   extrapolate: 'clamp',
+  // })
+  // const transform = [{
+  //   translateY: translateY,
+  // }, {
+  //   scale: scale
+  // }]
 
-  const fadeInValue = animated3.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 0],
-    extrapolate: 'clamp',
-  })
+  // const fadeInValue = animated3.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: [1, 0],
+  //   extrapolate: 'clamp',
+  // })
 
   useEffect(() => {
     mainDao.connectDatabase();
@@ -74,10 +76,12 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
     AsyncStorage.getItem('userId').then((userId) => {
       if (userId === null) {
         console.log('Use effect nulol');
-        setIsShow(true);
+        setTimeout(() => {
+          navigation.replace(Routes.NAV_LETS_GO_SCREEN)
+        }, 4000);
       } else {
         console.log('Use effect true');
-        navigation.navigate(Routes.NAV_APP)
+        navigation.replace(Routes.NAV_APP)
       }
     })
   }, [])
@@ -85,40 +89,31 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
 
   useEffect(() => {
-    console.log('Use effect 2');
+    // console.log('Use effect 2');
 
-    const translateUp =
-      Animated.timing(animated, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      })
-    const translateUp2 =
-      Animated.timing(animated2, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      })
-    //this.translateUp();
-    Animated.parallel([translateUp, translateUp2]).start(() => {
-      { console.log("Ho12", isShow) }
+    // const translateUp =
+    //   Animated.timing(animated, {
+    //     toValue: 1,
+    //     duration: 1000,
+    //     useNativeDriver: true,
+    //   })
+    // const translateUp2 =
+    //   Animated.timing(animated2, {
+    //     toValue: 1,
+    //     duration: 1000,
+    //     useNativeDriver: true,
+    //   })
+    // //this.translateUp();
+    // Animated.parallel([translateUp, translateUp2]).start(() => {
+    //   { console.log("Ho12", isShow) }
 
-      Animated.timing(animated3, {
-        toValue: 0,
-        duration: 1000,
-        useNativeDriver: true,
-      }).start();
+    //   Animated.timing(animated3, {
+    //     toValue: 0,
+    //     duration: 1000,
+    //     useNativeDriver: true,
+    //   }).start();
 
-      // if (isLogin) {
-      //     setIsShow(false);
-      // } else {
-      //     setIsShow(true);
-      //     { console.log("Ho", isShow) }
-      //     navigation.navigate(Routes.NAV_APP)
-
-
-      // }
-    });
+    // });
     // { console.log("HIHIHI") }
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
@@ -156,7 +151,12 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
   return (
     <SafeAreaView
       style={styles.bodyContainer}>
-      <View style={styles.topView}>
+      <View style={styles.textWrapper}>
+        <Text style={styles.welcomeTextStyle}>{STRINGS.WELCOME}</Text>
+        <Text style={styles.broadCastText}>{STRINGS.WELCOME_TEXT}</Text>
+      </View>
+      <Image source={startImage} style={styles.monocleImage} />
+      {/* <View style={styles.topView}>
         {isShow === true ?
 
           <Animated.View style={[
@@ -193,20 +193,14 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
           </Animated.View>
           :
           null
-        }
-        {/* <Text
-                    style={styles.brilliantTextSmall}
-                >{'BRILLIANT'}</Text> */}
-        <Animated.Text
+        } */}
+      {/* <Animated.Text
           style={[
             {
               transform: transform
             }, styles.brillientTextBig
-          ]}>BRILLIANT</Animated.Text>
-
-
-
-      </View>
+          ]}>BRILLIANT</Animated.Text> */}
+      {/* </View> */}
 
     </SafeAreaView >
   );

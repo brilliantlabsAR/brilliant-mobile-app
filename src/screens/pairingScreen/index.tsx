@@ -373,9 +373,9 @@ const PairingScreen = (props: PairingNavigationProps) => {
           setConnected(true);
           console.log("Monocle is connected!");
           ShowToast(STRINGS.MONOCLE_CONNECTED);
-          setShowLoading(false);
           dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
           setTimeout(() => {
+            setShowLoading(false);
             navigation.navigate(Routes.NAV_MEDIA_SCREEN);
           }, 2000);
         }
@@ -712,7 +712,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
             </View>
           </View>
         }
-      </View> */}
+        </View> */}
       </View>
     </SafeAreaView >
   )

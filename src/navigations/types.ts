@@ -10,6 +10,10 @@ export type LoginNavigationProps = NativeStackScreenProps<
   RootStackParamList,
   "LoginScreen"
 >;
+export type LetsGoNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  "LetsGoScreen"
+>;
 export type LoginVerifyNavigationProps = NativeStackScreenProps<
   RootStackParamList,
   "LoginVerifyScreen"

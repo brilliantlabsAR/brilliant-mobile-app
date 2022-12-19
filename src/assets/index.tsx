@@ -42,3 +42,4 @@ export const monocleImage = require("./images/monocle_image.png");
 export const downArrow = require("./images/Down_arrow.png");
 export const upArrow = require("./images/Up_arrow.png");
 export const phone = require("./images/Phone.png");
+export const startImage = require("./images/start_image.png");
