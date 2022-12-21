@@ -40,7 +40,7 @@ import { CustomModal } from "../../components/customModal";
 import { CommonButton } from "../../components/commonButton";
 import { TopBar } from "../../components/topBar";
 import { UIActivityIndicator } from 'react-native-indicators';
-import { base64TopBar } from 'react-native-base64';
+import base64 from 'react-native-base64';
 import Buffer from '@craftzdog/react-native-buffer';
 import * as RNFS from 'react-native-fs';
 
@@ -247,7 +247,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         console.log('ARRAY PUSH IMAGE BASE-----> ', imageBase);
         var base64Icon = 'data:image/png;base64,' + imageBase;
         setImageIcon(base64Icon);
-        const myAlbumPath = RNFS.PicturesDirectoryPath + '/brillient'
+        const myAlbumPath = RNFS.PicturesDirectoryPath + '/brilliant'
         const path = myAlbumPath + '/test.png'
         // RNFS.writeFile(myAlbumPath, base64Icon, 'base64').then(()=>{
         //   console.log("Success Copy")
@@ -255,18 +255,12 @@ const PairingScreen = (props: PairingNavigationProps) => {
           .then(() => {
             console.log("Success Copy mkdr")
 
-            RNFS.writeFile(path, base64Icon, 'base64').then(() => {
+            RNFS.writeFile(path, imageBase, 'base64').then(() => {
               console.log("Success Copy")
             })
           }
 
           )
-        const imageData = imageBase;
-
-        const imagePath = `${RNFS.PicturesDirectoryPath}test5.jpg`;
-
-        RNFS.writeFile(imagePath, imageData, 'base64')
-          .then(() => console.log('Image converted to jpg and saved at ' + imagePath));
 
       }
       console.log('ARRAY PUSH-----> ', data.value[0]);
@@ -379,33 +373,35 @@ const PairingScreen = (props: PairingNavigationProps) => {
     console.log("peripheral", peripheral.id);
 
     if (peripheral) {
-      await BleManager.connect(peripheral.id).then(async () => {
-        setPeripheralID(peripheral.id);
-        let p = peripherals.get(peripheral.id);
-        if (p) {
-          p.connected = true;
-          peripherals.set(peripheral.id, p);
-          setDevices(Array.from(peripherals.values()))
-        }
-        console.log('Connected to ' + peripheral.id);
-        console.log('Device Name ' + peripheral.name);
-      })
+      if (peripheral.name == 'Monocle' || peripheral.name == 'MONOCLE') {
+        await BleManager.connect(peripheral.id).then(async () => {
+          setPeripheralID(peripheral.id);
+          let p = peripherals.get(peripheral.id);
+          if (p) {
+            p.connected = true;
+            peripherals.set(peripheral.id, p);
+            setDevices(Array.from(peripherals.values()))
+          }
+          console.log('Connected to ' + peripheral.id);
+          console.log('Device Name ' + peripheral.name);
+        })
 
-      BleManager.isPeripheralConnected(
-        peripheral.id,
-        []
-      ).then((isConnected) => {
-        if (isConnected) {
-          setConnected(true);
-          console.log("Monocle is connected!");
-          ShowToast(STRINGS.MONOCLE_CONNECTED);
-          dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
-          setTimeout(() => {
-            setShowLoading(false);
-            navigation.navigate(Routes.NAV_MEDIA_SCREEN);
-          }, 2000);
-        }
-      });
+        BleManager.isPeripheralConnected(
+          peripheral.id,
+          []
+        ).then((isConnected) => {
+          if (isConnected) {
+            setConnected(true);
+            console.log("Monocle is connected!");
+            ShowToast(STRINGS.MONOCLE_CONNECTED);
+            dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
+            setTimeout(() => {
+              setShowLoading(false);
+              navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+            }, 2000);
+          }
+        });
+      }
     }
     if (peripheral.name == 'Frame' || peripheral.name == 'FRAME') {
       BleManager.createBond(peripheral.id)

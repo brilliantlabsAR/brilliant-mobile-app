@@ -11,7 +11,8 @@ import {
   BackHandler,
   ScrollView,
   Alert,
-  TextInput
+  TextInput,
+  Linking
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImageCropPicker, { clean } from "react-native-image-crop-picker";
@@ -286,7 +287,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
               activeOpacity={0.6}
               style={styles.menuBox}
               onPress={() => {
-                navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "1" });
+                Linking.openURL('http://brilliantmonocle.com/terms')
               }}
             >
               <Image
@@ -300,7 +301,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
               activeOpacity={0.6}
               style={styles.menuBox}
               onPress={() => {
-                navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "2" });
+                Linking.openURL('http://brilliantmonocle.com/privacy')
               }}
             >
               <Image
@@ -314,7 +315,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
               activeOpacity={0.6}
               style={styles.menuBox}
               onPress={() => {
-                navigation.navigate(Routes.NAV_HELP_SCREEN, { pageNo: "3" });
+                Linking.openURL('https://docs.brilliantmonocle.com/')
               }}
             >
               <Image
