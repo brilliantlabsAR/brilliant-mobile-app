@@ -17,12 +17,11 @@
 		7D936206D84B4138BF5537FC /* ApercuProMediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C6B7A211A874872AA217699 /* ApercuProMediumItalic.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		83C41205AFF44372A1CD0E0B /* ApercuProLightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 91540333D9424958968CE056 /* ApercuProLightItalic.otf */; };
+		89135D7B850CA25FA8678A58 /* Pods_Brilliant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCFFBB1DAE91ED8C7C60430A /* Pods_Brilliant.framework */; };
 		9F44AC1F6B5B446AB4CFDD5F /* ApercuProBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D3B1576F57024906857C1F6B /* ApercuProBoldItalic.otf */; };
-		AEA1E158B5FF8297C72DCBAA /* Pods_Brilliant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634337E929128F6F00B249A5 /* Pods_Brilliant.framework */; };
-		AF321134F22237712EC87077 /* Pods_Brilliant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10632CB6F6844FEA0A888CE8 /* Pods_Brilliant.framework */; };
 		B53AF4BE75B34CC7A630773C /* ApercuProMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 50339A5FACBA4334AA23799E /* ApercuProMedium.otf */; };
 		B84D9A990DB149B89A0FF80C /* ApercuProBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B523E360D8494D5793D85068 /* ApercuProBold.otf */; };
-		EE1586FDD89D84408E76ABF4 /* Pods_Brilliant_BrilliantTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18381B22DABE58526D026B5A /* Pods_Brilliant_BrilliantTests.framework */; };
+		DEBDCFB89FA8D4BF3E2128D7 /* Pods_Brilliant_BrilliantTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC41A5EC9DF9C5A6EFC54228 /* Pods_Brilliant_BrilliantTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,18 +38,13 @@
 		00E356EE1AD99517003FC87E /* BrilliantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrilliantTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* BrilliantTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrilliantTests.m; sourceTree = "<group>"; };
-		10632CB6F6844FEA0A888CE8 /* Pods_Brilliant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Brilliant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* Brilliant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Brilliant.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Brilliant/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Brilliant/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Brilliant/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Brilliant/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Brilliant/main.m; sourceTree = "<group>"; };
-		18381B22DABE58526D026B5A /* Pods_Brilliant_BrilliantTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Brilliant_BrilliantTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3B4392A12AC88292D35C810B /* Pods-Brilliant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant.debug.xcconfig"; path = "Target Support Files/Pods-Brilliant/Pods-Brilliant.debug.xcconfig"; sourceTree = "<group>"; };
 		50339A5FACBA4334AA23799E /* ApercuProMedium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProMedium.otf; path = ../src/assets/fonts/ApercuProMedium.otf; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-Brilliant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant.release.xcconfig"; path = "Target Support Files/Pods-Brilliant/Pods-Brilliant.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-Brilliant-BrilliantTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant-BrilliantTests.debug.xcconfig"; path = "Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests.debug.xcconfig"; sourceTree = "<group>"; };
 		634337C329128F6F00B249A5 /* AgoraAIDenoiseExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraAIDenoiseExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraAIDenoiseExtension.xcframework; sourceTree = "<group>"; };
 		634337C529128F6F00B249A5 /* AgoraCIExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraCIExtension.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraCIExtension.xcframework; sourceTree = "<group>"; };
 		634337C729128F6F00B249A5 /* AgoraCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AgoraCore.xcframework; path = Pods/AgoraRtcEngine_iOS/AgoraCore.xcframework; sourceTree = "<group>"; };
@@ -70,7 +64,6 @@
 		634337E329128F6F00B249A5 /* DoubleConversion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DoubleConversion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		634337E529128F6F00B249A5 /* fmt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = fmt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		634337E729128F6F00B249A5 /* glog.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = glog.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		634337E929128F6F00B249A5 /* Pods_Brilliant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Brilliant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		634337ED29128F6F00B249A5 /* folly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = folly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		634337EF29128F6F00B249A5 /* RCTTypeSafety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTTypeSafety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		634337F129128F6F00B249A5 /* react_bridging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = react_bridging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,11 +112,16 @@
 		63A1E3E82912874C0012E814 /* folly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = folly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A1E3EA291287520012E814 /* RCTTypeSafety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RCTTypeSafety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C6B7A211A874872AA217699 /* ApercuProMediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProMediumItalic.otf; path = ../src/assets/fonts/ApercuProMediumItalic.otf; sourceTree = "<group>"; };
+		78BB63B968C32728778C6B07 /* Pods-Brilliant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant.debug.xcconfig"; path = "Target Support Files/Pods-Brilliant/Pods-Brilliant.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Brilliant/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-Brilliant-BrilliantTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant-BrilliantTests.release.xcconfig"; path = "Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests.release.xcconfig"; sourceTree = "<group>"; };
 		91540333D9424958968CE056 /* ApercuProLightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProLightItalic.otf; path = ../src/assets/fonts/ApercuProLightItalic.otf; sourceTree = "<group>"; };
+		98E15ADB1AF009450DD71F6C /* Pods-Brilliant-BrilliantTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant-BrilliantTests.debug.xcconfig"; path = "Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AC41A5EC9DF9C5A6EFC54228 /* Pods_Brilliant_BrilliantTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Brilliant_BrilliantTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE9811CB2B4C824FD9771F93 /* Pods-Brilliant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant.release.xcconfig"; path = "Target Support Files/Pods-Brilliant/Pods-Brilliant.release.xcconfig"; sourceTree = "<group>"; };
 		B523E360D8494D5793D85068 /* ApercuProBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProBold.otf; path = ../src/assets/fonts/ApercuProBold.otf; sourceTree = "<group>"; };
+		C842FB18FED5979BC79A3548 /* Pods-Brilliant-BrilliantTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brilliant-BrilliantTests.release.xcconfig"; path = "Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests.release.xcconfig"; sourceTree = "<group>"; };
 		CCE1D66C9497466DBDE3BFDE /* ApercuProItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProItalic.otf; path = ../src/assets/fonts/ApercuProItalic.otf; sourceTree = "<group>"; };
+		CCFFBB1DAE91ED8C7C60430A /* Pods_Brilliant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Brilliant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3B1576F57024906857C1F6B /* ApercuProBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProBoldItalic.otf; path = ../src/assets/fonts/ApercuProBoldItalic.otf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F3DC2D2FDC034841ADD3ACC2 /* ApercuProRegular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = ApercuProRegular.otf; path = ../src/assets/fonts/ApercuProRegular.otf; sourceTree = "<group>"; };
@@ -135,7 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE1586FDD89D84408E76ABF4 /* Pods_Brilliant_BrilliantTests.framework in Frameworks */,
+				DEBDCFB89FA8D4BF3E2128D7 /* Pods_Brilliant_BrilliantTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,8 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF321134F22237712EC87077 /* Pods_Brilliant.framework in Frameworks */,
-				AEA1E158B5FF8297C72DCBAA /* Pods_Brilliant.framework in Frameworks */,
+				89135D7B850CA25FA8678A58 /* Pods_Brilliant.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,7 +200,6 @@
 				634337E329128F6F00B249A5 /* DoubleConversion.framework */,
 				634337E529128F6F00B249A5 /* fmt.framework */,
 				634337E729128F6F00B249A5 /* glog.framework */,
-				634337E929128F6F00B249A5 /* Pods_Brilliant.framework */,
 				634337ED29128F6F00B249A5 /* folly.framework */,
 				634337EF29128F6F00B249A5 /* RCTTypeSafety.framework */,
 				634337F129128F6F00B249A5 /* react_bridging.framework */,
@@ -252,8 +248,8 @@
 				63A1E3EA291287520012E814 /* RCTTypeSafety.framework */,
 				63A1E3E82912874C0012E814 /* folly.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				10632CB6F6844FEA0A888CE8 /* Pods_Brilliant.framework */,
-				18381B22DABE58526D026B5A /* Pods_Brilliant_BrilliantTests.framework */,
+				CCFFBB1DAE91ED8C7C60430A /* Pods_Brilliant.framework */,
+				AC41A5EC9DF9C5A6EFC54228 /* Pods_Brilliant_BrilliantTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -308,10 +304,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-Brilliant.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-Brilliant.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-Brilliant-BrilliantTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-Brilliant-BrilliantTests.release.xcconfig */,
+				78BB63B968C32728778C6B07 /* Pods-Brilliant.debug.xcconfig */,
+				AE9811CB2B4C824FD9771F93 /* Pods-Brilliant.release.xcconfig */,
+				98E15ADB1AF009450DD71F6C /* Pods-Brilliant-BrilliantTests.debug.xcconfig */,
+				C842FB18FED5979BC79A3548 /* Pods-Brilliant-BrilliantTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -323,11 +319,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "BrilliantTests" */;
 			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				39700F27A73D1F48094EC475 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				1FE1E779D42746A8EF5C7B7D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -343,13 +339,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Brilliant" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				B4B80CD87BCEC62B36FF2FB1 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				F421F5441DA7A93EEEBE1635 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -440,7 +436,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
+		1FE1E779D42746A8EF5C7B7D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		39700F27A73D1F48094EC475 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -462,7 +475,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		B4B80CD87BCEC62B36FF2FB1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -484,7 +497,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
+		F421F5441DA7A93EEEBE1635 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -499,23 +512,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Brilliant/Pods-Brilliant-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Brilliant-BrilliantTests/Pods-Brilliant-BrilliantTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -570,7 +566,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Brilliant-BrilliantTests.debug.xcconfig */;
+			baseConfigurationReference = 98E15ADB1AF009450DD71F6C /* Pods-Brilliant-BrilliantTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -590,6 +586,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = org.Brilliant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Brilliant.app/Brilliant";
 			};
@@ -597,7 +594,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-Brilliant-BrilliantTests.release.xcconfig */;
+			baseConfigurationReference = C842FB18FED5979BC79A3548 /* Pods-Brilliant-BrilliantTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -614,6 +611,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = org.Brilliant;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Brilliant.app/Brilliant";
 			};
@@ -621,7 +619,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-Brilliant.debug.xcconfig */;
+			baseConfigurationReference = 78BB63B968C32728778C6B07 /* Pods-Brilliant.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -652,7 +650,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-Brilliant.release.xcconfig */;
+			baseConfigurationReference = AE9811CB2B4C824FD9771F93 /* Pods-Brilliant.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

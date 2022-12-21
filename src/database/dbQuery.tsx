@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { executeSql } from "./mainDao";
-import { GenerateUuid } from "../utils";
+import { GenerateRandomString, GenerateUuid } from "../utils";
 import SQLite, {
   openDatabase,
   SQLiteDatabase,
@@ -53,7 +53,7 @@ export const CreateAsset = async (
   filePath: string,
   assetId?: string,
 ): Promise<Asset> => {
-  let uuid: string = GenerateUuid();
+  let uuid: string = GenerateRandomString();
 
   if (assetId != null) {
     uuid = assetId;
