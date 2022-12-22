@@ -417,246 +417,245 @@ const PairingScreen = (props: PairingNavigationProps) => {
         });
       }
     }
-  }
 
+    if (peripheral.name == 'Frame' || peripheral.name == 'FRAME') {
+      BleManager.createBond(peripheral.id)
+        .then(async () => {
+          console.log("createBond success or there is already an existing one");
+          setPeripheralID(peripheral.id);
 
-  if (peripheral.name == 'Frame' || peripheral.name == 'FRAME') {
-    BleManager.createBond(peripheral.id)
-      .then(async () => {
-        console.log("createBond success or there is already an existing one");
-        setPeripheralID(peripheral.id);
+          if (peripheral) {
+            await BleManager.connect(peripheral.id).then(async () => {
+              setPeripheralID(peripheral.id);
+              let p = peripherals.get(peripheral.id);
+              if (p) {
+                p.connected = true;
+                peripherals.set(peripheral.id, p);
+                setDevices(Array.from(peripherals.values()))
+              }
+              console.log('Connected to ' + peripheral.id);
+              console.log('Device Name ' + peripheral.name);
+              BleManager.requestMTU(peripheral.id, 256)
+                .then((mtu) => {
+                  // Success code
+                  console.log("MTU size changed to " + mtu + " bytes");
+                  BleManager.retrieveServices(peripheral.id).then(async (peripheralData) => {
+                    console.log('Retrieved peripheral services', peripheralData);
+                    var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
+                    var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
+                    var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
 
-        if (peripheral) {
-          await BleManager.connect(peripheral.id).then(async () => {
-            setPeripheralID(peripheral.id);
-            let p = peripherals.get(peripheral.id);
-            if (p) {
-              p.connected = true;
-              peripherals.set(peripheral.id, p);
-              setDevices(Array.from(peripherals.values()))
-            }
-            console.log('Connected to ' + peripheral.id);
-            console.log('Device Name ' + peripheral.name);
-            BleManager.requestMTU(peripheral.id, 256)
-              .then((mtu) => {
-                // Success code
-                console.log("MTU size changed to " + mtu + " bytes");
-                BleManager.retrieveServices(peripheral.id).then(async (peripheralData) => {
-                  console.log('Retrieved peripheral services', peripheralData);
-                  var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
-                  var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
-                  var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
+                    let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+                    let uartRxCharacteristicUuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+                    let uartTxCharacteristicUuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 
-                  let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-                  let uartRxCharacteristicUuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-                  let uartTxCharacteristicUuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+                    let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
+                    let rawDataRxCharacteristicUuid = "e5700002-7bac-429a-b4ce-57ff900f479d";
+                    let rawDataTxCharacteristicUuid = "e5700003-7bac-429a-b4ce-57ff900f479d";
+                    await BleManager.startNotification(peripheral.id, rawDataServiceUuid, rawDataTxCharacteristicUuid).then(() => {
+                      console.log('Start notification: ONE ');
 
-                  let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
-                  let rawDataRxCharacteristicUuid = "e5700002-7bac-429a-b4ce-57ff900f479d";
-                  let rawDataTxCharacteristicUuid = "e5700003-7bac-429a-b4ce-57ff900f479d";
-                  await BleManager.startNotification(peripheral.id, rawDataServiceUuid, rawDataTxCharacteristicUuid).then(() => {
-                    console.log('Start notification: ONE ');
+                    })
+                    //  await BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
+                    await BleManager.startNotification(peripheral.id, nordicUartServiceUuid, uartTxCharacteristicUuid).then(() => {
+                      console.log('Start notification: ');
+                      // setTimeout(() => {    //1st Command
+                      //   console.log("1st Command");
 
-                  })
-                  //  await BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
-                  await BleManager.startNotification(peripheral.id, nordicUartServiceUuid, uartTxCharacteristicUuid).then(() => {
-                    console.log('Start notification: ');
-                    // setTimeout(() => {    //1st Command
-                    //   console.log("1st Command");
+                      //   dataWrite("\x03", peripheral.id);
 
-                    //   dataWrite("\x03", peripheral.id);
+                      //   setTimeout(() => {//2nd Command
+                      //     console.log("2nd Command");
 
-                    //   setTimeout(() => {//2nd Command
-                    //     console.log("2nd Command");
+                      //     dataWrite("\x01", peripheral.id);
 
-                    //     dataWrite("\x01", peripheral.id);
+                      //   }, 3000);
 
-                    //   }, 3000);
+                      //   setTimeout(() => {//3rd Command
+                      //     console.log("3rd Command \\x04");
 
-                    //   setTimeout(() => {//3rd Command
-                    //     console.log("3rd Command \\x04");
+                      //     dataWrite("from machine import WiFi \nprint('IMPORT')\x04", peripheral.id);
+                      //     // dataWrite("print('hi')\x04", peripheral.id);
 
-                    //     dataWrite("from machine import WiFi \nprint('IMPORT')\x04", peripheral.id);
-                    //     // dataWrite("print('hi')\x04", peripheral.id);
+                      //   }, 4000);
 
-                    //   }, 4000);
+                      // }, 5000);
+                      setTimeout(() => {    //1st Command
+                        console.log("1st Command");
 
-                    // }, 5000);
-                    setTimeout(() => {    //1st Command
-                      console.log("1st Command");
+                        dataWrite("\x03", peripheral.id);
 
-                      dataWrite("\x03", peripheral.id);
+                        setTimeout(() => {//2nd Command
+                          console.log("2nd Command");
 
-                      setTimeout(() => {//2nd Command
-                        console.log("2nd Command");
+                          dataWrite("\x01", peripheral.id);
 
-                        dataWrite("\x01", peripheral.id);
+                        }, 3000);
 
-                      }, 3000);
+                        setTimeout(() => {//3rd Command
+                          console.log("3rd Command \\x04");
 
-                      setTimeout(() => {//3rd Command
-                        console.log("3rd Command \\x04");
+                          dataWrite("from machine import Camera \nprint('IMPORT')\x04", peripheral.id);
+                          // dataWrite("print('hi')\x04", peripheral.id);
 
-                        dataWrite("from machine import Camera \nprint('IMPORT')\x04", peripheral.id);
-                        // dataWrite("print('hi')\x04", peripheral.id);
+                        }, 4000);
 
-                      }, 4000);
+                      }, 5000);
 
-                    }, 5000);
+                    }).catch(() => {
+                      console.log("Notification error");
+
+                    });
 
                   }).catch(() => {
-                    console.log("Notification error");
+                    console.log("Retrive error");
 
-                  });
-
-                }).catch(() => {
-                  console.log("Retrive error");
-
+                  })
                 })
-              })
-              .catch((error) => {
-                // Failure code
-                console.log("MTU error ", error);
-              });
+                .catch((error) => {
+                  // Failure code
+                  console.log("MTU error ", error);
+                });
 
-            // else {
-            //   BleManager.isPeripheralConnected(
-            //     peripheral.id,
-            //     []
-            //   ).then((isConnected) => {
-            //     if (isConnected) {
-            //       console.log("Monocle is connected!");
-            //       ShowToast(STRINGS.MONOCLE_CONNECTED);
-            //       dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
-            //       setTimeout(() => {
-            //         navigation.navigate(Routes.NAV_MEDIA_SCREEN);
-            //       }, 2000);
-            //     }
-            //   });
-            // }
+              // else {
+              //   BleManager.isPeripheralConnected(
+              //     peripheral.id,
+              //     []
+              //   ).then((isConnected) => {
+              //     if (isConnected) {
+              //       console.log("Monocle is connected!");
+              //       ShowToast(STRINGS.MONOCLE_CONNECTED);
+              //       dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
+              //       setTimeout(() => {
+              //         navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+              //       }, 2000);
+              //     }
+              //   });
+              // }
 
 
-          }).catch(() => {
-            console.log("Device not connected");
-            dispatch(setDevicePairingStatus(DevicePairingStatus.PairingError));
-          });
-        }
+            }).catch(() => {
+              console.log("Device not connected");
+              dispatch(setDevicePairingStatus(DevicePairingStatus.PairingError));
+            });
+          }
 
-      }).catch(() => {
-        console.log("fail to bond");
-      });
+        }).catch(() => {
+          console.log("fail to bond");
+        });
+    }
   }
-}
-
-const dataWrite = (data: any, peripheralId: any) => {
-  var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
-  var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
-  var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
-
-  console.log('Start write data---->', data);
-  BleManager.write(
-    peripheralId,
-    service,
-    UUID,
-    stringToBytes(data),
-    256
-  )
-    .then((readData) => {
-      // Success code
-      console.log('write:---> ' + readData);
-    })
-    .catch((error) => {
-      // Failure code
-      console.log("write data failure", error);
-    });
-  // BleManager.writeWithoutResponse(
-  //     peripheralId,
-  //     service,
-  //     UUID,
-  //     stringToBytes(data),
-  //     256
-  // )
-  //     .then(() => {
-  //         // Success code
-  //         console.log("Writed:-----" + data);
-  //     })
-  //     .catch((error) => {
-  //         // Failure code
-  //         console.log("WRITE----??", error);
-  //     });
-
-}
-
-const addWifi = () => {
-  // dataWrite("WiFi.add('Sanatan Home-2G','passpass') \nprint('ADD') \x04", data.peripheral)
-  dataWrite(`WiFi.add('${ssid}','${password.trim()}') \nprint('ADD') \x04`, peripheralId)
-  hideModal();
-}
 
 
-// const renderItem = (item: any) => {
-//   return (
-//     <TouchableHighlight onPress={() => console.log('Click')}>
-//       <View style={styles.renderItemMainView}>
-//         <View style={styles.renderItemView} >
-//           <Text style={styles.renderItemText}>{getPeripheralName(item)}</Text>
-//           <View style={styles.marginTopView}>
-//             <Text style={styles.renderItemText2}> {item.id}</Text>
-//           </View>
-//         </View>
-//         <TouchableOpacity style={styles.connectTouchView}
-//           onPress={() => {
-//             // this.setState({ bluetoothDevice: item }, () => {
-//             //     NetInfo.fetch().then((state) => {
-//             //         console.log('net status', state)
-//             //     })
-//             //     // this.showModal()
-//             //     // this.testPeripheral();
-//             // })
+  const dataWrite = (data: any, peripheralId: any) => {
+    var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
+    var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
+    var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
 
-//             testPeripheral(item)
-//           }}
-//         >
-//           <View style={styles.connectView} >
-//             <Text style={styles.connectText}>{STRINGS.CONNECT}</Text>
-//           </View>
-//         </TouchableOpacity>
-//       </View>
-//     </TouchableHighlight>
+    console.log('Start write data---->', data);
+    BleManager.write(
+      peripheralId,
+      service,
+      UUID,
+      stringToBytes(data),
+      256
+    )
+      .then((readData) => {
+        // Success code
+        console.log('write:---> ' + readData);
+      })
+      .catch((error) => {
+        // Failure code
+        console.log("write data failure", error);
+      });
+    // BleManager.writeWithoutResponse(
+    //     peripheralId,
+    //     service,
+    //     UUID,
+    //     stringToBytes(data),
+    //     256
+    // )
+    //     .then(() => {
+    //         // Success code
+    //         console.log("Writed:-----" + data);
+    //     })
+    //     .catch((error) => {
+    //         // Failure code
+    //         console.log("WRITE----??", error);
+    //     });
 
-//   );
-// }
+  }
+
+  const addWifi = () => {
+    // dataWrite("WiFi.add('Sanatan Home-2G','passpass') \nprint('ADD') \x04", data.peripheral)
+    dataWrite(`WiFi.add('${ssid}','${password.trim()}') \nprint('ADD') \x04`, peripheralId)
+    hideModal();
+  }
+
+
+  // const renderItem = (item: any) => {
+  //   return (
+  //     <TouchableHighlight onPress={() => console.log('Click')}>
+  //       <View style={styles.renderItemMainView}>
+  //         <View style={styles.renderItemView} >
+  //           <Text style={styles.renderItemText}>{getPeripheralName(item)}</Text>
+  //           <View style={styles.marginTopView}>
+  //             <Text style={styles.renderItemText2}> {item.id}</Text>
+  //           </View>
+  //         </View>
+  //         <TouchableOpacity style={styles.connectTouchView}
+  //           onPress={() => {
+  //             // this.setState({ bluetoothDevice: item }, () => {
+  //             //     NetInfo.fetch().then((state) => {
+  //             //         console.log('net status', state)
+  //             //     })
+  //             //     // this.showModal()
+  //             //     // this.testPeripheral();
+  //             // })
+
+  //             testPeripheral(item)
+  //           }}
+  //         >
+  //           <View style={styles.connectView} >
+  //             <Text style={styles.connectText}>{STRINGS.CONNECT}</Text>
+  //           </View>
+  //         </TouchableOpacity>
+  //       </View>
+  //     </TouchableHighlight>
+
+  //   );
+  // }
 
 
 
-// const renderSSIDItem = (item: any) => {
-//   return (
-//     <TouchableOpacity style={styles.modalView} onPress={() => setSsid(item.ssid)}>
-//       <Text style={styles.renderItemText}>{item.ssid}</Text>
-//     </TouchableOpacity>
-//   );
-// }
+  // const renderSSIDItem = (item: any) => {
+  //   return (
+  //     <TouchableOpacity style={styles.modalView} onPress={() => setSsid(item.ssid)}>
+  //       <Text style={styles.renderItemText}>{item.ssid}</Text>
+  //     </TouchableOpacity>
+  //   );
+  // }
 
-return (
-  <SafeAreaView
-    style={styles.bodyContainer}>
-    <TopBar />
-    <View style={styles.middleView}>
-      <View style={{ flexDirection: 'row', width: normalize(150), alignItems: 'center', paddingLeft: 20 }}>
-        <Text style={styles.verifyText}>{STRINGS.CONNECT}</Text>
-        <Image source={BLE_icon} style={styles.bleImageStyle} />
-      </View>
-      <Text style={styles.phoneNumberText}>{STRINGS.CONNECT_TEXT}</Text>
-      <View style={{ alignItems: 'center', width: '100%' }}>
-        <Image source={monocleImage} style={styles.monocleImage} />
-        <Image source={downArrow} style={styles.arrowStyle} />
-        {showLoading &&
-          <UIActivityIndicator color='black' style={{ margin: 20 }} />
-        }
-        <Image source={upArrow} style={styles.arrowStyle} />
-        <Image source={phone} style={styles.phoneImage} />
-      </View>
-      {/* <View style={styles.mainContainer2} >
+  return (
+    <SafeAreaView
+      style={styles.bodyContainer}>
+      <TopBar />
+      <View style={styles.middleView}>
+        <View style={{ flexDirection: 'row', width: normalize(150), alignItems: 'center', paddingLeft: 20 }}>
+          <Text style={styles.verifyText}>{STRINGS.CONNECT}</Text>
+          <Image source={BLE_icon} style={styles.bleImageStyle} />
+        </View>
+        <Text style={styles.phoneNumberText}>{STRINGS.CONNECT_TEXT}</Text>
+        <View style={{ alignItems: 'center', width: '100%' }}>
+          <Image source={monocleImage} style={styles.monocleImage} />
+          <Image source={downArrow} style={styles.arrowStyle} />
+          {showLoading &&
+            <UIActivityIndicator color='black' style={{ margin: 20 }} />
+          }
+          <Image source={upArrow} style={styles.arrowStyle} />
+          <Image source={phone} style={styles.phoneImage} />
+        </View>
+        {/* <View style={styles.mainContainer2} >
           {showBLE == true ?
             <View style={styles.marginTopView}>
               <KeyboardAvoidingView
@@ -750,9 +749,9 @@ return (
             </View>
           }
           </View> */}
-    </View>
-  </SafeAreaView >
-)
+      </View>
+    </SafeAreaView >
+  )
 };
 
 export default PairingScreen;
