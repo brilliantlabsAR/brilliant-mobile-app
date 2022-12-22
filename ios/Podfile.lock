@@ -228,6 +228,8 @@ PODS:
     - React-Core
   - react-native-document-picker (8.1.2):
     - React-Core
+  - react-native-get-random-values (1.8.0):
+    - React-Core
   - react-native-maps (1.3.2):
     - React-Core
   - react-native-netinfo (9.3.5):
@@ -326,7 +328,7 @@ PODS:
     - React-Core
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.7.1):
+  - RNGestureHandler (2.8.0):
     - React-Core
   - RNImageCropPicker (0.38.0):
     - React-Core
@@ -408,6 +410,7 @@ DEPENDENCIES:
   - react-native-ble-manager (from `../node_modules/react-native-ble-manager`)
   - react-native-contacts (from `../node_modules/react-native-contacts`)
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
+  - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -495,6 +498,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-contacts"
   react-native-document-picker:
     :path: "../node_modules/react-native-document-picker"
+  react-native-get-random-values:
+    :path: "../node_modules/react-native-get-random-values"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   react-native-netinfo:
@@ -587,6 +592,7 @@ SPEC CHECKSUMS:
   react-native-ble-manager: e1184e064e170de242ca12648ac31f8fcdc6ecab
   react-native-contacts: 0aa99963d8f29099d4725cd0d2f8b6ef5f0d9a2d
   react-native-document-picker: f5ec1a712ca2a975c233117f044817bb8393cad4
+  react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
   react-native-maps: 085f614cf14d3637b2048bb9752da5b1c27c2886
   react-native-netinfo: 85b2a435c4d3705c08b0c42ff2d6ef6b9622ea0a
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
@@ -611,7 +617,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: bc0170f389056201c82a55e242e5d90070e18e5a
   RNDeviceInfo: 4701f0bf2a06b34654745053db0ce4cb0c53ada7
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: b7a872907ee289ada902127f2554fa1d2c076122
+  RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   RNImageCropPicker: ffbba608264885c241cbf3a8f78eb7aeeb978241
   RNNotifee: 5155e0a5e0a97d0c839030d8192783cd63053999
   RNReanimated: 7181243f956b43a9a95fd85c4b6f10aa26358a99

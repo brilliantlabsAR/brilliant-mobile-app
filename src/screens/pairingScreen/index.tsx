@@ -24,7 +24,7 @@ import BleManager, { stopScan } from 'react-native-ble-manager';
 import { stringToBytes } from "convert-string";
 import NetInfo from '@react-native-community/netinfo';
 import { normalize } from "../../utils/dimentionUtils";
-import { DevicePairingStatus, FontFamily, Theme } from "../../models";
+import { AssetStatus, AssetType, DevicePairingStatus, FontFamily, Theme } from "../../models";
 import { PairingNavigationProps } from "../../navigations/types";
 import { mediaDemoImage } from "../../assets";
 
@@ -43,6 +43,7 @@ import { UIActivityIndicator } from 'react-native-indicators';
 import base64 from 'react-native-base64';
 import Buffer from '@craftzdog/react-native-buffer';
 import * as RNFS from 'react-native-fs';
+import * as mainDao from '../../database';
 
 const peripherals = new Map();
 
@@ -135,6 +136,18 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
   // useEffect(() => {
   // }, [ssidList]);
+
+  const insertDataToDb = async (
+    type: AssetType,
+    fileName: string,
+    filePath: string
+  ) => {
+    mainDao.connectDatabase();
+    let result = await mainDao.CreateAsset(AssetStatus.Transferred, type, fileName, filePath)
+    if (result != null) {
+      await console.log('fetch Result', JSON.stringify(result));
+    }
+  }
 
   async function connectedDevice() {
     try {
@@ -242,7 +255,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
         const buffer = Buffer.Buffer.from(imageArray)
         console.log("buffer >> " + buffer) //[161,52]  
-        let imageBase = base64.encodeFromByteArray(z, Uint8Array);
+        let imageBase = base64TopBar.encodeFromByteArray(z, Uint8Array);
 
         console.log('ARRAY PUSH IMAGE BASE-----> ', imageBase);
         var base64Icon = 'data:image/png;base64,' + imageBase;
@@ -257,6 +270,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
             RNFS.writeFile(path, imageBase, 'base64').then(() => {
               console.log("Success Copy")
+              insertDataToDb(AssetType.Image, "test.png", path)
             })
           }
 
@@ -403,6 +417,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         });
       }
     }
+
     if (peripheral.name == 'Frame' || peripheral.name == 'FRAME') {
       BleManager.createBond(peripheral.id)
         .then(async () => {
@@ -530,6 +545,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         });
     }
   }
+
 
   const dataWrite = (data: any, peripheralId: any) => {
     var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
