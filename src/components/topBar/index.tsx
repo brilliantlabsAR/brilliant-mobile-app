@@ -15,11 +15,15 @@ import { ITopBar } from "../../types";
 
 export const TopBar = (props: ITopBar) => {
   const navigation = useNavigation<FooterNavigationProps>();
+
+  const goBack = () => {
+    navigation.goBack();
+  };
   return (
     <View style={styles.topView}>
       <TouchableOpacity
         activeOpacity={0.6}
-        onPress={() => navigation.goBack()}>
+        onPress={props.navigateTo || goBack}>
         <Image
           style={styles.homeMenu}
           source={leftarrow}

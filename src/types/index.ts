@@ -24,6 +24,7 @@ export interface IFooter {
 export interface ITopBar {
   title?: string;
   isTextVisible?: boolean;
+  navigateTo?: () => void;
 }
 
 export interface ICommonButtonProps {

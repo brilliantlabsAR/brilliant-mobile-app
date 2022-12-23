@@ -17,7 +17,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  BackHandler,
+  Alert
 } from "react-native";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import BleManager, { stopScan } from 'react-native-ble-manager';
@@ -45,6 +47,7 @@ import Buffer from '@craftzdog/react-native-buffer';
 import * as RNFS from 'react-native-fs';
 import * as mainDao from '../../database';
 import { DateTime } from "luxon";
+import RNExitApp from 'react-native-exit-app';
 
 const peripherals = new Map();
 
@@ -70,6 +73,26 @@ const PairingScreen = (props: PairingNavigationProps) => {
   const dispatch = useAppDispatch();
   const pairingStatus: DevicePairingStatus = useAppSelector((state) => state.pairing.status);
 
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => {
+      backHandler.remove();
+    }
+  })
+
+  const handleBackButton = () => {
+    Alert.alert(
+      'Alert',
+      'Are you want to exit',
+      [
+        { text: 'OK', onPress: () => { Platform.OS == "ios" ? RNExitApp.exitApp() : BackHandler.exitApp() } },
+      ]
+    );
+
+    return true;
+  }
+
   const showModal = () => {
     setVisibleModal(true)
   }
@@ -82,7 +105,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   //   );
   // }
   useEffect(() => {
-   //mainDao.executeSql(mainDao.dropAssetsTableQrery, []);
+    //mainDao.executeSql(mainDao.dropAssetsTableQrery, []);
     try {
       if (Platform.OS == 'android') {
         if (Platform.OS === 'android' && Platform.Version >= 23) {
@@ -230,7 +253,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
         setDevices(Array.from(peripherals.values()))
         setDeviceFound(true);
-        testPeripheral(peripheral.id);
+        testPeripheral(peripheral);
       } else {
         setDeviceFound(false);
       }
@@ -253,7 +276,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         imageArray.push(...dataArray);
       }
 
-      if (data.value[0]==2) {
+      if (data.value[0] == 2) {
         const z = new Uint8Array(imageArray);
         console.log('Uint8Array-----> ', z);
 
@@ -265,7 +288,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         var base64Icon = 'data:image/png;base64,' + imageBase;
         setImageIcon(base64Icon);
         const myAlbumPath = RNFS.PicturesDirectoryPath + '/brilliant'
-        const path = myAlbumPath + '/'+DateTime.now().toUnixInteger()+'.png'
+        const path = myAlbumPath + '/' + DateTime.now().toUnixInteger() + '.png'
         // RNFS.writeFile(myAlbumPath, base64Icon, 'base64').then(()=>{
         //   console.log("Success Copy")
         RNFS.mkdir(myAlbumPath)
@@ -278,10 +301,10 @@ const PairingScreen = (props: PairingNavigationProps) => {
               // .then(dataUrl => {
               //   console.log('## base64 conversion success', dataUrl);
               // });
-              insertDataToDb(AssetType.Image,DateTime.now().toUnixInteger()+'.png', myAlbumPath+"/")
+              insertDataToDb(AssetType.Image, DateTime.now().toUnixInteger() + '.png', myAlbumPath + "/")
 
               // setTimeout(() => {
-                
+
               // }, 2000);
             })
           }
@@ -661,7 +684,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   return (
     <SafeAreaView
       style={styles.bodyContainer}>
-      <TopBar />
+      <TopBar navigateTo={() => handleBackButton()} />
       <View style={styles.middleView}>
         <View style={{ flexDirection: 'row', width: normalize(150), alignItems: 'center', paddingLeft: 20 }}>
           <Text style={styles.verifyText}>{STRINGS.CONNECT}</Text>

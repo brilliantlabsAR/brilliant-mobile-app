@@ -36,6 +36,7 @@
     "react-native-country-codes-picker": "^2.1.8",
     "react-native-device-info": "^10.0.2",
     "react-native-document-picker": "^8.1.2",
+    "react-native-exit-app": "^1.1.0",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-get-location": "^2.2.1",

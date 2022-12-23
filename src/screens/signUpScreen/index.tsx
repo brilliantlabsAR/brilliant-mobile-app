@@ -44,7 +44,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
             setPhoneNumber("");
             setCountryCode("")
             setEmail("");
-            navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { screen: STRINGS.SIGNUP })
+            navigation.replace(Routes.NAV_LOGIN_VERIFY_SCREEN, { screen: STRINGS.SIGNUP })
         } else if (status === apiStatus.failed) {
             setIsLoading(false);
             ShowToast(userDetails);

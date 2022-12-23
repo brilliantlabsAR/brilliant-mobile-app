@@ -47,7 +47,7 @@ const LoginScreen = (props: LoginNavigationProps) => {
       setIsLoading(false);
       setCountryCode("");
       setPhoneNumber("");
-      navigation.navigate(Routes.NAV_LOGIN_VERIFY_SCREEN, { screen: STRINGS.LOGIN })
+      navigation.replace(Routes.NAV_LOGIN_VERIFY_SCREEN, { screen: STRINGS.LOGIN })
     } else if (status === apiStatus.failed) {
       setIsLoading(false);
       ShowToast(userDetails);
