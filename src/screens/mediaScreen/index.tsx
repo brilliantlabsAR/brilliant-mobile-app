@@ -21,7 +21,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { MediaScreenNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
-import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage, logoButton,monocleIcon,heartIcon } from "../../assets";
+import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage, logoButton, monocleIcon, heartIcon } from "../../assets";
 import { STRINGS } from "../../models/constants";
 import { styles } from "./styles";
 import Footer from '../../components/footer';
@@ -37,8 +37,8 @@ import {
     MenuOptions,
     MenuOption,
 } from 'react-native-popup-menu';
-
-import { } from 'react-native-super-grid'
+import * as mainDao from '../../database';
+import { Asset } from "../../models";
 
 type Props = MediaScreenNavigationProps
 
@@ -47,78 +47,10 @@ const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 const MediaScreen = (props: Props) => {
     const { navigation, route } = props;
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [mediaList, setMediaList] = React.useState([
-
-        {
-            "id": "1",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "21 Jan 2022"
-        },
-        {
-            "id": "2",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "28 Jan 2021"
-        },
-        {
-            "id": "3",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "4",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "5",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "6",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "7",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "8",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "9",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "10",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "11",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "12",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        },
-        {
-            "id": "13",
-            "name": "Media File 1\n2022-06-31 12-0.",
-            "date": "14 Feb 2021"
-        }
-
-    ]);
-
+    const [mediaList, setMediaList] = useState<Asset[]>();
 
     useEffect(() => {
+        showImage()
         const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
 
         return () => {
@@ -133,58 +65,99 @@ const MediaScreen = (props: Props) => {
         return true;
     }
 
+    const showImage = async (page?: number) => {
+        // try {
+        //   const totalPage = await mainDao.GetTotalPage();
+        //   // setTotalPage(totalPage);         //for pagination 
+        // }
+        // catch (e) {
+        //   console.log(e);
+        // }
+
+        try {
+            const fetchAll = await mainDao.GetAssets();
+
+            if (fetchAll != null) {
+                // if (page === 1) {              //for pagination 
+                await console.log('fetch all Result', JSON.stringify(fetchAll));
+                setMediaList(fetchAll);
+                // } else {                        //for pagination 
+                //   const data = [
+                //     ...assetData,
+                //     ...fetchAll,
+                //   ];
+                //   setAssetData(data);
+                // }
+                // setShowIndicator(false);
+                // setRefreshing(false);
+            }
+        } catch (e) {
+            console.log("error", e);
+
+        }
+    }
+
+
+
+
+    const renderItem = (item: any) => {
+        console.log("IMAGE--->", item.filePath + item.fileName)
+        return (
+            <View style={styles.flatview}>
+
+                <View style={styles.renderViewMiddle} >
+                    <Image
+                        style={styles.userImage}
+                        // source={{ uri: `data:image/png;base64,${item.filePath}` }}
+                        source={{ uri: "file://"+item.filePath + item.fileName }}
+                        resizeMode='cover'
+
+                    />
+                    <View style={styles.playButtonView}>
+                        <Image
+                            style={styles.playButtonImage}
+                            source={heartIcon}
+                            resizeMode='cover'
+
+                        />
+                    </View>
+                    <View style={styles.timeTextView}>
+                        <Text style={styles.ItemText}>{'00:15'}</Text>
+
+                    </View>
+                </View>
+
+            </View>
+        );
+    }
 
 
     return (
         <SafeAreaView style={styles.bodyContainer}>
             <View style={styles.topView}>
-                <ScrollView style={styles.scrollviewStyle}>
+               
                     <View style={styles.marginTopFlatList}>
                         <Text style={styles.brillientTextBig}>{STRINGS.BRILLIANT_TEXT}</Text>
 
-                        
+
 
                     </View>
 
-                  
-                        <FlatList
-                           style={styles.marginTopFlatList}
-                            data={mediaList}
-                            scrollEnabled={false}
-                            showsVerticalScrollIndicator={false}
-                            // ItemSeparatorComponent={FlatListItemSeparator}
-                            renderItem={({ item }) =>
 
-                                <View style={styles.flatview}>
-                                   
-                                    <View style={styles.renderViewMiddle} >
-                                            <Image
-                                                style={styles.userImage}
-                                                source={mediaDemoImage}
-                                                resizeMode='cover'
+                    <FlatList
+                        style={styles.marginTopFlatList}
+                        data={mediaList}
+                        scrollEnabled={false}
+                        showsVerticalScrollIndicator={false}
+                        // ItemSeparatorComponent={FlatListItemSeparator}
+                        renderItem={({ item }) =>
+                            renderItem(item)
+                        }
+                        keyExtractor={item =>  item.id.toString()}
+                        numColumns={3}
+                    />
 
-                                            />
-                                            <View style={styles.playButtonView}>
-                                                <Image
-                                                    style={styles.playButtonImage}
-                                                    source={heartIcon}
-                                                    resizeMode='cover'
-
-                                                />
-                                            </View>
-                                            <View style={styles.timeTextView}>
-                                            <Text style={styles.ItemText}>{'00:15'}</Text>
-
-                                            </View>
-                                        </View>
-
-                                </View>
-                            }
-                            keyExtractor={item => item.id}
-                            numColumns={3}
-                        />
-                   
-                </ScrollView>
+               
             </View>
             {/* <Footer selectedTab="MediaScreen" /> */}
             <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_ACCOUNT_SCREEN)}>

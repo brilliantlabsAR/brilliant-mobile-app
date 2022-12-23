@@ -44,6 +44,7 @@ import base64 from 'react-native-base64';
 import Buffer from '@craftzdog/react-native-buffer';
 import * as RNFS from 'react-native-fs';
 import * as mainDao from '../../database';
+import { DateTime } from "luxon";
 
 const peripherals = new Map();
 
@@ -81,6 +82,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   //   );
   // }
   useEffect(() => {
+   //mainDao.executeSql(mainDao.dropAssetsTableQrery, []);
     try {
       if (Platform.OS == 'android') {
         if (Platform.OS === 'android' && Platform.Version >= 23) {
@@ -146,6 +148,8 @@ const PairingScreen = (props: PairingNavigationProps) => {
     let result = await mainDao.CreateAsset(AssetStatus.Transferred, type, fileName, filePath)
     if (result != null) {
       await console.log('fetch Result', JSON.stringify(result));
+      setShowLoading(false);
+      navigation.navigate(Routes.NAV_MEDIA_SCREEN);
     }
   }
 
@@ -249,19 +253,19 @@ const PairingScreen = (props: PairingNavigationProps) => {
         imageArray.push(...dataArray);
       }
 
-      if (data.value[3]) {
+      if (data.value[0]==2) {
         const z = new Uint8Array(imageArray);
         console.log('Uint8Array-----> ', z);
 
         const buffer = Buffer.Buffer.from(imageArray)
         console.log("buffer >> " + buffer) //[161,52]  
-        let imageBase = base64TopBar.encodeFromByteArray(z, Uint8Array);
+        let imageBase = base64.encodeFromByteArray(z, Uint8Array);
 
         console.log('ARRAY PUSH IMAGE BASE-----> ', imageBase);
         var base64Icon = 'data:image/png;base64,' + imageBase;
         setImageIcon(base64Icon);
         const myAlbumPath = RNFS.PicturesDirectoryPath + '/brilliant'
-        const path = myAlbumPath + '/test.png'
+        const path = myAlbumPath + '/'+DateTime.now().toUnixInteger()+'.png'
         // RNFS.writeFile(myAlbumPath, base64Icon, 'base64').then(()=>{
         //   console.log("Success Copy")
         RNFS.mkdir(myAlbumPath)
@@ -270,7 +274,15 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
             RNFS.writeFile(path, imageBase, 'base64').then(() => {
               console.log("Success Copy")
-              insertDataToDb(AssetType.Image, "test.png", path)
+              // RNFS.readFile(path, 'base64')
+              // .then(dataUrl => {
+              //   console.log('## base64 conversion success', dataUrl);
+              // });
+              insertDataToDb(AssetType.Image,DateTime.now().toUnixInteger()+'.png', myAlbumPath+"/")
+
+              // setTimeout(() => {
+                
+              // }, 2000);
             })
           }
 
@@ -435,6 +447,16 @@ const PairingScreen = (props: PairingNavigationProps) => {
               }
               console.log('Connected to ' + peripheral.id);
               console.log('Device Name ' + peripheral.name);
+              BleManager.isPeripheralConnected(
+                peripheral.id,
+                []
+              ).then((isConnected) => {
+                if (isConnected) {
+                  setConnected(true);
+                  console.log("Frame is connected!");
+                  ShowToast(STRINGS.FRAME_CONNECTED);
+                }
+              });
               BleManager.requestMTU(peripheral.id, 256)
                 .then((mtu) => {
                   // Success code

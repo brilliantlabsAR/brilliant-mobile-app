@@ -60,6 +60,7 @@ export const STRINGS = {
   PROFILE_IMAGE_SUCCESS: "Profile image uploaded successfully",
   PROFILE_IMAGE_ERROR: "There is some error",
   MONOCLE_CONNECTED: "Monocle is connected successfully",
+  FRAME_CONNECTED: "Frame is connected successfully",
   ALERT: "Alert",
   ALERT_LOGOUT: "Are you want to logout?",
   CLOSE: "Close",
@@ -75,6 +76,8 @@ export const STRINGS = {
   CONNECT_TEXT: "Bring your Monocle close to your phone",
   WELCOME: "Welcome",
   WELCOME_TEXT: "The pocket sized AR device for imaginative hackers",
+  BRILLIANT_TEXT:"BRILLIANT"
+
 };
 
 //micro python command
