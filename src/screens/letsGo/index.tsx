@@ -8,6 +8,7 @@ import {
 	TouchableOpacity,
 	Platform,
 	PermissionsAndroid,
+	Linking,
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import notifee, { EventType } from '@notifee/react-native';
@@ -160,7 +161,7 @@ const LetsGoScreen = ({ navigation }: LetsGoNavigationProps) => {
 							<Text style={styles.loginText}>{STRINGS.LOGIN}</Text>
 						</TouchableOpacity>
 						<TouchableOpacity activeOpacity={0.6}
-							onPress={() => { }
+							onPress={() => { Linking.openURL('http://brilliantmonocle.com/terms') }
 							}>
 							<Text style={styles.termsText}>{STRINGS.TERMS_CONDITIONS}</Text>
 						</TouchableOpacity>

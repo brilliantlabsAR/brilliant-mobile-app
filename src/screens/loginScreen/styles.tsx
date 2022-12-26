@@ -9,8 +9,8 @@ export const styles = StyleSheet.create({
     bodyContainer: {
         backgroundColor: Theme.color.White,
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        // alignItems: 'center',
+        // justifyContent: 'center'
     },
     mainContainer: {
         backgroundColor: Theme.color.White,

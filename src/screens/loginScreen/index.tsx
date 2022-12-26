@@ -75,100 +75,100 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
   return (
     <SafeAreaView style={styles.bodyContainer}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-          <TopBar />
-          <View style={styles.mainContainer}>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-              <View style={styles.headerContainer}>
-                <Text style={styles.signupdescText}>
-                  {STRINGS.LOGIN_TEXT}
-                </Text>
-              </View>
-              <View style={styles.inputContainer}>
-                <View style={styles.afterinputContainer}>
-                  <View>
-                    <View style={styles.outcountrycodeView}>
-                      <TouchableOpacity
-                        style={styles.countrycodeView}
-                        onPress={() => setIsShow(true)}
-                      >
-                        <TextInput
-                          mode="outlined"
-                          label="Country Code"
-                          keyboardType="phone-pad"
-                          pointerEvents="none"
-                          editable={false}
-                          value={countryCode}
-                          onFocus={() => {
-                            setIsShow(true)
-                          }}
-                          onKeyPress={(keyPress) => {
-                            setIsShow(false);
-                          }}
-                          onChangeText={(countryCode) =>
-                            setCountryCode(countryCode)
-                          }
-                          theme={textInputStyle}
-                        />
-                      </TouchableOpacity>
-                      <View style={styles.gape1} />
-                      <View style={styles.gape2}>
-                        <TextInput
-                          mode="outlined"
-                          label="Phone No."
-                          keyboardType="phone-pad"
-                          value={phoneNumber}
-                          onChangeText={(phoneNumber) =>
-                            setPhoneNumber(phoneNumber)
-                          }
-                          right={<TextInput.Icon name={smartphone} size={15} />}
-                          theme={textInputStyle}
-                        />
-                      </View>
-                    </View>
-
-                    <CountryCodePicker
-                      show={isShow}
-                      lang={"en"}
-                      style={countryPickerStyle}
-                      // when picker button press you will get the country object with dial code
-                      pickerButtonOnPress={(item) => {
-                        console.log("hii", item.dial_code);
-                        setCountryCode(item.dial_code);
+        > */}
+      <TopBar />
+      <View style={styles.mainContainer}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.signupdescText}>
+              {STRINGS.LOGIN_TEXT}
+            </Text>
+          </View>
+          <View style={styles.inputContainer}>
+            <View style={styles.afterinputContainer}>
+              <View>
+                <View style={styles.outcountrycodeView}>
+                  <TouchableOpacity
+                    style={styles.countrycodeView}
+                    onPress={() => setIsShow(true)}
+                  >
+                    <TextInput
+                      mode="outlined"
+                      label="Country Code"
+                      keyboardType="phone-pad"
+                      pointerEvents="none"
+                      editable={false}
+                      value={countryCode}
+                      onFocus={() => {
+                        setIsShow(true)
+                      }}
+                      onKeyPress={(keyPress) => {
                         setIsShow(false);
                       }}
-                      onBackdropPress={() => setIsShow(false)}
-                    />
-                    <TouchableOpacity
-                      activeOpacity={0.6}
-                      onPress={() =>
-                        //this.registerMember()
-                        //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
-                        //
-                        // console.log("Register", "Hii")
-                        loginApiFunc()
+                      onChangeText={(countryCode) =>
+                        setCountryCode(countryCode)
                       }
-                      style={styles.touchOpacityView}
-                    >
-                      <Text style={styles.loginTextStyle}>{STRINGS.LOGIN}</Text>
-                    </TouchableOpacity>
-
+                      theme={textInputStyle}
+                    />
+                  </TouchableOpacity>
+                  <View style={styles.gape1} />
+                  <View style={styles.gape2}>
+                    <TextInput
+                      mode="outlined"
+                      label="Phone No."
+                      keyboardType="phone-pad"
+                      value={phoneNumber}
+                      onChangeText={(phoneNumber) =>
+                        setPhoneNumber(phoneNumber)
+                      }
+                      right={<TextInput.Icon name={smartphone} size={15} />}
+                      theme={textInputStyle}
+                    />
                   </View>
                 </View>
 
+                <CountryCodePicker
+                  show={isShow}
+                  lang={"en"}
+                  style={countryPickerStyle}
+                  // when picker button press you will get the country object with dial code
+                  pickerButtonOnPress={(item) => {
+                    console.log("hii", item.dial_code);
+                    setCountryCode(item.dial_code);
+                    setIsShow(false);
+                  }}
+                  onBackdropPress={() => setIsShow(false)}
+                />
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={() =>
+                    //this.registerMember()
+                    //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
+                    //
+                    // console.log("Register", "Hii")
+                    loginApiFunc()
+                  }
+                  style={styles.touchOpacityView}
+                >
+                  <Text style={styles.loginTextStyle}>{STRINGS.LOGIN}</Text>
+                </TouchableOpacity>
+
               </View>
-              {
-                isLoading ?
-                  <Loading /> : null
-              }
-            </ScrollView>
+            </View>
+
           </View>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+          {
+            isLoading ?
+              <Loading /> : null
+          }
+        </ScrollView>
+      </View>
+      {/* </KeyboardAvoidingView>
+      </TouchableWithoutFeedback> */}
     </SafeAreaView>
   );
 }
