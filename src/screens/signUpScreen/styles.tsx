@@ -15,33 +15,34 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column',
-        marginLeft: normalize(20)
-
+        margin: normalize(20),
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     scrollContainer: {
-        backgroundColor: Theme.color.White
+        backgroundColor: Theme.color.White,
     },
     headerContainer: {
-        marginRight: 25
+        // marginRight: 25
     },
-    signupText: {
-        color: Theme.color.Black,
-        fontSize: normalize(30),
-        flexDirection: 'row',
-        fontFamily: FontFamily.bold
-    },
+    // signupText: {
+    //     color: Theme.color.Black,
+    //     fontSize: normalize(30),
+    //     flexDirection: 'row',
+    //     fontFamily: FontFamily.bold
+    // },
     signupdescText: {
         fontSize: normalize(14),
         marginTop: normalize(10),
         color: Theme.color.Black,
-        flexDirection: 'row',
+        textAlign: "left",
         fontFamily: FontFamily.regular
     },
     inputContainer: {
-        marginRight: 25
+        // marginRight: 25
     },
     afterinputContainer: {
-        marginTop: 50,
+        marginTop: normalize(20),
         backgroundColor: Theme.color.White,
         paddingBottom: 20,
         borderRadius: 20
@@ -107,7 +108,7 @@ export const styles = StyleSheet.create({
         fontSize: 13,
         color: Theme.color.Black,
         fontStyle: 'normal',
-        fontFamily: 'Apercu Pro Medium'
+        fontFamily: FontFamily.medium,
 
     }
 })

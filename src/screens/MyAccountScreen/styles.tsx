@@ -146,31 +146,27 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.grayEight,
         height: normalize(0.5),
     },
-    footerButtonView: {
+    footerLinearStyle: {
         position: 'absolute',
         left: normalize(250),
         right: 0,
-        bottom: 5,
-        justifyContent: 'center',
-        alignItems: 'center',
+        bottom: 10,
         zIndex: 1,
         elevation: 20,
-        //shadowColor: 'red',
-    },
-    footerButtonImage: {
-        height: normalize(40),
-        width: normalize(40),
-    },
-    footerLinearStyle: {
         justifyContent: 'center',
         alignItems: 'center',
         width: normalize(50),
         height: normalize(50),
         borderRadius: normalize(25),
-        backgroundColor: 'blue',
+        backgroundColor: Theme.color.Black,
         borderColor: Theme.color.Black,
         borderWidth: 2,
     },
+    footerButtonImage: {
+        height: normalize(30),
+        width: normalize(30),
+    },
+
     // device firmware modal view
     modalView: {
         alignSelf: 'center',

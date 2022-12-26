@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
     activeOpacity: 0.6,
   },
   loginText: {
-    fontSize: 16,
+    fontSize: normalize(16),
     color: Theme.color.Black,
     fontStyle: "normal",
     borderRadius: 25,
@@ -95,5 +95,13 @@ export const styles = StyleSheet.create({
     letterSpacing: 10,
     position: "absolute",
     alignSelf: "center",
+  },
+  termsText: {
+    fontSize: normalize(13),
+    color: Theme.color.Black,
+    fontFamily: FontFamily.regular,
+    textAlign: "center",
+    marginTop: normalize(30),
+    textDecorationLine: "underline",
   },
 });

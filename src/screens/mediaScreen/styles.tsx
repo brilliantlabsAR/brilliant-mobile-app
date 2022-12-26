@@ -33,7 +33,18 @@ export const styles = StyleSheet.create({
     }, scrollviewStyle: {
         backgroundColor: Theme.color.White,
         marginBottom: normalize(20),
-
+    },
+    emptyContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    emptyText: {
+        color: Theme.color.Black,
+        fontSize: 16,
+        fontStyle: 'normal',
+        flexDirection: 'row',
+        fontFamily: FontFamily.regular
     },
     searchView: {
         backgroundColor: Theme.color.gray14,
@@ -72,7 +83,7 @@ export const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        margin:normalize(1)
+        margin: normalize(1)
     }, playButtonView: {
         backgroundColor: Theme.color.White,
         opacity: 0.9,
@@ -80,23 +91,23 @@ export const styles = StyleSheet.create({
         width: normalize(25),
         borderRadius: normalize(50 / 2),
         position: 'absolute',
-        alignContent:'center',
-        justifyContent:"center",
-        alignItems:'center',
-        bottom:0,
-        left:0,
-        marginLeft:normalize(5),
-        marginBottom:normalize(5)
+        alignContent: 'center',
+        justifyContent: "center",
+        alignItems: 'center',
+        bottom: 0,
+        left: 0,
+        marginLeft: normalize(5),
+        marginBottom: normalize(5)
 
     }, timeTextView: {
         position: 'absolute',
-        alignContent:'center',
-        justifyContent:"center",
-        alignItems:'center',
-        bottom:0,
-        right:0,
-        marginRight:normalize(5),
-        marginBottom:normalize(5)
+        alignContent: 'center',
+        justifyContent: "center",
+        alignItems: 'center',
+        bottom: 0,
+        right: 0,
+        marginRight: normalize(5),
+        marginBottom: normalize(5)
 
     },
     playButtonImage: {
@@ -165,7 +176,7 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         left: normalize(250),
         right: 0,
-        bottom: 5,
+        bottom: 10,
         zIndex: 1,
         elevation: 20,
         justifyContent: 'center',
@@ -183,14 +194,14 @@ export const styles = StyleSheet.create({
         alignSelf: 'center'
     }, marginTopFlatList: {
         marginTop: normalize(10)
-    },wishImage: {
+    }, wishImage: {
         height: normalize(20),
         width: normalize(20),
-    },ItemText: {
+    }, ItemText: {
         fontSize: normalize(10),
         color: Theme.color.White,
         fontFamily: FontFamily.regular,
-        
+
     }
 
 })

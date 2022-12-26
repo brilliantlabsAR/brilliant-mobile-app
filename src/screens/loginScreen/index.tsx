@@ -13,7 +13,10 @@ import {
   BackHandler,
   ScrollView,
   ActivityIndicator,
-  Alert
+  Alert,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard
 } from "react-native";
 import { FontFamily, Theme, STRINGS } from "../../models";
 import { LoginNavigationProps } from "../../navigations/types";
@@ -26,10 +29,12 @@ import * as Routes from "../../models/routes";
 import { ShowToast } from "../../utils/toastUtils";
 import { Validations } from "../../utils/validationUtils";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { FetchLoginData } from "../../redux/authSlices/loginSlice";
+import { FetchLoginData, resetLogin } from "../../redux/authSlices/loginSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { countryPickerStyle, textInputStyle } from "../../utils/stylesUtils";
 import { TopBar } from "../../components/topBar";
+import { resetOTPData } from "../../redux/authSlices/otpVerifySlice";
+import { resetResendData } from "../../redux/authSlices/otpResendSlice";
 
 const LoginScreen = (props: LoginNavigationProps) => {
 
@@ -42,19 +47,17 @@ const LoginScreen = (props: LoginNavigationProps) => {
   const status = useAppSelector(state => state.login.status)
   const userDetails = useAppSelector(state => state.login.userData);
 
+
   useEffect(() => {
     if (status === apiStatus.success) {
       setIsLoading(false);
+      navigation.replace(Routes.NAV_LOGIN_VERIFY_SCREEN, { screen: STRINGS.LOGIN, phone: countryCode + phoneNumber })
       setCountryCode("");
       setPhoneNumber("");
-      navigation.replace(Routes.NAV_LOGIN_VERIFY_SCREEN, { screen: STRINGS.LOGIN })
     } else if (status === apiStatus.failed) {
       setIsLoading(false);
       ShowToast(userDetails);
     }
-
-
-
   }, [status])
 
 
@@ -71,94 +74,101 @@ const LoginScreen = (props: LoginNavigationProps) => {
   }
 
   return (
-    <SafeAreaView
-      style={styles.bodyContainer}>
-      <StatusBar barStyle="dark-content" backgroundColor={Theme.color.White} />
-      <TopBar />
-      <View style={styles.middleView}>
-        <ScrollView style={styles.backgroundWhite}>
-          <View>
-            <Text style={styles.loginText}>{STRINGS.LOGIN}</Text>
-            <Text style={styles.welcomeText}>{STRINGS.LOGIN_TEXT}</Text>
-          </View>
-          <View style={styles.phoneBox}>
-            <View style={styles.phoneBoxTwo}>
-
-              <TouchableOpacity style={styles.touchableCountryBox}
-                onPress={() => setIsShow(true)}
-              >
-                <TextInput
-                  mode="outlined"
-                  label="Country Code"
-                  keyboardType="phone-pad"
-                  pointerEvents="none"
-                  editable={false}
-                  value={countryCode}
-                  onFocus={() => { setIsShow(true) }}
-                  onKeyPress={keyPress => { setIsShow(false) }}
-                  onChangeText={(countryCode) => setCountryCode(countryCode)}
-                  theme={textInputStyle}
-                />
-
-              </TouchableOpacity>
-              <View style={styles.gap1} />
-              <View style={styles.gap2}>
-                <TextInput
-                  mode="outlined"
-                  label="Phone No."
-                  keyboardType="phone-pad"
-                  value={phoneNumber}
-                  onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber.replace(/\s/g, ''))}
-                  right={<TextInput.Icon name={smartphone} size={15} />}
-                  theme={textInputStyle}
-
-                />
-              </View>
-            </View>
-            <TouchableOpacity activeOpacity={0.6}
-              onPress={loginApiFunc
-                // this.LoginMember()
-                //showErrorAlert('Register Successfully!')
-                //    this.props.navigation.navigate("LoginOtpVerifyScreen")
-                //  console.log("Register", "Hii")
-
-              }
-              style={styles.loginButtonStyle}>
-              <Text style={styles.loginTextStyle}>{STRINGS.LOGIN}</Text>
-
-            </TouchableOpacity>
-            <CountryCodePicker
-              show={isShow}
-              lang={'en'}
-              style={countryPickerStyle}
-              // when picker button press you will get the country object with dial code
-              pickerButtonOnPress={(item) => {
-                console.log("hii", item.dial_code);
-                setCountryCode(item.dial_code);
-                setIsShow(false)
-              }}
-              onBackdropPress={() => setIsShow(false)}
-            />
-
-            <View style={styles.signUpView}>
-
-              <Text style={styles.dontSignUp}>{STRINGS.DONT_HAVE_ACCN}
-                <Text style={styles.signupTextStyle}
-                  onPress={() => { navigation.navigate(Routes.NAV_SIGNUP_SCREEN) }}>{STRINGS.SIGNUP}
+    <SafeAreaView style={styles.bodyContainer}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <TopBar />
+          <View style={styles.mainContainer}>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+              <View style={styles.headerContainer}>
+                <Text style={styles.signupdescText}>
+                  {STRINGS.LOGIN_TEXT}
                 </Text>
-              </Text>
-              {/* onPress={() => this.props.navigation.navigate("InviteContactScreen")}>Signup</Text></Text> */}
+              </View>
+              <View style={styles.inputContainer}>
+                <View style={styles.afterinputContainer}>
+                  <View>
+                    <View style={styles.outcountrycodeView}>
+                      <TouchableOpacity
+                        style={styles.countrycodeView}
+                        onPress={() => setIsShow(true)}
+                      >
+                        <TextInput
+                          mode="outlined"
+                          label="Country Code"
+                          keyboardType="phone-pad"
+                          pointerEvents="none"
+                          editable={false}
+                          value={countryCode}
+                          onFocus={() => {
+                            setIsShow(true)
+                          }}
+                          onKeyPress={(keyPress) => {
+                            setIsShow(false);
+                          }}
+                          onChangeText={(countryCode) =>
+                            setCountryCode(countryCode)
+                          }
+                          theme={textInputStyle}
+                        />
+                      </TouchableOpacity>
+                      <View style={styles.gape1} />
+                      <View style={styles.gape2}>
+                        <TextInput
+                          mode="outlined"
+                          label="Phone No."
+                          keyboardType="phone-pad"
+                          value={phoneNumber}
+                          onChangeText={(phoneNumber) =>
+                            setPhoneNumber(phoneNumber)
+                          }
+                          right={<TextInput.Icon name={smartphone} size={15} />}
+                          theme={textInputStyle}
+                        />
+                      </View>
+                    </View>
 
-            </View>
+                    <CountryCodePicker
+                      show={isShow}
+                      lang={"en"}
+                      style={countryPickerStyle}
+                      // when picker button press you will get the country object with dial code
+                      pickerButtonOnPress={(item) => {
+                        console.log("hii", item.dial_code);
+                        setCountryCode(item.dial_code);
+                        setIsShow(false);
+                      }}
+                      onBackdropPress={() => setIsShow(false)}
+                    />
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={() =>
+                        //this.registerMember()
+                        //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
+                        //
+                        // console.log("Register", "Hii")
+                        loginApiFunc()
+                      }
+                      style={styles.touchOpacityView}
+                    >
+                      <Text style={styles.loginTextStyle}>{STRINGS.LOGIN}</Text>
+                    </TouchableOpacity>
+
+                  </View>
+                </View>
+
+              </View>
+              {
+                isLoading ?
+                  <Loading /> : null
+              }
+            </ScrollView>
           </View>
-
-          {
-            isLoading ?
-              <Loading /> : null
-          }
-        </ScrollView>
-
-      </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }

@@ -17,11 +17,16 @@ import { STRINGS } from "../../models/constants";
 import * as Routes from "../../models/routes";
 import * as mainDao from '../../database';
 import { LetsGoNavigationProps } from "../../navigations/types";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { resetLogin } from "../../redux/authSlices/loginSlice";
+import { resetOTPData } from "../../redux/authSlices/otpVerifySlice";
+import { resetResendData } from "../../redux/authSlices/otpResendSlice";
+import { resetSignUpData } from "../../redux/authSlices/signupSlice";
 
 const windowHeight = Dimensions.get('window').height;
 
 const LetsGoScreen = ({ navigation }: LetsGoNavigationProps) => {
-
+	const dispatch = useAppDispatch();
 	const [isShow, setIsShow] = useState<boolean>(false);
 	//var isShow:boolean=false;
 	const animated = useRef(new Animated.Value(0)).current;
@@ -49,6 +54,18 @@ const LetsGoScreen = ({ navigation }: LetsGoNavigationProps) => {
 		outputRange: [1, 0],
 		extrapolate: 'clamp',
 	})
+
+	useEffect(() => {
+		const unsubscribe = navigation.addListener("focus", () => {
+			dispatch(resetLogin());
+			dispatch(resetOTPData());
+			dispatch(resetResendData());
+			dispatch(resetSignUpData());
+		});
+		// Return the function to unsubscribe from the event so it gets removed on unmount
+		return unsubscribe;
+	}, [navigation]);
+
 
 	useEffect(() => {
 		const translateUp =
@@ -141,6 +158,11 @@ const LetsGoScreen = ({ navigation }: LetsGoNavigationProps) => {
 							}
 						>
 							<Text style={styles.loginText}>{STRINGS.LOGIN}</Text>
+						</TouchableOpacity>
+						<TouchableOpacity activeOpacity={0.6}
+							onPress={() => { }
+							}>
+							<Text style={styles.termsText}>{STRINGS.TERMS_CONDITIONS}</Text>
 						</TouchableOpacity>
 					</View>
 				</Animated.View>

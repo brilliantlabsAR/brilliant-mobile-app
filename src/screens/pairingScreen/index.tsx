@@ -3,7 +3,6 @@ import {
   StatusBar,
   View,
   Text,
-  SafeAreaView,
   Platform,
   LogBox,
   TouchableOpacity,
@@ -19,8 +18,9 @@ import {
   ScrollView,
   ActivityIndicator,
   BackHandler,
-  Alert
+  Alert,
 } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import BleManager, { stopScan } from 'react-native-ble-manager';
 import { stringToBytes } from "convert-string";
@@ -686,19 +686,22 @@ const PairingScreen = (props: PairingNavigationProps) => {
       style={styles.bodyContainer}>
       <TopBar navigateTo={() => handleBackButton()} />
       <View style={styles.middleView}>
-        <View style={{ flexDirection: 'row', width: normalize(150), alignItems: 'center', paddingLeft: 20 }}>
+        <View style={styles.headingContainer}>
           <Text style={styles.verifyText}>{STRINGS.CONNECT}</Text>
           <Image source={BLE_icon} style={styles.bleImageStyle} />
         </View>
         <Text style={styles.phoneNumberText}>{STRINGS.CONNECT_TEXT}</Text>
-        <View style={{ alignItems: 'center', width: '100%' }}>
+        <View style={styles.monocleImageContainer}>
           <Image source={monocleImage} style={styles.monocleImage} />
           <Image source={downArrow} style={styles.arrowStyle} />
           {showLoading &&
-            <UIActivityIndicator color='black' style={{ margin: 20 }} />
+            <UIActivityIndicator color='black' style={{ margin: normalize(20) }} />
           }
-          <Image source={upArrow} style={styles.arrowStyle} />
+          <Image source={upArrow} style={styles.arrowStyleSecond} />
           <Image source={phone} style={styles.phoneImage} />
+          <TouchableOpacity style={styles.skipTextContainer} onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}>
+            <Text style={styles.skipText}>Skip</Text>
+          </TouchableOpacity>
         </View>
         {/* <View style={styles.mainContainer2} >
           {showBLE == true ?

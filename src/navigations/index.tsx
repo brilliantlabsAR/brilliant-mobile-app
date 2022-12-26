@@ -11,7 +11,7 @@ export type RootStackParamList = {
   [Routes.NAV_LETS_GO_SCREEN]: undefined;
   [Routes.NAV_APP]: undefined;
   [Routes.NAV_LOGIN_SCREEN]: undefined;
-  [Routes.NAV_LOGIN_VERIFY_SCREEN]: { screen: string };
+  [Routes.NAV_LOGIN_VERIFY_SCREEN]: { screen: string, phone: string };
   [Routes.NAV_SIGNUP_SCREEN]: undefined;
   [Routes.NAV_SUCCESS_LOGIN]: undefined;
 };

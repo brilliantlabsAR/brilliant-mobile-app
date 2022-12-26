@@ -28,7 +28,7 @@ const SignupSlice = createSlice({
   name: "signupSlice",
   initialState,
   reducers: {
-    resetData: (state) => {
+    resetSignUpData: (state) => {
       state.status = apiStatus.idle;
       state.userData = {};
     },
@@ -57,5 +57,5 @@ const SignupSlice = createSlice({
   },
 });
 
-export const { resetData } = SignupSlice.actions;
+export const { resetSignUpData } = SignupSlice.actions;
 export default SignupSlice.reducer;

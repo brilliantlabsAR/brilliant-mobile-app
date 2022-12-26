@@ -41,7 +41,7 @@ let timerEnable = true;
 const LoginOtpVerify = (props: Props) => {
   const { navigation, route } = props;
   const loginDetails = useAppSelector(state => state.login.userData);
-  const [phoneNumber] = useState<string>(loginDetails.phoneNumber);
+  const [phoneNumber] = useState<string>(route.params.phone);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(240);
   const [otp, setOtp] = useState<string>('');
@@ -87,7 +87,7 @@ const LoginOtpVerify = (props: Props) => {
       setStringData(ASYNC_CONST.phone, userDetails.phone);
       //console.log('from otp screen ',userDetails);
       if (route.params.screen == STRINGS.SIGNUP) {
-        navigation.navigate(Routes.NAV_SUCCESS_LOGIN)
+        navigation.replace(Routes.NAV_SUCCESS_LOGIN)
       } else if (route.params.screen == STRINGS.LOGIN) {
         navigation.replace(Routes.NAV_APP)
       }
@@ -136,8 +136,8 @@ const LoginOtpVerify = (props: Props) => {
   }
 
   function verifyOTPCall() {
-    // console.log("fjhbd", userDetails.phoneNumber);
-    // console.log(phoneNumber + '//// ' + otp)
+    console.log("fjhbd", otp);
+    console.log(phoneNumber + '//// ' + otp)
     if (Validations.verifyRequired(otp)) {
       setIsLoading(true)
       dispatch(FetchOtpData({

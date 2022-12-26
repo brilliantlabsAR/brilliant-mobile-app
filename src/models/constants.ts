@@ -15,7 +15,7 @@ export const STRINGS = {
   SIGNUP_TITLE: "Your details will only be used for login",
   ALREADY_TITLE: "Already have an account? ",
   AGREE_TITLE: "by signing up you agree with our ",
-  TERMS_CONDITIONS: "Terms and Conditions.",
+  TERMS_CONDITIONS: "Terms and Conditions",
   LOGIN: "Login",
   SIGNUP: "Signup",
   SIGN_UP: "Sign up",
@@ -76,8 +76,8 @@ export const STRINGS = {
   CONNECT_TEXT: "Bring your Monocle close to your phone",
   WELCOME: "Welcome",
   WELCOME_TEXT: "The pocket sized AR device for imaginative hackers",
-  BRILLIANT_TEXT:"BRILLIANT"
-
+  BRILLIANT_TEXT: "BRILLIANT",
+  EMPTY_TEXT: "No media found",
 };
 
 //micro python command

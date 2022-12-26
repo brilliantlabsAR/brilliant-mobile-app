@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
         fontSize: 13,
         color: Theme.color.Black,
         fontStyle: 'normal',
-        fontFamily: 'Apercu Pro Medium'
+        fontFamily: FontFamily.medium,
 
     },
     loginButtonStyle: {

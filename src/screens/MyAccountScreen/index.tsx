@@ -32,6 +32,7 @@ import {
   menuData,
   menuHelp,
   logoButton,
+  monocleIcon,
 } from "../../assets";
 import { ASYNC_CONST, STRINGS } from "../../models";
 import Footer from "../../components/footer";
@@ -391,19 +392,13 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
       <TouchableOpacity
         onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}
       >
-        <View style={styles.footerButtonView}>
-          <LinearGradient
-            style={styles.footerLinearStyle}
-            colors={["#000000", "#000000", "#000000"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-          >
-            <Image
-              style={styles.footerButtonImage}
-              source={logoButton}
-              resizeMode="cover"
-            />
-          </LinearGradient>
+        <View
+          style={styles.footerLinearStyle}>
+          <Image
+            style={styles.footerButtonImage}
+            source={monocleIcon}
+            resizeMode='contain'
+          />
         </View>
       </TouchableOpacity>
     </SafeAreaView>
