@@ -58,7 +58,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   const { navigation } = props;
   const [showBLE, setShowBLE] = useState<boolean>(false);
   const [showLoading, setShowLoading] = useState<boolean>(true);
-  const [connected, setConnected] = useState<boolean>(false);
+  // const [connected, setConnected] = useState<boolean>(false);
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
   const [ssid, setSsid] = useState<string>("");
   const [imageIcon, setImageIcon] = useState<string>("");
@@ -273,12 +273,12 @@ const PairingScreen = (props: PairingNavigationProps) => {
         setPeripheralName(peripheral.name);
         console.log("peripheral id here", peripheral.id);
         // console.log("connected or not", connected);
-
-        if (connected) {
-          stopScan
-        } else {
-          testPeripheral(peripheral);
-        }
+        testPeripheral(peripheral);
+        // if (connected) {
+        //   stopScan
+        // } else {
+        // testPeripheral(peripheral);
+        // }
       } else {
         setDeviceFound(false);
       }
@@ -475,7 +475,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
           []
         ).then((isConnected) => {
           if (isConnected) {
-            setConnected(true);
+            // setConnected(true);
             console.log("Monocle is connected!");
             ShowToast(STRINGS.MONOCLE_CONNECTED);
             dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Paired, id: peripheral.id as string }));
@@ -510,7 +510,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                 []
               ).then((isConnected) => {
                 if (isConnected) {
-                  setConnected(true);
+                  // setConnected(true);
                   console.log("Frame is connected!");
                   ShowToast(STRINGS.FRAME_CONNECTED);
                 }
