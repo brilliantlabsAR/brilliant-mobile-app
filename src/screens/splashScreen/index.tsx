@@ -30,6 +30,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Routes from "../../models/routes";
 import * as mainDao from '../../database';
 import { startImage } from "../../assets";
+import BleManager, { stopScan } from 'react-native-ble-manager';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -88,6 +89,7 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
       }
     }
+
   })
 
   useEffect(() => {

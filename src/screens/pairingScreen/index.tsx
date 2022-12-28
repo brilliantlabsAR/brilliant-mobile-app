@@ -163,6 +163,16 @@ const PairingScreen = (props: PairingNavigationProps) => {
           console.warn(err)
         }
 
+      } else {
+        BleManager.enableBluetooth()
+          .then(() => {
+            // Success code
+            console.log("The bluetooth is already enabled or the user confirm");
+          })
+          .catch((error) => {
+            // Failure code
+            console.log("The user refuse to enable bluetooth");
+          });
       }
 
 
@@ -264,6 +274,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
     }
     { console.log('Name---->', peripheral.name) }
     { console.log('Name-IOS--->', peripheral.advertising.localName) }
+    ShowToast(peripheral.id + peripheral.advertising.localName)
     if (Platform.OS == 'android') {
       if (peripheral.name === "FRAME" || peripheral.name === "Frame" || peripheral.name === "Monocle") {
         peripherals.set(peripheral.id, peripheral);
@@ -288,6 +299,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
         setDevices(Array.from(peripherals.values()))
         setDeviceFound(true);
+        ShowToast(peripheral.id + peripheral.advertising.localName)
         testPeripheral(peripheral);
       } else {
         setDeviceFound(false);
@@ -453,6 +465,137 @@ const PairingScreen = (props: PairingNavigationProps) => {
     return item.name;
   };
 
+  const framePairing = async (peripheral: any) => {
+    ShowToast(peripheral)
+    if (peripheral) {
+      await BleManager.connect(peripheral.id).then(async () => {
+        setPeripheralID(peripheral.id);
+        let p = peripherals.get(peripheral.id);
+        if (p) {
+          p.connected = true;
+          peripherals.set(peripheral.id, p);
+          setDevices(Array.from(peripherals.values()))
+        }
+        ShowToast(peripheral.id)
+        console.log('Connected to ' + peripheral.id);
+        console.log('Device Name ' + peripheral.name);
+        BleManager.isPeripheralConnected(
+          peripheral.id,
+          []
+        ).then((isConnected) => {
+          if (isConnected) {
+            // setConnected(true);
+            console.log("Frame is connected!");
+            ShowToast(STRINGS.FRAME_CONNECTED);
+          }
+        });
+        BleManager.requestMTU(peripheral.id, 256)
+          .then((mtu) => {
+            // Success code
+            console.log("MTU size changed to " + mtu + " bytes");
+            BleManager.retrieveServices(peripheral.id).then(async (peripheralData) => {
+              console.log('Retrieved peripheral services', peripheralData);
+              var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
+              var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
+              var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
+
+              let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+              let uartRxCharacteristicUuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+              let uartTxCharacteristicUuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+
+              let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
+              let rawDataRxCharacteristicUuid = "e5700002-7bac-429a-b4ce-57ff900f479d";
+              let rawDataTxCharacteristicUuid = "e5700003-7bac-429a-b4ce-57ff900f479d";
+              await BleManager.startNotification(peripheral.id, rawDataServiceUuid, rawDataTxCharacteristicUuid).then(() => {
+                console.log('Start notification: ONE ');
+
+              })
+              //  await BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
+              await BleManager.startNotification(peripheral.id, nordicUartServiceUuid, uartTxCharacteristicUuid).then(() => {
+                console.log('Start notification: ');
+                // setTimeout(() => {    //1st Command
+                //   console.log("1st Command");
+
+                //   dataWrite("\x03", peripheral.id);
+
+                //   setTimeout(() => {//2nd Command
+                //     console.log("2nd Command");
+
+                //     dataWrite("\x01", peripheral.id);
+
+                //   }, 3000);
+
+                //   setTimeout(() => {//3rd Command
+                //     console.log("3rd Command \\x04");
+
+                //     dataWrite("from machine import WiFi \nprint('IMPORT')\x04", peripheral.id);
+                //     // dataWrite("print('hi')\x04", peripheral.id);
+
+                //   }, 4000);
+
+                // }, 5000);
+                setTimeout(() => {    //1st Command
+                  console.log("1st Command");
+
+                  dataWrite("\x03", peripheral.id);
+
+                  setTimeout(() => {//2nd Command
+                    console.log("2nd Command");
+
+                    dataWrite("\x01", peripheral.id);
+
+                  }, 3000);
+
+                  setTimeout(() => {//3rd Command
+                    console.log("3rd Command \\x04");
+
+                    dataWrite("from machine import Camera \nprint('IMPORT')\x04", peripheral.id);
+                    // dataWrite("print('hi')\x04", peripheral.id);
+
+                  }, 4000);
+
+                }, 5000);
+
+              }).catch(() => {
+                console.log("Notification error");
+
+              });
+
+            }).catch(() => {
+              console.log("Retrive error");
+
+            })
+          })
+          .catch((error) => {
+            // Failure code
+            console.log("MTU error ", error);
+          });
+
+        // else {
+        //   BleManager.isPeripheralConnected(
+        //     peripheral.id,
+        //     []
+        //   ).then((isConnected) => {
+        //     if (isConnected) {
+        //       console.log("Monocle is connected!");
+        //       ShowToast(STRINGS.MONOCLE_CONNECTED);
+        //       dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
+        //       setTimeout(() => {
+        //         navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+        //       }, 2000);
+        //     }
+        //   });
+        // }
+
+
+      }).catch(() => {
+        ShowToast("Device not connected")
+        console.log("Device not connected");
+        dispatch(setDevicePairingError(DevicePairingStatus.PairingError));
+      });
+    }
+  }
+
   const testPeripheral = async (peripheral: any) => {
     console.log("peripheral", peripheral.id);
 
@@ -489,140 +632,20 @@ const PairingScreen = (props: PairingNavigationProps) => {
     }
 
     if (peripheral.name == 'Frame' || peripheral.name == 'FRAME') {
-      BleManager.createBond(peripheral.id)
-        .then(async () => {
-          console.log("createBond success or there is already an existing one");
-          setPeripheralID(peripheral.id);
+      if (Platform.OS === "android") {
+        BleManager.createBond(peripheral.id)
+          .then(async () => {
+            console.log("createBond success or there is already an existing one");
+            setPeripheralID(peripheral.id);
+            framePairing(peripheral)
+          }).catch(() => {
+            console.log("fail to bond");
+          });
+      } else {
+        ShowToast("In ios section")
+        framePairing(peripheral)
+      }
 
-          if (peripheral) {
-            await BleManager.connect(peripheral.id).then(async () => {
-              setPeripheralID(peripheral.id);
-              let p = peripherals.get(peripheral.id);
-              if (p) {
-                p.connected = true;
-                peripherals.set(peripheral.id, p);
-                setDevices(Array.from(peripherals.values()))
-              }
-              console.log('Connected to ' + peripheral.id);
-              console.log('Device Name ' + peripheral.name);
-              BleManager.isPeripheralConnected(
-                peripheral.id,
-                []
-              ).then((isConnected) => {
-                if (isConnected) {
-                  // setConnected(true);
-                  console.log("Frame is connected!");
-                  ShowToast(STRINGS.FRAME_CONNECTED);
-                }
-              });
-              BleManager.requestMTU(peripheral.id, 256)
-                .then((mtu) => {
-                  // Success code
-                  console.log("MTU size changed to " + mtu + " bytes");
-                  BleManager.retrieveServices(peripheral.id).then(async (peripheralData) => {
-                    console.log('Retrieved peripheral services', peripheralData);
-                    var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
-                    var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
-                    var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
-
-                    let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-                    let uartRxCharacteristicUuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-                    let uartTxCharacteristicUuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
-
-                    let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
-                    let rawDataRxCharacteristicUuid = "e5700002-7bac-429a-b4ce-57ff900f479d";
-                    let rawDataTxCharacteristicUuid = "e5700003-7bac-429a-b4ce-57ff900f479d";
-                    await BleManager.startNotification(peripheral.id, rawDataServiceUuid, rawDataTxCharacteristicUuid).then(() => {
-                      console.log('Start notification: ONE ');
-
-                    })
-                    //  await BleManager.startNotification(peripheral.id, service, readUUID).then(() => {
-                    await BleManager.startNotification(peripheral.id, nordicUartServiceUuid, uartTxCharacteristicUuid).then(() => {
-                      console.log('Start notification: ');
-                      // setTimeout(() => {    //1st Command
-                      //   console.log("1st Command");
-
-                      //   dataWrite("\x03", peripheral.id);
-
-                      //   setTimeout(() => {//2nd Command
-                      //     console.log("2nd Command");
-
-                      //     dataWrite("\x01", peripheral.id);
-
-                      //   }, 3000);
-
-                      //   setTimeout(() => {//3rd Command
-                      //     console.log("3rd Command \\x04");
-
-                      //     dataWrite("from machine import WiFi \nprint('IMPORT')\x04", peripheral.id);
-                      //     // dataWrite("print('hi')\x04", peripheral.id);
-
-                      //   }, 4000);
-
-                      // }, 5000);
-                      setTimeout(() => {    //1st Command
-                        console.log("1st Command");
-
-                        dataWrite("\x03", peripheral.id);
-
-                        setTimeout(() => {//2nd Command
-                          console.log("2nd Command");
-
-                          dataWrite("\x01", peripheral.id);
-
-                        }, 3000);
-
-                        setTimeout(() => {//3rd Command
-                          console.log("3rd Command \\x04");
-
-                          dataWrite("from machine import Camera \nprint('IMPORT')\x04", peripheral.id);
-                          // dataWrite("print('hi')\x04", peripheral.id);
-
-                        }, 4000);
-
-                      }, 5000);
-
-                    }).catch(() => {
-                      console.log("Notification error");
-
-                    });
-
-                  }).catch(() => {
-                    console.log("Retrive error");
-
-                  })
-                })
-                .catch((error) => {
-                  // Failure code
-                  console.log("MTU error ", error);
-                });
-
-              // else {
-              //   BleManager.isPeripheralConnected(
-              //     peripheral.id,
-              //     []
-              //   ).then((isConnected) => {
-              //     if (isConnected) {
-              //       console.log("Monocle is connected!");
-              //       ShowToast(STRINGS.MONOCLE_CONNECTED);
-              //       dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
-              //       setTimeout(() => {
-              //         navigation.navigate(Routes.NAV_MEDIA_SCREEN);
-              //       }, 2000);
-              //     }
-              //   });
-              // }
-
-
-            }).catch(() => {
-              console.log("Device not connected");
-              dispatch(setDevicePairingError(DevicePairingStatus.PairingError));
-            });
-          }
-
-        }).catch(() => {
-          console.log("fail to bond");
-        });
     }
   }
 
