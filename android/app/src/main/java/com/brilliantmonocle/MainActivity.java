@@ -1,4 +1,4 @@
-package com.brilliant;
+package com.brilliantmonocle;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

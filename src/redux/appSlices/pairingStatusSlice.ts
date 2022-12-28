@@ -3,11 +3,13 @@ import { DevicePairingStatus } from "../../models";
 import { RootState } from "../store";
 export interface DevicePairingState {
   status: DevicePairingStatus;
+  peripheralId?: string;
   error?: string;
 }
 
 const initialState: DevicePairingState = {
   status: DevicePairingStatus.Unpaired,
+  peripheralId: undefined,
 };
 
 // Slice
@@ -17,9 +19,13 @@ const devicePairingSlice = createSlice({
   reducers: {
     setDevicePairingStatus: (
       state: DevicePairingState,
-      action: PayloadAction<DevicePairingStatus>
+      action: PayloadAction<{
+        status: DevicePairingStatus;
+        id?: string;
+      }>
     ) => {
-      state.status = action.payload;
+      state.status = action.payload.status;
+      state.peripheralId = action.payload.id;
     },
     setDevicePairingError: (
       state: DevicePairingState,
@@ -30,6 +36,7 @@ const devicePairingSlice = createSlice({
   },
 });
 
-export const { setDevicePairingStatus } = devicePairingSlice.actions;
+export const { setDevicePairingStatus, setDevicePairingError } =
+  devicePairingSlice.actions;
 
 export default devicePairingSlice.reducer;

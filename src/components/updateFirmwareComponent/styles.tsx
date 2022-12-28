@@ -3,6 +3,10 @@ import { FontFamily, Theme } from "../../models";
 import { normalize } from "../../utils/dimentionUtils";
 
 export const styles = StyleSheet.create({
+  bodyContainer: {
+    backgroundColor: Theme.color.White,
+    flex: 1,
+  },
   container: {
     padding: normalize(20)
   },

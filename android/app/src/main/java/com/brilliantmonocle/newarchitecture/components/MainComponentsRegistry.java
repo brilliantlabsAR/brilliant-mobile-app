@@ -1,4 +1,4 @@
-package com.brilliant.newarchitecture.components;
+package com.brilliantmonocle.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

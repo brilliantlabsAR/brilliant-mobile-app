@@ -37,7 +37,7 @@ import { BLE_icon, downArrow, logoButton, monocleImage, phone, upArrow } from ".
 import { STRINGS } from "../../models/constants";
 import { ShowToast } from "../../utils/toastUtils";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { setDevicePairingStatus } from "../../redux/appSlices/pairingStatusSlice";
+import { setDevicePairingError, setDevicePairingStatus } from "../../redux/appSlices/pairingStatusSlice";
 import { CustomModal } from "../../components/customModal";
 import { CommonButton } from "../../components/commonButton";
 import { TopBar } from "../../components/topBar";
@@ -75,7 +75,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-
+    // setShowLoading(true);
     return () => {
       backHandler.remove();
     }
@@ -104,36 +104,69 @@ const PairingScreen = (props: PairingNavigationProps) => {
   //     <View style={styles.itemSeparatorView} />
   //   );
   // }
+
+  const skipPairing = () => {
+    // stopScan
+    // if (peripheralId) {
+    //   BleManager.isPeripheralConnected(
+    //     peripheralId,
+    //     []
+    //   ).then((isConnected) => {
+    //     if (isConnected) {
+    //       BleManager.disconnect(peripheralId)
+    //         .then(() => {
+    //           // Success code
+    //           console.log("Disconnected-->");
+    //           setConnected(false);
+    //           setPeripheralID('');
+    //         })
+    //         .catch((error) => {
+    //           // Failure code
+    //           console.log(error);
+    //         });
+    //     }
+    //   })
+    // }
+    navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+  }
+
+
   useEffect(() => {
     //mainDao.executeSql(mainDao.dropAssetsTableQrery, []);
     try {
+
       if (Platform.OS == 'android') {
-        if (Platform.OS === 'android' && Platform.Version >= 23) {
-          PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
-            if (result) {
-              console.log("Permission is OK");
+        try {
+          PermissionsAndroid.requestMultiple(
+            [PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+            PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT]
+          ).then((result) => {
+            if (result['android.permission.BLUETOOTH_SCAN']
+              && result['android.permission.BLUETOOTH_CONNECT'] === 'granted') {
+              console.log('You can use the bluetooth');
+              BleManager.enableBluetooth()
+                .then(() => {
+                  // Success code
+                  console.log("The bluetooth is already enabled or the user confirm");
+                })
+                .catch((error) => {
+                  // Failure code
+                  console.log("The user refuse to enable bluetooth");
+                });
             } else {
-              PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
-                if (result) {
-                  console.log("User accept");
-                } else {
-                  console.log("User refuse");
-                }
-              });
+              console.log('Permission denied');
+              return;
             }
           });
 
+        } catch (err) {
+          console.warn(err)
         }
-        BleManager.enableBluetooth()
-          .then(() => {
-            // Success code
-            console.log("The bluetooth is already enabled or the user confirm");
-          })
-          .catch((error) => {
-            // Failure code
-            console.log("The user refuse to enable bluetooth");
-          });
+
       }
+
+
+
       BleManager.start({ showAlert: false }).then(() => {
         // Success code
         console.log("Module initialized");
@@ -145,7 +178,9 @@ const PairingScreen = (props: PairingNavigationProps) => {
           connectedDevice();
         }, 1000);
       } else {
-        connectedDevice();
+        setTimeout(() => {
+          connectedDevice();
+        }, 3000);
       }
     } catch (e) {
       console.log(e);
@@ -172,7 +207,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
     if (result != null) {
       await console.log('fetch Result', JSON.stringify(result));
       setShowLoading(false);
-      navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+      navigation.replace(Routes.NAV_MEDIA_SCREEN);
     }
   }
 
@@ -443,10 +478,10 @@ const PairingScreen = (props: PairingNavigationProps) => {
             setConnected(true);
             console.log("Monocle is connected!");
             ShowToast(STRINGS.MONOCLE_CONNECTED);
-            dispatch(setDevicePairingStatus(DevicePairingStatus.Paired));
+            dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Paired, id: peripheral.id as string }));
             setTimeout(() => {
               setShowLoading(false);
-              navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+              navigation.replace(Routes.NAV_MEDIA_SCREEN);
             }, 2000);
           }
         });
@@ -581,7 +616,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
             }).catch(() => {
               console.log("Device not connected");
-              dispatch(setDevicePairingStatus(DevicePairingStatus.PairingError));
+              dispatch(setDevicePairingError(DevicePairingStatus.PairingError));
             });
           }
 
@@ -699,7 +734,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
           }
           <Image source={upArrow} style={styles.arrowStyleSecond} />
           <Image source={phone} style={styles.phoneImage} />
-          <TouchableOpacity style={styles.skipTextContainer} onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}>
+          <TouchableOpacity style={styles.skipTextContainer} onPress={() => skipPairing()}>
             <Text style={styles.skipText}>Skip</Text>
           </TouchableOpacity>
         </View>

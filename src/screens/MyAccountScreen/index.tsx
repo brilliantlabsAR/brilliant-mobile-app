@@ -47,6 +47,7 @@ import { resetResendData } from "../../redux/authSlices/otpResendSlice";
 import { setDevicePairingStatus } from "../../redux/appSlices/pairingStatusSlice";
 import { DevicePairingStatus } from "../../models";
 import { CustomModal } from "../../components/customModal";
+import BleManager from 'react-native-ble-manager';
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
   const { navigation } = props;
@@ -63,7 +64,11 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
   const pairingStatus: DevicePairingStatus = useAppSelector(
     (state) => state.pairing.status
   );
+  const peripheralId = useAppSelector((state) => state.pairing.peripheralId);
+
   useEffect(() => {
+    console.log(peripheralId, '   --->', pairingStatus, "------>", DevicePairingStatus.Paired);
+
     setShowLoading(true);
     dispatch(FetchMyAccountData());
     BackHandler.addEventListener("hardwareBackPress", handleBackButton);
@@ -91,6 +96,9 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
       setShowLoading(false);
     }
   }, [status]);
+
+
+
 
   const handleBackButton = () => {
     //this.props.navigation.goBack();
@@ -152,6 +160,8 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
       })
       .catch((error) => console.log(error));
   };
+
+
   const logout = () => {
     Alert.alert(STRINGS.ALERT, STRINGS.ALERT_LOGOUT, [
       {
@@ -175,10 +185,19 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
 
   const handleMonoclePairing = async () => {
     if (pairingStatus === DevicePairingStatus.Paired) {
-      dispatch(setDevicePairingStatus(DevicePairingStatus.Unpaired));
+      BleManager.disconnect(peripheralId)
+        .then(() => {
+          // Success code
+          console.log("Disconnected-->");
+        })
+        .catch((error) => {
+          // Failure code
+          console.log(error);
+        });
+      dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Unpaired, id: undefined }));
     }
     setIsFirmwareModalVisible(false);
-    navigation.navigate(Routes.NAV_START_SCREEN);
+    navigation.replace(Routes.NAV_PAIRING_SCREEN);
   };
 
   const handleFirmware = () => {
@@ -241,7 +260,8 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                 source={userIcon}
                 resizeMode="contain"
               />
-              <Text style={styles.menuText}>{STRINGS.UPDATE_PROFILE}</Text>
+              <Text style={styles.menuText}>{STRINGS.UPDATE_PROFILE}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.6}
@@ -253,7 +273,10 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                 source={menuBluetooth}
                 resizeMode="contain"
               />
-              <Text style={styles.menuText}>{STRINGS.UNPAIR_DEVICE}</Text>
+              <Text style={styles.menuText}>{pairingStatus === DevicePairingStatus.Paired
+                ? STRINGS.UNPAIR_DEVICE
+                : "Pair Monocle"}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.6}

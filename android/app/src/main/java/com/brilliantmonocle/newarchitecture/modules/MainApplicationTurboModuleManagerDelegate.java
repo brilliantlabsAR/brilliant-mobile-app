@@ -1,4 +1,4 @@
-package com.brilliant.newarchitecture.modules;
+package com.brilliantmonocle.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
