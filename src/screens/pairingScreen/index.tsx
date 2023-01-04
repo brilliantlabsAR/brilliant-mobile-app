@@ -274,7 +274,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
     }
     { console.log('Name---->', peripheral.name) }
     { console.log('Name-IOS--->', peripheral.advertising.localName) }
-    ShowToast(peripheral.id + peripheral.advertising.localName)
     if (Platform.OS == 'android') {
       if (peripheral.name === "FRAME" || peripheral.name === "Frame" || peripheral.name === "Monocle") {
         peripherals.set(peripheral.id, peripheral);
@@ -299,7 +298,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
         console.log('handleDiscoverPeripheral----->', Array.from(peripherals.values()));
         setDevices(Array.from(peripherals.values()))
         setDeviceFound(true);
-        ShowToast(peripheral.id + peripheral.advertising.localName)
         testPeripheral(peripheral);
       } else {
         setDeviceFound(false);
@@ -466,7 +464,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
   };
 
   const framePairing = async (peripheral: any) => {
-    ShowToast(peripheral)
     if (peripheral) {
       await BleManager.connect(peripheral.id).then(async () => {
         setPeripheralID(peripheral.id);
@@ -476,7 +473,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
           peripherals.set(peripheral.id, p);
           setDevices(Array.from(peripherals.values()))
         }
-        ShowToast(peripheral.id)
         console.log('Connected to ' + peripheral.id);
         console.log('Device Name ' + peripheral.name);
         BleManager.isPeripheralConnected(
@@ -589,7 +585,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
 
       }).catch(() => {
-        ShowToast("Device not connected")
+        // ShowToast("Device not connected")
         console.log("Device not connected");
         dispatch(setDevicePairingError(DevicePairingStatus.PairingError));
       });
@@ -642,7 +638,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
             console.log("fail to bond");
           });
       } else {
-        ShowToast("In ios section")
         framePairing(peripheral)
       }
 

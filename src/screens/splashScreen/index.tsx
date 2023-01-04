@@ -71,28 +71,6 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
   // })
 
   useEffect(() => {
-    if (Platform.OS == 'android') {
-      if (Platform.OS === 'android' && Platform.Version >= 23) {
-        PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
-          if (result) {
-            console.log("ACCESS_FINE_LOCATION Permission is OK");
-          } else {
-            PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
-              if (result) {
-                console.log("ACCESS_FINE_LOCATION User accept");
-              } else {
-                console.log("User refuse");
-              }
-            });
-          }
-        });
-
-      }
-    }
-
-  })
-
-  useEffect(() => {
     mainDao.connectDatabase();
     mainDao.executeSql(mainDao.createAssetsTableQuery, []);
     console.log('Use effect');
@@ -157,6 +135,7 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
     }
     getLocation();
   }, []);
+
   async function getLocation() {
 
     await GetLocation.getCurrentPosition({
