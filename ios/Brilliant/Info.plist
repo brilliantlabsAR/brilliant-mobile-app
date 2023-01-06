@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -40,11 +40,9 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>To access bluetooth </string>
 	<key>NSCameraUsageDescription</key>
-	<string>To access camera</string>
+	<string>Please allow permission for camera access</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Allow contacts access</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>To access Location</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow microphone access</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -71,8 +69,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

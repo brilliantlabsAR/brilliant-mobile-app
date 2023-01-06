@@ -3,13 +3,17 @@ import { FontFamily, Theme } from "../../models";
 import { normalize } from "../../utils/dimentionUtils";
 
 export const styles = StyleSheet.create({
+  bodyContainer: {
+    backgroundColor: Theme.color.White,
+    flex: 1,
+  },
   container: {
     padding: normalize(20)
   },
   styledHeader: {
     fontFamily: FontFamily.regular,
-    fontWeight: '500',
-    fontSize: 38,
+    fontWeight: '600',
+    fontSize: 34,
     lineHeight: 47,
     color: Theme.color.darkGray,
     letterSpacing: -2.64,

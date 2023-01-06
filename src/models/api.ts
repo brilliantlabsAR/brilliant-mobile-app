@@ -1,4 +1,3 @@
-export const API_BASE_URL = "https://api.brilliantframe.com/api/";
 export const BASE_URL = "";
 
 export const API_LOGIN = "user/login";

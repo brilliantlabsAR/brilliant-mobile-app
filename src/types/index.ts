@@ -17,13 +17,11 @@ export interface IOtpContainer {
   onTyping?: (code: string) => void;
   blankCheck: boolean;
 }
-export interface IFooter {
-  selectedTab: string;
-}
 
 export interface ITopBar {
   title?: string;
   isTextVisible?: boolean;
+  navigateTo?: () => void;
 }
 
 export interface ICommonButtonProps {
@@ -39,6 +37,4 @@ export interface IUpdateFirmwareFileComponentProps {
 export interface ICustomModalProps {
   modalVisible: boolean;
   modalVisibleOff: () => void;
-  // pairNow: () => void;
-  // title: string;
 }

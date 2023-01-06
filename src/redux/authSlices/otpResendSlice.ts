@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
 import { apiStatus, IResedOtpProps, IStateProps } from "../apiDataTypes";
+import { REACT_APP_API_BASE_URL } from "@env";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -13,7 +14,7 @@ export const FetchResendOtpData = createAsyncThunk(
   async (options: IResedOtpProps) => {
     try {
       const response = await axios.post(
-        Const.API_BASE_URL + Const.API_RESEND_OTP,
+        REACT_APP_API_BASE_URL + Const.API_RESEND_OTP,
         options
       );
       return response.data;

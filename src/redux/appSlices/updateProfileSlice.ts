@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as Const from "../../models/api";
 import { apiStatus, IUpdateProfileProps, IStateProps } from "../apiDataTypes";
 import { postApi } from "../../models/apiStructure";
+import { ShowToast } from "../../utils/toastUtils";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -37,8 +38,8 @@ const UpdateProfileSlice = createSlice({
       .addCase(FetchUpdateProfileData.fulfilled, (state, action) => {
         if (action.payload.error === false) {
           state.status = apiStatus.success;
-          // console.log("UserData", action.payload.data);
           state.userData = action.payload.data;
+          // ShowToast(JSON.stringify(action.payload.data.otp));
         } else {
           state.status = apiStatus.failed;
           console.log(action.payload.message);

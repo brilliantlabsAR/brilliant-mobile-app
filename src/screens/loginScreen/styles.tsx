@@ -9,67 +9,73 @@ export const styles = StyleSheet.create({
     bodyContainer: {
         backgroundColor: Theme.color.White,
         flex: 1,
-        flexDirection: 'column'
+        // alignItems: 'center',
+        // justifyContent: 'center'
     },
-    middleView: {
+    mainContainer: {
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column',
-        marginTop: 50,
-        marginLeft: 25,
-        marginRight: 25
+        marginTop: normalize(100),
+        marginHorizontal: normalize(20),
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    backgroundWhite: {
+    scrollContainer: {
         backgroundColor: Theme.color.White,
-
     },
-    loginText: {
-        color: Theme.color.Black,
-        fontSize: normalize(30),
-        flexDirection: 'row',
-        fontFamily: FontFamily.bold
-
+    headerContainer: {
+        // marginRight: 25
     },
-    welcomeText: {
+    signUpDescText: {
         fontSize: normalize(14),
-        marginTop: 10,
+        marginTop: normalize(10),
         color: Theme.color.Black,
-        flexDirection: 'row',
+        textAlign: "left",
         fontFamily: FontFamily.regular
     },
-    phoneBox: {
-        marginTop: 40,
+    inputContainer: {
+        // marginRight: 25
+    },
+    afterInputContainer: {
+        marginTop: normalize(20),
         backgroundColor: Theme.color.White,
         paddingBottom: 20,
         borderRadius: 20
     },
-    phoneBoxTwo: {
+    termsView: {
         flexDirection: 'row',
         flex: 1,
-        width: '100%'
+        justifyContent: 'center'
     },
-    touchableCountryBox: {
+    termsText: {
+        fontSize: normalize(14),
+        color: Theme.color.Black,
+        fontFamily: FontFamily.regular,
+    },
+    outCountryCodeView: {
+        flexDirection: "row",
+        flex: 1,
+        width: "100%",
+    },
+    countryCodeView: {
         width: '28%',
         height: normalize(47),
         backgroundColor: Theme.color.White,
     },
-    signUpView: {
-        marginTop: normalize(20),
-        alignContent: 'center',
-        flex: 1,
-        flexDirection: 'row',
-        alignSelf: 'center'
+    gape1: {
+        width: "2%",
+        backgroundColor: Theme.color.White,
     },
-    dontSignUp: {
-        fontSize: 13,
-        color: Theme.color.Black,
-        fontStyle: 'normal',
-        fontFamily: 'Apercu Pro Medium'
-
+    gape2: {
+        width: "70%",
+        backgroundColor: Theme.color.White,
     },
-    loginButtonStyle: {
+    height20px: {
+        height: 20
+    },
+    touchOpacityView: {
         marginTop: 40,
-        alignContent: 'center',
         alignItems: 'center',
         borderRadius: 100,
         backgroundColor: '#000000',
@@ -87,17 +93,4 @@ export const styles = StyleSheet.create({
         fontFamily: FontFamily.light
 
     },
-    gap1: {
-        width: '2%',
-        backgroundColor: Theme.color.White,
-    },
-    gap2: {
-        width: '70%',
-        backgroundColor: Theme.color.White,
-    },
-    signupTextStyle: {
-        textDecorationLine: 'underline',
-    }
-
-
 })

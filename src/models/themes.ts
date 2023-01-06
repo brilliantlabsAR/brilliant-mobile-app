@@ -59,4 +59,5 @@ export const FontFamily = {
   regular: "ApercuPro-Regular",
   bold: "ApercuPro-Bold",
   light: "ApercuPro-Light",
+  medium: "ApercuPro-Medium",
 };

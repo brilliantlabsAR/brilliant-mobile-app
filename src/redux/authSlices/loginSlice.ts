@@ -3,6 +3,7 @@ import axios from "axios";
 import * as Const from "../../models/api";
 import { ShowToast } from "../../utils/toastUtils";
 import { apiStatus, ILoginProps, IStateProps } from "../apiDataTypes";
+import { REACT_APP_API_BASE_URL } from "@env";
 
 const initialState: IStateProps = {
   status: apiStatus.idle,
@@ -14,7 +15,7 @@ export const FetchLoginData = createAsyncThunk(
   async (options: ILoginProps) => {
     try {
       const response = await axios.post(
-        Const.API_BASE_URL + Const.API_LOGIN,
+        REACT_APP_API_BASE_URL + Const.API_LOGIN,
         options
       );
       return response.data;
