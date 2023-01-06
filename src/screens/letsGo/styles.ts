@@ -81,21 +81,6 @@ export const styles = StyleSheet.create({
     borderRadius: 25,
     fontFamily: FontFamily.light,
   },
-  brilliantTextSmall: {
-    fontSize: 15,
-    flex: 1,
-    position: "absolute",
-    color: Theme.color.White,
-    alignSelf: "center",
-    backgroundColor: Theme.color.DeepBlue,
-  },
-  brillientTextBig: {
-    color: Theme.color.Black,
-    fontSize: normalize(25),
-    letterSpacing: 10,
-    position: "absolute",
-    alignSelf: "center",
-  },
   termsText: {
     fontSize: normalize(13),
     color: Theme.color.Black,

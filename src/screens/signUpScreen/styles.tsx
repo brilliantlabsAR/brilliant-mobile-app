@@ -25,13 +25,7 @@ export const styles = StyleSheet.create({
     headerContainer: {
         // marginRight: 25
     },
-    // signupText: {
-    //     color: Theme.color.Black,
-    //     fontSize: normalize(30),
-    //     flexDirection: 'row',
-    //     fontFamily: FontFamily.bold
-    // },
-    signupdescText: {
+    signUpDescText: {
         fontSize: normalize(14),
         marginTop: normalize(10),
         color: Theme.color.Black,
@@ -41,7 +35,7 @@ export const styles = StyleSheet.create({
     inputContainer: {
         // marginRight: 25
     },
-    afterinputContainer: {
+    afterInputContainer: {
         marginTop: normalize(20),
         backgroundColor: Theme.color.White,
         paddingBottom: 20,
@@ -57,12 +51,12 @@ export const styles = StyleSheet.create({
         color: Theme.color.Black,
         fontFamily: FontFamily.regular,
     },
-    outcountrycodeView: {
+    outCountrycodeView: {
         flexDirection: "row",
         flex: 1,
         width: "100%",
     },
-    countrycodeView: {
+    countryCodeView: {
         width: '28%',
         height: normalize(47),
         backgroundColor: Theme.color.White,
@@ -97,18 +91,17 @@ export const styles = StyleSheet.create({
         fontFamily: FontFamily.regular
 
     },
-    alreadyaccountView: {
+    alreadyAccountView: {
         marginTop: normalize(20),
         alignContent: 'center',
         flex: 1,
         flexDirection: 'row',
         alignSelf: 'center'
     },
-    alreadyaccountText: {
+    alreadyAccountText: {
         fontSize: 13,
         color: Theme.color.Black,
         fontStyle: 'normal',
         fontFamily: FontFamily.medium,
-
     }
 })

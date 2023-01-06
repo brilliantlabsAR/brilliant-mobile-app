@@ -1,22 +1,17 @@
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  StatusBar,
   View,
   Text,
   SafeAreaView,
-  Platform,
-  LogBox,
   TouchableOpacity,
   Image,
-  BackHandler,
   ScrollView,
-  ActivityIndicator,
   Keyboard
 } from "react-native";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
-import { leftarrow, smartphone, timeIcon } from "../../assets";
+import { timeIcon } from "../../assets";
 import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
 import { Loading } from "../../components/loading";
@@ -24,12 +19,10 @@ import { STRINGS, ASYNC_CONST } from '../../models/constants';
 import * as Routes from "../../models/routes";
 import { ShowToast } from "../../utils/toastUtils";
 import { Validations } from "../../utils/validationUtils";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchOtpData } from "../../redux/authSlices/otpVerifySlice";
 import { FetchResendOtpData } from "../../redux/authSlices/otpResendSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
-import { Alert } from "react-native";
 import { countdownTimer } from "../../utils";
 import { setStringData } from "../../utils/asyncUtils";
 import { TopBar } from "../../components/topBar";
@@ -40,7 +33,7 @@ let timerEnable = true;
 
 const LoginOtpVerify = (props: Props) => {
   const { navigation, route } = props;
-  const loginDetails = useAppSelector(state => state.login.userData);
+  // const loginDetails = useAppSelector(state => state.login.userData);
   const [phoneNumber] = useState<string>(route.params.phone);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(240);
@@ -54,7 +47,6 @@ const LoginOtpVerify = (props: Props) => {
   const userDetails = useAppSelector(state => state.otp.userData);
 
   useEffect(() => {
-    //console.log('LoLO', timer);
     let clockCall = setInterval(() => {
       if (timer === 0) {
         clearInterval(clockCall);
@@ -63,23 +55,13 @@ const LoginOtpVerify = (props: Props) => {
         setTimer(timer - 1);
       }
     }, 1000);
-    // const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
 
     return () => {
       clearInterval(clockCall);
-      // backHandler.remove();
-
     }
   })
 
-  // const handleBackButton = () => {
-  //     //this.props.navigation.goBack();
-
-  //     navigation.goBack();
-  //     return true;
-  // }
   useEffect(() => {
-    // console.log(status);
     if (status === apiStatus.success) {
       setIsLoading(false);
       setStringData(ASYNC_CONST.userId, userDetails.id);
@@ -111,7 +93,6 @@ const LoginOtpVerify = (props: Props) => {
   }, [resendOtpStatus])
 
   const calculateTimer = () => {
-    //console.log("timerlog", timer);
     if (timer === 0) {
       timerEnable = false;
       return ('00:00');
@@ -122,7 +103,6 @@ const LoginOtpVerify = (props: Props) => {
 
   function resendOtp() {
     setBlankCheck(true);
-    // setOtp('');
     if (!Validations.verifyRequired(phoneNumber)) {
       navigation.replace(Routes.NAV_LOGIN_SCREEN)
     } else {
@@ -136,8 +116,8 @@ const LoginOtpVerify = (props: Props) => {
   }
 
   function verifyOTPCall() {
-    console.log("fjhbd", otp);
-    console.log(phoneNumber + '//// ' + otp)
+    // console.log("fjhbd", otp);
+    // console.log(phoneNumber + '//// ' + otp)
     if (Validations.verifyRequired(otp)) {
       setIsLoading(true)
       dispatch(FetchOtpData({
@@ -145,7 +125,6 @@ const LoginOtpVerify = (props: Props) => {
         otp: otp,
       }))
     }
-
   }
 
   return (
@@ -195,21 +174,15 @@ const LoginOtpVerify = (props: Props) => {
               <TouchableOpacity activeOpacity={0.6}
                 onPress={() =>
                   verifyOTPCall()
-                  //this.registerMember()
-                  //showErrorAlert('Register Successfully!')
-                  // console.log("Register", "Hii")
                 }
                 style={styles.verifyButtonStyle}>
 
                 <Text style={styles.verifyButtonText}>{STRINGS.VERIFY_NOW}</Text>
               </TouchableOpacity>
-
             </View>
-
           </View>
           {isLoading ? <Loading /> : null}
         </ScrollView>
-
       </View>
     </SafeAreaView>
   )

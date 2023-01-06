@@ -1,49 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  StatusBar,
   View,
   Text,
-  Platform,
-  LogBox,
   TouchableOpacity,
   Image,
   BackHandler,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator,
-  Keyboard,
   Dimensions,
   FlatList,
-  Alert,
-  PermissionsAndroid
+  Alert
 } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
 import { MediaScreenNavigationProps } from "../../navigations/types";
-import { ILoginVerification } from "../../types";
-import { leftarrow, calendarIcon, mediaPlay, moreButton, search, mediaDemoImage, logoButton, monocleIcon, heartIcon } from "../../assets";
+import { monocleIcon, heartIcon } from "../../assets";
 import { STRINGS } from "../../models/constants";
 import { styles } from "./styles";
-import Footer from '../../components/footer';
-import MapView, { Marker } from "react-native-maps";
-import { normalize } from "../../utils/dimentionUtils";
-import Contacts from 'react-native-contacts';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Routes from "../../models/routes";
-import {
-  MenuProvider,
-  Menu,
-  MenuTrigger,
-  MenuOptions,
-  MenuOption,
-} from 'react-native-popup-menu';
 import * as mainDao from '../../database';
 import { Asset } from "../../models";
 
 type Props = MediaScreenNavigationProps
 
-const { height: SCREEN_HEIGHT } = Dimensions.get('screen');
-const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 const MediaScreen = (props: Props) => {
   const { navigation, route } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -58,12 +34,24 @@ const MediaScreen = (props: Props) => {
     }
   }, [])
 
+  /** EXIT APP **/
   const handleBackButton = () => {
-    //this.props.navigation.goBack();
-
-    BackHandler.exitApp();
+    Alert.alert(
+      'Alert',
+      'Are you want to exit',
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: 'OK', onPress: () => { BackHandler.exitApp() } },
+      ],
+      { cancelable: true, }
+    );
     return true;
   }
+
 
   const showImage = async (page?: number) => {
     // try {
@@ -97,13 +85,10 @@ const MediaScreen = (props: Props) => {
     }
   }
 
-
-
-
   const renderItem = (item: any) => {
     console.log("IMAGE--->", item.filePath + item.fileName)
     return (
-      <View style={styles.flatview}>
+      <View style={styles.flatView}>
 
         <View style={styles.renderViewMiddle} >
           <Image
@@ -111,22 +96,18 @@ const MediaScreen = (props: Props) => {
             // source={{ uri: `data:image/png;base64,${item.filePath}` }}
             source={{ uri: "file://" + item.filePath + item.fileName }}
             resizeMode='cover'
-
           />
           <View style={styles.playButtonView}>
             <Image
               style={styles.playButtonImage}
               source={heartIcon}
               resizeMode='cover'
-
             />
           </View>
           <View style={styles.timeTextView}>
             <Text style={styles.ItemText}>{'00:15'}</Text>
-
           </View>
         </View>
-
       </View>
     );
   }
@@ -136,7 +117,7 @@ const MediaScreen = (props: Props) => {
     <SafeAreaView style={styles.bodyContainer}>
       <View style={styles.topView}>
         <View style={styles.marginTopFlatList}>
-          <Text style={styles.brillientTextBig}>{STRINGS.BRILLIANT_TEXT}</Text>
+          <Text style={styles.brilliantTextBig}>{STRINGS.BRILLIANT_TEXT}</Text>
         </View>
         {mediaList?.length !== 0 ? (
 
@@ -145,7 +126,6 @@ const MediaScreen = (props: Props) => {
             data={mediaList}
             scrollEnabled={false}
             showsVerticalScrollIndicator={false}
-            // ItemSeparatorComponent={FlatListItemSeparator}
             renderItem={({ item }) =>
               renderItem(item)
             }
@@ -160,7 +140,6 @@ const MediaScreen = (props: Props) => {
         }
 
       </View>
-      {/* <Footer selectedTab="MediaScreen" /> */}
       <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_ACCOUNT_SCREEN)}>
         <View
           style={styles.footerLinearStyle}>

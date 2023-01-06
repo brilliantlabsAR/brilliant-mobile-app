@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import { styles } from "./styles";
-import * as Routes from "../../models";
 import FileSelectionComponent from "../fileSelection";
 import DocumentPicker from "react-native-document-picker";
 import Snackbar from "react-native-snackbar";
 import { useNavigation } from "@react-navigation/native";
 import { CommonButton } from "../commonButton";
 import { UpdateFirmwareNavigationProps } from "../../navigations/types";
-import { normalize } from "../../utils/dimentionUtils";
 import { STRINGS } from "../../models";
 import { TopBar } from "../topBar";
 
@@ -21,7 +19,6 @@ const UpdateFirmwareComponent = () => {
   const handleUploadFile = () => {
     DocumentPicker.pickSingle({
       type: DocumentPicker.types.zip,
-      // copyTo: "documentDirectory",
     })
       .then((res: any) => {
         if (res?.name.substring(res?.name.length - 4) !== ".zip") {

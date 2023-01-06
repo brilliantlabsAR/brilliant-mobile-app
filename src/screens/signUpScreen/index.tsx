@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   SafeAreaView,
   TouchableOpacity,
-  Image,
   ScrollView,
   Keyboard,
   TouchableWithoutFeedback,
@@ -15,7 +14,7 @@ import { TextInput } from "react-native-paper";
 import { SignUpNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
-import { leftarrow, smartphone, userIcon, mailIcon } from "../../assets";
+import { smartphone, userIcon, mailIcon } from "../../assets";
 import { CountryCodePicker } from "../../utils/countryCodePicker";
 import { STRINGS } from "../../models/constants"
 import { ShowToast } from "../../utils/toastUtils";
@@ -28,7 +27,6 @@ import { countryPickerStyle, textInputStyle } from "../../utils/stylesUtils";
 import { TopBar } from "../../components/topBar";
 
 const SignUpScreen = (props: SignUpNavigationProps) => {
-  const [isShow, setIsShow] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [firstName, setFirstName] = useState<string>("");
   const [countryCode, setCountryCode] = useState<string>("");
@@ -54,7 +52,7 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
     }
   }, [status])
 
-  const signupApiFunc = () => {
+  const signUpApiFunc = () => {
     console.log("email checking", email);
 
     if (Validations.VerifySignup(phoneNumber, countryCode, firstName, email)) {
@@ -86,27 +84,26 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
           <View style={styles.mainContainer}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
               <View style={styles.headerContainer}>
-                <Text style={styles.signupdescText}>
+                <Text style={styles.signUpDescText}>
                   {STRINGS.SIGNUP_TITLE}
                 </Text>
               </View>
               <View style={styles.inputContainer}>
-                <View style={styles.afterinputContainer}>
+                <View style={styles.afterInputContainer}>
                   <View>
                     <TextInput
                       mode="outlined"
                       label="Full Name"
                       keyboardType="default"
                       value={firstName}
-                      //fontSize={15}
                       onChangeText={(firstName) => setFirstName(firstName)}
                       right={<TextInput.Icon name={userIcon} size={15} />}
                       theme={textInputStyle}
                     />
                     <View style={styles.height20px} />
-                    <View style={styles.outcountrycodeView}>
+                    <View style={styles.outCountrycodeView}>
                       <TouchableOpacity
-                        style={styles.countrycodeView}
+                        style={styles.countryCodeView}
                         onPress={() => setShow(true)}
                       >
                         <TextInput
@@ -168,41 +165,14 @@ const SignUpScreen = (props: SignUpNavigationProps) => {
                     <TouchableOpacity
                       activeOpacity={0.6}
                       onPress={() =>
-                        //this.registerMember()
-                        //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
-                        //
-                        // console.log("Register", "Hii")
-                        signupApiFunc()
+                        signUpApiFunc()
                       }
                       style={styles.touchOpacityView}
                     >
                       <Text style={styles.touchOpacityText}>Submit</Text>
                     </TouchableOpacity>
-                    {/* <View style={styles.alreadyaccountView}>
-                                    <Text style={styles.alreadyaccountText}>
-                                        {STRINGS.ALREADY_TITLE}
-                                        <Text
-                                            style={{ textDecorationLine: "underline" }}
-                                            onPress={() => navigation.navigate(Routes.NAV_LOGIN_SCREEN)}
-                                        >
-                                            {STRINGS.LOGIN}
-                                        </Text>
-                                    </Text>
-                                </View> */}
                   </View>
                 </View>
-                {/* <View style={styles.termsView}>
-                            <Text style={styles.termsText}>
-                                {STRINGS.AGREE_TITLE}
-                                <Text
-                                    style={{ textDecorationLine: "underline" }}
-                                    onPress={() => console.log("Comming soon")
-                                    }
-                                >
-                                    {STRINGS.TERMS_CONDITIONS}
-                                </Text>
-                            </Text>
-                        </View> */}
               </View>
               {
                 isLoading ?

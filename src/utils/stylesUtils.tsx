@@ -5,7 +5,6 @@ export const textInputStyle = {
         placeholder: Theme.color.place_holder,
         text: Theme.color.Black,
         primary: Theme.color.place_holder,
-        // underlineColor: 'transparent',
         background: Theme.color.White,
 
     }, fonts: {

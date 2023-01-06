@@ -1,29 +1,19 @@
 
-import React, { useState, useEffect, useRef } from "react";
-
+import React, { useState, useEffect } from "react";
 import {
-  StatusBar,
   View,
   Text,
   SafeAreaView,
   Platform,
-  LogBox,
   TouchableOpacity,
-  Image,
-  BackHandler,
-  ScrollView,
-  ActivityIndicator,
-  Alert,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Keyboard
+  ScrollView
 } from "react-native";
-import { FontFamily, Theme, STRINGS } from "../../models";
+import { STRINGS } from "../../models";
 import { LoginNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import { CountryCodePicker } from "../../utils/countryCodePicker";
 import { TextInput } from 'react-native-paper';
-import { leftarrow, smartphone } from "../../assets";
+import { smartphone } from "../../assets";
 import { Loading } from '../../components/loading';
 import * as Routes from "../../models/routes";
 import { ShowToast } from "../../utils/toastUtils";
@@ -33,11 +23,8 @@ import { FetchLoginData, resetLogin } from "../../redux/authSlices/loginSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import { countryPickerStyle, textInputStyle } from "../../utils/stylesUtils";
 import { TopBar } from "../../components/topBar";
-import { resetOTPData } from "../../redux/authSlices/otpVerifySlice";
-import { resetResendData } from "../../redux/authSlices/otpResendSlice";
 
 const LoginScreen = (props: LoginNavigationProps) => {
-
   const [isShow, setIsShow] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [countryCode, setCountryCode] = useState<string>('');
@@ -75,25 +62,20 @@ const LoginScreen = (props: LoginNavigationProps) => {
 
   return (
     <SafeAreaView style={styles.bodyContainer}>
-      {/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        > */}
       <TopBar />
       <View style={styles.mainContainer}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.headerContainer}>
-            <Text style={styles.signupdescText}>
+            <Text style={styles.signUpDescText}>
               {STRINGS.LOGIN_TEXT}
             </Text>
           </View>
           <View style={styles.inputContainer}>
-            <View style={styles.afterinputContainer}>
+            <View style={styles.afterInputContainer}>
               <View>
-                <View style={styles.outcountrycodeView}>
+                <View style={styles.outCountryCodeView}>
                   <TouchableOpacity
-                    style={styles.countrycodeView}
+                    style={styles.countryCodeView}
                     onPress={() => setIsShow(true)}
                   >
                     <TextInput
@@ -146,10 +128,6 @@ const LoginScreen = (props: LoginNavigationProps) => {
                 <TouchableOpacity
                   activeOpacity={0.6}
                   onPress={() =>
-                    //this.registerMember()
-                    //SimpleToast.show('Register Successfully!',SimpleToast.SHORT)
-                    //
-                    // console.log("Register", "Hii")
                     loginApiFunc()
                   }
                   style={styles.touchOpacityView}
@@ -167,8 +145,6 @@ const LoginScreen = (props: LoginNavigationProps) => {
           }
         </ScrollView>
       </View>
-      {/* </KeyboardAvoidingView>
-      </TouchableWithoutFeedback> */}
     </SafeAreaView>
   );
 }

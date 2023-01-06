@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  StatusBar,
   View,
   Text,
   SafeAreaView,
   Platform,
-  LogBox,
   TouchableOpacity,
   Image,
   BackHandler,
   ScrollView,
   Alert,
-  TextInput,
   Linking
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -27,15 +24,13 @@ import {
   userIcon,
   menuBluetooth,
   menuDeviceFrame,
-  liveStreaming,
   menuLicence,
   menuData,
   menuHelp,
   logoButton,
   monocleIcon,
 } from "../../assets";
-import { ASYNC_CONST, STRINGS } from "../../models";
-import Footer from "../../components/footer";
+import { STRINGS } from "../../models";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
@@ -53,7 +48,6 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
   const { navigation } = props;
   const [userImageState, setUserImageState] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
-  const [token, setToken] = useState<string>("");
   const [showLoading, setShowLoading] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isFirmwareModalVisible, setIsFirmwareModalVisible] = useState<boolean>(false);
@@ -97,15 +91,18 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
     }
   }, [status]);
 
-
-
-
+  /** EXIT APP **/
   const handleBackButton = () => {
-    //this.props.navigation.goBack();
-    //BackHandler.exitApp();
-    navigation.goBack();
+    Alert.alert(
+      'Alert',
+      'Are you want to exit',
+      [
+        { text: 'OK', onPress: () => BackHandler.exitApp() },
+      ]
+    );
     return true;
-  };
+  }
+
 
   const openModal = () => {
     setModalVisible(true);
@@ -128,39 +125,11 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
         setModalVisible(false);
         setUserImageState(image.path);
         setShowLoading(true);
-        // await axios.post(
-        //     Const.API_BASE_URL + Const.API_UPDATE_IMAGE,
-        //     data,
-        //     { headers: imageHeaders }
-        // ).then((res) => {
-        //     console.log("image data", res.data)
-        // }).catch((e) => {
-        //     console.log(e);
-        // })
         dispatch(FetchProfilePictureData(file));
         setShowLoading(false);
       })
       .catch((error) => console.log(error));
   };
-
-  const openCamera = () => {
-    ImageCropPicker.openCamera({
-      compressImageQuality: 0.9,
-    })
-      .then((image) => {
-        file = {
-          uri:
-            Platform.OS === "android"
-              ? image.path
-              : image.path.replace("file://", ""),
-          type: "image/jpeg",
-          name: image.path.split("/")[image.path.split("/").length - 1],
-        };
-        setUserImageState(image.path);
-      })
-      .catch((error) => console.log(error));
-  };
-
 
   const logout = () => {
     Alert.alert(STRINGS.ALERT, STRINGS.ALERT_LOGOUT, [
@@ -185,7 +154,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
 
   const handleMonoclePairing = async () => {
     if (pairingStatus === DevicePairingStatus.Paired) {
-      BleManager.disconnect(peripheralId)
+      BleManager.disconnect(peripheralId as string)
         .then(() => {
           // Success code
           console.log("Disconnected-->");
@@ -292,21 +261,6 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
               />
               <Text style={styles.menuText}>{STRINGS.UPDATE_DEVICE_FIRMWARE}</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.menuBox}
-              onPress={() =>
-              // navigation.navigate("LiveStreamingScreen")
-              { }
-              }
-            >
-              <Image
-                style={styles.menuIcon}
-                source={liveStreaming}
-                resizeMode="contain"
-              />
-              <Text style={styles.menuText}>{STRINGS.START_LIVE}</Text>
-            </TouchableOpacity> */}
             <TouchableOpacity
               activeOpacity={0.6}
               style={styles.menuBox}
@@ -358,7 +312,6 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
             </TouchableOpacity>
             <View style={styles.heightView} />
           </View>
-
           {showLoading ? <Loading /> : null}
         </ScrollView>
         <CustomModal
@@ -366,13 +319,6 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
           modalVisibleOff={() => setModalVisible(false)}
         >
           <View style={styles.modalMainView}>
-            {/* <TouchableOpacity
-                            activeOpacity={0.6}
-                            style={styles.modalBox}
-                            onPress={() => this.openCamera()}>
-
-                            <Text style={styles.modalText}>{'Open Camera'}</Text>
-                        </TouchableOpacity> */}
             <TouchableOpacity
               activeOpacity={0.6}
               style={styles.modalBox}
@@ -390,7 +336,6 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
             </TouchableOpacity>
           </View>
         </CustomModal>
-
 
         {/* {isFirmwareModalVisible && ( */}
         <CustomModal
@@ -411,7 +356,6 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
         </CustomModal>
         {/* )} */}
       </View>
-      {/* <Footer selectedTab="MyAccount" /> */}
       <TouchableOpacity
         onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}
       >

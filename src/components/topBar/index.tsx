@@ -10,11 +10,11 @@ import {
 import { leftarrow } from "../../assets";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./styles";
-import { FooterNavigationProps } from "../../navigations/types";
+import { TopBarNavigationProps } from "../../navigations/types";
 import { ITopBar } from "../../types";
 
 export const TopBar = (props: ITopBar) => {
-  const navigation = useNavigation<FooterNavigationProps>();
+  const navigation = useNavigation<TopBarNavigationProps>();
 
   const goBack = () => {
     navigation.goBack();

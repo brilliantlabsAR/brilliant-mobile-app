@@ -7,7 +7,6 @@ import { normalize } from "../../utils/dimentionUtils";
 const windowWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
-
     bodyContainer: {
         backgroundColor: Theme.color.WhiteSeven,
         flex: 1,
