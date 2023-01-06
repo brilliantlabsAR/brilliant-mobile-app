@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
 import { ShowToast } from "../../utils/toastUtils";
+import { REACT_APP_API_BASE_URL } from "@env";
 import { apiStatus, ISignupProps, IStateProps } from "../apiDataTypes";
 
 const initialState: IStateProps = {
@@ -14,7 +15,7 @@ export const FetchSignupData = createAsyncThunk(
   async (options: ISignupProps) => {
     try {
       const response = await axios.post(
-        Const.API_BASE_URL + Const.API_SIGNUP,
+        REACT_APP_API_BASE_URL + Const.API_SIGNUP,
         options
       );
       return response.data;

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as Const from "../../models/api";
+import { REACT_APP_API_BASE_URL } from "@env";
 import { imageHeaders } from "../../models/apiStructure";
 import { ShowToastLong } from "../../utils/toastUtils";
 import { ASYNC_CONST, STRINGS } from "../../models/constants";
@@ -16,7 +17,7 @@ export const FetchProfilePictureData = createAsyncThunk(
     let data = new FormData();
     data.append("profilePicture", options);
     await axios
-      .post(Const.API_BASE_URL + Const.API_UPDATE_IMAGE, data, {
+      .post(REACT_APP_API_BASE_URL + Const.API_UPDATE_IMAGE, data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "multipart/form-data",

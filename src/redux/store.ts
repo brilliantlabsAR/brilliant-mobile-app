@@ -1,15 +1,10 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import LoginSlice from "./authSlices/loginSlice";
 import UpdateProfileSlice from "./appSlices/updateProfileSlice";
-import SendInviteSlice from "./appSlices/sendInviteSlice";
-import StreamerAudienceSlice from "./appSlices/streamerAudienceSlice";
-import AppLocationSlice from "./appSlices/appLocationSlice";
 import NotificationCreateSlice from "./appSlices/notificationCreateSlice";
-import UserBlockSlice from "./appSlices/userBlockSlice";
 import otpVerifySlice from "./authSlices/otpVerifySlice";
 import SignupSlice from "./authSlices/signupSlice";
 import otpResendSlice from "./authSlices/otpResendSlice";
-import HelpSlice from "./appSlices/helpSlice";
 import MyAccountSlice from "./appSlices/myAccountSlice";
 import UpdateProfileVerifySlice from "./appSlices/updateProfileVerifySlice";
 import BluetoothPairingSlice from "./appSlices/pairingStatusSlice";
@@ -21,12 +16,7 @@ const store = configureStore({
     otp: otpVerifySlice,
     resendOtp: otpResendSlice,
     updateProfile: UpdateProfileSlice,
-    sendInviteSlice: SendInviteSlice,
-    streamerAudienceSlice: StreamerAudienceSlice,
-    appLocationSlice: AppLocationSlice,
     notificationCreateSlice: NotificationCreateSlice,
-    userBlockSlice: UserBlockSlice,
-    helpSlice: HelpSlice,
     myAccountSlice: MyAccountSlice,
     updateProfileVerifySlice: UpdateProfileVerifySlice,
     pairing: BluetoothPairingSlice,

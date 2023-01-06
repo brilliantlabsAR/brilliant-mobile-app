@@ -34,24 +34,9 @@ export interface IUpdateProfileProps {
     phone: string,
     email: string
 }
-export interface ISendInviteProps {
-    cc: string,
-    receiver: string
-}
-export interface IStreamAudienceProps {
-}
 
-export interface ILocationStoreProps {
-    latitude: string,
-    longitude: string,
-    time: string
-}
 export interface INotificationProps {
     userId: string
-}
-export interface IUserBlockProps {
-    blockedUser: string,
-    type: string
 }
 
 export interface IProfilePictureProps {

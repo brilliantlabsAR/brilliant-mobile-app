@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { API_BASE_URL } from './api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ASYNC_CONST } from './constants';
-import * as Const from "../models/api";
+import { REACT_APP_API_BASE_URL } from "@env";
 
 export const imageHeaders = {
     Accept: 'application/json',
@@ -22,7 +21,7 @@ export const getApi = async (url: string, params?: any) => {
     console.log("token here", userToken);
 
     const response = await axios.get(
-        Const.API_BASE_URL + url,
+        REACT_APP_API_BASE_URL + url,
         {
             headers: {
                 "x-access-token": userToken,
@@ -37,7 +36,7 @@ export const postApi = async (url: string, params?: any) => {
     const userToken = await AsyncStorage.getItem(ASYNC_CONST.accessToken);
     console.log("token here", userToken);
     const response = await axios.post(
-        Const.API_BASE_URL + url,
+        REACT_APP_API_BASE_URL + url,
         params,
         {
             headers: {
