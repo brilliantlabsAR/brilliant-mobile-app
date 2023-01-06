@@ -8,9 +8,10 @@ import { View, Text } from "react-native";
 
 export type RootStackParamList = {
   [Routes.NAV_SPLASH_SCREEN]: undefined;
+  [Routes.NAV_LETS_GO_SCREEN]: undefined;
   [Routes.NAV_APP]: undefined;
   [Routes.NAV_LOGIN_SCREEN]: undefined;
-  [Routes.NAV_LOGIN_VERIFY_SCREEN]: { phoneNumber: string };
+  [Routes.NAV_LOGIN_VERIFY_SCREEN]: { screen: string, phone: string };
   [Routes.NAV_SIGNUP_SCREEN]: undefined;
   [Routes.NAV_SUCCESS_LOGIN]: undefined;
 };
@@ -26,7 +27,11 @@ const RootNavigation: React.FC = () => {
           component={screens.SplashScreen}
           options={{ headerShown: false }}
         />
-
+        <RootStack.Screen
+          name={Routes.NAV_LETS_GO_SCREEN}
+          component={screens.LetsGoScreen}
+          options={{ headerShown: false }}
+        />
         <RootStack.Screen
           name={Routes.NAV_LOGIN_SCREEN}
           component={screens.LoginScreen}
@@ -48,7 +53,6 @@ const RootNavigation: React.FC = () => {
           component={screens.SignUpScreen}
           options={{ headerShown: false }}
         />
-
 
         <RootStack.Screen
           name={Routes.NAV_APP}

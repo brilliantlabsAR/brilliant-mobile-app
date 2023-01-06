@@ -38,6 +38,7 @@ export const Theme = {
     gray13: "#DBE0EA",
     gray14: "#CFD4DF",
     gray15: "#D9D9D9",
+    darkGray: "#202020",
     greenOne: "#ddedc8",
     pinkOne: "#F5AEBE",
     pinkTwo: "#E6529E",
@@ -50,6 +51,7 @@ export const Theme = {
     red_color: "#FE5F5F",
     transparentWhite: "#B0FFFFFF",
     blue_four: "#210170",
+    place_holder: "#A1A1A1",
   },
 };
 
@@ -57,4 +59,5 @@ export const FontFamily = {
   regular: "ApercuPro-Regular",
   bold: "ApercuPro-Bold",
   light: "ApercuPro-Light",
+  medium: "ApercuPro-Medium",
 };

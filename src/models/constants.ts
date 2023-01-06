@@ -1,118 +1,97 @@
-// export const SETTINGS_SETMODE_SUCCESS = "settings_setmode_success";
-// export const SETTINGS_GETSETTINGS_SUCCESS = "settings_getsettings_success";
-// export const ERROR_OCCURED = "Some Error Occured!";
-
-// export const AUTH_LOGIN_LOADING = "auth_login_loading";
-// export const AUTH_LOGIN_SUCCESS = "auth_login_success";
-// export const AUTH_LOGIN_FAIL = "auth_login_fail";
-
-// export const AUTH_SIGNUP_LOADING = "auth_signup_loading";
-// export const AUTH_SIGNUP_SUCCESS = "auth_signup_success";
-// export const AUTH_SIGNUP_FAIL = "auth_signup_fail";
-
-// export const AUTH_RESEND_OTP_LOADING = "auth_resend_otp_loading";
-// export const AUTH_RESEND_OTP_SUCCESS = "auth_resend_otp_success";
-// export const AUTH_RESEND_OTP_FAIL = "auth_resend_otp_fail";
-
-// export const AUTH_VERIFY_OTP_LOADING = "auth_verify_otp_loading";
-// export const AUTH_VERIFY_OTP_SUCCESS = "auth_verify_otp_success";
-// export const AUTH_VERIFY_OTP_FAIL = "auth_verify_otp_fail";
-
-// export const AUTH_PROFILE_VERIFY_OTP_LOADING =
-//   "auth_profile_verify_otp_loading";
-// export const AUTH_PROFILE_VERIFY_OTP_SUCCESS =
-//   "auth_profile_verify_otp_success";
-// export const AUTH_PROFILE_VERIFY_OTP_FAIL = "auth_profile_verify_otp_fail";
-
-// export const AUTH_REGISTER_NUMBER_LOADING = "auth_register_number_loading";
-// export const AUTH_REGISTER_NUMBER_SUCCESS = "auth_register_number_success";
-// export const AUTH_REGISTER_NUMBER_FAIL = "auth_register_number_fail";
-
-// export const USER_INFO_LOADING = "user_info_loading";
-// export const USER_INFO_SUCCESS = "user_info_success";
-// export const USER_INFO_FAIL = "user_info_fail";
-
-// export const USER_UPDATE_LOADING = "user_update_loading";
-// export const USER_UPDATE_SUCCESS = "user_update_success";
-// export const USER_UPDATE_FAIL = "user_update_fail";
-
-// export const IMAGE_UPDATE_LOADING = "image_update_loading";
-// export const IMAGE_UPDATE_SUCCESS = "image_update_success";
-// export const IMAGE_UPDATE_FAIL = "image_update_fail";
-
-// export const SLUG_CONTENT_LOADING = "slug_content_loading";
-// export const SLUG_CONTENT_SUCCESS = "slug_content_success";
-// export const SLUG_CONTENT_FAIL = "slug_content_fail";
-
-// export const TOKEN_LOADING = "token_loading";
-// export const TOKEN_SUCCESS = "token_success";
-// export const TOKEN_FAIL = "token_fail";
-
-// export const STORE_LOCATION_LOADING = "store_location_loading";
-// export const STORE_LOCATION_SUCCESS = "store_location_success";
-// export const STORE_LOCATION_FAIL = "store_location_fail";
-
-// export const ALL_USER_LOADING = "all_user_loading";
-// export const ALL_USER_SUCCESS = "all_user_success";
-// export const ALL_USER_FAIL = "all_user_fail";
-
-// export const ALL_STREAMER_LOADING = "all_streamer_loading";
-// export const ALL_STREAMER_SUCCESS = "all_streamer_success";
-// export const ALL_STREAMER_FAIL = "all_streamer_fail";
-
-// export const END_VIDEO_LOADING = "end_video_loading";
-// export const END_VIDEO_SUCCESS = "end_video_success";
-// export const END_VIDEO_FAIL = "end_video_fail";
-
-// export const SEND_INVITE_LOADING = "send_invite_loading";
-// export const SEND_INVITE_SUCCESS = "send_invite_success";
-// export const SEND_INVITE_FAIL = "send_invite_fail";
-
-// export const SEND_NOTIFICATION_LOADING = "send_notification_loading";
-// export const SEND_NOTIFICATION_SUCCESS = "send_notification_success";
-// export const SEND_NOTIFICATION_FAIL = "send_notification_fail";
-
-// export const BLOCK_USER_LOADING = "block_user_loading";
-// export const BLOCK_USER_SUCCESS = "block_user_success";
-// export const BLOCK_USER_FAIL = "block_user_fail";
-
 // STRINGS
-export const FULL_NAME_ERROR = "Please enter full name";
-export const PHONE_ERROR = "Please enter phone number";
-export const EMAIL_ERROR = "Please enter valid email";
-export const COUNTRY_ERROR = "Please choose country code";
-export const EMPTY_PHONE_ERROR = "Please Provide a Phone number!";
-export const EMPTY_EMAIL_ERROR = "Please Fill All the details!";
-export const PASSWORD_ERROR = "Please Provide a Password!";
-export const INCORRECT_PASSWORD =
-  "Password should be atleast 8 characters, one uppercase and one special character and one number";
-export const VERIFY_REQUIRE = "Please Provide Required Details!";
-export const OTP_VERIFY = "Please enter OTP";
-export const SIGNUP_TITLE = "Please enter your personal details below";
-export const ALREADY_TITLE = "Already have an account? ";
-export const AGREE_TITLE = "by signing up you agree with our ";
-export const TERMS_CONDITIONS = "Terms and Conditions.";
-export const LOGIN = "Login";
-export const START_TITLE = "Frame Device";
-export const START_INST_TITLE = "Tap & Pair Your Frame Device with Frame App";
-export const START_TUTORIAL_TITLE = "Skip Tutorial";
-export const ENSURE_TITLE = "Ensure Bluetooth & Wifi is on";
-export const LETS_PAIR_TITLE = "Let’s Pair Your\nDevice";
-export const SUBMIT = "Submit";
-export const CONNECT = "Connect";
-export const UPDATE_PROFILE = "Update Profile";
-export const UNPAIR_DEVICE = "Unpair Device";
-export const UPDATE_DEVICE_FIRMWARE = "Update Device Firmware";
-export const START_LIVE = "Start Live";
-export const LICENSE = "License Agreement";
-export const PRIVACY = "Data Privacy";
-export const HELP = "Help";
-export const CHOOSE_GALLARY = "Choose from Gallary";
-export const CANCEL = "Cancel";
-export const VERIFY_OTP_TEXT = "Verify Phone";
-export const SEND_OTP = "We have send otp to your phone\nno.";
-export const SUCCESS_TEXT = "Success";
-export const SUCCESS_LOGIN = "Congratulations, successfully login";
-export const INVITE_CONTACT = "Invite Contacts";
-export const STREAMER = "Streamer";
-export const AUDIENCE = "Audience";
+export const STRINGS = {
+  FULL_NAME_ERROR: "Please enter full name",
+  PHONE_ERROR: "Please enter a correct phone number",
+  EMAIL_ERROR: "Please enter valid email",
+  COUNTRY_ERROR: "Please choose country code",
+  EMPTY_PHONE_ERROR: "Please Provide a Phone number!",
+  EMPTY_EMAIL_ERROR: "Please Fill All the details!",
+  PASSWORD_ERROR: "Please Provide a Password!",
+  ENTER_WIFI_PASS: "Enter your Wifi password",
+  INCORRECT_PASSWORD:
+    "Password should be at least 8 characters, one uppercase and one special character and one number",
+  VERIFY_REQUIRE: "Please Provide Required Details!",
+  OTP_VERIFY: "Please enter OTP",
+  SIGNUP_TITLE: "Your details will only be used for login",
+  ALREADY_TITLE: "Already have an account? ",
+  AGREE_TITLE: "by signing up you agree with our ",
+  TERMS_CONDITIONS: "Terms and Conditions",
+  LOGIN: "Login",
+  SIGNUP: "Signup",
+  SIGN_UP: "Sign up",
+  START_TITLE: "Frame Device",
+  START_INST_TITLE: "Tap & Pair Your Frame Device with Frame App",
+  START_TUTORIAL_TITLE: "Skip Tutorial",
+  ENSURE_TITLE: "Ensure Bluetooth & Wifi is on",
+  LETS_PAIR_TITLE: "Let’s Pair Your\nDevice",
+  SUBMIT: "Submit",
+  OK: "Ok",
+  CONNECT: "Connect",
+  UPDATE: "Update",
+  UPDATE_PROFILE: "Update Profile",
+  UNPAIR_DEVICE: "Unpair Device",
+  UPDATE_DEVICE_FIRMWARE: "Update Device Firmware",
+  START_LIVE: "Start Live",
+  LICENSE: "License Agreement",
+  PRIVACY: "Data Privacy",
+  HELP: "Help",
+  CHOOSE_GALLARY: "Choose from Gallery",
+  CANCEL: "Cancel",
+  VERIFY_OTP_TEXT: "Verify Phone",
+  SEND_OTP: "We have send otp to your phone\nno.",
+  SUCCESS_TEXT: "Success",
+  SUCCESS_LOGIN: "Congratulations, successfully login",
+  INVITE_CONTACT: "Invite Contacts",
+  STREAMER: "Streamer",
+  AUDIENCE: "Audience",
+  SHARE_LINK: "Share Link",
+  NO_CONTACT_LIST: "No Contact List found",
+  VERIFY_NOW: "Verify Now",
+  RESEND_OTP: "Resend OTP",
+  LOGIN_TEXT: "Enter your phone number and we’ll text you a code",
+  DONT_HAVE_ACCN: "Don't have an account?",
+  SEARCH_MEDIA: "Search media",
+  RENAME: "Rename",
+  DOWNLOAD: "Download",
+  DELETE: "Delete",
+  LETS_GO_HEADING: "Let’s get you set up",
+  LETS_GO_TITLE: "Sign up, or login with your phone number",
+  // BROADCAST_YOUR_LIFE: "Broadcast your life as it happens",
+  PROFILE_IMAGE_SUCCESS: "Profile image uploaded successfully",
+  PROFILE_IMAGE_ERROR: "There is some error",
+  MONOCLE_CONNECTED: "Monocle is connected successfully",
+  FRAME_CONNECTED: "Frame is connected successfully",
+  ALERT: "Alert",
+  ALERT_LOGOUT: "Are you want to logout?",
+  CLOSE: "Close",
+  PAIR_NOW: "Pair now",
+  FIRMWARE_UPDATE_PAIR: "Pair with your Monocle to update firmware.",
+  CHOOSE_WIFI_NETWORK: "Choose Your Personal Network :",
+  UPDATE_FIRMWARE: "Update Firmware",
+  ZIP_FILE_SUPPORTED: "Only zip file is supported",
+  CANCEL_PICKER: "You cancelled the picker",
+  FILE_SELECTED: "File Selected: ",
+  SELECT_UPDATE_FILE: "Select Update File",
+  PERFORM_FIRMWARE_UPDATE: "Perform Firmware Update",
+  CONNECT_TEXT: "Bring your Monocle close to your phone",
+  WELCOME: "Welcome",
+  WELCOME_TEXT: "The pocket sized AR device for imaginative hackers",
+  BRILLIANT_TEXT: "BRILLIANT",
+  EMPTY_TEXT: "No media found",
+};
+
+//micro python command
+export const COMMAND = {
+  X3: "\x03",
+  X1: "\x01",
+  IMPORT_CAMERA: "from machine import Camera \nprint('IMPORT')\x04",
+  CAMERA_CAPTURE: "Camera.capture() \nprint('SCAN') \x04",
+  WIFI_STATUS: "p=WiFi.status() \nprint('STATUS') \nprint(p)\x04",
+  WIFI_LIST: "p=WiFi.list() \nprint('LIST') \nprint(p)\x04",
+};
+
+export const ASYNC_CONST = {
+  userId: "userId",
+  accessToken: "accessToken",
+  phone: "phone",
+};

@@ -1,266 +1,375 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-    StatusBar,
-    View,
-    Text,
-    SafeAreaView,
-    Platform,
-    LogBox,
-    TouchableOpacity,
-    Image,
-    BackHandler,
-    ScrollView,
-    ActivityIndicator,
-    FlatList,
-    TouchableHighlight
+  View,
+  Text,
+  SafeAreaView,
+  Platform,
+  TouchableOpacity,
+  Image,
+  BackHandler,
+  ScrollView,
+  Alert,
+  Linking
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ImageCropPicker from "react-native-image-crop-picker";
-import Modal from 'react-native-modal';
-
-import { normalize } from "../../utils/dimentionUtils";
-import { Theme } from "../../models";
+import ImageCropPicker, { clean } from "react-native-image-crop-picker";
+import LinearGradient from "react-native-linear-gradient";
 import { AccountNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
-import { mainUser, blackCamera, userIcon, menuBluetooth, menuDeviceFrame, liveStreaming, menuLicence, menuData, menuHelp } from "../../assets";
-import { UPDATE_PROFILE, UNPAIR_DEVICE, UPDATE_DEVICE_FIRMWARE, START_LIVE, LICENSE, PRIVACY, HELP, CHOOSE_GALLARY, CANCEL } from "../../models/constants";
-import Footer from "../../components/footer";
+import { Loading } from "../../components/loading";
+import {
+  mainUser,
+  blackCamera,
+  userIcon,
+  menuBluetooth,
+  menuDeviceFrame,
+  menuLicence,
+  menuData,
+  menuHelp,
+  logoButton,
+  monocleIcon,
+} from "../../assets";
+import { STRINGS } from "../../models";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
+import { apiStatus } from "../../redux/apiDataTypes";
+import { FetchProfilePictureData } from "../../redux/appSlices/profilePictureSlice";
+import { cleanStorageItem } from "../../utils/asyncUtils";
+import { resetOTPData } from "../../redux/authSlices/otpVerifySlice";
+import { resetLogin } from "../../redux/authSlices/loginSlice";
+import { resetResendData } from "../../redux/authSlices/otpResendSlice";
+import { setDevicePairingStatus } from "../../redux/appSlices/pairingStatusSlice";
+import { DevicePairingStatus } from "../../models";
+import { CustomModal } from "../../components/customModal";
+import BleManager from 'react-native-ble-manager';
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
-    const { navigation } = props;
-    const [userImageState, setuserImageState] = useState<string>("");
-    const [fullName, setfullName] = useState<string>("");
-    const [showLoading, setshowLoading] = useState<boolean>(false);
-    const [modalVisible, setmodalVisible] = useState<boolean>(false);
-    let file = '';
+  const { navigation } = props;
+  const [userImageState, setUserImageState] = useState<string>("");
+  const [fullName, setFullName] = useState<string>("");
+  const [showLoading, setShowLoading] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [isFirmwareModalVisible, setIsFirmwareModalVisible] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  let file: any = "";
+  const status = useAppSelector((state) => state.myAccountSlice.status);
+  const userDetails = useAppSelector((state) => state.myAccountSlice.userData);
+  const pairingStatus: DevicePairingStatus = useAppSelector(
+    (state) => state.pairing.status
+  );
+  const peripheralId = useAppSelector((state) => state.pairing.peripheralId);
 
-    const openModal = () => {
-        setmodalVisible(true);
+  useEffect(() => {
+    console.log(peripheralId, '   --->', pairingStatus, "------>", DevicePairingStatus.Paired);
+
+    setShowLoading(true);
+    dispatch(FetchMyAccountData());
+    BackHandler.addEventListener("hardwareBackPress", handleBackButton);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackButton);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (status === apiStatus.success) {
+      setShowLoading(false);
+      // console.log("data-->", userDetails);
+      // console.log("data-->2", userDetails.name);
+      setFullName(userDetails.name);
+      AsyncStorage.setItem("name", userDetails.name);
+      AsyncStorage.setItem("countryCode", userDetails.cc);
+      AsyncStorage.setItem("phone", userDetails.phone);
+      AsyncStorage.setItem("email", userDetails.email);
+      if (userDetails.profilePicture == "") {
+        setUserImageState("");
+      } else {
+        setUserImageState(userDetails.profilePicture);
+      }
+    } else if (status === apiStatus.failed) {
+      setShowLoading(false);
     }
-    const openGallery = () => {
-        ImageCropPicker.openPicker({
-            compressImageQuality: 0.9,
-        }).then(image => {
-            file = {
-                uri: Platform.OS === 'android' ? image.path : image.path.replace("file://", ""),
-                type: 'image/jpeg',
-                name: image.path.split("/")[image.path.split("/").length - 1]
-            }
+  }, [status]);
 
-            setmodalVisible(false)
-            setuserImageState(image.path);
-            setshowLoading(true);
-            //uploadProfileImage();
+  /** EXIT APP **/
+  const handleBackButton = () => {
+    Alert.alert(
+      'Alert',
+      'Are you want to exit',
+      [
+        { text: 'OK', onPress: () => BackHandler.exitApp() },
+      ]
+    );
+    return true;
+  }
+
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+  const openGallery = () => {
+    ImageCropPicker.openPicker({
+      compressImageQuality: 0.9,
+    })
+      .then(async (image) => {
+        file = {
+          uri:
+            Platform.OS === "android"
+              ? image.path
+              : image.path.replace("file://", ""),
+          name: image.path.split("/")[image.path.split("/").length - 1],
+          type: "image/jpeg",
+        };
+        console.log("check image path", file);
+
+        setModalVisible(false);
+        setUserImageState(image.path);
+        setShowLoading(true);
+        dispatch(FetchProfilePictureData(file));
+        setShowLoading(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const logout = () => {
+    Alert.alert(STRINGS.ALERT, STRINGS.ALERT_LOGOUT, [
+      {
+        text: STRINGS.CANCEL,
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: STRINGS.OK,
+        onPress: async () => {
+          dispatch(resetLogin());
+          dispatch(resetOTPData());
+          dispatch(resetResendData());
+          cleanStorageItem().then(() => {
+            navigation.replace(Routes.NAV_SPLASH_SCREEN);
+          });
+        },
+      },
+    ]);
+  };
+
+  const handleMonoclePairing = async () => {
+    if (pairingStatus === DevicePairingStatus.Paired) {
+      BleManager.disconnect(peripheralId as string)
+        .then(() => {
+          // Success code
+          console.log("Disconnected-->");
         })
-            .catch(error => console.log(error))
+        .catch((error) => {
+          // Failure code
+          console.log(error);
+        });
+      dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Unpaired, id: undefined }));
     }
+    setIsFirmwareModalVisible(false);
+    navigation.replace(Routes.NAV_PAIRING_SCREEN);
+  };
 
-    const openCamera = () => {
-        ImageCropPicker.openCamera({
-            compressImageQuality: 0.9
-        }).then(image => {
-            file = {
-                uri: Platform.OS === 'android' ? image.path : image.path.replace("file://", ""),
-                type: 'image/jpeg',
-                name: image.path.split("/")[image.path.split("/").length - 1]
-            }
-            setuserImageState(image.path);
+  const handleFirmware = () => {
+    // if (pairingStatus === DevicePairingStatus.Paired) {
+    navigation.navigate(Routes.NAV_UPDATE_FIRMWARE);
+    // } else {
+    //   setIsFirmwareModalVisible(true);
+    // }
+  };
 
-        }).catch(error => console.log(error))
-    }
+  const modalClose = () => {
+    setIsFirmwareModalVisible(false);
+  };
 
-    return (
-        <SafeAreaView style={styles.bodyContainer}>
-            <View style={styles.mainContainer}>
-                <ScrollView style={styles.firstScrollView}>
-                    <View>
-                        <View style={styles.insideFirstScrollView}>
-                            <View style={styles.profileImageView}>
-                                {userImageState == '' &&
-                                    <Image
-                                        style={styles.userImage}
-                                        source={mainUser}
-                                        resizeMode='cover'
-
-                                    />
-                                }
-                                {userImageState != '' &&
-                                    <Image
-                                        style={styles.userProfileImage}
-                                        source={{ uri: userImageState }}
-                                        resizeMode='cover'
-
-                                    />
-                                }
-                            </View>
-                            <TouchableOpacity style={styles.openModalTouch}
-                                onPress={() => openModal()}>
-                                <View >
-
-                                    <Image
-                                        style={styles.cameraImageView}
-                                        source={blackCamera}
-                                        resizeMode='cover'
-
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                            <Text style={styles.nameText}>{fullName}</Text>
-                        </View>
-                        <View>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() =>
-                                    navigation.navigate(Routes.NAV_UPDATE_PROFILE_SCREEN)}>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={userIcon}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{UPDATE_PROFILE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() =>
-                                    navigation.navigate(Routes.NAV_START_SCREEN)}>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuBluetooth}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{UNPAIR_DEVICE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() => { }
-                                    // navigation.navigate('RtmpStreamScreen')
-                                    //showToast('coming soon')
-                                }>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuDeviceFrame}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{UPDATE_DEVICE_FIRMWARE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() =>
-                                // navigation.navigate("LiveStreamingScreen")
-                                { }
-                                }>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={liveStreaming}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{START_LIVE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() => { }
-                                    // navigation.navigate("SlugScreen", {
-                                    //     pageNo: "1"
-                                    // })
-                                }>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuLicence}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{LICENSE}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() => { }
-                                    // navigation.navigate("SlugScreen", {
-                                    //     pageNo: "2"
-                                    // })
-                                }>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuData}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{PRIVACY}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                activeOpacity={0.6}
-                                style={styles.menuBox}
-                                onPress={() =>
-                                // navigation.navigate("SlugScreen", {
-                                //     pageNo: "3"
-                                // })
-                                // navigation.navigate('RtmpStreamerScreen')
-                                { }
-                                }>
-                                <Image
-                                    style={styles.menuIcon}
-                                    source={menuHelp}
-                                    resizeMode='contain'
-                                />
-                                <Text style={styles.menuText}>{HELP}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity activeOpacity={0.6}
-                                onPress={() =>
-                                // logout()
-                                { }
-                                }
-                                style={styles.logoutView}>
-                                <Text style={styles.logoutText}>Logout</Text>
-                            </TouchableOpacity>
-                            <View style={styles.heightView} />
-                        </View>
-                    </View>
-                    {
-                        showLoading ?
-                            <ActivityIndicator
-                                style={styles.activityView}
-                                size="large"
-                                color={Theme.color.Black}
-                            /> : null
-                    }
-                </ScrollView>
-                <Modal
-                    isVisible={modalVisible}
-                    onBackdropPress={() => setmodalVisible(false)}
-                >
-                    <View style={styles.modalMainView}>
-
-                        {/* <TouchableOpacity
-                        activeOpacity={0.6}
-                        style={styles.modalBox}
-                        onPress={() => this.openCamera()}>
-
-                        <Text style={styles.modalText}>{'Open Camera'}</Text>
-                    </TouchableOpacity> */}
-                        <TouchableOpacity
-                            activeOpacity={0.6}
-                            style={styles.modalBox}
-                            onPress={() => openGallery()}>
-                            <Text style={styles.modalText}>{CHOOSE_GALLARY}</Text>
-                        </TouchableOpacity>
-                        <View style={styles.modalHeight} />
-                        <TouchableOpacity
-                            activeOpacity={0.6}
-                            style={styles.modalBox}
-                            onPress={() =>
-                                setmodalVisible(false)}>
-                            <Text style={styles.modalText}>{CANCEL}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </Modal>
+  return (
+    <SafeAreaView style={styles.bodyContainer}>
+      <View style={styles.mainContainer}>
+        <ScrollView style={styles.firstScrollView}>
+          <View style={styles.insideFirstScrollView}>
+            <View style={styles.profileImageView}>
+              {userImageState == "" && (
+                <Image
+                  style={styles.userImage}
+                  source={mainUser}
+                  resizeMode="cover"
+                />
+              )}
+              {userImageState != "" && (
+                <Image
+                  style={styles.userProfileImage}
+                  source={{ uri: userImageState }}
+                  resizeMode="cover"
+                />
+              )}
             </View>
-            <Footer selectedTab="MyAccount" />
-        </SafeAreaView>
-    )
+            <TouchableOpacity
+              style={styles.openModalTouch}
+              onPress={() => openModal()}
+            >
+              <View>
+                <Image
+                  style={styles.cameraImageView}
+                  source={blackCamera}
+                  resizeMode="cover"
+                />
+              </View>
+            </TouchableOpacity>
+            <Text style={styles.nameText}>{fullName}</Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.menuBox}
+              onPress={() =>
+                navigation.navigate(Routes.NAV_UPDATE_PROFILE_SCREEN)
+              }
+            >
+              <Image
+                style={styles.menuIcon}
+                source={userIcon}
+                resizeMode="contain"
+              />
+              <Text style={styles.menuText}>{STRINGS.UPDATE_PROFILE}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.menuBox}
+              onPress={() => handleMonoclePairing()}
+            >
+              <Image
+                style={styles.menuIcon}
+                source={menuBluetooth}
+                resizeMode="contain"
+              />
+              <Text style={styles.menuText}>{pairingStatus === DevicePairingStatus.Paired
+                ? STRINGS.UNPAIR_DEVICE
+                : "Pair Monocle"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.menuBox}
+              onPress={() => {
+                handleFirmware();
+              }}
+            >
+              <Image
+                style={styles.menuIcon}
+                source={menuDeviceFrame}
+                resizeMode="contain"
+              />
+              <Text style={styles.menuText}>{STRINGS.UPDATE_DEVICE_FIRMWARE}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.menuBox}
+              onPress={() => {
+                Linking.openURL('http://brilliantmonocle.com/terms')
+              }}
+            >
+              <Image
+                style={styles.menuIcon}
+                source={menuLicence}
+                resizeMode="contain"
+              />
+              <Text style={styles.menuText}>{STRINGS.LICENSE}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.menuBox}
+              onPress={() => {
+                Linking.openURL('http://brilliantmonocle.com/privacy')
+              }}
+            >
+              <Image
+                style={styles.menuIcon}
+                source={menuData}
+                resizeMode="contain"
+              />
+              <Text style={styles.menuText}>{STRINGS.PRIVACY}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.menuBox}
+              onPress={() => {
+                Linking.openURL('https://docs.brilliantmonocle.com/')
+              }}
+            >
+              <Image
+                style={styles.menuIcon}
+                source={menuHelp}
+                resizeMode="contain"
+              />
+              <Text style={styles.menuText}>{STRINGS.HELP}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => logout()}
+              style={styles.logoutView}
+            >
+              <Text style={styles.logoutText}>Logout</Text>
+            </TouchableOpacity>
+            <View style={styles.heightView} />
+          </View>
+          {showLoading ? <Loading /> : null}
+        </ScrollView>
+        <CustomModal
+          modalVisible={modalVisible}
+          modalVisibleOff={() => setModalVisible(false)}
+        >
+          <View style={styles.modalMainView}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.modalBox}
+              onPress={() => openGallery()}
+            >
+              <Text style={styles.modalText}>{STRINGS.CHOOSE_GALLARY}</Text>
+            </TouchableOpacity>
+            <View style={styles.modalHeight} />
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.modalBox}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.modalText}>{STRINGS.CANCEL}</Text>
+            </TouchableOpacity>
+          </View>
+        </CustomModal>
+
+        {/* {isFirmwareModalVisible && ( */}
+        <CustomModal
+          modalVisible={isFirmwareModalVisible}
+          modalVisibleOff={modalClose}
+        >
+          <View style={styles.modalView}>
+            <Text style={styles.textView}>{STRINGS.FIRMWARE_UPDATE_PAIR}</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.buttonView} onPress={modalClose}>
+                <Text style={styles.btnTextView}>{STRINGS.CLOSE}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonView} onPress={handleMonoclePairing}>
+                <Text style={styles.btnTextView}>{STRINGS.PAIR_NOW}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </CustomModal>
+        {/* )} */}
+      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}
+      >
+        <View
+          style={styles.footerLinearStyle}>
+          <Image
+            style={styles.footerButtonImage}
+            source={monocleIcon}
+            resizeMode='contain'
+          />
+        </View>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
 };
 
 export default MyAccountScreen;

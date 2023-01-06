@@ -7,7 +7,6 @@ import { normalize } from "../../utils/dimentionUtils";
 const windowWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
-
     bodyContainer: {
         backgroundColor: Theme.color.WhiteSeven,
         flex: 1,
@@ -122,17 +121,9 @@ export const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         height: normalize(60),
     },
-    activityView: {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        right: 0,
-        left: 0,
-        backgroundColor: Theme.color.transparent
-    },
     modalMainView: {
         alignSelf: 'center',
-        backgroundColor: 'white',
+        backgroundColor: Theme.color.White,
         width: normalize(220),
         borderRadius: normalize(10)
     },
@@ -153,6 +144,61 @@ export const styles = StyleSheet.create({
     modalHeight: {
         backgroundColor: Theme.color.grayEight,
         height: normalize(0.5),
-    }
+    },
+    footerLinearStyle: {
+        position: 'absolute',
+        left: normalize(250),
+        right: 0,
+        bottom: 10,
+        zIndex: 1,
+        elevation: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: normalize(50),
+        height: normalize(50),
+        borderRadius: normalize(25),
+        backgroundColor: Theme.color.Black,
+        borderColor: Theme.color.Black,
+        borderWidth: 2,
+    },
+    footerButtonImage: {
+        height: normalize(30),
+        width: normalize(30),
+    },
+
+    // device firmware modal view
+    modalView: {
+        alignSelf: 'center',
+        width: normalize(300),
+        borderRadius: normalize(10),
+        backgroundColor: Theme.color.White,
+        padding: 35,
+        alignItems: 'center',
+    },
+    buttonContainer: {
+        flexDirection: 'row'
+    },
+    textView: {
+        fontFamily: FontFamily.regular,
+        fontSize: normalize(15),
+        fontStyle: 'normal',
+        fontWeight: '600',
+        lineHeight: 20,
+        color: Theme.color.darkGray,
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    btnTextView: {
+        color: Theme.color.Black,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    buttonView: {
+        borderRadius: 20,
+        margin: 10,
+        padding: 10,
+        elevation: 2,
+        backgroundColor: Theme.color.gray15
+    },
 
 })

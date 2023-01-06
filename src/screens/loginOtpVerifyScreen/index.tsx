@@ -1,159 +1,191 @@
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
-    StatusBar,
-    View,
-    Text,
-    SafeAreaView,
-    Platform,
-    LogBox,
-    TouchableOpacity,
-    Image,
-    BackHandler,
-    ScrollView,
-    ActivityIndicator,
-    Keyboard
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Keyboard
 } from "react-native";
-import { Theme } from "../../models";
 import { LoginVerifyNavigationProps } from "../../navigations/types";
 import { ILoginVerification } from "../../types";
-import { leftarrow, smartphone, timeIcon } from "../../assets";
+import { timeIcon } from "../../assets";
 import { styles } from "./styles";
 import OTPContainer from "../../components/otpContainer";
 import { Loading } from "../../components/loading";
-import { ShowToast } from "../../utils/toastUtils";
-import * as Strings from '../../models';
+import { STRINGS, ASYNC_CONST } from '../../models/constants';
 import * as Routes from "../../models/routes";
+import { ShowToast } from "../../utils/toastUtils";
+import { Validations } from "../../utils/validationUtils";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchOtpData } from "../../redux/authSlices/otpVerifySlice";
+import { FetchResendOtpData } from "../../redux/authSlices/otpResendSlice";
+import { apiStatus } from "../../redux/apiDataTypes";
+import { countdownTimer } from "../../utils";
+import { setStringData } from "../../utils/asyncUtils";
+import { TopBar } from "../../components/topBar";
 
 type Props = ILoginVerification & LoginVerifyNavigationProps
 
 let timerEnable = true;
+
 const LoginOtpVerify = (props: Props) => {
-    const { navigation, route } = props;
+  const { navigation, route } = props;
+  // const loginDetails = useAppSelector(state => state.login.userData);
+  const [phoneNumber] = useState<string>(route.params.phone);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [timer, setTimer] = useState<number>(240);
+  const [otp, setOtp] = useState<string>('');
+  const [codeCount, setcodeCount] = useState<number>(4);
+  const [blankCheck, setBlankCheck] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
+  const status = useAppSelector(state => state.otp.status);
+  const resendOtpStatus = useAppSelector(state => state.resendOtp.status);
+  const resendOtpDetails = useAppSelector(state => state.resendOtp.userData);
+  const userDetails = useAppSelector(state => state.otp.userData);
 
-    const [phoneNumber] = useState<string>(route.params.phoneNumber);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [timer, setTimer] = useState<number>(240);
-    const [otp, setOtp] = useState<string>('');
+  useEffect(() => {
+    let clockCall = setInterval(() => {
+      if (timer === 0) {
+        clearInterval(clockCall);
+      }
+      else {
+        setTimer(timer - 1);
+      }
+    }, 1000);
 
-
-    useEffect(() => {
-        console.log('LoLO', timer);
-        let clockCall = setInterval(() => {
-            if (timer === 0) {
-                clearInterval(clockCall);
-            }
-            else {
-                setTimer(timer - 1);
-            }
-        }, 1000);
-        return () => {
-            clearInterval(clockCall)
-        }
-    })
-
-    const calculateTimer = () => {
-        console.log("timerlog", timer);
-        if (timer === 0) {
-            timerEnable = false;
-            return ('00:00');
-        } else {
-            var m = Math.floor(timer % 3600 / 60);
-            var s = Math.floor(timer % 3600 % 60);
-            return ((m < 10 ? `0${m} :` : `${m} :`) + (s < 10 ? `0${s}` : `${s}`))
-        }
-    };
-
-    function resendOtp() {
-        if (otp == '' || otp == ' ') {
-            ShowToast(Strings.OTP_VERIFY);
-        } else {
-            Keyboard.dismiss();
-            setIsLoading(true);
-            // this.props.verifyOTP({ phone: phoneNumber, otp: otp })
-        }
+    return () => {
+      clearInterval(clockCall);
     }
+  })
 
-    function verifyOTPCall() {
-        navigation.replace(Routes.NAV_SUCCESS_LOGIN);
+  useEffect(() => {
+    if (status === apiStatus.success) {
+      setIsLoading(false);
+      setStringData(ASYNC_CONST.userId, userDetails.id);
+      setStringData(ASYNC_CONST.accessToken, userDetails.token)
+      setStringData(ASYNC_CONST.phone, userDetails.phone);
+      //console.log('from otp screen ',userDetails);
+      if (route.params.screen == STRINGS.SIGNUP) {
+        navigation.replace(Routes.NAV_SUCCESS_LOGIN)
+      } else if (route.params.screen == STRINGS.LOGIN) {
+        navigation.replace(Routes.NAV_APP)
+      }
+    } else if (status === apiStatus.failed) {
+      setOtp('');
+      setIsLoading(false);
+      ShowToast(userDetails)
     }
+  }, [status])
 
-    return (
-        <SafeAreaView
-            style={styles.bodyContainer}>
-            <View style={styles.topView}>
-                <TouchableOpacity
-                    activeOpacity={0.6}
-                    onPress={() => navigation.goBack()}>
-                    <View>
-                        <Image
-                            style={styles.homeMenu}
-                            source={leftarrow}
-                            resizeMode='contain' />
-                    </View>
-                </TouchableOpacity>
+  useEffect(() => {
+    if (resendOtpStatus === apiStatus.success) {
+      setIsLoading(false);
+      setBlankCheck(false);
+      ShowToast(JSON.stringify(resendOtpDetails.otp));
+    } else if (resendOtpStatus === apiStatus.failed) {
+      setIsLoading(false);
+      setBlankCheck(false);
+      ShowToast(resendOtpDetails)
+    }
+  }, [resendOtpStatus])
+
+  const calculateTimer = () => {
+    if (timer === 0) {
+      timerEnable = false;
+      return ('00:00');
+    } else {
+      return countdownTimer(timer)
+    }
+  };
+
+  function resendOtp() {
+    setBlankCheck(true);
+    if (!Validations.verifyRequired(phoneNumber)) {
+      navigation.replace(Routes.NAV_LOGIN_SCREEN)
+    } else {
+      Keyboard.dismiss();
+      setTimer(240);
+      setIsLoading(true);
+      dispatch(FetchResendOtpData({
+        phone: phoneNumber,
+      }))
+    }
+  }
+
+  function verifyOTPCall() {
+    // console.log("fjhbd", otp);
+    // console.log(phoneNumber + '//// ' + otp)
+    if (Validations.verifyRequired(otp)) {
+      setIsLoading(true)
+      dispatch(FetchOtpData({
+        phone: phoneNumber,
+        otp: otp,
+      }))
+    }
+  }
+
+  return (
+    <SafeAreaView
+      style={styles.bodyContainer}>
+      <TopBar />
+      <View style={styles.middleView}>
+        <ScrollView style={styles.backgroundWhite}
+          keyboardShouldPersistTaps={'handled'}>
+          <View>
+            <Text style={styles.verifyText}>{STRINGS.VERIFY_OTP_TEXT}</Text>
+            <Text style={styles.phoneNumberText}>{STRINGS.SEND_OTP + phoneNumber}</Text>
+          </View>
+          <View style={styles.otpViewContainer}>
+
+            <View style={styles.otpViewBox}>
+              <OTPContainer
+                codeCount={codeCount}
+                containerStyle={styles.otpContainerStyle}
+                onFinish={(code) => {
+                  setOtp(code)
+                }}
+                blankCheck={blankCheck}
+              />
+              <View style={styles.marginView}>
+                <View style={styles.timerView}>
+                  <Image
+                    style={styles.timerImage}
+                    source={timeIcon}
+                    resizeMode='contain' />
+                  <Text
+                    style={styles.timerText}
+                  >{calculateTimer()}</Text>
+                </View>
+
+                <View style={styles.resendView}>
+                  <TouchableOpacity activeOpacity={0.6}
+                    disabled={timerEnable}
+                    onPress={() =>
+                      resendOtp()
+                    }>
+                    <Text style={styles.resendText}>{STRINGS.RESEND_OTP}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <TouchableOpacity activeOpacity={0.6}
+                onPress={() =>
+                  verifyOTPCall()
+                }
+                style={styles.verifyButtonStyle}>
+
+                <Text style={styles.verifyButtonText}>{STRINGS.VERIFY_NOW}</Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.middleView}>
-                <ScrollView style={styles.backgroundWhite}
-                    keyboardShouldPersistTaps={'handled'}>
-                    <View>
-                        <Text style={styles.verifyText}>{Strings.VERIFY_OTP_TEXT}</Text>
-                        <Text style={styles.phoneNumberText}>{Strings.SEND_OTP + phoneNumber}</Text>
-                    </View>
-                    <View style={styles.otpViewContainer}>
-
-                        <View style={styles.otpViewBox}>
-                            <View>
-                                <OTPContainer
-                                    codeCount={4}
-                                    containerStyle={styles.otpContainerStyle}
-                                    onFinish={(code) => {
-                                        setOtp(code)
-                                    }}
-                                />
-                                <View style={styles.marginView}>
-                                    <View style={styles.timerView}>
-                                        <Image
-                                            style={styles.timerImage}
-                                            source={timeIcon}
-                                            resizeMode='contain' />
-                                        <Text
-                                            style={styles.timerText}
-                                        >{calculateTimer()}</Text>
-                                    </View>
-
-                                    <View style={styles.resendView}>
-                                        <TouchableOpacity activeOpacity={0.6}
-                                            disabled={timerEnable}
-                                            onPress={() =>
-                                                resendOtp()
-                                            }>
-                                            <Text style={styles.resendText}>Resend OTP</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-
-                                <TouchableOpacity activeOpacity={0.6}
-                                    onPress={() =>
-                                        verifyOTPCall()
-                                        //this.registerMember()
-                                        //showErrorAlert('Register Successfully!')
-                                        // console.log("Register", "Hii")
-                                    }
-                                    style={styles.verifyButtonStyle}>
-
-                                    <Text style={styles.verifyButtonText}>Verify Now</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                    </View>
-                    {isLoading ? <Loading /> : null}
-                </ScrollView>
-
-            </View>
-        </SafeAreaView>
-    )
+          </View>
+          {isLoading ? <Loading /> : null}
+        </ScrollView>
+      </View>
+    </SafeAreaView>
+  )
 
 }
 export default LoginOtpVerify;
