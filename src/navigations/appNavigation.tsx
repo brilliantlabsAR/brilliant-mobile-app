@@ -10,6 +10,7 @@ export type AppStackParamList = {
   [Routes.NAV_ACCOUNT_SCREEN]: undefined;
   [Routes.NAV_MEDIA_SCREEN]: undefined;
   [Routes.NAV_UPDATE_FIRMWARE]: undefined;
+  [Routes.NAV_TERMINAL_SCREEN]: undefined;
   [Routes.NAV_PROFILE_OTP_SCREEN]: { phoneNumber: string, countryCode: string | any, phone: string | any, email: string | any, name: string | any };
 };
 const AppStack = createNativeStackNavigator<AppStackParamList>();
@@ -50,6 +51,11 @@ const AppNavigation = () => {
       <AppStack.Screen
         name={Routes.NAV_UPDATE_FIRMWARE}
         component={Screens.UpdateFirmwareScreen}
+        options={{ title: "" }}
+      />
+      <AppStack.Screen
+        name={Routes.NAV_TERMINAL_SCREEN}
+        component={Screens.TerminalScreen}
         options={{ title: "" }}
       />
     </AppStack.Navigator>

@@ -30,13 +30,14 @@ export const styles = StyleSheet.create({
         backgroundColor: Theme.color.White,
         flex: 1,
         flexDirection: 'column',
-        marginLeft: normalize(15),
-        marginRight: normalize(15),
-        marginTop: normalize(10)
+        marginLeft: normalize(0),
+        marginRight: normalize(0),
+        marginTop: normalize(0)
     },
     emptyContainer: {
         flex: 1,
         alignItems: 'center',
+        height:'100%',
         justifyContent: 'center'
     },
     emptyText: {
@@ -102,22 +103,6 @@ export const styles = StyleSheet.create({
         borderColor: Theme.color.Black,
         borderWidth: 2,
     },
-    footerLinearStyleTerminal: {
-        position: 'absolute',
-        left: normalize(200),
-        right: 0,
-        bottom: 10,
-        zIndex: 1,
-        elevation: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: normalize(50),
-        height: normalize(50),
-        borderRadius: normalize(25),
-        backgroundColor: Theme.color.LightBlue,
-        borderColor: Theme.color.LightBlue,
-        borderWidth: 2,
-    },
     brilliantTextBig: {
         color: Theme.color.Black,
         fontSize: normalize(15),
@@ -125,7 +110,7 @@ export const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     marginTopFlatList: {
-        marginTop: normalize(10)
+        marginTop: normalize(0)
     },
     ItemText: {
         fontSize: normalize(10),

@@ -140,6 +140,16 @@ const MediaScreen = (props: Props) => {
         }
 
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_TERMINAL_SCREEN)}>
+        <View
+          style={styles.footerLinearStyleTerminal}>
+          <Image
+            style={styles.footerButtonImage}
+            source={monocleIcon}
+            resizeMode='contain'
+          />
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_ACCOUNT_SCREEN)}>
         <View
           style={styles.footerLinearStyle}>

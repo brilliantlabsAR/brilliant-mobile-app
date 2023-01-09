@@ -37,6 +37,10 @@ export type MediaScreenNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "MediaScreen"
 >;
+export type TerminalScreenNavigationProps = NativeStackScreenProps<
+  AppStackParamList,
+  "TerminalScreen"
+>;
 export type PairingNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "PairingScreen"
