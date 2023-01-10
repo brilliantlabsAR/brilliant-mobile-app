@@ -26,6 +26,7 @@
     "luxon": "^3.1.1",
     "react": "18.0.0",
     "react-native": "0.69.1",
+    "react-native-android-location-enabler": "^1.2.2",
     "react-native-animated-pagination-dot": "^0.3.2",
     "react-native-base64": "^0.2.1",
     "react-native-ble-manager": "^8.5.0",

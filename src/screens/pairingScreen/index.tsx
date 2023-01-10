@@ -115,17 +115,17 @@ const PairingScreen = (props: PairingNavigationProps) => {
         } catch (err) {
           console.warn(err)
         }
-      } else {
-        BleManager.enableBluetooth()
-          .then(() => {
-            // Success code
-            console.log("The bluetooth is already enabled or the user confirm");
-          })
-          .catch((error) => {
-            // Failure code
-            console.log("The user refuse to enable bluetooth");
-          });
       }
+      BleManager.enableBluetooth()
+        .then(() => {
+          // Success code
+          console.log("The bluetooth is already enabled or the user confirm");
+        })
+        .catch((error) => {
+          // Failure code
+          console.log("The user refuse to enable bluetooth");
+        });
+
 
       BleManager.start({ showAlert: false }).then(() => {
         // Success code
@@ -292,7 +292,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
     if (receiveData.includes('OKIMPORT')) {
       console.log("ok response coming");
-      dataWrite("Camera.capture() \nprint('SCAN') \x04", data.peripheral)
+      dataWrite("camera.capture() \nprint('SCAN') \x04", data.peripheral)
       //dataWrite("WiFi.clear() \nprint('SCAN') \x04", data.peripheral)
     } else if (receiveData.includes("OKSCAN")) {
       console.log("ok scan response coming");
@@ -399,7 +399,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
                   setTimeout(() => {//3rd Command
                     console.log("3rd Command \\x04");
-                    dataWrite("from machine import Camera \nprint('IMPORT')\x04", peripheral.id);
+                    dataWrite("import camera \nprint('IMPORT')\x04", peripheral.id);
                   }, 4000);
                 }, 5000);
 

@@ -57,7 +57,6 @@ const LetsGoScreen = ({ navigation }: LetsGoNavigationProps) => {
   /** REQUEST PERMISSION FOR BLUETOOTH SCAN AND CONNECT **/
   const blePermission = () => {
     if (Platform.OS == 'android') {
-
       try {
         PermissionsAndroid.requestMultiple(
           [PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
@@ -70,7 +69,6 @@ const LetsGoScreen = ({ navigation }: LetsGoNavigationProps) => {
               .then(() => {
                 // Success code
                 console.log("The bluetooth is already enabled or the user confirm");
-
               })
               .catch((error) => {
                 // Failure code
@@ -87,6 +85,15 @@ const LetsGoScreen = ({ navigation }: LetsGoNavigationProps) => {
       }
 
     }
+    BleManager.enableBluetooth()
+      .then(() => {
+        // Success code
+        console.log("The bluetooth is already enabled or the user confirm");
+      })
+      .catch((error) => {
+        // Failure code
+        console.log("The user refuse to enable bluetooth");
+      });
   }
 
 

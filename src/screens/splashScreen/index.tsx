@@ -28,6 +28,23 @@ type SplashScreenProps = NativeStackScreenProps<
 const SplashScreen = ({ navigation }: SplashScreenProps) => {
 
   useEffect(() => {
+    setTimeout(() => {
+      if (Platform.OS === 'android' && Platform.Version >= 23) {
+        PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
+          if (result) {
+            console.log("ACCESS_FINE_LOCATION Permission is OK");
+          } else {
+            PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
+              if (result) {
+                console.log("ACCESS_FINE_LOCATION User accept");
+              } else {
+                console.log("User refuse");
+              }
+            });
+          }
+        });
+      }
+    }, 2000);
     mainDao.connectDatabase();
     mainDao.executeSql(mainDao.createAssetsTableQuery, []);
     AsyncStorage.getItem('userId').then((userId) => {
@@ -44,38 +61,38 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
   }, [])
 
 
-  useEffect(() => {
-    if (Platform.OS === 'android' && Platform.Version >= 23) {
-      PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
-        if (result) {
-          console.log("ACCESS_FINE_LOCATION Permission is OK");
-        } else {
-          PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
-            if (result) {
-              console.log("ACCESS_FINE_LOCATION User accept");
-            } else {
-              console.log("User refuse");
-            }
-          });
-        }
-      });
-    }
-    getLocation();
-  }, []);
+  // useEffect(() => {
+  //   if (Platform.OS === 'android' && Platform.Version >= 23) {
+  //     PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
+  //       if (result) {
+  //         console.log("ACCESS_FINE_LOCATION Permission is OK");
+  //       } else {
+  //         PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((result) => {
+  //           if (result) {
+  //             console.log("ACCESS_FINE_LOCATION User accept");
+  //           } else {
+  //             console.log("User refuse");
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }
+  //   getLocation();
+  // }, []);
 
-  async function getLocation() {
-    await GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 15000,
-    })
-      .then(location => {
-        console.log('Location', location);
-      })
-      .catch(error => {
-        const { code, message } = error;
-        console.warn(code, message);
-      })
-  }
+  // async function getLocation() {
+  //   await GetLocation.getCurrentPosition({
+  //     enableHighAccuracy: true,
+  //     timeout: 15000,
+  //   })
+  //     .then(location => {
+  //       console.log('Location', location);
+  //     })
+  //     .catch(error => {
+  //       const { code, message } = error;
+  //       console.warn(code, message);
+  //     })
+  // }
 
   return (
     <SafeAreaView
