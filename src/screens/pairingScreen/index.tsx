@@ -292,7 +292,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
     if (receiveData.includes('OKIMPORT')) {
       console.log("ok response coming");
-      dataWrite("Camera.capture() \nprint('SCAN') \x04", data.peripheral)
+      dataWrite("camera.capture('') \nprint('SCAN') \x04", data.peripheral)
       //dataWrite("WiFi.clear() \nprint('SCAN') \x04", data.peripheral)
     } else if (receiveData.includes("OKSCAN")) {
       console.log("ok scan response coming");
@@ -392,14 +392,12 @@ const PairingScreen = (props: PairingNavigationProps) => {
 
                   setTimeout(() => {//2nd Command
                     console.log("2nd Command");
-
                     dataWrite("\x01", peripheral.id);
-
                   }, 3000);
 
                   setTimeout(() => {//3rd Command
                     console.log("3rd Command \\x04");
-                    dataWrite("from machine import Camera \nprint('IMPORT')\x04", peripheral.id);
+                    dataWrite("import camera \nprint('IMPORT')\x04", peripheral.id);
                   }, 4000);
                 }, 5000);
 
@@ -408,7 +406,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
               });
 
             }).catch(() => {
-              console.log("Retrive error");
+              console.log("Retrieve error");
             })
           })
           .catch((error) => {
@@ -449,10 +447,54 @@ const PairingScreen = (props: PairingNavigationProps) => {
             console.log("Monocle is connected!");
             ShowToast(STRINGS.MONOCLE_CONNECTED);
             dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Paired, id: peripheral.id as string }));
-            setTimeout(() => {
-              setShowLoading(false);
-              navigation.replace(Routes.NAV_MEDIA_SCREEN);
-            }, 2000);
+            BleManager.requestMTU(peripheral.id, 256)
+              .then((mtu) => {
+                // Success code
+                console.log("MTU size changed to " + mtu + " bytes");
+                console.log("monocle peripheral id", peripheral.id);
+                BleManager.retrieveServices(peripheral.id).then(async (peripheralData) => {
+                  console.log('Retrieved peripheral services', peripheralData);
+                  var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
+                  var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
+                  var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
+
+                  let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+                  let uartRxCharacteristicUuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+                  let uartTxCharacteristicUuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+
+                  let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
+                  let rawDataRxCharacteristicUuid = "e5700002-7bac-429a-b4ce-57ff900f479d";
+                  let rawDataTxCharacteristicUuid = "e5700003-7bac-429a-b4ce-57ff900f479d";
+                  // await BleManager.startNotification(peripheral.id, rawDataServiceUuid, rawDataTxCharacteristicUuid).then(() => {
+                  //   console.log('Start notification: ONE ');
+
+                  // })
+                  await BleManager.startNotification(peripheral.id, nordicUartServiceUuid, uartTxCharacteristicUuid).then(() => {
+                    console.log('Start notification: ');
+
+                    setTimeout(() => {    //1st Command
+                      console.log("1st Command");
+                      dataWrite("\x02", peripheral.id);
+
+                    }, 5000);
+
+                  }).catch(() => {
+                    console.log("Notification error");
+                  });
+
+                }).catch(() => {
+                  console.log("Retrive error");
+                })
+              })
+              .catch((error) => {
+                // Failure code
+                console.log("MTU error ", error);
+              });
+
+            // setTimeout(() => {
+            //   setShowLoading(false);
+            //   navigation.replace(Routes.NAV_MEDIA_SCREEN);
+            // }, 2000);
           }
         });
       }
