@@ -22,7 +22,7 @@ import { STRINGS } from "../../models/constants";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 // import * as mainDao from '../../database';
-import { Asset } from "../../models";
+import { Asset, DevicePairingStatus } from "../../models";
 import { useAppSelector } from "../../redux/hooks";
 type Props = TerminalScreenNavigationProps
 
@@ -33,13 +33,15 @@ const TerminalScreen = (props: Props) => {
   const [mediaList, setMediaList] = useState<Asset[]>();
 
 const peripheralId = useAppSelector((state) => state.pairing.peripheralId);
+const pairingStatus = useAppSelector((state) => state.pairing.status);
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-
+    bleManagerEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', handleUpdateValueForCharacteristic);
+    bleManagerEmitter.addListener('BleManagerDisconnectPeripheral', handleDisconnectedPeripheral);
     return () => {
       backHandler.remove();
     }
@@ -47,7 +49,6 @@ const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
   
   const handleUpdateValueForCharacteristic = (data: any) => {
     //console.log('Received data from ' + data.peripheral + ' characteristic ' + data.characteristic);
-    console.log('Received data from Device IMAGE DEMO-----> ' + data.value);
     console.log('Received data from Device-----> ' + String.fromCharCode.apply(String, data.value));
     var receiveData = String.fromCharCode.apply(String, data.value);
     sendMessage(receiveData);
@@ -58,18 +59,22 @@ const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
     sendMessage(`controlButtons.forEach(ele => { ele.disabled = false;}); replConsole.value = replConsole.value + "\nDisconnected"; connectButton; connectButton.innerHTML = 'Disconnect'; true;`);
   }
 
-  bleManagerEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', handleUpdateValueForCharacteristic);
-  bleManagerEmitter.addListener('BleManagerDisconnectPeripheral', handleDisconnectedPeripheral);
+  
   /** Go to media **/
   const handleBackButton = () => {
     navigation.navigate(Routes.NAV_MEDIA_SCREEN);
     return true
   }
 
-  let webref :any = null
+   const webViewRef :any = useRef(null);
    const onMessageCallBack = (event : any) => {
       console.log(event.nativeEvent.data)
-      bluetoothDataWrite(event.nativeEvent.data, peripheralId)
+      if(pairingStatus == DevicePairingStatus.Paired && peripheralId){
+        bluetoothDataWrite(event.nativeEvent.data, peripheralId)
+      }else{
+        handleDisconnectedPeripheral(null)
+      }
+     
        // write to bluetooth 
        // writedata(event.nativeEvent.data)
        
@@ -93,8 +98,10 @@ const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
    const sendMessage = (data:string) =>{
       data = String(data).replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t").replace("\x1B", "\\x1B")
       console.log(data)
-      let final_data = ` uartStringDataHandler("${data}"); true;` 
-      webref.injectJavaScript(final_data);
+      let final_data = ` uartStringDataHandler("${data}"); true;`
+      if(webViewRef){
+         webViewRef.current.injectJavaScript(final_data);
+      }
    }
 
    const bluetoothDataWrite = (data: any, peripheralId: any) => {
@@ -131,7 +138,7 @@ const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
         </View>:null} */}
         <WebView
             source={{ uri: 'http://139.144.72.206/repl' }}
-            ref={(r) => (webref = r)}
+           ref={webViewRef}
             onMessage={onMessageCallBack}
             incognito={true}
             onLoadEnd={()=>setIsLoading(false)}

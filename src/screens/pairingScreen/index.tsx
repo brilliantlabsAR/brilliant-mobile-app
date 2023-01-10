@@ -464,6 +464,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
           .then(async () => {
             console.log("createBond success or there is already an existing one");
             setPeripheralID(peripheral.id);
+            dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Paired, id: peripheral.id as string }));
             framePairing(peripheral)
           }).catch(() => {
             console.log("fail to bond");
@@ -490,7 +491,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
     )
       .then((readData) => {
         // Success code
-        console.log('write:---> ' + readData);
+        console.log('write:---> ' + data);
       })
       .catch((error) => {
         // Failure code
