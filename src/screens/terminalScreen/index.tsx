@@ -52,15 +52,17 @@ const TerminalScreen = (props: Props) => {
   }, [])
 
   const handleUpdateValueForCharacteristic = (data: any) => {
-    console.log('Received data from ' + data.peripheral + ' characteristic ' + data.characteristic);
-    console.log('Received data from Device-----> ' + String.fromCharCode.apply(String, data.value));
-    var receiveData = String.fromCharCode.apply(String, data.value);
-    sendMessage(receiveData);
-    console.log('----------------------------------END');
+    if(data.characteristic!="e5700003-7bac-429a-b4ce-57ff900f479d"){
+      // console.log('Received data from ' + data.peripheral + ' characteristic ' + data.characteristic);
+      console.log('Received data from Device-----> ' + String.fromCharCode.apply(String, data.value));
+      let receiveData = String.fromCharCode.apply(String, data.value);
+      sendMessage(receiveData);
+      console.log('----------------------------------END');
+    }
 
   }
   const handleDisconnectedPeripheral = (data: any) => {
-    sendMessage(`controlButtons.forEach(ele => { ele.disabled = false;}); replConsole.value = replConsole.value + "\nDisconnected"; connectButton; connectButton.innerHTML = 'Disconnect'; true;`);
+    sendMessage(`controlButtons.forEach(ele => { ele.disabled = false;}); replConsole.value = replConsole.value + "\nDisconnected"; connectButton.innerHTML = 'Disconnect'; true;`);
   }
 
 
@@ -78,31 +80,12 @@ const TerminalScreen = (props: Props) => {
     } else {
       handleDisconnectedPeripheral(null)
     }
-
-    // write to bluetooth 
-    // writedata(event.nativeEvent.data)
-
-    //  let data = event.nativeEvent.data
-
-    //  if(data=="\x03"){
-    //   data = "\r\n>>>"
-    //  }else{
-    //   if(data=="\r\n"){
-    //     sendMessage("\r\n"+dataStack)
-    //     data = "\r\n>>>"
-    //     dataStack = ""
-    //    }else{
-    //     dataStack = dataStack + data
-    //    }
-    //  }
-    //for test
-    //  sendMessage(data)
   }
 
   const sendMessage = (data: string) => {
-    data = String(data).replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t").replace(/\x1B/g, "\\x1B")
+    // data = String(data).replace(/\n/g, "\\n").replace(/\r/g, "\\r").replace(/\t/g, "\\t").replace(/\x1B/g, "\\x1B")
     console.log("response", data)
-    let final_data = ` uartStringDataHandler("${data}"); true;`
+    let final_data = ` uartStringDataHandler(decodeURI("${encodeURI(data)}")); true;`
     if (webViewRef) {
       webViewRef.current.injectJavaScript(final_data);
     }
