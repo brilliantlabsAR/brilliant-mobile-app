@@ -38,7 +38,7 @@ const MediaScreen = (props: Props) => {
   const handleBackButton = () => {
     Alert.alert(
       'Alert',
-      'Are you want to exit',
+      'Are you sure you want to exit',
       [
         {
           text: "Cancel",

@@ -65,7 +65,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   const handleBackButton = () => {
     Alert.alert(
       'Alert',
-      'Are you want to exit',
+      'Are you sure you want to exit',
       [
         {
           text: "Cancel",
