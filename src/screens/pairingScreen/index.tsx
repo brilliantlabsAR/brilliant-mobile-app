@@ -243,7 +243,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
     console.log('Received data from Device IMAGE DEMO-----> ' + data.value);
     console.log('Received data from Device Length-----> ', data.value.length);
     let array = [];
-    if (data.value[0] >= 1 && data.value[0] <= 3) {
+    if (data.value[0] >= 0 && data.value[0] <= 2) {
       if (data.value[0] == 0) {
         let fileSize = data.value[5];
         let dataArray = data.value.slice(fileSize + 6);
@@ -254,7 +254,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
         imageArray.push(...dataArray);
       }
 
-      if (data.value[0] == 3) {
+      if (data.value[0] == 2) {
         const z = new Uint8Array(imageArray);
         console.log('Uint8Array-----> ', z);
 
@@ -475,7 +475,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
                     setTimeout(() => {    //1st Command
                       console.log("1st Command");
                       dataWrite("\x02", peripheral.id);
-
+                      navigation.replace(Routes.NAV_MEDIA_SCREEN);
                     }, 5000);
 
                   }).catch(() => {

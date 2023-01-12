@@ -42,6 +42,7 @@ const TerminalScreen = (props: Props) => {
     BleManager.getConnectedPeripherals([]).then((peripheralsArray) => {
       // Success code
       console.log("Connected peripherals: " + peripheralsArray.length);
+      bluetoothDataWrite("\x02", peripheralId);
     });
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
     bleManagerEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', handleUpdateValueForCharacteristic);
@@ -62,7 +63,10 @@ const TerminalScreen = (props: Props) => {
 
   }
   const handleDisconnectedPeripheral = (data: any) => {
-    sendMessage(`controlButtons.forEach(ele => { ele.disabled = false;}); replConsole.value = replConsole.value + "\nDisconnected"; connectButton.innerHTML = 'Disconnect'; true;`);
+    if (webViewRef) {
+      webViewRef.current.injectJavaScript(`controlButtons.forEach(ele => { ele.disabled = true;}); replConsole.value  += "\\nBluetooth error. Are you connected?"; connectButton.innerHTML = 'Connect'; true;`);
+    }
+    
   }
 
 
@@ -78,6 +82,7 @@ const TerminalScreen = (props: Props) => {
     if (pairingStatus == DevicePairingStatus.Paired && peripheralId) {
       bluetoothDataWrite(event.nativeEvent.data, peripheralId)
     } else {
+      // console.log("Okkkk")
       handleDisconnectedPeripheral(null)
     }
   }
