@@ -447,49 +447,42 @@ const PairingScreen = (props: PairingNavigationProps) => {
             console.log("Monocle is connected!");
             ShowToast(STRINGS.MONOCLE_CONNECTED);
             dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Paired, id: peripheral.id as string }));
-            BleManager.requestMTU(peripheral.id, 256)
-              .then((mtu) => {
-                // Success code
-                console.log("MTU size changed to " + mtu + " bytes");
-                console.log("monocle peripheral id", peripheral.id);
-                BleManager.retrieveServices(peripheral.id).then(async (peripheralData) => {
-                  console.log('Retrieved peripheral services', peripheralData);
-                  var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
-                  var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
-                  var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
 
-                  let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-                  let uartRxCharacteristicUuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-                  let uartTxCharacteristicUuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+            console.log("monocle peripheral id", peripheral.id);
+            BleManager.retrieveServices(peripheral.id).then(async (peripheralData) => {
+              console.log('Retrieved peripheral services', peripheralData);
+              var service = '6e400001-b5a3-f393-e0a9-e50e24dcca9e'
+              var UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'
+              var readUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
 
-                  let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
-                  let rawDataRxCharacteristicUuid = "e5700002-7bac-429a-b4ce-57ff900f479d";
-                  let rawDataTxCharacteristicUuid = "e5700003-7bac-429a-b4ce-57ff900f479d";
-                  // await BleManager.startNotification(peripheral.id, rawDataServiceUuid, rawDataTxCharacteristicUuid).then(() => {
-                  //   console.log('Start notification: ONE ');
+              let nordicUartServiceUuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+              let uartRxCharacteristicUuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
+              let uartTxCharacteristicUuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 
-                  // })
-                  await BleManager.startNotification(peripheral.id, nordicUartServiceUuid, uartTxCharacteristicUuid).then(() => {
-                    console.log('Start notification: ');
+              let rawDataServiceUuid = "e5700001-7bac-429a-b4ce-57ff900f479d";
+              let rawDataRxCharacteristicUuid = "e5700002-7bac-429a-b4ce-57ff900f479d";
+              let rawDataTxCharacteristicUuid = "e5700003-7bac-429a-b4ce-57ff900f479d";
+              // await BleManager.startNotification(peripheral.id, rawDataServiceUuid, rawDataTxCharacteristicUuid).then(() => {
+              //   console.log('Start notification: ONE ');
 
-                    setTimeout(() => {    //1st Command
-                      console.log("1st Command");
-                      dataWrite("\x02", peripheral.id);
-                      navigation.replace(Routes.NAV_MEDIA_SCREEN);
-                    }, 5000);
+              // })
+              await BleManager.startNotification(peripheral.id, nordicUartServiceUuid, uartTxCharacteristicUuid).then(() => {
+                console.log('Start notification: ');
 
-                  }).catch(() => {
-                    console.log("Notification error");
-                  });
+                setTimeout(() => {    //1st Command
+                  console.log("1st Command");
+                  dataWrite("\x02", peripheral.id);
+                  navigation.replace(Routes.NAV_MEDIA_SCREEN);
+                }, 5000);
 
-                }).catch(() => {
-                  console.log("Retrive error");
-                })
-              })
-              .catch((error) => {
-                // Failure code
-                console.log("MTU error ", error);
+              }).catch(() => {
+                console.log("Notification error");
               });
+
+            }).catch(() => {
+              console.log("Retrive error");
+            })
+
 
             // setTimeout(() => {
             //   setShowLoading(false);
