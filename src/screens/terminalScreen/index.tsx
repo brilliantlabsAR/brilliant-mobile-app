@@ -7,6 +7,10 @@ import {
   BackHandler,
   NativeEventEmitter,
   NativeModules,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
   Dimensions,
   FlatList,
   Alert
@@ -22,7 +26,7 @@ import { STRINGS } from "../../models/constants";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 // import * as mainDao from '../../database';
-import { Asset, DevicePairingStatus } from "../../models";
+import { Asset, DevicePairingStatus,REPL_ENDPOINT } from "../../models";
 import { useAppSelector } from "../../redux/hooks";
 type Props = TerminalScreenNavigationProps
 
@@ -42,7 +46,7 @@ const TerminalScreen = (props: Props) => {
     BleManager.getConnectedPeripherals([]).then((peripheralsArray) => {
       // Success code
       console.log("Connected peripherals: " + peripheralsArray.length);
-      bluetoothDataWrite("\x02", peripheralId);
+      
     });
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
     bleManagerEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', handleUpdateValueForCharacteristic);
@@ -64,7 +68,7 @@ const TerminalScreen = (props: Props) => {
   }
   const handleDisconnectedPeripheral = (data: any) => {
     if (webViewRef) {
-      webViewRef.current.injectJavaScript(`controlButtons.forEach(ele => { ele.disabled = true;}); replConsole.value  += "\\nBluetooth error. Are you connected?"; connectButton.innerHTML = 'Connect'; true;`);
+      webViewRef.current?.injectJavaScript(`controlButtons.forEach(ele => { ele.disabled = true;}); replConsole.value  += "\\nBluetooth error. Are you connected?"; connectButton.innerHTML = 'Connect'; true;`);
     }
     
   }
@@ -92,7 +96,7 @@ const TerminalScreen = (props: Props) => {
     console.log("response", data)
     let final_data = ` uartStringDataHandler(decodeURI("${encodeURI(data)}")); true;`
     if (webViewRef) {
-      webViewRef.current.injectJavaScript(final_data);
+      webViewRef.current?.injectJavaScript(final_data);
     }
   }
 
@@ -114,6 +118,7 @@ const TerminalScreen = (props: Props) => {
     })
       .catch((error) => {
         // Failure code
+        handleDisconnectedPeripheral(null)
         console.log("write data failure", error);
       });
   }
@@ -121,31 +126,40 @@ const TerminalScreen = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.bodyContainer}>
-      <View style={styles.topView}>
-        <View style={styles.marginTopFlatList}>
-          <Text style={styles.brilliantTextBig}>{STRINGS.BRILLIANT_TEXT}</Text>
-        </View>
-        {/* {isLoading?<View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>{STRINGS.WEB_VIEWLOADING}</Text>
-        </View>:null} */}
-        <WebView
-          source={{ uri: 'http://139.144.72.206/repl' }}
-          ref={webViewRef}
-          onMessage={onMessageCallBack}
-          incognito={true}
-          onLoadEnd={() => setIsLoading(false)}
-        />
-        <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}>
-          <View
-            style={styles.footerLinearStyle}>
-            <Image
-              style={styles.footerButtonImage}
-              source={monocleIcon}
-              resizeMode='contain'
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            keyboardVerticalOffset={45}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
+          <View style={styles.topView}>
+            <View style={styles.marginTopFlatList}>
+              <Text style={styles.brilliantTextBig}>{STRINGS.BRILLIANT_TEXT}</Text>
+            </View>
+            {/* {isLoading?<View style={styles.emptyContainer}>
+                <Text style={styles.emptyText}>{STRINGS.WEB_VIEWLOADING}</Text>
+            </View>:null} */}
+            <WebView
+              source={{ uri: REPL_ENDPOINT }}
+              ref={webViewRef}
+              onMessage={onMessageCallBack}
+              incognito={true}
+              onLoadEnd={() => {
+                setIsLoading(false)
+                bluetoothDataWrite("\x02", peripheralId);
+              }}
             />
+            <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}>
+              <View
+                style={styles.footerLinearStyle}>
+                <Image
+                  style={styles.footerButtonImage}
+                  source={monocleIcon}
+                  resizeMode='contain'
+                />
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
+        </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }

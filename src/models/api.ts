@@ -17,3 +17,4 @@ export const API_TOKEN = "generateRTCToken";
 export const API_STORE_LOCATION = "user/addLocation";
 export const API_ALL_USER = "user/allUsers";
 export const API_END_LIVE = "endLive";
+export const REPL_ENDPOINT = "https://repl.brilliant.xyz/"
