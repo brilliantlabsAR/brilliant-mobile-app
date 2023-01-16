@@ -249,7 +249,7 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
                 resizeMode="contain"
               />
               <Text style={styles.menuText}>{pairingStatus === DevicePairingStatus.Paired
-                ? STRINGS.UNPAIR_DEVICE
+                ? STRINGS.REPAIR_DEVICE
                 : "Pair Monocle"}
               </Text>
             </TouchableOpacity>

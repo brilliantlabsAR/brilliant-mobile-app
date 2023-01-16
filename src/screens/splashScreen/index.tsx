@@ -50,11 +50,11 @@ const SplashScreen = ({ navigation }: SplashScreenProps) => {
       if (userId === null) {
         setTimeout(() => {
           navigation.replace(Routes.NAV_LETS_GO_SCREEN)
-        }, 4000);
+        }, 2000);
       } else {
         setTimeout(() => {
           navigation.replace(Routes.NAV_APP)
-        }, 4000);
+        }, 2000);
       }
     })
   }, [])

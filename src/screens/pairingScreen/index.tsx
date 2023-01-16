@@ -17,11 +17,11 @@ import BleManager, { stopScan } from 'react-native-ble-manager';
 import { stringToBytes } from "convert-string";
 import NetInfo from '@react-native-community/netinfo';
 import { normalize } from "../../utils/dimentionUtils";
-import { AssetStatus, AssetType, DevicePairingStatus, FontFamily, Theme } from "../../models";
+import { AssetStatus, AssetType, DevicePairingStatus } from "../../models";
 import { PairingNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
-import { BLE_icon, downArrow, logoButton, monocleImage, phone, upArrow } from "../../assets";
+import { BLE_icon, downArrow, monocleImage, phone, upArrow } from "../../assets";
 import { STRINGS } from "../../models/constants";
 import { ShowToast } from "../../utils/toastUtils";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -39,7 +39,7 @@ const peripherals = new Map();
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
-let concatData: any = '', importWIFI = 'from machine import WiFi';
+let concatData: any = '';
 const PairingScreen = (props: PairingNavigationProps) => {
   const { navigation } = props;
   const [showLoading, setShowLoading] = useState<boolean>(true);
@@ -286,8 +286,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
     console.log('Received array data from Device-----> ' + imageArray);
 
     var receiveData = String.fromCharCode.apply(String, data.value);
-
-    var subData = '';
     concatData = concatData + receiveData;//OK1
 
     if (receiveData.includes('OKIMPORT')) {
@@ -471,7 +469,6 @@ const PairingScreen = (props: PairingNavigationProps) => {
       } else {
         framePairing(peripheral)
       }
-
     }
   }
 
