@@ -79,6 +79,7 @@ export const STRINGS = {
   WELCOME_TEXT: "The pocket sized AR device for imaginative hackers",
   BRILLIANT_TEXT: "BRILLIANT",
   EMPTY_TEXT: "No media found",
+  WEB_VIEWLOADING : "Loading..."
 };
 
 //micro python command

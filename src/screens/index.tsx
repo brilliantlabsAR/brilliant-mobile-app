@@ -10,7 +10,7 @@ import SuccessLogin from "./successLogin";
 import MediaScreen from "./mediaScreen";
 import ProfileOtpVerify from "./profileOtpVerifyScreen";
 import UpdateFirmwareScreen from "./updateFirmwareScreen";
-
+import TerminalScreen from "./terminalScreen";
 export default {
   SplashScreen,
   LetsGoScreen,
@@ -23,5 +23,6 @@ export default {
   SuccessLogin,
   MediaScreen,
   ProfileOtpVerify,
+  TerminalScreen,
   UpdateFirmwareScreen
 };

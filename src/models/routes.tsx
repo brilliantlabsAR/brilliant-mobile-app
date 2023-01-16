@@ -16,3 +16,4 @@ export const NAV_ACCOUNT_SCREEN = "MyAccountScreen";
 export const NAV_HELP_SCREEN = "HelpScreen";
 export const NAV_PROFILE_OTP_SCREEN = "ProfileOtpVerifyScreen";
 export const NAV_UPDATE_FIRMWARE = "UpdateFirmware";
+export const NAV_TERMINAL_SCREEN = "TerminalScreen";
