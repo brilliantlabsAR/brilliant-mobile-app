@@ -129,8 +129,11 @@ const TerminalScreen = (props: Props) => {
   
   const handleDisconnectedPeripheral = (data: any) => {
     if (webViewRef) {
-      webViewRef.current?.injectJavaScript(`controlButtons.forEach(ele => { ele.disabled = true;}); replConsole.value  += "\\nBluetooth error. Are you connected?"; connectButton.innerHTML = 'Connect'; true;`);
-     navigation.navigate(Routes.NAV_PAIRING_SCREEN)
+      webViewRef.current?.injectJavaScript(`controlButtons.forEach(ele => { ele.disabled = true;}); replConsole.value  += "\\nBluetooth error. Are you connected? Try Again!"; connectButton.innerHTML = 'Connect'; true;`);
+     setTimeout(() => {
+      navigation.navigate(Routes.NAV_PAIRING_SCREEN)
+      
+     }, 3000);
     }
     
   }
