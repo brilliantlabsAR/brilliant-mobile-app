@@ -65,7 +65,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   const handleBackButton = () => {
     Alert.alert(
       'Alert',
-      'Are you want to exit',
+      'Are you sure you want to exit',
       [
         {
           text: "Cancel",
@@ -115,17 +115,17 @@ const PairingScreen = (props: PairingNavigationProps) => {
         } catch (err) {
           console.warn(err)
         }
-      } else {
-        BleManager.enableBluetooth()
-          .then(() => {
-            // Success code
-            console.log("The bluetooth is already enabled or the user confirm");
-          })
-          .catch((error) => {
-            // Failure code
-            console.log("The user refuse to enable bluetooth");
-          });
       }
+      BleManager.enableBluetooth()
+        .then(() => {
+          // Success code
+          console.log("The bluetooth is already enabled or the user confirm");
+        })
+        .catch((error) => {
+          // Failure code
+          console.log("The user refuse to enable bluetooth");
+        });
+
 
       BleManager.start({ showAlert: false }).then(() => {
         // Success code

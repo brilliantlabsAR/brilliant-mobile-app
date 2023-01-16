@@ -95,10 +95,16 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
   const handleBackButton = () => {
     Alert.alert(
       'Alert',
-      'Are you want to exit',
+      'Are you sure you want to exit',
       [
-        { text: 'OK', onPress: () => BackHandler.exitApp() },
-      ]
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: 'OK', onPress: () => { BackHandler.exitApp() } },
+      ],
+      { cancelable: true, }
     );
     return true;
   }
