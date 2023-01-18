@@ -81,7 +81,7 @@ const PairingScreen = (props: PairingNavigationProps) => {
   }
 
   const skipPairing = () => {
-    navigation.navigate(Routes.NAV_MEDIA_SCREEN);
+    navigation.navigate(Routes.NAV_TERMINAL_SCREEN);
   }
 
 
