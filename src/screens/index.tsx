@@ -7,7 +7,6 @@ import UpdateProfileScreen from "./updateProfileScreen";
 import PairingScreen from "./pairingScreen";
 import MyAccountScreen from "./MyAccountScreen";
 import SuccessLogin from "./successLogin";
-import MediaScreen from "./mediaScreen";
 import ProfileOtpVerify from "./profileOtpVerifyScreen";
 import UpdateFirmwareScreen from "./updateFirmwareScreen";
 import TerminalScreen from "./terminalScreen";
@@ -21,7 +20,6 @@ export default {
   PairingScreen,
   MyAccountScreen,
   SuccessLogin,
-  MediaScreen,
   ProfileOtpVerify,
   TerminalScreen,
   UpdateFirmwareScreen

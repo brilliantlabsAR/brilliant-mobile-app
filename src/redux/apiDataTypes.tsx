@@ -6,13 +6,11 @@ export enum apiStatus {
 }
 export interface ILoginProps {
     phone: string;
-    cc: string;
     fcmToken: string;
     deviceType: string;
 }
 export interface ISignupProps {
     phone: string;
-    cc: any;
     name: any;
     email: any;
 }
@@ -29,7 +27,6 @@ export interface IStateProps {
 }
 
 export interface IUpdateProfileProps {
-    cc: string,
     name: string,
     phone: string,
     email: string
@@ -46,7 +43,6 @@ export interface IProfilePictureProps {
 export interface IProfileUpdateVerifyProps {
     name: string | any,
     email: string | any,
-    cc: string | any,
     phone: string | any,
     oldPhoneNumber: string | any,
     otp: string | any

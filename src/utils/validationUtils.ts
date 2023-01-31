@@ -72,10 +72,9 @@ export const Validations = {
     }
   },
 
-  VerifySignup(phnNo: string, cc: string, name: string, email: string) {
+  VerifySignup(phnNo: string, name: string, email: string) {
     if (
       this.verifyPhone(phnNo) &&
-      this.verifyRequired(cc) &&
       this.verifyRequired(name) &&
       this.verifyEmail(email)
     ) {
@@ -89,8 +88,8 @@ export const Validations = {
    * desc: Method of login validation
    * @returns boolean
    */
-  VerifyLogin(cc: string, phone: string) {
-    if (this.verifyPhone(phone) && this.verifyRequired(cc)) {
+  VerifyLogin(phone: string) {
+    if (this.verifyPhone(phone)) {
       return true;
     } else {
       return false;

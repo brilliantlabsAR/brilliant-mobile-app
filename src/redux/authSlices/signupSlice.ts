@@ -44,7 +44,7 @@ const SignupSlice = createSlice({
           state.status = apiStatus.success;
           // console.log("Payload Data", action.payload.data);
           state.userData = action.payload.data;
-          ShowToast(JSON.stringify(action.payload.data.otp));
+          // ShowToast(JSON.stringify(action.payload.data.otp));
         } else {
           state.status = apiStatus.failed;
           state.userData = action.payload.message;

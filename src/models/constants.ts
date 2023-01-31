@@ -35,8 +35,8 @@ export const STRINGS = {
   START_LIVE: "Start Live",
   LICENSE: "License Agreement",
   PRIVACY: "Data Privacy",
-  HELP: "Help",
-  CHOOSE_GALLARY: "Choose from Gallery",
+  HELP: "Documentation",
+  CHOOSE_GALLERY: "Choose from Gallery",
   CANCEL: "Cancel",
   VERIFY_OTP_TEXT: "Verify Phone",
   SEND_OTP: "We have send otp to your phone\nno.",
@@ -60,6 +60,7 @@ export const STRINGS = {
   // BROADCAST_YOUR_LIFE: "Broadcast your life as it happens",
   PROFILE_IMAGE_SUCCESS: "Profile image uploaded successfully",
   PROFILE_IMAGE_ERROR: "There is some error",
+  PROFILE_UPDATE_SUCCESS: "Profile updated successfully",
   MONOCLE_CONNECTED: "Monocle is connected successfully",
   FRAME_CONNECTED: "Frame is connected successfully",
   ALERT: "Alert",
@@ -79,7 +80,7 @@ export const STRINGS = {
   WELCOME_TEXT: "The pocket sized AR device for imaginative hackers",
   BRILLIANT_TEXT: "BRILLIANT",
   EMPTY_TEXT: "No media found",
-  WEB_VIEWLOADING : "Loading..."
+  WEB_VIEWLOADING: "Loading...",
 };
 
 //micro python command

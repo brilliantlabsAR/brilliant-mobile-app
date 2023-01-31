@@ -43,6 +43,8 @@
 	<string>Please allow permission for camera access</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Allow contacts access</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>$(PRODUCT_NAME) needs location to work properly.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow microphone access</string>
 	<key>NSPhotoLibraryUsageDescription</key>

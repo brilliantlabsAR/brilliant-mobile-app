@@ -53,7 +53,7 @@ const SuccessLogin = (props: SuccessLoginNavigationProps) => {
         <View style={styles.navigateContainer}>
           <TouchableOpacity activeOpacity={0.6}
             onPress={() =>
-              navigation.replace(Routes.NAV_APP)
+              navigation.replace(Routes.NAV_PAIRING_SCREEN)
             }
           >
             <View style={styles.textContainer}>

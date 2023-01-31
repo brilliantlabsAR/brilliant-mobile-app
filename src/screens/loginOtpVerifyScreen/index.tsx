@@ -71,7 +71,7 @@ const LoginOtpVerify = (props: Props) => {
       if (route.params.screen == STRINGS.SIGNUP) {
         navigation.replace(Routes.NAV_SUCCESS_LOGIN)
       } else if (route.params.screen == STRINGS.LOGIN) {
-        navigation.replace(Routes.NAV_APP)
+        navigation.replace(Routes.NAV_PAIRING_SCREEN)
       }
     } else if (status === apiStatus.failed) {
       setOtp('');
@@ -118,6 +118,7 @@ const LoginOtpVerify = (props: Props) => {
   function verifyOTPCall() {
     // console.log("fjhbd", otp);
     // console.log(phoneNumber + '//// ' + otp)
+    Keyboard.dismiss();
     if (Validations.verifyRequired(otp)) {
       setIsLoading(true)
       dispatch(FetchOtpData({
