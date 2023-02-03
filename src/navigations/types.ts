@@ -25,21 +25,21 @@ export type SuccessLoginNavigationProps = NativeStackScreenProps<
   RootStackParamList,
   "SuccessLoginScreen"
 >;
+export type PairingNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  "PairingScreen"
+>;
 export type UpdateProfileNavigationProps = NativeStackScreenProps<
   AppStackParamList,
   "UpdateProfileScreen"
 >;
 export type TopBarNavigationProps = NativeStackNavigationProp<
   AppStackParamList,
-  "PairingScreen"
+  "TerminalScreen"
 >;
-export type MediaScreenNavigationProps = NativeStackScreenProps<
+export type TerminalScreenNavigationProps = NativeStackScreenProps<
   AppStackParamList,
-  "MediaScreen"
->;
-export type PairingNavigationProps = NativeStackScreenProps<
-  AppStackParamList,
-  "PairingScreen"
+  "TerminalScreen"
 >;
 export type AccountNavigationProps = NativeStackScreenProps<
   AppStackParamList,

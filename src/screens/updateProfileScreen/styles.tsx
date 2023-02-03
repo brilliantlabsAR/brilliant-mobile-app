@@ -11,11 +11,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
-  spaceView: {
-    backgroundColor: Theme.color.Black,
-    height: 0.2,
-    width: '100%',
-  },
   textInputView: {
     marginTop: normalize(30),
     backgroundColor: Theme.color.White,
@@ -24,24 +19,7 @@ export const styles = StyleSheet.create({
     marginLeft: normalize(20),
     marginRight: normalize(20)
   },
-  countryCodeView: {
-    flexDirection: 'row',
-    width: '100%',
-    marginTop: normalize(20)
-  },
-  countryCodeOpen: {
-    width: '28%',
-    height: normalize(47),
-    backgroundColor: Theme.color.White,
-  },
-  smallViewSpace: {
-    width: '2%',
-    backgroundColor: Theme.color.White,
-  },
-  mediumViewSpace: {
-    width: '70%',
-    backgroundColor: Theme.color.White,
-  },
+
   updateButtonStyle: {
     alignItems: 'center',
     backgroundColor: Theme.color.Black,

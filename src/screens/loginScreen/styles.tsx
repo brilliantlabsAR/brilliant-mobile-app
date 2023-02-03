@@ -9,80 +9,39 @@ export const styles = StyleSheet.create({
     bodyContainer: {
         backgroundColor: Theme.color.White,
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     mainContainer: {
+        height: '70%',
+        width: '80%',
         backgroundColor: Theme.color.White,
-        flex: 1,
-        flexDirection: 'column',
-        marginTop: normalize(100),
         marginHorizontal: normalize(20),
         alignItems: 'center',
         justifyContent: 'center'
     },
-    scrollContainer: {
-        backgroundColor: Theme.color.White,
-    },
-    headerContainer: {
-        // marginRight: 25
-    },
     signUpDescText: {
         fontSize: normalize(14),
-        marginTop: normalize(10),
         color: Theme.color.Black,
         textAlign: "left",
-        fontFamily: FontFamily.regular
+        fontFamily: FontFamily.regular,
+        paddingBottom: normalize(20)
     },
     inputContainer: {
-        // marginRight: 25
-    },
-    afterInputContainer: {
-        marginTop: normalize(20),
         backgroundColor: Theme.color.White,
-        paddingBottom: 20,
-        borderRadius: 20
+        height: normalize(50),
+        width: normalize(250),
+        justifyContent: 'center',
+        borderRadius: normalize(50),
     },
-    termsView: {
-        flexDirection: 'row',
-        flex: 1,
-        justifyContent: 'center'
-    },
-    termsText: {
-        fontSize: normalize(14),
-        color: Theme.color.Black,
-        fontFamily: FontFamily.regular,
-    },
-    outCountryCodeView: {
-        flexDirection: "row",
-        flex: 1,
-        width: "100%",
-    },
-    countryCodeView: {
-        width: '28%',
-        height: normalize(47),
-        backgroundColor: Theme.color.White,
-    },
-    gape1: {
-        width: "2%",
-        backgroundColor: Theme.color.White,
-    },
-    gape2: {
-        width: "70%",
-        backgroundColor: Theme.color.White,
-    },
-    height20px: {
-        height: 20
-    },
-    touchOpacityView: {
-        marginTop: 40,
-        alignItems: 'center',
-        borderRadius: 100,
+    loginBtn: {
         backgroundColor: '#000000',
-        height: 50,
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center'
+        height: normalize(46),
+        width: normalize(250),
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: normalize(50),
+        marginTop: normalize(30)
     },
     loginTextStyle: {
         fontSize: 16,

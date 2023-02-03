@@ -3,7 +3,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  Platform,
   TouchableOpacity,
   Image,
   BackHandler,
@@ -12,29 +11,23 @@ import {
   Linking
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ImageCropPicker, { clean } from "react-native-image-crop-picker";
-import LinearGradient from "react-native-linear-gradient";
 import { AccountNavigationProps } from "../../navigations/types";
 import { styles } from "./styles";
 import * as Routes from "../../models/routes";
 import { Loading } from "../../components/loading";
 import {
-  mainUser,
-  blackCamera,
   userIcon,
   menuBluetooth,
-  menuDeviceFrame,
+  updateDevice,
   menuLicence,
   menuData,
   menuHelp,
-  logoButton,
-  monocleIcon,
+  hamburgerIcon,
 } from "../../assets";
-import { STRINGS } from "../../models";
+import { STRINGS, BluetoothConst } from "../../models";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchMyAccountData } from "../../redux/appSlices/myAccountSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
-import { FetchProfilePictureData } from "../../redux/appSlices/profilePictureSlice";
 import { cleanStorageItem } from "../../utils/asyncUtils";
 import { resetOTPData } from "../../redux/authSlices/otpVerifySlice";
 import { resetLogin } from "../../redux/authSlices/loginSlice";
@@ -43,33 +36,38 @@ import { setDevicePairingStatus } from "../../redux/appSlices/pairingStatusSlice
 import { DevicePairingStatus } from "../../models";
 import { CustomModal } from "../../components/customModal";
 import BleManager from 'react-native-ble-manager';
+import { stringToBytes } from "convert-string";
+import openApp from '../../components/appLInking'
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
   const { navigation } = props;
-  const [userImageState, setUserImageState] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
   const [showLoading, setShowLoading] = useState<boolean>(false);
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [isFirmwareModalVisible, setIsFirmwareModalVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  let file: any = "";
   const status = useAppSelector((state) => state.myAccountSlice.status);
   const userDetails = useAppSelector((state) => state.myAccountSlice.userData);
   const pairingStatus: DevicePairingStatus = useAppSelector(
     (state) => state.pairing.status
   );
-  const peripheralId = useAppSelector((state) => state.pairing.peripheralId);
+  const peripheralId = useAppSelector((state): string => String(state.pairing.peripheralId));
+
 
   useEffect(() => {
-    console.log(peripheralId, '   --->', pairingStatus, "------>", DevicePairingStatus.Paired);
-
+    // console.log(peripheralId, '   --->', pairingStatus, "------>", DevicePairingStatus.Paired);
     setShowLoading(true);
-    dispatch(FetchMyAccountData());
     BackHandler.addEventListener("hardwareBackPress", handleBackButton);
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", handleBackButton);
     };
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(FetchMyAccountData());
+    }, [])
+  );
 
   useEffect(() => {
     if (status === apiStatus.success) {
@@ -78,14 +76,9 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
       // console.log("data-->2", userDetails.name);
       setFullName(userDetails.name);
       AsyncStorage.setItem("name", userDetails.name);
-      AsyncStorage.setItem("countryCode", userDetails.cc);
       AsyncStorage.setItem("phone", userDetails.phone);
       AsyncStorage.setItem("email", userDetails.email);
-      if (userDetails.profilePicture == "") {
-        setUserImageState("");
-      } else {
-        setUserImageState(userDetails.profilePicture);
-      }
+
     } else if (status === apiStatus.failed) {
       setShowLoading(false);
     }
@@ -95,41 +88,43 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
   const handleBackButton = () => {
     Alert.alert(
       'Alert',
-      'Are you want to exit',
+      'Are you sure you want to exit',
       [
-        { text: 'OK', onPress: () => BackHandler.exitApp() },
-      ]
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: 'OK', onPress: () => { BackHandler.exitApp() } },
+      ],
+      { cancelable: true, }
     );
     return true;
   }
 
+  const bluetoothDataWrite = (data: any, peripheralId: any) => {
+    console.log("peripheralId", peripheralId);
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
-  const openGallery = () => {
-    ImageCropPicker.openPicker({
-      compressImageQuality: 0.9,
+    console.log('Start write data---->', data);
+    BleManager.write(
+      peripheralId,
+      BluetoothConst.nordicUartServiceUuid,
+      BluetoothConst.uartRxCharacteristicUuid,
+      stringToBytes(data),
+      256
+    ).then((readData) => {
+      // Success code
+      console.log('write:---> ' + readData);
+      if (data == "import device;device.update('')") {
+        Alert.alert("Ready for update")
+      }
     })
-      .then(async (image) => {
-        file = {
-          uri:
-            Platform.OS === "android"
-              ? image.path
-              : image.path.replace("file://", ""),
-          name: image.path.split("/")[image.path.split("/").length - 1],
-          type: "image/jpeg",
-        };
-        console.log("check image path", file);
-
-        setModalVisible(false);
-        setUserImageState(image.path);
-        setShowLoading(true);
-        dispatch(FetchProfilePictureData(file));
-        setShowLoading(false);
-      })
-      .catch((error) => console.log(error));
-  };
+      .catch((error) => {
+        // Failure code
+        // Alert.alert("Bluetooth write failure")
+        console.log("write data failure", error);
+      });
+  }
 
   const logout = () => {
     Alert.alert(STRINGS.ALERT, STRINGS.ALERT_LOGOUT, [
@@ -166,15 +161,21 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
       dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Unpaired, id: undefined }));
     }
     setIsFirmwareModalVisible(false);
-    navigation.replace(Routes.NAV_PAIRING_SCREEN);
+    navigation.replace(Routes.NAV_TERMINAL_SCREEN);
   };
 
   const handleFirmware = () => {
-    // if (pairingStatus === DevicePairingStatus.Paired) {
-    navigation.navigate(Routes.NAV_UPDATE_FIRMWARE);
-    // } else {
-    //   setIsFirmwareModalVisible(true);
-    // }
+    if (pairingStatus == DevicePairingStatus.Paired && peripheralId) {
+
+      // bluetoothDataWrite("\x02", peripheralId)
+
+      setTimeout(() => {
+        bluetoothDataWrite("import update;update.micropyton() \r\n", peripheralId);
+        openApp({ url: "nRFConnect", appStoreId: "1054362403", playMarketId: 'no.nordicsemi.android.mcp', name: 'nRFConnect' })
+      }, 2000);
+    } else {
+      Alert.alert("Bluetooth disconnected")
+    }
   };
 
   const modalClose = () => {
@@ -184,158 +185,99 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
   return (
     <SafeAreaView style={styles.bodyContainer}>
       <View style={styles.mainContainer}>
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() => { navigation.navigate(Routes.NAV_TERMINAL_SCREEN) }}
+          style={styles.menuIconContainer}>
+          <Image
+            style={styles.menuIcon}
+            source={hamburgerIcon}
+            resizeMode='contain'
+          />
+        </TouchableOpacity>
         <ScrollView style={styles.firstScrollView}>
-          <View style={styles.insideFirstScrollView}>
-            <View style={styles.profileImageView}>
-              {userImageState == "" && (
-                <Image
-                  style={styles.userImage}
-                  source={mainUser}
-                  resizeMode="cover"
-                />
-              )}
-              {userImageState != "" && (
-                <Image
-                  style={styles.userProfileImage}
-                  source={{ uri: userImageState }}
-                  resizeMode="cover"
-                />
-              )}
-            </View>
-            <TouchableOpacity
-              style={styles.openModalTouch}
-              onPress={() => openModal()}
-            >
-              <View>
-                <Image
-                  style={styles.cameraImageView}
-                  source={blackCamera}
-                  resizeMode="cover"
-                />
-              </View>
-            </TouchableOpacity>
-            <Text style={styles.nameText}>{fullName}</Text>
-          </View>
-          <View>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.menuBox}
-              onPress={() =>
-                navigation.navigate(Routes.NAV_UPDATE_PROFILE_SCREEN)
-              }
-            >
-              <Image
-                style={styles.menuIcon}
-                source={userIcon}
-                resizeMode="contain"
-              />
-              <Text style={styles.menuText}>{STRINGS.UPDATE_PROFILE}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.menuBox}
-              onPress={() => handleMonoclePairing()}
-            >
-              <Image
-                style={styles.menuIcon}
-                source={menuBluetooth}
-                resizeMode="contain"
-              />
-              <Text style={styles.menuText}>{pairingStatus === DevicePairingStatus.Paired
-                ? STRINGS.UNPAIR_DEVICE
-                : "Pair Monocle"}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.menuBox}
-              onPress={() => {
-                handleFirmware();
-              }}
-            >
-              <Image
-                style={styles.menuIcon}
-                source={menuDeviceFrame}
-                resizeMode="contain"
-              />
-              <Text style={styles.menuText}>{STRINGS.UPDATE_DEVICE_FIRMWARE}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.menuBox}
-              onPress={() => {
-                Linking.openURL('http://brilliantmonocle.com/terms')
-              }}
-            >
-              <Image
-                style={styles.menuIcon}
-                source={menuLicence}
-                resizeMode="contain"
-              />
-              <Text style={styles.menuText}>{STRINGS.LICENSE}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.menuBox}
-              onPress={() => {
-                Linking.openURL('http://brilliantmonocle.com/privacy')
-              }}
-            >
-              <Image
-                style={styles.menuIcon}
-                source={menuData}
-                resizeMode="contain"
-              />
-              <Text style={styles.menuText}>{STRINGS.PRIVACY}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.menuBox}
-              onPress={() => {
-                Linking.openURL('https://docs.brilliantmonocle.com/')
-              }}
-            >
-              <Image
-                style={styles.menuIcon}
-                source={menuHelp}
-                resizeMode="contain"
-              />
-              <Text style={styles.menuText}>{STRINGS.HELP}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => logout()}
-              style={styles.logoutView}
-            >
-              <Text style={styles.logoutText}>Logout</Text>
-            </TouchableOpacity>
-            <View style={styles.heightView} />
-          </View>
+          <Text style={styles.nameText}>{fullName}</Text>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.menuBox}
+            onPress={() =>
+              navigation.navigate(Routes.NAV_UPDATE_PROFILE_SCREEN)
+            }
+          >
+            <Image
+              style={styles.itemIcon}
+              source={userIcon}
+              resizeMode="contain"
+            />
+            <Text style={styles.menuText}>{STRINGS.UPDATE_PROFILE}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.menuBox}
+            onPress={() => {
+              handleFirmware();
+            }}
+          >
+            <Image
+              style={styles.itemIcon}
+              source={updateDevice}
+              resizeMode="contain"
+            />
+            <Text style={styles.menuText}>{STRINGS.UPDATE_DEVICE_FIRMWARE}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.menuBox}
+            onPress={() => {
+              Linking.openURL('http://brilliantmonocle.com/terms')
+            }}
+          >
+            <Image
+              style={styles.itemIcon}
+              source={menuLicence}
+              resizeMode="contain"
+            />
+            <Text style={styles.menuText}>{STRINGS.LICENSE}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.menuBox}
+            onPress={() => {
+              Linking.openURL('http://brilliantmonocle.com/privacy')
+            }}
+          >
+            <Image
+              style={styles.itemIcon}
+              source={menuData}
+              resizeMode="contain"
+            />
+            <Text style={styles.menuText}>{STRINGS.PRIVACY}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.menuBox}
+            onPress={() => {
+              Linking.openURL('https://docs.brilliantmonocle.com/')
+            }}
+          >
+            <Image
+              style={styles.itemIcon}
+              source={menuHelp}
+              resizeMode="contain"
+            />
+            <Text style={styles.menuText}>{STRINGS.HELP}</Text>
+          </TouchableOpacity>
+
           {showLoading ? <Loading /> : null}
         </ScrollView>
-        <CustomModal
-          modalVisible={modalVisible}
-          modalVisibleOff={() => setModalVisible(false)}
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() => logout()}
+          style={styles.logoutView}
         >
-          <View style={styles.modalMainView}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.modalBox}
-              onPress={() => openGallery()}
-            >
-              <Text style={styles.modalText}>{STRINGS.CHOOSE_GALLARY}</Text>
-            </TouchableOpacity>
-            <View style={styles.modalHeight} />
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.modalBox}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.modalText}>{STRINGS.CANCEL}</Text>
-            </TouchableOpacity>
-          </View>
-        </CustomModal>
+          <Text style={styles.logoutText}>Logout</Text>
+        </TouchableOpacity>
 
         {/* {isFirmwareModalVisible && ( */}
         <CustomModal
@@ -356,18 +298,6 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
         </CustomModal>
         {/* )} */}
       </View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}
-      >
-        <View
-          style={styles.footerLinearStyle}>
-          <Image
-            style={styles.footerButtonImage}
-            source={monocleIcon}
-            resizeMode='contain'
-          />
-        </View>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };

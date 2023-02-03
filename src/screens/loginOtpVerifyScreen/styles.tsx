@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 100,
         backgroundColor: Theme.color.Black,
-        height: 50,
+        height: normalize(46),
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center'

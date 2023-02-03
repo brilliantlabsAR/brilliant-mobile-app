@@ -4,6 +4,9 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import { FontFamily, STRINGS, Theme } from "../../models";
 import { UpdateProfileNavigationProps } from "../../navigations/types";
@@ -13,7 +16,7 @@ import { Loading } from '../../components/loading';
 import { TextInput } from 'react-native-paper';
 import { CountryCodePicker } from "../../utils/countryCodePicker";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { FetchUpdateProfileData } from "../../redux/appSlices/updateProfileSlice";
+import { FetchUpdateProfileData, resetProfileData } from "../../redux/appSlices/updateProfileSlice";
 import { apiStatus } from "../../redux/apiDataTypes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Validations } from "../../utils/validationUtils";
@@ -50,10 +53,8 @@ const countryPickerStyle = {
 const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
   const { navigation } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   const [firstName, setFirstName] = useState<string | any>('');
-  const [countryCode, setCountryCode] = useState<string | any>('');
-  const [oldCountryCode, setOldCountryCode] = useState<string | any>('');
   const [phoneNumber, setPhoneNumber] = useState<string | any>('');
   const [oldPhoneNumber, setOldPhoneNumber] = useState<string | any>('');
   const [email, setEmail] = useState<string | any>('');
@@ -63,12 +64,17 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
 
   useEffect(() => {
     if (status === apiStatus.success) {
+      // AsyncStorage.setItem("name", userDetails.name);
+      // AsyncStorage.setItem("phone", userDetails.phone);
+      // AsyncStorage.setItem("email", userDetails.email);
       setIsLoading(false);
+      resetProfileData();
+      if (userDetails.otpSend == true) {
+        navigation.navigate(Routes.NAV_PROFILE_OTP_SCREEN, { phoneNumber: phoneNumber, phone: oldPhoneNumber, email: email, name: firstName })
+      }
       // console.log("successfully updated");
-      navigation.navigate(Routes.NAV_PROFILE_OTP_SCREEN, { phoneNumber: phoneNumber, countryCode: countryCode, phone: oldCountryCode + oldPhoneNumber, email: email, name: firstName })
     } else if (status === apiStatus.failed) {
       setIsLoading(false);
-      ShowToast(userDetails);
     }
   }, [status])
 
@@ -83,21 +89,17 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
     AsyncStorage.getItem('email').then((emailId) => {
       setEmail(emailId)
     })
-    AsyncStorage.getItem('countryCode').then((countryCode) => {
-      setCountryCode(countryCode);
-      setOldCountryCode(countryCode);
-    })
   }, [])
 
   const updateProfileApiFunc = () => {
+    console.log("phone number", phoneNumber);
+
     if (Validations.verifyRequired(firstName) == true &&
-      Validations.verifyRequired(countryCode) == true &&
       Validations.verifyRequired(phoneNumber) == true &&
       Validations.verifyRequired(email) == true) {
       if (Validations.verifyEmail(email) == true && Validations.verifyPhone(phoneNumber) == true) {
         setIsLoading(true);
         dispatch(FetchUpdateProfileData({
-          cc: countryCode,
           name: firstName,
           phone: phoneNumber,
           email: email
@@ -112,92 +114,75 @@ const UpdateProfileScreen = (props: UpdateProfileNavigationProps) => {
     }
   }
 
+  const onChangePhone = (value: any) => {
+    let newPhone = value.includes("+", 0)
+    let phone = value.replace(/[a-zA-Z- #*;(),.<>''{''}''[\]\\''/]/gi, '')
+    if (value.length == 1 && !newPhone) {
+      setPhoneNumber('+' + phone)
+    } else {
+      setPhoneNumber(phone)
+    }
+    if (!newPhone) {
+      setPhoneNumber('+' + phone)
+    }
+  }
+
   return (
     <SafeAreaView style={styles.bodyContainer}>
-      <TopBar title={STRINGS.UPDATE_PROFILE} isTextVisible={true} />
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+        >
+          <TopBar title={STRINGS.UPDATE_PROFILE} isTextVisible={true} />
 
-      <View style={styles.spaceView} />
-      <CountryCodePicker
-        show={show}
-        lang={'en'}
-        style={countryPickerStyle}
+          <View style={styles.textInputView}>
 
-        // when picker button press you will get the country object with dial code
-        pickerButtonOnPress={(item) => {
-          console.log("hii", item.dial_code);
-          setCountryCode(item.dial_code);
-          setShow(false);
-        }}
-        onBackdropPress={() => setShow(false)}
-      />
-      <View style={styles.textInputView}>
-
-        <TextInput
-          mode="outlined"
-          label="Full Name"
-          keyboardType="default"
-          value={firstName}
-          onChangeText={(firstName) => setFirstName(firstName)}
-          right={<TextInput.Icon name={userIcon} size={15} />}
-          theme={textInputStyle}
-        />
-
-        <View style={styles.countryCodeView}>
-          <TouchableOpacity style={styles.countryCodeOpen}
-            onPress={() => { setShow(true) }}
-          >
             <TextInput
               mode="outlined"
-              label="Country Code"
-              keyboardType="phone-pad"
-              pointerEvents="none"
-              editable={false}
-              value={countryCode}
-              onKeyPress={keyPress => setShow(true)}
-              onChangeText={(countryCode) => setCountryCode(countryCode)}
+              label="Full Name"
+              keyboardType="default"
+              value={firstName}
+              onChangeText={(firstName) => setFirstName(firstName)}
+              right={<TextInput.Icon name={userIcon} size={15} />}
               theme={textInputStyle}
             />
-
-          </TouchableOpacity>
-          <View style={styles.smallViewSpace} />
-          <View style={styles.mediumViewSpace}>
             <TextInput
               mode="outlined"
               label="Phone No."
               keyboardType="phone-pad"
               value={phoneNumber}
-              onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+              onChangeText={(phoneNumber) => onChangePhone(phoneNumber)}
               right={<TextInput.Icon name={smartphone} size={15} />}
               theme={textInputStyle}
+              style={styles.marginTop}
+            />
+            <TextInput
+              mode="outlined"
+              label="Email"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={(email) => setEmail(email.replace(/\s/g, ''))}
+              right={<TextInput.Icon name={mailIcon} size={15} />}
+              theme={textInputStyle}
+              style={styles.marginTop}
 
             />
+            <TouchableOpacity activeOpacity={0.6}
+              onPress={() =>
+                updateProfileApiFunc()
+              }
+              style={styles.updateButtonStyle}>
+              <Text style={styles.updateText}>{STRINGS.UPDATE}</Text>
+            </TouchableOpacity>
+
           </View>
-        </View>
-        <TextInput
-          mode="outlined"
-          label="Email"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={(email) => setEmail(email.replace(/\s/g, ''))}
-          right={<TextInput.Icon name={mailIcon} size={15} />}
-          theme={textInputStyle}
-          style={styles.marginTop}
 
-        />
-        <TouchableOpacity activeOpacity={0.6}
-          onPress={() =>
-            updateProfileApiFunc()
+          {
+            isLoading ?
+              <Loading /> : null
           }
-          style={styles.updateButtonStyle}>
-          <Text style={styles.updateText}>{STRINGS.UPDATE}</Text>
-        </TouchableOpacity>
-
-      </View>
-
-      {
-        isLoading ?
-          <Loading /> : null
-      }
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   )
 }

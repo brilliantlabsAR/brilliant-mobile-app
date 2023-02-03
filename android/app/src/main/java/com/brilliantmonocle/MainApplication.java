@@ -12,6 +12,7 @@ import com.facebook.soloader.SoLoader;
 import com.brilliantmonocle.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import com.brilliantmonocle.CustomWebViewPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -28,9 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+        packages.add(new CustomWebViewPackage());
           return packages;
         }
-
         @Override
         protected String getJSMainModuleName() {
           return "index";

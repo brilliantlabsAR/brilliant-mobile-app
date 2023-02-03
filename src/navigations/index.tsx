@@ -14,6 +14,7 @@ export type RootStackParamList = {
   [Routes.NAV_LOGIN_VERIFY_SCREEN]: { screen: string, phone: string };
   [Routes.NAV_SIGNUP_SCREEN]: undefined;
   [Routes.NAV_SUCCESS_LOGIN]: undefined;
+  [Routes.NAV_PAIRING_SCREEN]: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -53,7 +54,11 @@ const RootNavigation: React.FC = () => {
           component={screens.SignUpScreen}
           options={{ headerShown: false }}
         />
-
+        <RootStack.Screen
+          name={Routes.NAV_PAIRING_SCREEN}
+          component={screens.PairingScreen}
+          options={{ headerShown: false }}
+        />
         <RootStack.Screen
           name={Routes.NAV_APP}
           component={AppNavigation}

@@ -8,23 +8,35 @@ const windowWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
     bodyContainer: {
-        backgroundColor: Theme.color.WhiteSeven,
+        backgroundColor: Theme.color.White,
         flex: 1,
-        flexDirection: 'column'
+        alignItems: 'center',
     },
     mainContainer: {
-        backgroundColor: Theme.color.WhiteSix,
-        flex: 1,
-        flexDirection: 'column',
+        height: '90%',
+        width: '80%',
+        backgroundColor: Theme.color.White,
+    },
+    menuIconContainer: {
+        height: normalize(50),
+        backgroundColor: Theme.color.White,
+        marginTop: normalize(30),
+        alignItems: "flex-end"
+    },
+    menuIcon: {
+        height: normalize(25),
+        width: normalize(25)
     },
     firstScrollView: {
         backgroundColor: Theme.color.White
     },
-    insideFirstScrollView: {
-        flexDirection: 'row',
-        flex: 1,
-        height: normalize(100),
-        backgroundColor: Theme.color.WhiteSeven,
+    nameText: {
+        color: Theme.color.Black,
+        fontSize: 30,
+        fontStyle: 'normal',
+        fontWeight: 'bold',
+        fontFamily: FontFamily.bold,
+        paddingBottom: normalize(30)
     },
     profileImageView: {
         height: normalize(70),
@@ -68,104 +80,39 @@ export const styles = StyleSheet.create({
         height: normalize(15),
         width: normalize(15),
     },
-    nameText: {
-        fontSize: normalize(15),
-        color: Theme.color.Black,
-        fontFamily: FontFamily.bold,
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        marginLeft: normalize(20)
-    },
-    menuIcon: {
-        height: normalize(20),
-        width: normalize(20)
+    itemIcon: {
+        height: normalize(15),
+        width: normalize(15)
     },
     menuBox: {
         flexDirection: 'row',
         alignItems: 'center',
         height: normalize(50),
-        marginLeft: normalize(20),
     },
     menuText: {
-        fontSize: normalize(12),
+        fontSize: normalize(13),
         color: Theme.color.Black,
         fontFamily: FontFamily.regular,
         alignItems: 'center',
         marginLeft: normalize(10)
     },
     logoutView: {
-        marginBottom: normalize(70),
         alignItems: 'center',
-        borderRadius: normalize(100),
+        borderRadius: normalize(50),
         backgroundColor: Theme.color.White,
         borderColor: '#000000',
-        height: normalize(40),
+        height: normalize(46),
         borderWidth: normalize(1.3),
-        marginLeft: normalize(25),
-        marginRight: normalize(25),
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     logoutText: {
-        fontSize: normalize(15),
+        fontSize: normalize(14),
         color: Theme.color.Black,
         fontStyle: 'normal',
         borderRadius: normalize(25),
         fontFamily: FontFamily.regular
 
     },
-    heightView: {
-        backgroundColor: 'transparent',
-        height: normalize(60),
-    },
-    modalMainView: {
-        alignSelf: 'center',
-        backgroundColor: Theme.color.White,
-        width: normalize(220),
-        borderRadius: normalize(10)
-    },
-    modalText: {
-        fontSize: normalize(12),
-        color: Theme.color.Black,
-        fontFamily: FontFamily.regular,
-        alignItems: 'center',
-        marginLeft: normalize(10),
-        textAlign: 'center'
-    },
-    modalBox: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: normalize(50),
-        alignSelf: 'center'
-    },
-    modalHeight: {
-        backgroundColor: Theme.color.grayEight,
-        height: normalize(0.5),
-    },
-    footerLinearStyle: {
-        position: 'absolute',
-        left: normalize(250),
-        right: 0,
-        bottom: 10,
-        zIndex: 1,
-        elevation: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: normalize(50),
-        height: normalize(50),
-        borderRadius: normalize(25),
-        backgroundColor: Theme.color.Black,
-        borderColor: Theme.color.Black,
-        borderWidth: 2,
-    },
-    footerButtonImage: {
-        height: normalize(30),
-        width: normalize(30),
-    },
-
     // device firmware modal view
     modalView: {
         alignSelf: 'center',

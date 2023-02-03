@@ -29,7 +29,6 @@ let timerEnable = true;
 const ProfileOtpVerify = (props: Props) => {
 	const { route } = props;
 	const [phoneNumber] = useState<string>(route.params.phoneNumber);
-	const [countryCode] = useState<string>(route.params.countryCode);
 	const [phone] = useState<string>(route.params.phone);
 	const [email] = useState<string>(route.params.email);
 	const [name] = useState<string>(route.params.name);
@@ -108,7 +107,6 @@ const ProfileOtpVerify = (props: Props) => {
 			dispatch(FetchProfileVerifyData({
 				name: name,
 				email: email,
-				cc: countryCode,
 				phone: phoneNumber,
 				oldPhoneNumber: phone,
 				otp: otp
@@ -126,7 +124,7 @@ const ProfileOtpVerify = (props: Props) => {
 					keyboardShouldPersistTaps={'handled'}>
 					<View>
 						<Text style={styles.verifyText}>{STRINGS.VERIFY_OTP_TEXT}</Text>
-						<Text style={styles.phoneNumberText}>{STRINGS.SEND_OTP + countryCode + phoneNumber}</Text>
+						<Text style={styles.phoneNumberText}>{STRINGS.SEND_OTP + phoneNumber}</Text>
 					</View>
 					<View style={styles.otpViewContainer}>
 

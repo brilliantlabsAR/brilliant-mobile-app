@@ -21,7 +21,6 @@ export const styles = StyleSheet.create({
     color: Theme.color.Black,
     fontSize: 30,
     fontStyle: 'normal',
-    flexDirection: 'row',
     fontWeight: 'bold',
     fontFamily: FontFamily.bold
   },

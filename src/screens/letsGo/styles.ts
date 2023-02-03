@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     marginTop: normalize(30),
   },
   signUpTouchableView: {
-    borderRadius: normalize(100),
+    borderRadius: normalize(50),
     backgroundColor: "#000000",
     height: normalize(50),
     alignItems: "center",
@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     marginTop: normalize(5),
     alignContent: "center",
     alignItems: "center",
-    borderRadius: normalize(100),
+    borderRadius: normalize(50),
     backgroundColor: "#FFFFFF",
     borderColor: "#000000",
     borderWidth: normalize(2),

@@ -1,10 +1,10 @@
 import "intl";
 import "intl/locale-data/jsonp/en";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StatusBar,
   Platform,
-  LogBox,
+  LogBox
 } from "react-native";
 import RootNavigation from "./navigations";
 import { Provider } from 'react-redux';

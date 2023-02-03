@@ -14,14 +14,3 @@ export const textInputStyle = {
     },
     roundness: 10
 }
-export const countryPickerStyle = {
-    // Styles for whole modal [View]
-    modal: {
-        backgroundColor: Theme.color.White,
-        height: '70%'
-    },
-    // Styles for input [TextInput]
-    textInput: {
-        borderRadius: 10,
-    },
-}

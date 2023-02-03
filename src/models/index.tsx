@@ -4,3 +4,4 @@ export * from "./constants";
 export * from "./api";
 export * from "./assetType";
 export * from "./devicePairingStatus";
+export * from "./bluetoothConst"

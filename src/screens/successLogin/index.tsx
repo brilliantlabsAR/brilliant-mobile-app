@@ -26,10 +26,16 @@ const SuccessLogin = (props: SuccessLoginNavigationProps) => {
   const handleBackButton = () => {
     Alert.alert(
       'Alert',
-      'Are you want to exit',
+      'Are you sure you want to exit',
       [
-        { text: 'OK', onPress: () => BackHandler.exitApp() },
-      ]
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: 'OK', onPress: () => { BackHandler.exitApp() } },
+      ],
+      { cancelable: true, }
     );
     return true;
   }
@@ -47,7 +53,7 @@ const SuccessLogin = (props: SuccessLoginNavigationProps) => {
         <View style={styles.navigateContainer}>
           <TouchableOpacity activeOpacity={0.6}
             onPress={() =>
-              navigation.replace(Routes.NAV_APP)
+              navigation.replace(Routes.NAV_PAIRING_SCREEN)
             }
           >
             <View style={styles.textContainer}>
