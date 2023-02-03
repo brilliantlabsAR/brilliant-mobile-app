@@ -38,6 +38,7 @@ import { CustomModal } from "../../components/customModal";
 import BleManager from 'react-native-ble-manager';
 import { stringToBytes } from "convert-string";
 import openApp from '../../components/appLInking'
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 
 const MyAccountScreen = (props: AccountNavigationProps) => {
   const { navigation } = props;
@@ -56,12 +57,17 @@ const MyAccountScreen = (props: AccountNavigationProps) => {
   useEffect(() => {
     // console.log(peripheralId, '   --->', pairingStatus, "------>", DevicePairingStatus.Paired);
     setShowLoading(true);
-    dispatch(FetchMyAccountData());
     BackHandler.addEventListener("hardwareBackPress", handleBackButton);
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", handleBackButton);
     };
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(FetchMyAccountData());
+    }, [])
+  );
 
   useEffect(() => {
     if (status === apiStatus.success) {

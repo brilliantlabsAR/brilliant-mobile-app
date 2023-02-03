@@ -9,7 +9,8 @@ import {
   Alert,
   PermissionsAndroid,
   requireNativeComponent,
-  ScrollView
+  ScrollView,
+  Linking
 } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BleManager from 'react-native-ble-manager';
@@ -50,7 +51,7 @@ const TerminalScreen = (props: Props) => {
   const [bleFileName, setbleFileName] = useState<string>("");
   const [imageArray, setImageArray] = useState<any[]>([]);
   const [webViewHeight, setWebViewHeight] = useState<any>("100%")
-
+  const [currentUrl, setCurrentUrl] = useState<string>(REPL_ENDPOINT);
   const peripheralId = useAppSelector((state): string => String(state.pairing.peripheralId));
   const pairingStatus = useAppSelector((state) => state.pairing.status);
   const dispatch = useAppDispatch();
@@ -490,7 +491,7 @@ const TerminalScreen = (props: Props) => {
                 <Text style={styles.emptyText}>{STRINGS.WEB_VIEWLOADING}</Text>
             </View>:null} */}
         <WebView
-          source={{ uri: REPL_ENDPOINT }}
+          source={{ uri: currentUrl }}
           ref={webViewRef}
           onMessage={onMessageCallBack}
           scrollEnabled={true}
@@ -506,7 +507,15 @@ const TerminalScreen = (props: Props) => {
           startInLoadingState={true}
           nativeConfig={webProp}
           renderLoading={() => <Loading />}
-
+          onShouldStartLoadWithRequest={(request) => {
+            // Only allow navigating within this website
+            if (request.url != REPL_ENDPOINT) {
+              Linking.openURL(request.url)
+              return false;
+            } else {
+              return true;
+            }
+          }}
         />
 
         {/* <TouchableOpacity onPress={() => navigation.navigate(Routes.NAV_MEDIA_SCREEN)}>
