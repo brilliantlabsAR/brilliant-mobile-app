@@ -94,54 +94,58 @@ const TerminalScreen = (props: Props) => {
           }
         });
       }
+      setTimeout(() => {
+        try {
+          PermissionsAndroid.requestMultiple(
+            [PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+            PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT]
+          ).then((result) => {
+            if (result['android.permission.BLUETOOTH_SCAN']
+              && result['android.permission.BLUETOOTH_CONNECT'] === 'granted') {
+              console.log('You can use the bluetooth');
+              BleManager.enableBluetooth()
+                .then(() => {
+                  // Success code
+                  console.log("The bluetooth is already enabled or the user confirm");
+                })
+                .catch((error) => {
+                  // Failure code
+                  console.log("The user refuse to enable bluetooth");
+                });
+            } else {
+              console.log('Permission denied');
+              return;
+            }
+          });
+        } catch (err) {
+          console.warn(err)
+        }
 
-      try {
-        PermissionsAndroid.requestMultiple(
-          [PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
-          PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT]
-        ).then((result) => {
-          if (result['android.permission.BLUETOOTH_SCAN']
-            && result['android.permission.BLUETOOTH_CONNECT'] === 'granted') {
-            console.log('You can use the bluetooth');
-            BleManager.enableBluetooth()
-              .then(() => {
-                // Success code
-                console.log("The bluetooth is already enabled or the user confirm");
-              })
-              .catch((error) => {
-                // Failure code
-                console.log("The user refuse to enable bluetooth");
-              });
-          } else {
-            console.log('Permission denied');
-            return;
-          }
-        });
-      } catch (err) {
-        console.warn(err)
-      }
-
-      BleManager.enableBluetooth()
-        .then(async () => {
+        BleManager.enableBluetooth()
+          .then(async () => {
+            // Success code
+            console.log("The bluetooth is already enabled or the user confirm");
+          })
+          .catch((error) => {
+            // Failure code
+            console.log("The user refuse to enable bluetooth");
+          });
+        BleManager.start({ showAlert: false }).then(() => {
           // Success code
-
-          console.log("The bluetooth is already enabled or the user confirm");
+          console.log("Module initialized");
         })
-        .catch((error) => {
-          // Failure code
-          console.log("The user refuse to enable bluetooth");
-        });
+      }, 4000)
+    } else {
+      BleManager.start({ showAlert: false }).then(() => {
+        // Success code
+        console.log("Module initialized");
+      });
     }
 
-    BleManager.start({ showAlert: false }).then(() => {
-      // Success code
-      console.log("Module initialized");
-    });
-
-    bleManagerEmitter.addListener('BleManagerDiscoverPeripheral', handleDiscoverPeripheral);
-    bleManagerEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', handleUpdateValueForCharacteristic);
-    bleManagerEmitter.addListener('BleManagerStopScan', () => { console.log("scan stopped in terminal ") });
-    bleManagerEmitter.addListener('BleManagerDisconnectPeripheral', handleDisconnectedPeripheral);
+    // bleManagerEmitter.addListener('BleManagerDiscoverPeripheral', handleDiscoverPeripheral);
+    // bleManagerEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', handleUpdateValueForCharacteristic);
+    // bleManagerEmitter.addListener('BleManagerStopScan', () => { console.log("scan stopped in terminal ") });
+    // bleManagerEmitter.addListener('BleManagerDisconnectPeripheral', handleDisconnectedPeripheral);
 
   }, [])
 
@@ -244,7 +248,6 @@ const TerminalScreen = (props: Props) => {
       console.log('Connected to ' + peripheralID);
       console.log('Device Name ' + deviceName);
       console.log(deviceName + " is connected!");
-      // ShowToast(STRINGS.MONOCLE_CONNECTED);
       dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Paired, id: peripheralID as string }));
       // BleManager.retrieveServices(peripheralID).then(async (peripheralData) => {
       //   await BleManager.startNotification(peripheralID, BluetoothConst.nordicUartServiceUuid, BluetoothConst.uartTxCharacteristicUuid).then(() => {
@@ -271,10 +274,9 @@ const TerminalScreen = (props: Props) => {
           BleManager.retrieveServices(peripheralID).then(async (peripheralData) => {
             await BleManager.startNotification(peripheralID, BluetoothConst.nordicUartServiceUuid, BluetoothConst.uartTxCharacteristicUuid).then(() => {
               console.log('Start notification: ');
-
               if (currentUrl == REPL_ENDPOINT) {
                 // bluetoothDataWrite("\x02", peripheralId);
-                webViewRef?.current?.injectJavaScript(` onConnectRepl();true;`);
+                webViewRef?.current?.injectJavaScript(`onConnectRepl();true;`);
               } else {
                 webViewRef?.current?.injectJavaScript(`pairingDone();true;`);
               }
@@ -294,9 +296,8 @@ const TerminalScreen = (props: Props) => {
             await BleManager.startNotification(peripheralID, BluetoothConst.nordicUartServiceUuid, BluetoothConst.uartTxCharacteristicUuid).then(() => {
               console.log('Start notification: ');
               if (currentUrl == REPL_ENDPOINT) {
-                // bluetoothDataWrite("\x02", peripheralId);
-                webViewRef?.current?.injectJavaScript(` onConnectRepl();true;`);
-              } else if (currentUrl == REPL_ENDPOINT + PAIRING) {
+                webViewRef?.current?.injectJavaScript(`onConnectRepl();true;`);
+              } else {
                 webViewRef?.current?.injectJavaScript(`pairingDone();true;`);
               }
             }).catch(async () => {
@@ -318,7 +319,7 @@ const TerminalScreen = (props: Props) => {
 
   const handleDisconnectedPeripheral = async (data: any) => {
     if (webViewRef) {
-      webViewRef.current?.injectJavaScript(`appBleDisconnected(); true;`);
+      webViewRef.current?.injectJavaScript(`appBleDisconnected();true;`);
     }
     if (currentUrl == REPL_ENDPOINT + PAIRING || currentUrl == REPL_ENDPOINT) {
       await connectRetriveNotify(peripheralId, "MONOCLE");
@@ -376,17 +377,16 @@ const TerminalScreen = (props: Props) => {
         // Failure code
         console.log(error);
       });
-
   }
 
   const checkConnection = async () => {
     BleManager.isPeripheralConnected(
       peripheralId,
       []
-    ).then((isConnected) => {
+    ).then(async (isConnected) => {
       console.log("------------connected-----", isConnected)
       if (!isConnected) {
-        connectRetriveNotify(peripheralId, "MONOCLE")
+        await startScan()
       } else {
         webViewRef?.current?.injectJavaScript(` onConnectRepl();true;`);
       }
@@ -439,7 +439,6 @@ const TerminalScreen = (props: Props) => {
           }}
           onLoadEnd={() => {
             setIsLoading(false)
-            // connectionDone()
           }}
           cacheMode={'LOAD_NO_CACHE'}
           startInLoadingState={true}
@@ -456,7 +455,7 @@ const TerminalScreen = (props: Props) => {
                 console.log("Connected peripherals: " + peripheralsArray.length);
               });
               await startScan()
-            } else if (nativeEvent.url == REPL_ENDPOINT && !nativeEvent.loading) {
+            } else if (currentUrl == REPL_ENDPOINT && !nativeEvent.loading) {
               checkConnection()
             } else if (currentUrl == REPL_ENDPOINT + LOGIN && !nativeEvent.loading) {
               disconnectBle()
@@ -464,7 +463,7 @@ const TerminalScreen = (props: Props) => {
           }}
           onShouldStartLoadWithRequest={(request) => {
             // Only allow navigating within this website
-            if (request.url.includes(REPL_ENDPOINT) || request.url.includes('discord') || request.url.includes('github')) {
+            if (request.url.includes(REPL_ENDPOINT) || request.url.includes('discord') || request.url.includes('github.com/login')) {
               return true;
             } else {
               Linking.openURL(request.url)
