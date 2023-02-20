@@ -25,7 +25,7 @@
     "react": "18.0.0",
     "react-native": "0.69.1",
     "react-native-base64": "^0.2.1",
-    "react-native-ble-manager": "^8.7.0",
+    "react-native-ble-manager": "^8.8.0",
     "react-native-dotenv": "^3.4.7",
     "react-native-exit-app": "^1.1.0",
     "react-native-fs": "^2.20.0",

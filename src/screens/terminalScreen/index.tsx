@@ -59,7 +59,6 @@ const TerminalScreen = (props: Props) => {
   const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
   const webViewRef: any = useRef(null);
 
-
   const insertDataToDb = async (
     type: AssetType,
     fileName: string,
@@ -243,43 +242,59 @@ const TerminalScreen = (props: Props) => {
     }
   }
 
+  const requestMTU = async function (peripheralID: any) {
+    BleManager.requestMTU(peripheralID, Math.floor(Math.random() * 100) + 100)
+      .then((mtu) => {
+        // Success code
+        console.log("MTU size changed to " + mtu + " bytes");
+        BleManager.retrieveServices(peripheralID).then(async (peripheralData) => {
+          await BleManager.startNotification(peripheralID, BluetoothConst.nordicUartServiceUuid, BluetoothConst.uartTxCharacteristicUuid).then(() => {
+            console.log('Start notification: ');
+            webViewRef?.current?.injectJavaScript(`onConnectRepl();true;`);
+          }).catch(async () => {
+            console.log("Notification error");
+            await startScan();
+          });
+        }).catch(async () => {
+          console.log("Retrive error");
+          await startScan();
+        })
+      }).catch((error) => {
+        // Failure code
+        console.log("MTU error ", error);
+        BleManager.retrieveServices(peripheralID).then(async (peripheralData) => {
+          await BleManager.startNotification(peripheralID, BluetoothConst.nordicUartServiceUuid, BluetoothConst.uartTxCharacteristicUuid).then(() => {
+            console.log('Start notification: ');
+            webViewRef?.current?.injectJavaScript(`onConnectRepl();true;`);
+          }).catch(async () => {
+            console.log("Notification error");
+            await startScan();
+
+          });
+        }).catch(async () => {
+          console.log("Retrive error");
+          await startScan();
+        })
+      });
+  }
+
   const connectRetriveNotify = async (peripheralID: any, deviceName: string) => {
+    var startNotification = false
     await BleManager.connect(peripheralID).then(async () => {
       console.log('Connected to ' + peripheralID);
       console.log('Device Name ' + deviceName);
       console.log(deviceName + " is connected!");
       dispatch(setDevicePairingStatus({ status: DevicePairingStatus.Paired, id: peripheralID as string }));
-      // BleManager.retrieveServices(peripheralID).then(async (peripheralData) => {
-      //   await BleManager.startNotification(peripheralID, BluetoothConst.nordicUartServiceUuid, BluetoothConst.uartTxCharacteristicUuid).then(() => {
-      //     console.log('Start notification: ');
-      //     if (currentUrl == REPL_ENDPOINT) {
-      //       // bluetoothDataWrite("\x02", peripheralId);
-      //       webViewRef?.current?.injectJavaScript(` onConnectRepl();true;`);
-      //     } else {
-      //       webViewRef?.current?.injectJavaScript(`pairingDone();true;`);
-      //     }
-      //   }).catch(async () => {
-      //     console.log("Notification error");
-      //     await startScan();
-
-      //   });
-      // }).catch(async () => {
-      //   console.log("Retrive error");
-      //   await startScan();
-      // })
-      BleManager.requestMTU(peripheralID, 256)
-        .then((mtu) => {
-          // Success code
-          console.log("MTU size changed to " + mtu + " bytes");
+      if (currentUrl == REPL_ENDPOINT + PAIRING) {
+        // bluetoothDataWrite("\x02", peripheralId);
+        webViewRef?.current?.injectJavaScript(`pairingDone();true;`);
+      }
+      if (currentUrl == REPL_ENDPOINT) {
+        if (Platform.OS === 'ios') {
           BleManager.retrieveServices(peripheralID).then(async (peripheralData) => {
             await BleManager.startNotification(peripheralID, BluetoothConst.nordicUartServiceUuid, BluetoothConst.uartTxCharacteristicUuid).then(() => {
               console.log('Start notification: ');
-              if (currentUrl == REPL_ENDPOINT) {
-                // bluetoothDataWrite("\x02", peripheralId);
-                webViewRef?.current?.injectJavaScript(`onConnectRepl();true;`);
-              } else {
-                webViewRef?.current?.injectJavaScript(`pairingDone();true;`);
-              }
+              webViewRef?.current?.injectJavaScript(`onConnectRepl();true;`);
             }).catch(async () => {
               console.log("Notification error");
               await startScan();
@@ -289,27 +304,14 @@ const TerminalScreen = (props: Props) => {
             console.log("Retrive error");
             await startScan();
           })
-        }).catch((error) => {
-          // Failure code
-          console.log("MTU error ", error);
-          BleManager.retrieveServices(peripheralID).then(async (peripheralData) => {
-            await BleManager.startNotification(peripheralID, BluetoothConst.nordicUartServiceUuid, BluetoothConst.uartTxCharacteristicUuid).then(() => {
-              console.log('Start notification: ');
-              if (currentUrl == REPL_ENDPOINT) {
-                webViewRef?.current?.injectJavaScript(`onConnectRepl();true;`);
-              } else {
-                webViewRef?.current?.injectJavaScript(`pairingDone();true;`);
-              }
-            }).catch(async () => {
-              console.log("Notification error");
-              await startScan();
+        } else {
+          setTimeout(async () => {
+            await requestMTU(peripheralID)
+          }, 2000)
 
-            });
-          }).catch(async () => {
-            console.log("Retrive error");
-            await startScan();
-          })
-        });
+        }
+
+      }
 
     }).catch(async (err) => {
       console.log("connect error", err);
@@ -365,18 +367,7 @@ const TerminalScreen = (props: Props) => {
   }
 
   const disconnectBle = () => {
-    if (Platform.OS === "android") {
-      bluetoothDataWrite("\x04", peripheralId);
-    }
-    BleManager.disconnect(peripheralId, true)
-      .then(() => {
-        // Success code
-        console.log("Disconnected");
-      })
-      .catch((error) => {
-        // Failure code
-        console.log(error);
-      });
+    bluetoothDataWrite("\x04", peripheralId);
   }
 
   const checkConnection = async () => {
@@ -388,7 +379,8 @@ const TerminalScreen = (props: Props) => {
       if (!isConnected) {
         await startScan()
       } else {
-        webViewRef?.current?.injectJavaScript(` onConnectRepl();true;`);
+        await connectRetriveNotify(peripheralId, "MONOCLE");
+        // webViewRef?.current?.injectJavaScript(` onConnectRepl();true;`);
       }
     }).catch(async (err) => {
       await startScan()
@@ -463,7 +455,11 @@ const TerminalScreen = (props: Props) => {
           }}
           onShouldStartLoadWithRequest={(request) => {
             // Only allow navigating within this website
-            if (request.url.includes(REPL_ENDPOINT) || request.url.includes('discord') || request.url.includes('github.com/login')) {
+            if (request.url.includes("github.com/brilliantlabsAR")) {
+              Linking.openURL(request.url);
+              return false;
+            }
+            if (request.url.includes(REPL_ENDPOINT) || request.url.includes('discord') || request.url.includes('github.com')) {
               return true;
             } else {
               Linking.openURL(request.url)
