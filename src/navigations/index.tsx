@@ -2,19 +2,10 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Routes from "../models/routes";
-import AppNavigation from "./appNavigation";
 import screens from "../screens";
-import { View, Text } from "react-native";
 
 export type RootStackParamList = {
-  [Routes.NAV_SPLASH_SCREEN]: undefined;
-  [Routes.NAV_LETS_GO_SCREEN]: undefined;
-  [Routes.NAV_APP]: undefined;
-  [Routes.NAV_LOGIN_SCREEN]: undefined;
-  [Routes.NAV_LOGIN_VERIFY_SCREEN]: { screen: string, phone: string };
-  [Routes.NAV_SIGNUP_SCREEN]: undefined;
-  [Routes.NAV_SUCCESS_LOGIN]: undefined;
-  [Routes.NAV_PAIRING_SCREEN]: undefined;
+  [Routes.NAV_TERMINAL_SCREEN]: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -22,46 +13,10 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 const RootNavigation: React.FC = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={Routes.NAV_SPLASH_SCREEN}>
+      <RootStack.Navigator initialRouteName={Routes.NAV_TERMINAL_SCREEN}>
         <RootStack.Screen
-          name={Routes.NAV_SPLASH_SCREEN}
-          component={screens.SplashScreen}
-          options={{ headerShown: false }}
-        />
-        <RootStack.Screen
-          name={Routes.NAV_LETS_GO_SCREEN}
-          component={screens.LetsGoScreen}
-          options={{ headerShown: false }}
-        />
-        <RootStack.Screen
-          name={Routes.NAV_LOGIN_SCREEN}
-          component={screens.LoginScreen}
-          options={{ headerShown: false }}
-        />
-
-        <RootStack.Screen
-          name={Routes.NAV_LOGIN_VERIFY_SCREEN}
-          component={screens.LoginOtpVerify}
-          options={{ headerShown: false }}
-        />
-        <RootStack.Screen
-          name={Routes.NAV_SUCCESS_LOGIN}
-          component={screens.SuccessLogin}
-          options={{ headerShown: false }}
-        />
-        <RootStack.Screen
-          name={Routes.NAV_SIGNUP_SCREEN}
-          component={screens.SignUpScreen}
-          options={{ headerShown: false }}
-        />
-        <RootStack.Screen
-          name={Routes.NAV_PAIRING_SCREEN}
-          component={screens.PairingScreen}
-          options={{ headerShown: false }}
-        />
-        <RootStack.Screen
-          name={Routes.NAV_APP}
-          component={AppNavigation}
+          name={Routes.NAV_TERMINAL_SCREEN}
+          component={screens.TerminalScreen}
           options={{ headerShown: false }}
         />
       </RootStack.Navigator>
